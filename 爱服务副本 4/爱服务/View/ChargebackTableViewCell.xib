@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="100" id="KGk-i7-Jjw" customClass="ChargebackTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="99.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="退单理由：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lK2-nl-New">
+                        <rect key="frame" x="10" y="10" width="70" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="hz9-nd-VOx"/>
+                            <constraint firstAttribute="width" constant="70" id="trj-Nb-Yds"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7yt-Qd-186">
+                        <rect key="frame" x="10" y="39" width="300" height="50.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="lK2-nl-New" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="4Xw-pn-iv6"/>
+                    <constraint firstItem="7yt-Qd-186" firstAttribute="top" secondItem="lK2-nl-New" secondAttribute="bottom" constant="5" id="Jf1-bf-Dhc"/>
+                    <constraint firstAttribute="trailing" secondItem="7yt-Qd-186" secondAttribute="trailing" constant="10" id="Tqk-uN-ZQh"/>
+                    <constraint firstAttribute="bottom" secondItem="7yt-Qd-186" secondAttribute="bottom" constant="10" id="Wsb-2a-leh"/>
+                    <constraint firstItem="lK2-nl-New" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="b9Z-BH-HmW"/>
+                    <constraint firstItem="7yt-Qd-186" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="e6k-sa-ntI"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="chargeBackContentLabel" destination="7yt-Qd-186" id="GId-vg-JHE"/>
+                <outlet property="chargeBackReasonLabel" destination="lK2-nl-New" id="hxv-o9-Phb"/>
+            </connections>
+            <point key="canvasLocation" x="258" y="274"/>
+        </tableViewCell>
+    </objects>
+</document>
