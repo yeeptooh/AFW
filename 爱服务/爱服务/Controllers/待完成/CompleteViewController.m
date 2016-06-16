@@ -112,7 +112,7 @@ UITextFieldDelegate
         _tableView.tableFooterView = [[UIView alloc]init];
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        
+        _tableView.alpha = 0;
         __weak typeof(self) weakSelf = self;
         _tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
             [weakSelf loadMoreData];
@@ -519,6 +519,9 @@ UITextFieldDelegate
             return ;
         }
         [weakSelf.view addSubview:weakSelf.tableView];
+        [UIView animateWithDuration:0.3 animations:^{
+            weakSelf.tableView.alpha = 1;
+        }];
         [weakSelf.tableView reloadData];
         
         if ([responseObject[@"ResponseInfo"][0][@"PageNow"] integerValue] == [responseObject[@"ResponseInfo"][0][@"PageRowCount"] integerValue]) {

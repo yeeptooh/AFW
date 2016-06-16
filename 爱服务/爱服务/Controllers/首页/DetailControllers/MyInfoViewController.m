@@ -6,52 +6,119 @@
 //  Copyright © 2016年 张冬冬. All rights reserved.
 //
 
+
 #import "MyInfoViewController.h"
 #import "LoginViewController.h"
 #import "HomeViewController.h"
 #import "UserModel.h"
-#import "MBProgressHUD.h"
+#import <WebKit/WebKit.h>
 @interface MyInfoViewController ()
 <
-UIWebViewDelegate
+WKNavigationDelegate
 >
-@property (nonatomic, strong) MBProgressHUD *HUD;
-@property (nonatomic, strong) MBProgressHUD *errorHUD;
+@property (nonatomic, strong) UIProgressView *progressView;
+@property (nonatomic, strong) WKWebView *webView;
+@property (nonatomic, strong) UIView *noNetWorkingView;
 @end
 
 @implementation MyInfoViewController
+
+- (UIView *)noNetWorkingView {
+    
+    if (!_noNetWorkingView) {
+        _noNetWorkingView = [[UIView alloc]initWithFrame:CGRectMake(0, SearchBarHeight, Width, Height - StatusBarAndNavigationBarHeight - TabbarHeight - SearchBarHeight)];
+        _noNetWorkingView.backgroundColor = [UIColor whiteColor];
+        UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"loding_wrong"]];
+        imageView.center = CGPointMake(Width/2, _noNetWorkingView.center.y - imageView.bounds.size.height/2 - 25);
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, Width, 50)];
+        label.center = _noNetWorkingView.center;
+        label.text = @"请检查网络";
+        label.font = font(18);
+        label.textAlignment = NSTextAlignmentCenter;
+        [_noNetWorkingView addSubview:imageView];
+        [_noNetWorkingView addSubview:label];
+        
+    }
+    return _noNetWorkingView;
+}
+
+- (UIProgressView *)progressView {
+    if (!_progressView) {
+        _progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 0, Width, 2)];
+        
+    }
+    return _progressView;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.automaticallyAdjustsScrollViewInsets = NO;
-    [self setNaviTitle];
     [self setWebView];
+    [self setNaviTitle];
     [self setQuitButton];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    if (_noNetWorkingView) {
+        [self.noNetWorkingView removeFromSuperview];
+        self.noNetWorkingView = nil;
+    }
 }
 
 
 
 - (void)setWebView {
     UserModel *userModel = [UserModel readUserModel];
-    UIWebView *webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, Width, Height - StatusBarAndNavigationBarHeight - TabbarHeight)];
+    CGFloat height;
+    if (iPhone4_4s || iPhone5_5s) {
+        height = 44;
+    }else {
+        height = 49;
+    }
+    self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, Width, Height - StatusBarAndNavigationBarHeight - height)];
     
-    self.HUD = [[MBProgressHUD alloc]initWithView:webView];
-    self.HUD.mode = MBProgressHUDModeIndeterminate;
-    [webView addSubview:self.HUD];
-    [self.HUD showAnimated:YES];
-    webView.delegate = self;
     
-    self.errorHUD = [[MBProgressHUD alloc]initWithView:webView];
-    self.errorHUD.mode = MBProgressHUDModeText;
-    self.errorHUD.label.text = @"请检查网络连接";
-    self.errorHUD.label.font = font(12);
-    [webView addSubview:self.errorHUD];
+    self.webView.navigationDelegate = self;
     
-    webView.scrollView.bounces = NO;
-    webView.scrollView.showsVerticalScrollIndicator = NO;
-    [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/page.aspx?type=user&comid=%ld&uid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid]]]];
-    [self.view addSubview:webView];
+    
+    
+    self.webView.scrollView.bounces = NO;
+    self.webView.scrollView.showsVerticalScrollIndicator = NO;
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/page.aspx?type=user&comid=%ld&uid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid]]]];
+    [self.view addSubview:self.progressView];
+    [self.view insertSubview:self.webView belowSubview:self.progressView];
+    
+    
+    [self.webView addObserver:self
+                   forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"estimatedProgress"]) {
+        self.progressView.hidden = self.webView.estimatedProgress == 1;
+        [self.progressView setProgress:self.webView.estimatedProgress animated:YES];
+    }
+}
+
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+    [self.progressView setProgress:0.0 animated:NO];
+}
+
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    if (error) {
+        self.progressView.hidden = YES;
+        [self.view addSubview:self.noNetWorkingView];
+    }
+}
+
+
+
+- (void)dealloc {
+    
+    [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];
+    
 }
 
 - (void)setQuitButton {
@@ -90,25 +157,7 @@ UIWebViewDelegate
     self.navigationItem.title = @"我的信息";
 }
 
-- (void)dealloc {
-    NSLog(@"MyInfo dealloc");
-}
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-    [self.HUD hideAnimated:YES];
-    [self.HUD removeFromSuperViewOnHide];
-}
-
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    [self.HUD hideAnimated:YES];
-    [self.HUD removeFromSuperViewOnHide];
-    [self.errorHUD showAnimated:YES];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.errorHUD hideAnimated:YES];
-        [self.errorHUD removeFromSuperViewOnHide];
-    });
-    
-}
 
 
 @end

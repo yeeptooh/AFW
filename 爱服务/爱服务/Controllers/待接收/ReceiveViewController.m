@@ -88,7 +88,7 @@ UITextFieldDelegate
         _tableView.tableFooterView = [[UIView alloc]init];
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        
+        _tableView.alpha = 0;
         __weak typeof(self) weakSelf = self;
         _tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
             [weakSelf loadMoreData];
@@ -466,6 +466,9 @@ UITextFieldDelegate
             return ;
         }
         [weakSelf.view addSubview:weakSelf.tableView];
+        [UIView animateWithDuration:0.3 animations:^{
+            weakSelf.tableView.alpha = 1;
+        }];
         [weakSelf.tableView reloadData];
         
         if ([responseObject[@"ResponseInfo"][0][@"PageNow"] integerValue] == [responseObject[@"ResponseInfo"][0][@"PageRowCount"] integerValue]) {
@@ -494,48 +497,6 @@ UITextFieldDelegate
         return ;
     }];
     
-    
-//    [self.manager GET:URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        
-//        [weakSelf.HUD hideAnimated:YES];
-//        [weakSelf.HUD removeFromSuperViewOnHide];
-//        
-//        for (NSDictionary *dic in responseObject[@"task"]) {
-//            OrderModel *ordelModel = [OrderModel orderFromDictionary:dic];
-//            [weakSelf.dicList addObject:ordelModel];
-//        }
-//        
-//        if (!weakSelf.dicList.count) {
-//            [weakSelf.view addSubview:weakSelf.noOrderView];
-//            return ;
-//        }
-//        [weakSelf.view addSubview:weakSelf.tableView];
-//        [weakSelf.tableView reloadData];
-//        
-//        if ([responseObject[@"ResponseInfo"][0][@"PageNow"] integerValue] == [responseObject[@"ResponseInfo"][0][@"PageRowCount"] integerValue]) {
-//            [weakSelf.tableView.mj_footer endRefreshing];
-//            weakSelf.tableView.mj_footer.hidden = YES;
-//            return ;
-//        }else {
-//            weakSelf.tableView.mj_footer.hidden = NO;
-//        }
-//        
-//        [weakSelf.tableView.mj_footer endRefreshing];
-//        
-//        
-//        return ;
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        
-//        [weakSelf.manager.operationQueue cancelAllOperations];
-//        [weakSelf.tableView.mj_footer endRefreshing];
-//        
-//        [weakSelf.HUD hideAnimated:YES];
-//        [weakSelf.HUD removeFromSuperViewOnHide];
-//        
-//        [weakSelf.view addSubview:weakSelf.noNetWorkingView];
-//        weakSelf.tableView.mj_footer.hidden = YES;
-//        return ;
-//    }];
 }
 
 #pragma mark - UITableViewDelegate And DataSource -
@@ -639,7 +600,7 @@ UITextFieldDelegate
     self.searchHUD.showing = YES;
     [self.searchHUD showAnimated:YES];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
     UserModel *userModel = [UserModel readUserModel];
     NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=getlist&comid=%ld&uid=%ld&state=4&page=%ld&query=%@&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)self.page,textField.text,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
     //297错误，URL中有中文，需转码
@@ -690,50 +651,7 @@ UITextFieldDelegate
         weakSelf.searchResultTableView.mj_footer.hidden = YES;
         return ;
     }];
-    
-    
-//    [manager GET:URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        
-//        [weakSelf.searchHUD hideAnimated:YES];
-//        [weakSelf.searchHUD removeFromSuperViewOnHide];
-//        
-//        for (NSDictionary *dic in responseObject[@"task"]) {
-//            OrderModel *ordelModel = [OrderModel orderFromDictionary:dic];
-//            [weakSelf.searchResultList addObject:ordelModel];
-//        }
-//        
-//        if (!weakSelf.searchResultList.count) {
-//            [weakSelf.searchResultView addSubview:weakSelf.noSearchResultView];
-//            return ;
-//        }
-//        [weakSelf.searchResultView addSubview:weakSelf.searchResultTableView];
-//        [weakSelf.searchResultTableView reloadData];
-//        
-//        if ([responseObject[@"ResponseInfo"][0][@"PageNow"] integerValue] == [responseObject[@"ResponseInfo"][0][@"PageRowCount"] integerValue]) {
-//            [weakSelf.searchResultTableView.mj_footer endRefreshing];
-//            weakSelf.searchResultTableView.mj_footer.hidden = YES;
-//            return ;
-//        }else {
-//            weakSelf.searchResultTableView.mj_footer.hidden = NO;
-//        }
-//        
-//        [weakSelf.searchResultTableView.mj_footer endRefreshing];
-//        
-//        
-//        return ;
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        
-//        weakSelf.searchHUD.showing = NO;
-//        [weakSelf.searchResultTableView.mj_footer endRefreshing];
-//        
-//        [weakSelf.searchHUD hideAnimated:YES];
-//        [weakSelf.searchHUD removeFromSuperViewOnHide];
-//        
-//        [weakSelf.searchResultView addSubview:weakSelf.noNetWorkingView];
-//        weakSelf.searchResultTableView.mj_footer.hidden = YES;
-//        return ;
-//    }];
-    
+ 
     return YES;
 }
 
@@ -793,45 +711,7 @@ UITextFieldDelegate
         return ;
         
     }];
-//    [manager GET:URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        
-//        [weakSelf.searchHUD hideAnimated:YES];
-//        [weakSelf.searchHUD removeFromSuperViewOnHide];
-//        
-//        for (NSDictionary *dic in responseObject[@"task"]) {
-//            OrderModel *ordelModel = [OrderModel orderFromDictionary:dic];
-//            [weakSelf.searchResultList addObject:ordelModel];
-//        }
-//        
-//        if (!weakSelf.searchResultList.count) {
-//            [weakSelf.searchResultView addSubview:weakSelf.noSearchResultView];
-//            return ;
-//        }
-//        [weakSelf.searchResultView addSubview:weakSelf.searchResultTableView];
-//        [weakSelf.searchResultTableView reloadData];
-//        if ([responseObject[@"ResponseInfo"][0][@"PageNow"] integerValue] == [responseObject[@"ResponseInfo"][0][@"PageRowCount"] integerValue]) {
-//            [weakSelf.searchResultTableView.mj_footer endRefreshing];
-//            weakSelf.searchResultTableView.mj_footer.hidden = YES;
-//            return ;
-//        }else {
-//            weakSelf.searchResultTableView.mj_footer.hidden = NO;
-//        }
-//        [weakSelf.searchResultTableView.mj_footer endRefreshing];
-//        
-//        
-//        return ;
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        
-//        weakSelf.searchHUD.showing = NO;
-//        [weakSelf.searchResultTableView.mj_footer endRefreshing];
-//        
-//        [weakSelf.searchHUD hideAnimated:YES];
-//        [weakSelf.searchHUD removeFromSuperViewOnHide];
-//        
-//        [weakSelf.searchResultView addSubview:weakSelf.noNetWorkingView];
-//        weakSelf.searchResultTableView.mj_footer.hidden = YES;
-//        return ;
-//    }];
+
 }
 
 - (void)setNaviTitle {
@@ -887,43 +767,6 @@ UITextFieldDelegate
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
-    
-//    [manager GET:countString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        NSString *allString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
-//        NSArray *countList = [allString componentsSeparatedByString:@","];
-//        NSLog(@"－－－%@",countList);
-//        [[NSUserDefaults standardUserDefaults] setObject:countList forKey:@"countList"];
-//        [[NSUserDefaults standardUserDefaults] synchronize];
-//        
-//        if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][1] isEqualToString:@"0"]) {
-//            
-//            receiveVC.tabBarItem.badgeValue = nil;
-//        }else{
-//            receiveVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][1];
-//        }
-//        
-//        if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][2] isEqualToString:@"0"]) {
-//            completeVC.tabBarItem.badgeValue = nil;
-//        }else{
-//            completeVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][2];
-//        }
-//        
-//        if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][3] isEqualToString:@"0"]) {
-//            robVC.tabBarItem.badgeValue = nil;
-//        }else{
-//            robVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][3];
-//        }
-//        
-//        if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][0] isEqualToString:@"0"]) {
-//            allorderVC.tabBarItem.badgeValue = nil;
-//        }else{
-//            allorderVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][0];
-//        }
-//
-//        
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        
-//    }];
     
     
 }
