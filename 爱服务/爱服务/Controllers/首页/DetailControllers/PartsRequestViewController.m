@@ -336,6 +336,7 @@ static NSInteger number;
         NSUInteger sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         
         UIImagePickerController *imagePickerController = [[UIImagePickerController alloc]init];
+        imagePickerController.navigationBar.barStyle = UIBarStyleBlack;
         imagePickerController.delegate = self;
         imagePickerController.allowsEditing = YES;
         imagePickerController.sourceType = sourceType;
