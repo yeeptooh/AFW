@@ -556,7 +556,7 @@ static NSInteger number;
     }
     
     number = 1;
-    //验证码不定是否必填
+    //验证码不是否必填
     
 //    if ([((UITextField *)[self.tableView viewWithTag:1005]).text isEqualToString:@""] || !((UITextField *)[self.tableView viewWithTag:1005]).text) {
 //        MBProgressHUD *successHUD = [[MBProgressHUD alloc]initWithView:self.tableView];

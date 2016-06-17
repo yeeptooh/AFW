@@ -97,18 +97,30 @@ WKNavigationDelegate
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:@"estimatedProgress"]) {
-        self.progressView.hidden = self.webView.estimatedProgress == 1;
-        [self.progressView setProgress:self.webView.estimatedProgress animated:YES];
+        //        self.progressView.hidden = self.webView.estimatedProgress == 1;
+        //        [self.progressView setProgress:self.webView.estimatedProgress animated:YES];
+        self.progressView.progress = self.webView.estimatedProgress;
     }
+    //加载完成
+    if (!self.webView.isLoading) {
+        [UIView animateWithDuration:0.5 animations:^{
+            self.progressView.alpha = 0;
+        }];
+    }
+    
 }
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
-    [self.progressView setProgress:0.0 animated:NO];
+    [UIView animateWithDuration:0.5 animations:^{
+        self.progressView.alpha = 0;
+    }];
 }
 
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
     if (error) {
-        self.progressView.hidden = YES;
+        [UIView animateWithDuration:0.5 animations:^{
+            self.progressView.alpha = 0;
+        }];
         [self.view addSubview:self.noNetWorkingView];
     }
 }
