@@ -349,6 +349,7 @@ static NSInteger number;
             [cell addSubview:textfield];
         if (indexPath.row == 5) {
             textfield.keyboardType = UIKeyboardTypeNumberPad;
+            textfield.placeholder = @"请询问客户，获取验证码";
         }
         
     }else if (indexPath.row == 7) {
