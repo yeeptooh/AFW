@@ -15,8 +15,8 @@
 #import "pop/POP.h"
 #import "MJRefresh.h"
 
-//#define HomeURL @"http://i.51ifw.com/forapp/"
-#define HomeURL @"http://192.168.1.228:90/forapp/"
+#define HomeURL @"http://i.51ifw.com/forapp/"
+//#define HomeURL @"http://192.168.1.228:90/forapp/"
 
 
 #define kBadgeValueChanged @"badgeValueChanged"
