@@ -29,6 +29,7 @@
 
 
 #import <CoreLocation/CoreLocation.h>
+#import <AVFoundation/AVFoundation.h>
 #define  imageHeight 139
 @interface HomeViewController ()
 <
@@ -41,10 +42,33 @@ UINavigationControllerDelegate
 @property (nonatomic, strong) MBProgressHUD *HUD;
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
+@property (nonatomic, strong) UIAlertController *alertController;
 
 @end
 static NSInteger tag = 0;
 @implementation HomeViewController
+
+- (UIAlertController *)alertController {
+    if (!_alertController) {
+        _alertController = [UIAlertController alertControllerWithTitle:@"此应用的相机功能已禁用" message:@"请点击确定打开应用的相机功能" preferredStyle:UIAlertControllerStyleAlert];
+        
+        
+        UIAlertAction *openAction = [UIAlertAction actionWithTitle:@"打开" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+            
+        }];
+        
+        UIAlertAction *closeAction = [UIAlertAction actionWithTitle:@"关闭" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        
+        [_alertController addAction:openAction];
+        [_alertController addAction:closeAction];
+        
+    }
+    return _alertController;
+}
 
 - (UIView *)balanceView {
     if (!_balanceView) {
@@ -510,9 +534,17 @@ static NSInteger tag = 0;
 
 - (void)detailButtonClicked:(UIButton *)sender {
     if (sender.tag == 1000) {
-        PartsRequestViewController *partsRequestVC = [[PartsRequestViewController alloc]init];
-        partsRequestVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:partsRequestVC animated:YES];
+        AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+        if (status == AVAuthorizationStatusAuthorized) {
+            PartsRequestViewController *partsRequestVC = [[PartsRequestViewController alloc]init];
+            partsRequestVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:partsRequestVC animated:YES];
+        }else {
+            [self presentViewController:self.alertController animated:YES completion:nil];
+        }
+        
+        
+        
         
     }else if (sender.tag == 1001) {
         

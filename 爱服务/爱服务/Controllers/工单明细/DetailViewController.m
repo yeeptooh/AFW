@@ -23,7 +23,7 @@
 #import "AcceptViewController.h"
 
 #import "MBProgressHUD.h"
-
+#import <AVFoundation/AVFoundation.h>
 #define ButtonHeight 35
 #define BaseInfoViewHeight 150
 #define SectionHeaderHeight 32
@@ -37,9 +37,34 @@ UIViewControllerTransitioningDelegate
 @property (nonatomic, strong) DetailTaskPlanTableViewCell *baseDetailInfoCell;
 @property (nonatomic, strong) ProductTableViewCell *cell;
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UIAlertController *alertController;
 @end
 
 @implementation DetailViewController
+
+- (UIAlertController *)alertController {
+    if (!_alertController) {
+        _alertController = [UIAlertController alertControllerWithTitle:@"此应用的相机功能已禁用" message:@"请点击确定打开应用的相机功能" preferredStyle:UIAlertControllerStyleAlert];
+        
+        
+        UIAlertAction *openAction = [UIAlertAction actionWithTitle:@"打开" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+            
+        }];
+        
+        UIAlertAction *closeAction = [UIAlertAction actionWithTitle:@"关闭" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        
+        [_alertController addAction:openAction];
+        [_alertController addAction:closeAction];
+        
+    }
+    return _alertController;
+}
+
+
 - (UITableView *)tableView {
     if (!_tableView) {
         CGRect frame;
@@ -284,10 +309,16 @@ UIViewControllerTransitioningDelegate
 }
 
 - (void)completeButtonClicked {
+    AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    if (status == AVAuthorizationStatusAuthorized) {
+    
     CompleteButtonViewController *cbVC = [[CompleteButtonViewController alloc]init];
     cbVC.ID = self.ID;
     [self.navigationController pushViewController:cbVC animated:YES];
-
+    }else {
+         [self presentViewController:self.alertController animated:YES completion:nil];
+    }
+    
 }
 
 - (void)recedeButtonClicked {

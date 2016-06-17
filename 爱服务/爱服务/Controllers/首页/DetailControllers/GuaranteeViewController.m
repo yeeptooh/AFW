@@ -67,6 +67,7 @@ WKNavigationDelegate
    
     UserModel *userModel = [UserModel readUserModel];
     self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, Width, Height - StatusBarAndNavigationBarHeight)];
+    
     self.webView.navigationDelegate = self;
     
     self.webView.scrollView.bounces = NO;

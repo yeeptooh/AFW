@@ -483,7 +483,7 @@ static NSInteger number;
         imagePickerController.delegate = self;
         imagePickerController.allowsEditing = YES;
         imagePickerController.sourceType = sourceType;
-        
+        imagePickerController.navigationBar.barStyle = UIBarStyleBlack;
         [self presentViewController:imagePickerController animated:YES completion:^{
             
         }];

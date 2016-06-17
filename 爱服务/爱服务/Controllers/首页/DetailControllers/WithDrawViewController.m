@@ -11,7 +11,8 @@
 #import <WebKit/WebKit.h>
 @interface WithDrawViewController ()
 <
-WKNavigationDelegate
+WKNavigationDelegate,
+WKUIDelegate
 >
 @property (nonatomic, strong) UIProgressView *progressView;
 @property (nonatomic, strong) WKWebView *webView;
@@ -71,7 +72,7 @@ WKNavigationDelegate
     
     
     self.webView.navigationDelegate = self;
-    
+    self.webView.UIDelegate = self;
     
     
     self.webView.scrollView.bounces = NO;
@@ -113,6 +114,19 @@ WKNavigationDelegate
         }];
         [self.view addSubview:self.noNetWorkingView];
     }
+}
+
+- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler {
+    
+    UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleDefault handler:nil];
+    
+    [controller addAction:action];
+    
+    [self presentViewController:controller animated:YES completion:^{
+        completionHandler();
+    }];
+    
 }
 
 
