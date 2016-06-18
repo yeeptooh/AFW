@@ -746,6 +746,9 @@ static NSInteger number;
     [self.session stopRunning];
     
     if (metadataObjects.count > 0) {
+        
+        //扫码成功－vibrate
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
         AVMetadataMachineReadableCodeObject *obj = metadataObjects[0];
         UITextField *textfield = [self.tableView viewWithTag:1001];
         textfield.text = obj.stringValue;
