@@ -85,8 +85,7 @@ WKNavigationDelegate
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:@"estimatedProgress"]) {
-//        self.progressView.hidden = self.webView.estimatedProgress == 1;
-//        [self.progressView setProgress:self.webView.estimatedProgress animated:YES];
+
         self.progressView.progress = self.webView.estimatedProgress;
     }
     //加载完成

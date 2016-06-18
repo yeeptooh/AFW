@@ -387,7 +387,7 @@ static NSInteger tag = 0;
             
             [self.detailButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"a%ld",(long)tag]] forState:UIControlStateNormal];
             if (i == 2) {
-                if (j == 2 || j == 3) {
+                if (/*j == 2 || */j == 3) {
                     [self.detailButton setImage:nil forState:UIControlStateNormal];
                 }
             }
@@ -441,9 +441,9 @@ static NSInteger tag = 0;
                 [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
                 [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
             }else if(self.detailButton.tag == 1010) {
-//                [self.detailButton setTitle:@"我要充值" forState:UIControlStateNormal];
-//                [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
-//                [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                [self.detailButton setTitle:@"我要充值" forState:UIControlStateNormal];
+                [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
             }else if(self.detailButton.tag == 1011) {
 //                [self.detailButton setTitle:@"爱心保" forState:UIControlStateNormal];
 //                [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
@@ -602,9 +602,9 @@ static NSInteger tag = 0;
         withDrawVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:withDrawVC animated:YES];
     }else if (sender.tag == 1010) {
-//        RechargeViewController *rechargeVC = [[RechargeViewController alloc] init];
-//        rechargeVC.hidesBottomBarWhenPushed = YES;
-//        [self.navigationController pushViewController:rechargeVC animated:YES];
+        RechargeViewController *rechargeVC = [[RechargeViewController alloc] init];
+        rechargeVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:rechargeVC animated:YES];
         
     }else if (sender.tag == 1011) {
         
