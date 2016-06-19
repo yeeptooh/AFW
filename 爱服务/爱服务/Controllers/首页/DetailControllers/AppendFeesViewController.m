@@ -11,15 +11,17 @@
 #import "MBProgressHUD.h"
 #import "AFNetworking.h"
 #import "CompleteViewController.h"
+#import <WebKit/WebKit.h>
 @interface AppendFeesViewController ()
 <
-UIWebViewDelegate
+WKNavigationDelegate
 >
 @property (nonatomic, strong) NSString *ID;
+@property (nonatomic, strong) UIActivityIndicatorView *indicatorView;
 
 @property (nonatomic, strong) MBProgressHUD *HUD;
 @property (nonatomic, strong) MBProgressHUD *errorHUD;
-@property (nonatomic, strong) UIWebView *webView;
+@property (nonatomic, strong) WKWebView *webView;
 
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
 
@@ -33,6 +35,16 @@ UIWebViewDelegate
 @end
 
 @implementation AppendFeesViewController
+
+- (UIActivityIndicatorView *)indicatorView {
+    if (!_indicatorView) {
+        _indicatorView = [[UIActivityIndicatorView alloc] init];
+        _indicatorView.center = CGPointMake(self.webView.bounds.size.width/2, self.webView.bounds.size.height/3);
+        _indicatorView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+        [self.webView addSubview:_indicatorView];
+    }
+    return _indicatorView;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -271,20 +283,12 @@ UIWebViewDelegate
 }
 
 - (void)setWebView {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
     UserModel *userModel = [UserModel readUserModel];
-    self.webView = [[UIWebView alloc]initWithFrame:CGRectMake(20, 10 + (Height - StatusBarAndNavigationBarHeight)*8/12, Width - 40, Height - StatusBarAndNavigationBarHeight - (Height - StatusBarAndNavigationBarHeight)*8/12 - 10)];
-    self.HUD = [[MBProgressHUD alloc]initWithView:self.webView];
-    self.HUD.mode = MBProgressHUDModeIndeterminate;
-    [self.webView addSubview:self.HUD];
-    [self.HUD showAnimated:YES];
-    self.webView.delegate = self;
-    
-    self.errorHUD = [[MBProgressHUD alloc]initWithView:self.webView];
-    self.errorHUD.mode = MBProgressHUDModeText;
-    self.errorHUD.label.text = @"请检查网络连接";
-    self.errorHUD.label.font = font(12);
-    [self.webView addSubview:self.errorHUD];
+    self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(20, 10 + (Height - StatusBarAndNavigationBarHeight)*8/12, Width - 40, Height - StatusBarAndNavigationBarHeight - (Height - StatusBarAndNavigationBarHeight)*8/12 - 10)];
+    [self.indicatorView startAnimating];
+    self.webView.navigationDelegate = self;
     
     self.webView.scrollView.bounces = NO;
     self.webView.scrollView.showsVerticalScrollIndicator = NO;
@@ -293,22 +297,43 @@ UIWebViewDelegate
     [self.view addSubview:self.webView];
 }
 
-
-#pragma mark - UIWebViewDelegate -
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-    [self.HUD hideAnimated:YES];
-    [self.HUD removeFromSuperViewOnHide];
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    [self.indicatorView stopAnimating];
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    [self.HUD hideAnimated:YES];
-    [self.HUD removeFromSuperViewOnHide];
-    [self.errorHUD showAnimated:YES];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.errorHUD hideAnimated:YES];
-        [self.errorHUD removeFromSuperViewOnHide];
-    });
-    
+- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    if (error) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        [self.indicatorView stopAnimating];
+        UILabel *label = [[UILabel alloc] init];
+        
+        label.frame = CGRectMake(0, 0, self.webView.bounds.size.width, self.webView.bounds.size.height);
+        label.center = CGPointMake(self.webView.bounds.size.width/2, self.webView.bounds.size.height/2);
+        label.text = @"无法加载网页，请检查网络连接";
+        label.textAlignment = NSTextAlignmentCenter;
+        
+        label.font = font(15);
+        label.backgroundColor = [UIColor clearColor];
+        [self.webView addSubview:label];
+        
+    }
+}
+
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    if (error) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        [self.indicatorView stopAnimating];
+        UILabel *label = [[UILabel alloc] init];
+        
+        label.frame = CGRectMake(0, 0, self.webView.bounds.size.width, self.webView.bounds.size.height);
+        label.center = CGPointMake(self.webView.bounds.size.width/2, self.webView.bounds.size.height/2);
+        label.text = @"无法加载网页，请检查网络连接";
+        label.textAlignment = NSTextAlignmentCenter;
+        label.font = font(15);
+        label.backgroundColor = [UIColor clearColor];
+        [self.webView addSubview:label];
+    }
 }
 
 

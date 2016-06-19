@@ -12,7 +12,7 @@
 #import "AFNetworking.h"
 #import "UserModel.h"
 #import "MBProgressHUD.h"
-#define ButtonHeight 35
+//#define ButtonHeight 35
 
 @interface MapViewController ()
 <
@@ -45,7 +45,13 @@ MKMapViewDelegate
     self.locationManager.distanceFilter = 100;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     [self.locationManager startUpdatingLocation];
-    self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, Width, Height - ButtonHeight)];
+    CGFloat height;
+    if (iPhone4_4s || iPhone5_5s) {
+        height = 35;
+    }else {
+        height = 44;
+    }
+    self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, Width, Height - height)];
     
     self.mapView.mapType = MKMapTypeStandard;
     //设置代理
@@ -82,7 +88,7 @@ MKMapViewDelegate
     [self.view addSubview:self.mapView];
     
     UIButton *robButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    robButton.frame = CGRectMake(0, Height - StatusBarAndNavigationBarHeight - ButtonHeight, Width, ButtonHeight);
+    robButton.frame = CGRectMake(0, Height - StatusBarAndNavigationBarHeight - height, Width, height);
     robButton.backgroundColor = BlueColor;
     
     [robButton setTitle:@"立即抢单" forState:UIControlStateNormal];

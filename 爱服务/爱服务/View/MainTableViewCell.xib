@@ -105,7 +105,7 @@
                             <constraint firstAttribute="width" constant="41" id="1Ou-8m-WgF"/>
                             <constraint firstAttribute="height" constant="16" id="6g3-QI-6Ti"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <state key="normal" title="地图">
                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
@@ -150,7 +150,7 @@
                 <outlet property="robButton" destination="Jqh-aQ-PQm" id="82a-ln-JPA"/>
                 <outlet property="serviceTypeLabel" destination="lcK-PO-6LW" id="GJp-Ub-dEV"/>
             </connections>
-            <point key="canvasLocation" x="396" y="256.5"/>
+            <point key="canvasLocation" x="442" y="310.5"/>
         </tableViewCell>
     </objects>
 </document>
