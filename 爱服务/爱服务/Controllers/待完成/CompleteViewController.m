@@ -437,16 +437,21 @@ UITextFieldDelegate
         [self.noNetWorkingView removeFromSuperview];
         self.noNetWorkingView = nil;
     }
-    self.HUD = [[MBProgressHUD alloc]initWithView:self.view];
-    self.HUD.mode = MBProgressHUDModeIndeterminate;
-    self.HUD.animationType = MBProgressHUDAnimationZoom;
-    [self.view addSubview:self.HUD];
     
-    [self.HUD showAnimated:YES];
     self.page = 1;
     self.searchPage = 1;
     [self setBadgeValue];
     
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    self.HUD = [[MBProgressHUD alloc]initWithView:self.view];
+    self.HUD.mode = MBProgressHUDModeIndeterminate;
+    self.HUD.animationType = MBProgressHUDAnimationZoom;
+    [self.view addSubview:self.HUD];
+    [self.HUD showAnimated:YES];
     [self loadNewDate];
 }
 

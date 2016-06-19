@@ -24,7 +24,7 @@
 
 #import "MBProgressHUD.h"
 #import <AVFoundation/AVFoundation.h>
-#define ButtonHeight 35
+//#define ButtonHeight 35
 #define BaseInfoViewHeight 150
 #define SectionHeaderHeight 32
 @interface DetailViewController ()
@@ -68,8 +68,14 @@ UIViewControllerTransitioningDelegate
 - (UITableView *)tableView {
     if (!_tableView) {
         CGRect frame;
+        CGFloat height;
+        if (iPhone4_4s || iPhone5_5s) {
+            height = 35;
+        }else {
+            height = 44;
+        }
         if (self.state == 4 || self.state == 5) {
-            frame = CGRectMake(0, BaseInfoViewHeight, Width, Height - BaseInfoViewHeight - StatusBarAndNavigationBarHeight - ButtonHeight);
+            frame = CGRectMake(0, BaseInfoViewHeight, Width, Height - BaseInfoViewHeight - StatusBarAndNavigationBarHeight - height);
         }else{
             frame = CGRectMake(0, BaseInfoViewHeight, Width, Height - BaseInfoViewHeight - StatusBarAndNavigationBarHeight);
         }
@@ -136,12 +142,20 @@ UIViewControllerTransitioningDelegate
 }
 
 - (void)setBottomButton {
+    
+    CGFloat height;
+    if (iPhone4_4s || iPhone5_5s) {
+        height = 35;
+    }else {
+        height = 44;
+    }
+    
     if (self.state == 4) {
         
         if (self.flag == 1) {
             
             UIButton *robButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            robButton.frame = CGRectMake(0, Height - StatusBarAndNavigationBarHeight - ButtonHeight, Width, ButtonHeight);
+            robButton.frame = CGRectMake(0, Height - StatusBarAndNavigationBarHeight - height, Width, height);
             robButton.backgroundColor = BlueColor;
             
             [robButton setTitle:@"立即抢单" forState:UIControlStateNormal];
@@ -153,7 +167,7 @@ UIViewControllerTransitioningDelegate
         }else {
             
             UIButton *receiveButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            receiveButton.frame = CGRectMake(5, Height - StatusBarAndNavigationBarHeight - ButtonHeight, Width/2 - 10, ButtonHeight);
+            receiveButton.frame = CGRectMake(5, Height - StatusBarAndNavigationBarHeight - height, Width/2 - 10, height);
             receiveButton.backgroundColor = BlueColor;
             receiveButton.layer.cornerRadius = 3;
             receiveButton.layer.masksToBounds = YES;
@@ -164,7 +178,7 @@ UIViewControllerTransitioningDelegate
             [self.view addSubview:receiveButton];
             
             UIButton *refuseButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            refuseButton.frame = CGRectMake(Width -5 - Width/2 + 10, Height - StatusBarAndNavigationBarHeight - ButtonHeight, Width/2 - 10, ButtonHeight);
+            refuseButton.frame = CGRectMake(Width -5 - Width/2 + 10, Height - StatusBarAndNavigationBarHeight - height, Width/2 - 10, height);
             refuseButton.backgroundColor = BlueColor;
             refuseButton.layer.cornerRadius = 3;
             refuseButton.layer.masksToBounds = YES;
@@ -179,7 +193,7 @@ UIViewControllerTransitioningDelegate
     }else if (self.state == 5){
         
         UIButton *completeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        completeButton.frame = CGRectMake(5, Height - StatusBarAndNavigationBarHeight - ButtonHeight, Width/2 - 10, ButtonHeight);
+        completeButton.frame = CGRectMake(5, Height - StatusBarAndNavigationBarHeight - height, Width/2 - 10, height);
         completeButton.backgroundColor = BlueColor;
         completeButton.layer.cornerRadius = 3;
         completeButton.layer.masksToBounds = YES;
@@ -190,7 +204,7 @@ UIViewControllerTransitioningDelegate
         [self.view addSubview:completeButton];
         
         UIButton *recedeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        recedeButton.frame = CGRectMake(Width - 5 - Width/2 + 10, Height - StatusBarAndNavigationBarHeight - ButtonHeight, Width/2 - 10, ButtonHeight);
+        recedeButton.frame = CGRectMake(Width - 5 - Width/2 + 10, Height - StatusBarAndNavigationBarHeight - height, Width/2 - 10, height);
         recedeButton.backgroundColor = BlueColor;
         recedeButton.layer.cornerRadius = 3;
         recedeButton.layer.masksToBounds = YES;

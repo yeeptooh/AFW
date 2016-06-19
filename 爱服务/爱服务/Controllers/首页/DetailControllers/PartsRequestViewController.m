@@ -11,16 +11,17 @@
 #import "MBProgressHUD.h"
 #import "CompleteViewController.h"
 #import "AFNetworking.h"
+#import <WebKit/WebKit.h>
 
 @interface PartsRequestViewController ()
 <
-UIWebViewDelegate,
+WKNavigationDelegate,
 UIImagePickerControllerDelegate,
 UINavigationControllerDelegate
 >
 @property (nonatomic, strong) MBProgressHUD *HUD;
 @property (nonatomic, strong) MBProgressHUD *errorHUD;
-@property (nonatomic, strong) UIWebView *webView;
+@property (nonatomic, strong) WKWebView *webView;
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
@@ -58,11 +59,21 @@ UINavigationControllerDelegate
 
 @property (nonatomic, strong) UIButton *chooseButton;
 
-
+@property (nonatomic, strong) UIActivityIndicatorView *indicatorView;
 
 @end
 static NSInteger number;
 @implementation PartsRequestViewController
+
+- (UIActivityIndicatorView *)indicatorView {
+    if (!_indicatorView) {
+        _indicatorView = [[UIActivityIndicatorView alloc] init];
+        _indicatorView.center = CGPointMake(self.webView.bounds.size.width/2, self.webView.bounds.size.height/3);
+        _indicatorView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+        [self.webView addSubview:_indicatorView];
+    }
+    return _indicatorView;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -250,21 +261,11 @@ static NSInteger number;
     submit.backgroundColor = color(23, 133, 255, 1);
     submit.frame = CGRectMake(30, 5 + ((Height - StatusBarAndNavigationBarHeight)*(13)/12), Width - 60, (Height - StatusBarAndNavigationBarHeight)/12 - 10);
     [self.scrollView addSubview:submit];
-    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     UserModel *userModel = [UserModel readUserModel];
-    self.webView = [[UIWebView alloc]initWithFrame:CGRectMake(20, 5 + ((Height - StatusBarAndNavigationBarHeight)*(14)/12), Width - 40, (Height - StatusBarAndNavigationBarHeight)*5/12)];
-    self.HUD = [[MBProgressHUD alloc]initWithView:self.webView];
-    self.HUD.mode = MBProgressHUDModeIndeterminate;
-    [self.webView addSubview:self.HUD];
-    [self.HUD showAnimated:YES];
-    self.webView.delegate = self;
-    
-    self.errorHUD = [[MBProgressHUD alloc]initWithView:self.webView];
-    self.errorHUD.mode = MBProgressHUDModeText;
-    self.errorHUD.label.text = @"请检查网络连接";
-    self.errorHUD.label.font = font(12);
-    [self.webView addSubview:self.errorHUD];
-    
+    self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(20, 5 + ((Height - StatusBarAndNavigationBarHeight)*(14)/12), Width - 40, (Height - StatusBarAndNavigationBarHeight)*5/12)];
+    [self.indicatorView startAnimating];
+    self.webView.navigationDelegate = self;
     self.webView.scrollView.bounces = NO;
     self.webView.scrollView.showsVerticalScrollIndicator = NO;
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@page.aspx?type=applymine&comid=%ld&uid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid]]]];
@@ -626,24 +627,44 @@ static NSInteger number;
     
 }
 
-
-#pragma mark - UIWebViewDelegate -
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-    [self.HUD hideAnimated:YES];
-    [self.HUD removeFromSuperViewOnHide];
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    [self.indicatorView stopAnimating];
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    [self.HUD hideAnimated:YES];
-    [self.HUD removeFromSuperViewOnHide];
-    [self.errorHUD showAnimated:YES];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.errorHUD hideAnimated:YES];
-        [self.errorHUD removeFromSuperViewOnHide];
-    });
-    
+- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    if (error) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        [self.indicatorView stopAnimating];
+        UILabel *label = [[UILabel alloc] init];
+        
+        label.frame = CGRectMake(0, 0, self.webView.bounds.size.width, self.webView.bounds.size.height);
+        label.center = CGPointMake(self.webView.bounds.size.width/2, self.webView.bounds.size.height/2);
+        label.text = @"无法加载网页，请检查网络连接";
+        label.textAlignment = NSTextAlignmentCenter;
+        
+        label.font = font(15);
+        label.backgroundColor = [UIColor clearColor];
+        [self.webView addSubview:label];
+        
+    }
 }
 
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    if (error) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        [self.indicatorView stopAnimating];
+        UILabel *label = [[UILabel alloc] init];
+        
+        label.frame = CGRectMake(0, 0, self.webView.bounds.size.width, self.webView.bounds.size.height);
+        label.center = CGPointMake(self.webView.bounds.size.width/2, self.webView.bounds.size.height/2);
+        label.text = @"无法加载网页，请检查网络连接";
+        label.textAlignment = NSTextAlignmentCenter;
+        label.font = font(15);
+        label.backgroundColor = [UIColor clearColor];
+        [self.webView addSubview:label];
+    }
+}
 
 - (void)setNaviTitle {
     self.navigationItem.title = @"配件申请";

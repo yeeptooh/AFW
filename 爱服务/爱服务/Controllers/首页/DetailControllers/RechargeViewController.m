@@ -57,8 +57,9 @@ static NSInteger i = 0;
     [self.rechargeButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
     [self.rechargeButton addTarget:self action:@selector(rechargeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
-    self.rechargeButton.userInteractionEnabled = NO;
-    self.rechargeButton.backgroundColor = color(231, 76, 60, 1);
+    self.rechargeButton.enabled = NO;
+    self.rechargeButton.backgroundColor = color(144, 144, 144, 1);
+    
     CGFloat height;
     if (iPhone4_4s || iPhone5_5s) {
         height = 44;
@@ -73,10 +74,14 @@ static NSInteger i = 0;
 
 - (void)editingChanged:(UITextField *)sender {
     
-    
     if ([sender.text rangeOfString:@"."].location==NSNotFound) {
         
         self.haveDot=NO;
+    }
+    
+    if ([sender.text isEqualToString:@""]) {
+        self.rechargeButton.backgroundColor = color(144, 144, 144, 1);
+        self.rechargeButton.enabled = NO;
     }
     
     if (sender.text.length > 0) {
@@ -87,6 +92,9 @@ static NSInteger i = 0;
             self.haveDot=NO;
             return;
         }
+        
+        self.rechargeButton.backgroundColor = color(231, 76, 60, 1);
+        self.rechargeButton.enabled = YES;
         
         if (single == '.') {
             if (self.isHaveDot) {
@@ -114,7 +122,11 @@ static NSInteger i = 0;
 }
 
 - (void)rechargeButtonClicked:(UIButton *)sender {
+    [self.view endEditing:YES];
     
+    
+    
+
 }
 
 
@@ -223,6 +235,7 @@ static NSInteger i = 0;
 }
 
 - (void)buttonClicked:(UIButton *)sender {
+    
     [self.view endEditing:YES];
 }
 
