@@ -7,12 +7,47 @@
 //
 
 #import "RegisterViewController.h"
+#import <WebKit/WebKit.h>
 
 @interface RegisterViewController ()
-
+<
+WKNavigationDelegate
+>
+@property (nonatomic, strong) UIProgressView *progressView;
+@property (nonatomic, strong) WKWebView *webView;
+@property (nonatomic, strong) UIView *noNetWorkingView;
 @end
 
 @implementation RegisterViewController
+
+- (UIProgressView *)progressView {
+    if (!_progressView) {
+        _progressView = [[UIProgressView alloc] initWithFrame:self.view.bounds];
+        
+    }
+    return _progressView;
+}
+
+
+- (UIView *)noNetWorkingView {
+    
+    if (!_noNetWorkingView) {
+        _noNetWorkingView = [[UIView alloc]initWithFrame:CGRectMake(0, SearchBarHeight, Width, Height - StatusBarAndNavigationBarHeight - TabbarHeight - SearchBarHeight)];
+        _noNetWorkingView.backgroundColor = [UIColor whiteColor];
+        UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"loding_wrong"]];
+        imageView.center = CGPointMake(Width/2, _noNetWorkingView.center.y - imageView.bounds.size.height/2 - 25);
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, Width, 50)];
+        label.center = _noNetWorkingView.center;
+        label.text = @"请检查网络";
+        label.font = font(18);
+        label.textAlignment = NSTextAlignmentCenter;
+        [_noNetWorkingView addSubview:imageView];
+        [_noNetWorkingView addSubview:label];
+        
+    }
+    return _noNetWorkingView;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -39,18 +74,65 @@
 
 - (void)setWebView {
     
-    UIWebView *webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, Width, Height - StatusBarAndNavigationBarHeight)];
-    [self.view addSubview:webView];
-    webView.scrollView.showsVerticalScrollIndicator = NO;
-    webView.scrollView.showsHorizontalScrollIndicator = NO;
+    self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, Width, Height - StatusBarAndNavigationBarHeight)];
+    [self.view addSubview:self.webView];
+    self.webView.scrollView.showsVerticalScrollIndicator = NO;
+    self.webView.scrollView.showsHorizontalScrollIndicator = NO;
+    self.webView.navigationDelegate = self;
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://m.51ifw.com/passport/regbymobile.aspx?action=fromapp"]]];
+    self.webView.scrollView.bounces = NO;
     
-    [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://m.51ifw.com/passport/regbymobile.aspx?action=fromapp"]]];
-    webView.scrollView.bounces = NO;
+    [self.webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
+    [self.view addSubview:self.progressView];
+    
+}
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    
+    if ([keyPath isEqualToString:@"estimatedProgress"]) {
+        
+        self.progressView.progress = self.webView.estimatedProgress;
+    }
+    
+    if (!self.webView.isLoading) {
+        [UIView animateWithDuration:0.5 animations:^{
+            self.progressView.alpha = 0;
+        }];
+    }
+    
+}
+
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+    [UIView animateWithDuration:0.5 animations:^{
+        self.progressView.alpha = 0;
+    }];
+}
+
+- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    if (error) {
+        [UIView animateWithDuration:0.5 animations:^{
+            self.progressView.alpha = 0;
+        }];
+        [self.view addSubview:self.noNetWorkingView];
+    }
+}
+
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    if (error) {
+        [UIView animateWithDuration:0.5 animations:^{
+            self.progressView.alpha = 0;
+        }];
+        [self.view addSubview:self.noNetWorkingView];
+    }
 }
 
 - (void)backLastView:(UIBarButtonItem *)sender {
+    [self.view endEditing:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)dealloc {
+    [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];
 }
 
 

@@ -378,7 +378,7 @@ static NSInteger number;
         
         if (self.selectedBtnposition == 1) {
             self.firstImageView.image = image;
-        }
+        }   
         if (self.selectedBtnposition == 2) {
             self.secondImageView.image = image;
         }
