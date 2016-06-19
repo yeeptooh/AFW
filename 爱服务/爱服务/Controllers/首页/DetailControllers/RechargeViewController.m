@@ -16,8 +16,11 @@ UITableViewDataSource,
 UITextFieldDelegate
 >
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, assign, getter=isHaveDot) BOOL haveDot;
+@property (nonatomic, strong) UIButton *rechargeButton;
 @end
 
+static NSInteger i = 0;
 @implementation RechargeViewController
 
 - (UITableView *)tableView {
@@ -47,23 +50,67 @@ UITextFieldDelegate
 
 
 - (void)setRechargeButton {
-    UIButton *rechargeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rechargeButton setTitle:@"充值" forState:UIControlStateNormal];
+    self.rechargeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.rechargeButton setTitle:@"充值" forState:UIControlStateNormal];
+    self.rechargeButton.layer.cornerRadius = 5;
+    self.rechargeButton.layer.masksToBounds = YES;
+    [self.rechargeButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
+    [self.rechargeButton addTarget:self action:@selector(rechargeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
-    [rechargeButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
-    [rechargeButton addTarget:self action:@selector(rechargeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    rechargeButton.backgroundColor = color(231, 76, 60, 1);
+    self.rechargeButton.userInteractionEnabled = NO;
+    self.rechargeButton.backgroundColor = color(231, 76, 60, 1);
     CGFloat height;
     if (iPhone4_4s || iPhone5_5s) {
         height = 44;
     }else {
         height = 49;
     }
-    rechargeButton.frame = CGRectMake(0, Height - StatusBarAndNavigationBarHeight - height, Width, height);
-    [self.view addSubview:rechargeButton];
+    self.rechargeButton.frame = CGRectMake(40, 44*3+60 + 20, Width - 80, height);
+    [self.view addSubview:self.rechargeButton];
 
+}
+
+
+- (void)editingChanged:(UITextField *)sender {
+    
+    
+    if ([sender.text rangeOfString:@"."].location==NSNotFound) {
+        
+        self.haveDot=NO;
+    }
+    
+    if (sender.text.length > 0) {
+        unichar single=[sender.text characterAtIndex:sender.text.length - 1];
+        
+        if (sender.text.length == 1 && (single == '.' || single == '0')) {
+            sender.text = @"";
+            self.haveDot=NO;
+            return;
+        }
+        
+        if (single == '.') {
+            if (self.isHaveDot) {
+                NSString *str = [sender.text substringToIndex:sender.text.length - 1];
+                sender.text = str;
+                return;
+            }else {
+                self.haveDot = YES;
+            }
+        }
+        
+        if (self.isHaveDot) {
+            NSRange range = [sender.text rangeOfString:@"."];
+            
+            NSUInteger length = sender.text.length - range.location;
+            if (length > 3) {
+                NSString *str = [sender.text substringToIndex:sender.text.length - 1];
+                sender.text = str;
+                return;
+            }
+        }
+        
+    }
+  
 }
 
 - (void)rechargeButtonClicked:(UIButton *)sender {
@@ -90,6 +137,9 @@ UITextFieldDelegate
     if (indexPath.section == 0) {
         MoneyTableViewCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"MoneyTableViewCell" owner:self options:nil] lastObject];
         cell.moneyTextField.delegate = self;
+        cell.moneyTextField.keyboardType = UIKeyboardTypeDecimalPad;
+        [cell.moneyTextField addTarget:self action:@selector(editingChanged:) forControlEvents:UIControlEventEditingChanged];
+        
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else {
@@ -110,6 +160,8 @@ UITextFieldDelegate
 
 }
 
+
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -119,16 +171,21 @@ UITextFieldDelegate
     }else {
         [self.view endEditing:YES];
         if (indexPath.row == 0) {
+            
+            i = 1;
+            
             PayTableViewCell *cell1 = (PayTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
             cell1.chooseImageView.image = [UIImage imageNamed:@"rate_annoy_button_selected"];
             
             NSIndexPath *indexpath = [NSIndexPath indexPathForRow:1 inSection:1];
             PayTableViewCell *cell2 = (PayTableViewCell *)[tableView cellForRowAtIndexPath:indexpath];
             cell2.chooseImageView.image = [UIImage imageNamed:@"rate_annoy_button_normal"];
-            
-            
+ 
             
         }else {
+            
+            i = 2;
+            
             PayTableViewCell *cell1 = (PayTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
             cell1.chooseImageView.image = [UIImage imageNamed:@"rate_annoy_button_selected"];
             
