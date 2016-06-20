@@ -9,6 +9,10 @@
 #import "RechargeViewController.h"
 #import "MoneyTableViewCell.h"
 #import "PayTableViewCell.h"
+#import "Order.h"
+#import "DataSigner.h"
+
+#import <AlipaySDK/AlipaySDK.h>
 @interface RechargeViewController ()
 <
 UITableViewDelegate,
@@ -87,10 +91,14 @@ static NSInteger i = 0;
     if (sender.text.length > 0) {
         unichar single=[sender.text characterAtIndex:sender.text.length - 1];
         
-        if (sender.text.length == 1 && (single == '.' || single == '0')) {
+        if (sender.text.length == 1 && (single == '.')) {
             sender.text = @"";
             self.haveDot=NO;
             return;
+        }
+        
+        if (sender.text.length == 2 && [sender.text isEqualToString:@"00"]) {
+            sender.text = @"0";
         }
         
         self.rechargeButton.backgroundColor = color(231, 76, 60, 1);
@@ -124,9 +132,50 @@ static NSInteger i = 0;
 - (void)rechargeButtonClicked:(UIButton *)sender {
     [self.view endEditing:YES];
     
+    //将商品信息赋予AlixPayOrder的成员变量
+    Order *order = [[Order alloc] init];
+    order.partner = myPartner;
+    order.sellerID = mySeller;
+    order.outTradeNO = @"G111111111111"; //订单ID（由商家自行制定）
+    order.subject = @"我的测试"; //商品标题
+    order.body = @"我的商品描述"; //商品描述
+    order.totalFee = @"0.01"; //商品价格
+    order.notifyURL =  @"http://www.xxx.com"; //回调URL
+    
+    order.service = @"mobile.securitypay.pay";
+    order.paymentType = @"1";
+    order.goodsType = @"0";
+    order.inputCharset = @"utf-8";
+    order.itBPay = @"30m";
+//    order.showURL = @"m.alipay.com";
+    
+    //应用注册scheme,在AlixPayDemo-Info.plist定义URL types
+    NSString *appScheme = @"aifuwu";
+    
+    //将商品信息拼接成字符串
+    NSString *orderSpec = [order description];
     
     
-
+    //获取私钥并将商户信息签名,外部商户可以根据情况存放私钥和签名,只需要遵循RSA签名规范,并将签名字符串base64编码和UrlEncode
+    id<DataSigner> signer = CreateRSADataSigner(myPrivateKey);
+    NSString *signedString = [signer signString:orderSpec];
+    NSLog(@"signedString = %@",signedString);
+    NSString *orderString = nil;
+    
+//    orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
+//                   orderSpec, signedString, @"RSA"];
+    
+    
+    
+    if (signedString != nil) {
+        orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
+                       orderSpec, @"RSA", signedString];
+        
+        [[AlipaySDK defaultService] payOrder:orderString fromScheme:appScheme callback:^(NSDictionary *resultDic) {
+            
+            NSLog(@"%@",resultDic);
+        }];
+    }
 }
 
 
