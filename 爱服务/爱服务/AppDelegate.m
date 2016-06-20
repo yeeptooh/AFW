@@ -24,6 +24,9 @@
 #import <TencentOpenAPI/TencentApiInterface.h>
 #import "JPUSHService.h"
 #import <AdSupport/ASIdentifierManager.h>
+
+#import <AlipaySDK/AlipaySDK.h>
+
 @interface AppDelegate ()
 
 <
@@ -151,6 +154,15 @@ static BOOL isProduction = FALSE;
         return [TencentApiInterface handleOpenURL:url delegate:self];
     }
     
+    //跳转支付宝钱包进行支付，需要将支付宝钱包的支付结果回传给SDK（这个是将支付宝客户端的支付结果传回给SDK）
+    if ([url.host isEqualToString:@"safepay"]) {
+        [[AlipaySDK defaultService]
+         processOrderWithPaymentResult:url
+         standbyCallback:^(NSDictionary *resultDic)
+         {
+             NSLog(@" ------result = %@",resultDic);//返回的支付结果
+         }];
+    }
     
     return YES;
 }
