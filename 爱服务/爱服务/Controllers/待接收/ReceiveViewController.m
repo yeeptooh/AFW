@@ -541,7 +541,7 @@ UITextFieldDelegate
     cell.serviceTypeLabel.text = self.orderModel.serviceType;
     cell.productTypeLabel.text = self.orderModel.productType;
     cell.nameLabel.text = self.orderModel.name;
-    cell.phoneLabel.text = self.orderModel.phone;
+    cell.phoneLabel.text = @"接单后可见";//self.orderModel.phone;
     cell.locationLabel.text = self.orderModel.location;
     cell.assessLabel.text = self.orderModel.assess;
     cell.priceLabel.text = self.orderModel.price;
