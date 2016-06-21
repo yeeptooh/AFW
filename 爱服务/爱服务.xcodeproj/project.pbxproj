@@ -254,7 +254,6 @@
 		4A6424161D19396600F26BA9 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A4BD3041CB8F812009DA0B9 /* Info.plist */; };
 		4A6424171D19396600F26BA9 /* OverTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A7749951CC0C3EB008B9611 /* OverTableViewCell.xib */; };
 		4A6424201D19399900F26BA9 /* 爱服务厂商版-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A64241F1D19399900F26BA9 /* 爱服务厂商版-Info.plist */; };
-		4A6424271D19422700F26BA9 /* AddOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6424261D19422700F26BA9 /* AddOrderViewController.m */; };
 		4A65B7D41CF82AE400331CD2 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A65B7D31CF82AE400331CD2 /* MapViewController.m */; };
 		4A65B7D61CF8319800331CD2 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A65B7D51CF8319800331CD2 /* MapKit.framework */; };
 		4A671C641CD05AAB00F70176 /* ChargeBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A671C631CD05AAB00F70176 /* ChargeBackViewController.m */; };
@@ -525,8 +524,6 @@
 		4A5D038E1CCDF8C000773139 /* ZDDModalTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZDDModalTransition.m; sourceTree = "<group>"; };
 		4A64241D1D19396600F26BA9 /* 爱服务厂商版.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "爱服务厂商版.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A64241F1D19399900F26BA9 /* 爱服务厂商版-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "爱服务厂商版-Info.plist"; sourceTree = "<group>"; };
-		4A6424251D19422700F26BA9 /* AddOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddOrderViewController.h; sourceTree = "<group>"; };
-		4A6424261D19422700F26BA9 /* AddOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddOrderViewController.m; sourceTree = "<group>"; };
 		4A65B7D21CF82AE400331CD2 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		4A65B7D31CF82AE400331CD2 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		4A65B7D51CF8319800331CD2 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -971,33 +968,8 @@
 		4A4BD2701CB89DFE009DA0B9 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				4A561D631CBDE9DE00BB26AC /* MainTableViewCell.h */,
-				4A561D641CBDE9DE00BB26AC /* MainTableViewCell.m */,
-				4A561D651CBDE9DE00BB26AC /* MainTableViewCell.xib */,
-				4A4EDB6F1CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.h */,
-				4A4EDB701CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.m */,
-				4A4EDB711CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.xib */,
-				4A7749841CC07ECA008B9611 /* ProductTableViewCell.h */,
-				4A7749851CC07ECA008B9611 /* ProductTableViewCell.m */,
-				4A7749861CC07ECA008B9611 /* ProductTableViewCell.xib */,
-				4A7749891CC09464008B9611 /* ServiceTypeTableViewCell.h */,
-				4A77498A1CC09464008B9611 /* ServiceTypeTableViewCell.m */,
-				4A77498B1CC09464008B9611 /* ServiceTypeTableViewCell.xib */,
-				4A77498E1CC09DC8008B9611 /* ChargebackTableViewCell.h */,
-				4A77498F1CC09DC8008B9611 /* ChargebackTableViewCell.m */,
-				4A7749901CC09DC8008B9611 /* ChargebackTableViewCell.xib */,
-				4A7749931CC0C3EB008B9611 /* OverTableViewCell.h */,
-				4A7749941CC0C3EB008B9611 /* OverTableViewCell.m */,
-				4A7749951CC0C3EB008B9611 /* OverTableViewCell.xib */,
-				4A7749981CC0C66C008B9611 /* AssessTableViewCell.h */,
-				4A7749991CC0C66C008B9611 /* AssessTableViewCell.m */,
-				4A77499A1CC0C66C008B9611 /* AssessTableViewCell.xib */,
-				4A52746B1D113D0500B056C6 /* MoneyTableViewCell.h */,
-				4A52746C1D113D0500B056C6 /* MoneyTableViewCell.m */,
-				4A52746D1D113D0500B056C6 /* MoneyTableViewCell.xib */,
-				4A5274731D113F3E00B056C6 /* PayTableViewCell.h */,
-				4A5274741D113F3E00B056C6 /* PayTableViewCell.m */,
-				4A5274751D113F3E00B056C6 /* PayTableViewCell.xib */,
+				4A6424291D1947FB00F26BA9 /* 爱服务厂商版 */,
+				4A6424281D1947EC00F26BA9 /* 爱服务 */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1338,8 +1310,47 @@
 		4A6424241D1941F400F26BA9 /* 爱服务厂商版 */ = {
 			isa = PBXGroup;
 			children = (
-				4A6424251D19422700F26BA9 /* AddOrderViewController.h */,
-				4A6424261D19422700F26BA9 /* AddOrderViewController.m */,
+			);
+			name = "爱服务厂商版";
+			sourceTree = "<group>";
+		};
+		4A6424281D1947EC00F26BA9 /* 爱服务 */ = {
+			isa = PBXGroup;
+			children = (
+				4A561D631CBDE9DE00BB26AC /* MainTableViewCell.h */,
+				4A561D641CBDE9DE00BB26AC /* MainTableViewCell.m */,
+				4A561D651CBDE9DE00BB26AC /* MainTableViewCell.xib */,
+				4A4EDB6F1CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.h */,
+				4A4EDB701CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.m */,
+				4A4EDB711CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.xib */,
+				4A7749841CC07ECA008B9611 /* ProductTableViewCell.h */,
+				4A7749851CC07ECA008B9611 /* ProductTableViewCell.m */,
+				4A7749861CC07ECA008B9611 /* ProductTableViewCell.xib */,
+				4A7749891CC09464008B9611 /* ServiceTypeTableViewCell.h */,
+				4A77498A1CC09464008B9611 /* ServiceTypeTableViewCell.m */,
+				4A77498B1CC09464008B9611 /* ServiceTypeTableViewCell.xib */,
+				4A77498E1CC09DC8008B9611 /* ChargebackTableViewCell.h */,
+				4A77498F1CC09DC8008B9611 /* ChargebackTableViewCell.m */,
+				4A7749901CC09DC8008B9611 /* ChargebackTableViewCell.xib */,
+				4A7749931CC0C3EB008B9611 /* OverTableViewCell.h */,
+				4A7749941CC0C3EB008B9611 /* OverTableViewCell.m */,
+				4A7749951CC0C3EB008B9611 /* OverTableViewCell.xib */,
+				4A7749981CC0C66C008B9611 /* AssessTableViewCell.h */,
+				4A7749991CC0C66C008B9611 /* AssessTableViewCell.m */,
+				4A77499A1CC0C66C008B9611 /* AssessTableViewCell.xib */,
+				4A52746B1D113D0500B056C6 /* MoneyTableViewCell.h */,
+				4A52746C1D113D0500B056C6 /* MoneyTableViewCell.m */,
+				4A52746D1D113D0500B056C6 /* MoneyTableViewCell.xib */,
+				4A5274731D113F3E00B056C6 /* PayTableViewCell.h */,
+				4A5274741D113F3E00B056C6 /* PayTableViewCell.m */,
+				4A5274751D113F3E00B056C6 /* PayTableViewCell.xib */,
+			);
+			name = "爱服务";
+			sourceTree = "<group>";
+		};
+		4A6424291D1947FB00F26BA9 /* 爱服务厂商版 */ = {
+			isa = PBXGroup;
+			children = (
 			);
 			name = "爱服务厂商版";
 			sourceTree = "<group>";
@@ -2004,7 +2015,6 @@
 				4A561D701CBE490E00BB26AC /* OrderModel.m in Sources */,
 				4A4BD2D01CB8D903009DA0B9 /* SDWebImageCompat.m in Sources */,
 				4A4BD2A51CB8D61C009DA0B9 /* TAAnimatedDotView.m in Sources */,
-				4A6424271D19422700F26BA9 /* AddOrderViewController.m in Sources */,
 				4A5D038F1CCDF8C000773139 /* ZDDModalTransition.m in Sources */,
 				4A69736D1CBB42C8002A036C /* MBProgressHUD.m in Sources */,
 				4A4C6CF81CD20DF80030B861 /* ShareAnimation.m in Sources */,

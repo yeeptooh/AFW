@@ -30,6 +30,7 @@
 
 #import <CoreLocation/CoreLocation.h>
 #import <AVFoundation/AVFoundation.h>
+//#import "AddOrderViewController.h"
 #define  imageHeight 139
 @interface HomeViewController ()
 <
@@ -325,7 +326,7 @@ static NSInteger tag = 0;
     [self.balanceView addSubview:balanceLabel];
     
     
-    
+#if Environment_Mode == 1
     UILabel *moneyLabel = [[UILabel alloc]initWithFrame:CGRectMake(Width*2/5, 0, Width*2/5, balanceLabel.bounds.size.height)];
     NSString *money = [((NSArray *)[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"]) lastObject];
     CGFloat moneyNumber = [money floatValue];
@@ -334,9 +335,12 @@ static NSInteger tag = 0;
     [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(4, moneyStr.length - 5)];
     moneyLabel.attributedText = attributedString;
     moneyLabel.textAlignment = NSTextAlignmentCenter;
-    
+
     moneyLabel.font = font(13);
     [self.balanceView addSubview:moneyLabel];
+#elif Environment_Mode == 2
+#endif
+
     
     
     UIButton *drawMoneyButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -746,6 +750,7 @@ static NSInteger tag = 0;
     }
 #elif Environment_Mode == 2
     if (sender.tag == 1000) {
+        AddOrderViewController *addVC = [[AddOrderViewController alloc] init];
         
         
     }else if (sender.tag == 1001) {
