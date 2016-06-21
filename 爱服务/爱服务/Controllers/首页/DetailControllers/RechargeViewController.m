@@ -9,10 +9,12 @@
 #import "RechargeViewController.h"
 #import "MoneyTableViewCell.h"
 #import "PayTableViewCell.h"
+
 #import "Order.h"
 #import "DataSigner.h"
-
 #import <AlipaySDK/AlipaySDK.h>
+
+#import "MBProgressHUD.h"
 @interface RechargeViewController ()
 <
 UITableViewDelegate,
@@ -22,6 +24,7 @@ UITextFieldDelegate
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, assign, getter=isHaveDot) BOOL haveDot;
 @property (nonatomic, strong) UIButton *rechargeButton;
+@property (nonatomic, strong) MoneyTableViewCell *cell;
 @end
 
 static NSInteger i = 0;
@@ -132,50 +135,90 @@ static NSInteger i = 0;
 - (void)rechargeButtonClicked:(UIButton *)sender {
     [self.view endEditing:YES];
     
-    //将商品信息赋予AlixPayOrder的成员变量
-    Order *order = [[Order alloc] init];
-    order.partner = myPartner;
-    order.sellerID = mySeller;
-    order.outTradeNO = @"G111111111111"; //订单ID（由商家自行制定）
-    order.subject = @"我的测试"; //商品标题
-    order.body = @"我的商品描述"; //商品描述
-    order.totalFee = @"0.01"; //商品价格
-    order.notifyURL =  @"http://www.xxx.com"; //回调URL
-    
-    order.service = @"mobile.securitypay.pay";
-    order.paymentType = @"1";
-    order.goodsType = @"0";
-    order.inputCharset = @"utf-8";
-    order.itBPay = @"30m";
-//    order.showURL = @"m.alipay.com";
-    
-    //应用注册scheme,在AlixPayDemo-Info.plist定义URL types
-    NSString *appScheme = @"aifuwu";
-    
-    //将商品信息拼接成字符串
-    NSString *orderSpec = [order description];
-    
-    
-    //获取私钥并将商户信息签名,外部商户可以根据情况存放私钥和签名,只需要遵循RSA签名规范,并将签名字符串base64编码和UrlEncode
-    id<DataSigner> signer = CreateRSADataSigner(myPrivateKey);
-    NSString *signedString = [signer signString:orderSpec];
-    NSLog(@"signedString = %@",signedString);
-    NSString *orderString = nil;
-    
-//    orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
-//                   orderSpec, signedString, @"RSA"];
-    
-    
-    
-    if (signedString != nil) {
-        orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
-                       orderSpec, @"RSA", signedString];
+    if (i == 0) {
         
-        [[AlipaySDK defaultService] payOrder:orderString fromScheme:appScheme callback:^(NSDictionary *resultDic) {
-            
-            NSLog(@"%@",resultDic);
-        }];
+        MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.view];
+        hud.mode = MBProgressHUDModeText;
+        
+        hud.label.text = @"请选择支付方式";
+        CGFloat fontsize;
+        if (iPhone4_4s || iPhone5_5s) {
+            fontsize = 14;
+        }else {
+            fontsize = 16;
+        }
+        hud.label.font = font(fontsize);
+        [self.view addSubview:hud];
+        
+        [hud showAnimated:YES];
+        
+        [hud hideAnimated:YES afterDelay:0.75];
+        
+        return;
     }
+    
+    
+    if (i == 1) {
+        
+        Order *order = [[Order alloc] init];
+        order.partner = myPartner;
+        order.sellerID = mySeller;
+        order.outTradeNO = [self generateTradeNO];
+        order.subject = @"元宝购买";
+        order.body = @"元宝购买";
+        
+        order.totalFee = [NSString stringWithFormat:@"%@",self.cell.moneyTextField.text];
+        order.notifyURL =  @"http://www.xxx.com";
+        
+        order.service = @"mobile.securitypay.pay";
+        order.paymentType = @"1";
+        order.goodsType = @"0";
+        order.inputCharset = @"utf-8";
+        order.itBPay = @"30m";
+        
+        NSString *appScheme = @"aifuwu";
+        
+        //将商品信息拼接成字符串
+        NSString *orderSpec = [order description];
+        
+        
+        //获取私钥并将商户信息签名,外部商户可以根据情况存放私钥和签名,只需要遵循RSA签名规范,并将签名字符串base64编码和UrlEncode
+        id<DataSigner> signer = CreateRSADataSigner(myPrivateKey);
+        NSString *signedString = [signer signString:orderSpec];
+        
+        NSString *orderString = nil;
+        
+        
+        if (signedString != nil) {
+            orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
+                           orderSpec, signedString, @"RSA"];
+            
+            [[AlipaySDK defaultService] payOrder:orderString fromScheme:appScheme callback:^(NSDictionary *resultDic) {
+ 
+                if ([resultDic[@"resultStatus"] integerValue] == 9000) {
+                    NSLog(@"%@",@"购买成功");
+                }else {
+                    NSLog(@"%@",@"购买失败");
+                }
+            }];
+        }
+    }
+}
+
+
+- (NSString *)generateTradeNO {
+    
+    NSDate *date = [NSDate date];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"MMddHHmmss"];
+    
+    NSString *dateString = [formatter stringFromDate:date];
+    
+    u_int32_t rand = arc4random();
+    NSString *resultStr = [NSString stringWithFormat:@"%@%@",dateString,@(rand)];
+    resultStr = [resultStr substringWithRange:NSMakeRange(0, 15)];
+    
+    return resultStr;
 }
 
 
@@ -196,13 +239,13 @@ static NSInteger i = 0;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section == 0) {
-        MoneyTableViewCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"MoneyTableViewCell" owner:self options:nil] lastObject];
-        cell.moneyTextField.delegate = self;
-        cell.moneyTextField.keyboardType = UIKeyboardTypeDecimalPad;
-        [cell.moneyTextField addTarget:self action:@selector(editingChanged:) forControlEvents:UIControlEventEditingChanged];
+        self.cell = [[[NSBundle mainBundle] loadNibNamed:@"MoneyTableViewCell" owner:self options:nil] lastObject];
+        self.cell.moneyTextField.delegate = self;
+        self.cell.moneyTextField.keyboardType = UIKeyboardTypeDecimalPad;
+        [self.cell.moneyTextField addTarget:self action:@selector(editingChanged:) forControlEvents:UIControlEventEditingChanged];
         
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
+        self.cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return self.cell;
     }else {
         PayTableViewCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"PayTableViewCell" owner:self options:nil]lastObject];
         
