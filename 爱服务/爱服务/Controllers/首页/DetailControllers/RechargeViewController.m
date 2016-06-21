@@ -92,7 +92,10 @@ static NSInteger i = 0;
     }
     
     if (sender.text.length > 0) {
+        
         unichar single=[sender.text characterAtIndex:sender.text.length - 1];
+        
+        
         
         if (sender.text.length == 1 && (single == '.')) {
             sender.text = @"";
@@ -125,6 +128,14 @@ static NSInteger i = 0;
                 NSString *str = [sender.text substringToIndex:sender.text.length - 1];
                 sender.text = str;
                 return;
+            }
+        }
+        
+        if (sender.text.length == 6) {
+            if (!self.isHaveDot) {
+                sender.text = [sender.text substringToIndex:sender.text.length - 1];
+            }else {
+                
             }
         }
         
@@ -164,8 +175,8 @@ static NSInteger i = 0;
         order.partner = myPartner;
         order.sellerID = mySeller;
         order.outTradeNO = [self generateTradeNO];
-        order.subject = @"元宝购买";
-        order.body = @"元宝购买";
+        order.subject = @"账户充值";
+        order.body = @"账户充值";
         
         order.totalFee = [NSString stringWithFormat:@"%@",self.cell.moneyTextField.text];
         order.notifyURL =  @"http://www.xxx.com";

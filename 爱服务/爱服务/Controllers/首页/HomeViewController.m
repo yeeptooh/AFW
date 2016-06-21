@@ -30,6 +30,7 @@
 
 #import <CoreLocation/CoreLocation.h>
 #import <AVFoundation/AVFoundation.h>
+//#import "AddOrderViewController.h"
 #define  imageHeight 139
 @interface HomeViewController ()
 <
@@ -325,7 +326,7 @@ static NSInteger tag = 0;
     [self.balanceView addSubview:balanceLabel];
     
     
-    
+#if Environment_Mode == 1
     UILabel *moneyLabel = [[UILabel alloc]initWithFrame:CGRectMake(Width*2/5, 0, Width*2/5, balanceLabel.bounds.size.height)];
     NSString *money = [((NSArray *)[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"]) lastObject];
     CGFloat moneyNumber = [money floatValue];
@@ -334,9 +335,12 @@ static NSInteger tag = 0;
     [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(4, moneyStr.length - 5)];
     moneyLabel.attributedText = attributedString;
     moneyLabel.textAlignment = NSTextAlignmentCenter;
-    
+
     moneyLabel.font = font(13);
     [self.balanceView addSubview:moneyLabel];
+#elif Environment_Mode == 2
+#endif
+
     
     
     UIButton *drawMoneyButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -368,7 +372,7 @@ static NSInteger tag = 0;
 }
 
 - (void)setDetailButton {
-    
+#if Environment_Mode == 1
     CGFloat height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/8;
     UIView *containerView;
     if (iPhone4_4s) {
@@ -386,11 +390,7 @@ static NSInteger tag = 0;
             tag ++;
             
             [self.detailButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"a%ld",(long)tag]] forState:UIControlStateNormal];
-            if (i == 2) {
-                if (/*j == 2 || */j == 3) {
-                    [self.detailButton setImage:nil forState:UIControlStateNormal];
-                }
-            }
+            
             [self.detailButton addTarget:self action:@selector(detailButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
             
             
@@ -445,9 +445,9 @@ static NSInteger tag = 0;
                 [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
                 [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
             }else if(self.detailButton.tag == 1011) {
-//                [self.detailButton setTitle:@"爱心保" forState:UIControlStateNormal];
-//                [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
-//                [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                [self.detailButton setTitle:@"爱心保" forState:UIControlStateNormal];
+                [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
             }
             CGFloat fontsize;
             if (iPhone4_4s || iPhone5_5s) {
@@ -466,11 +466,97 @@ static NSInteger tag = 0;
             [containerView addSubview:self.detailButton];
         }
     }
+#elif Environment_Mode == 2
+    CGFloat height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/8;
+    UIView *containerView;
+    if (iPhone4_4s) {
+        containerView = [[UIView alloc]initWithFrame:CGRectMake(0, imageHeight + height, Width, height*7)];
+    }else{
+        containerView = [[UIView alloc]initWithFrame:CGRectMake(0, imageHeight + height, Width, height*6)];
+    }
     
+    
+    [self.view addSubview:containerView];
+    for (NSInteger i = 0; i < 2; i ++) {
+        for (NSInteger j = 0;  j < 4; j ++) {
+            self.detailButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            self.detailButton.tag = tag + 1000;
+            tag ++;
+            
+            [self.detailButton addTarget:self action:@selector(detailButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+            
+            
+            if (iPhone4_4s) {
+                self.detailButton.frame = CGRectMake(Width*j/4, height*7*i/3, Width/4, height*6/3);
+            }else {
+                self.detailButton.frame = CGRectMake(Width*j/4, height*6*i/3, Width/4, height*6/3);
+            }
+            
+            if (self.detailButton.tag == 1000) {
+                [self.detailButton setTitle:@"我要下单" forState:UIControlStateNormal];
+                [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                [self.detailButton setImage:[UIImage imageNamed:@"a1"] forState:UIControlStateNormal];
+            }else if (self.detailButton.tag == 1001) {
+                [self.detailButton setTitle:@"配件审核" forState:UIControlStateNormal];
+                [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                [self.detailButton setImage:[UIImage imageNamed:@"a3"] forState:UIControlStateNormal];
+            }else if (self.detailButton.tag == 1002) {
+                [self.detailButton setTitle:@"追加审核" forState:UIControlStateNormal];
+                [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                [self.detailButton setImage:[UIImage imageNamed:@"a4"] forState:UIControlStateNormal];
+            }else if (self.detailButton.tag == 1003) {
+                [self.detailButton setTitle:@"师傅查询" forState:UIControlStateNormal];
+                [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                [self.detailButton setImage:[UIImage imageNamed:@"a6"] forState:UIControlStateNormal];
+            }else if (self.detailButton.tag == 1004) {
+                [self.detailButton setTitle:@"基础资料" forState:UIControlStateNormal];
+                [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                [self.detailButton setImage:[UIImage imageNamed:@"a6"] forState:UIControlStateNormal];
+            }else if (self.detailButton.tag == 1005) {
+                [self.detailButton setTitle:@"我的账户" forState:UIControlStateNormal];
+                [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                [self.detailButton setImage:[UIImage imageNamed:@"a9"] forState:UIControlStateNormal];
+            }else if (self.detailButton.tag == 1006) {
+                [self.detailButton setTitle:@"我要提现" forState:UIControlStateNormal];
+                [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                [self.detailButton setImage:[UIImage imageNamed:@"a10"] forState:UIControlStateNormal];
+            }else if (self.detailButton.tag == 1007) {
+                [self.detailButton setTitle:@"我要充值" forState:UIControlStateNormal];
+                [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                [self.detailButton setImage:[UIImage imageNamed:@"a11"] forState:UIControlStateNormal];
+            }
+            CGFloat fontsize;
+            if (iPhone4_4s || iPhone5_5s) {
+                fontsize = 12;
+            }else {
+                fontsize = 13;
+            }
+            self.detailButton.titleLabel.font = font(fontsize);
+            CGSize imageSize = self.detailButton.imageView.bounds.size;
+            CGSize titleLabelSize = self.detailButton.titleLabel.bounds.size;
+            
+            self.detailButton.imageEdgeInsets = UIEdgeInsetsMake(- self.detailButton.bounds.size.height/3, 0, 0, -titleLabelSize.width);
+            self.detailButton.titleEdgeInsets = UIEdgeInsetsMake(self.detailButton.bounds.size.height/2, -imageSize.width, 0, 0);
+            
+            
+            [containerView addSubview:self.detailButton];
+        }
+    }
+    
+#endif
     
 }
 
 - (void)setBreakLine {
+#if Environment_Mode == 1
     CGFloat height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/8;
     
     if (iPhone4_4s) {
@@ -521,7 +607,58 @@ static NSInteger tag = 0;
         [self.view addSubview:V3Line];
     }
     
+#elif Environment_Mode == 2
+    CGFloat height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/8;
+    
+    if (iPhone4_4s) {
+        UIView *H1Line = [[UIView alloc]initWithFrame:CGRectMake(0, imageHeight + height + height*7/3-0.5, Width, 0.5)];
+        H1Line.backgroundColor = color(200, 200, 200, 1);
+        [self.view addSubview:H1Line];
+        
+        UIView *H2Line = [[UIView alloc]initWithFrame:CGRectMake(0, imageHeight + height + height*7*2/3-0.5, Width, 0.5)];
+        H2Line.backgroundColor = color(200, 200, 200, 1);
+        [self.view addSubview:H2Line];
+        
+        
+        UIView *V1Line = [[UIView alloc]initWithFrame:CGRectMake(Width/4-0.5, imageHeight + height, 0.5, height*7*2/3)];
+        V1Line.backgroundColor = color(200, 200, 200, 1);
+        [self.view addSubview:V1Line];
+        
+        UIView *V2Line = [[UIView alloc]initWithFrame:CGRectMake(Width*2/4-0.5, imageHeight + height, 0.5, height*7*2/3)];
+        V2Line.backgroundColor = color(200, 200, 200, 1);
+        [self.view addSubview:V2Line];
+        
+        UIView *V3Line = [[UIView alloc]initWithFrame:CGRectMake(Width*3/4-0.5, imageHeight + height, 0.5, height*7*2/3)];
+        V3Line.backgroundColor = color(200, 200, 200, 1);
+        [self.view addSubview:V3Line];
+    }else{
+        UIView *H1Line = [[UIView alloc]initWithFrame:CGRectMake(0, imageHeight + height + height * 6 / 3 - 0.5, Width, 0.5)];
+        H1Line.backgroundColor = color(200, 200, 200, 1);
+        [self.view addSubview:H1Line];
+        
+        UIView *H2Line = [[UIView alloc]initWithFrame:CGRectMake(0, imageHeight + height + height * 6 * 2 / 3 - 0.5, Width, 0.5)];
+        H2Line.backgroundColor = color(200, 200, 200, 1);
+        [self.view addSubview:H2Line];
+        
+        
+        UIView *V1Line = [[UIView alloc]initWithFrame:CGRectMake(Width / 4 - 0.5, imageHeight + height, 0.5, height * 6*2/3)];
+        V1Line.backgroundColor = color(200, 200, 200, 1);
+        [self.view addSubview:V1Line];
+        
+        UIView *V2Line = [[UIView alloc]initWithFrame:CGRectMake(Width * 2 / 4 - 0.5, imageHeight + height, 0.5, height * 6*2/3)];
+        V2Line.backgroundColor = color(200, 200, 200, 1);
+        [self.view addSubview:V2Line];
+        
+        UIView *V3Line = [[UIView alloc]initWithFrame:CGRectMake(Width * 3 / 4 - 0.5, imageHeight + height, 0.5, height * 6*2/3)];
+        V3Line.backgroundColor = color(200, 200, 200, 1);
+        [self.view addSubview:V3Line];
+    }
+#endif
+    
+    
 }
+
+
 
 #pragma mark - buttonClicked -
 - (void)drawMoneyButtonClicked {
@@ -533,6 +670,7 @@ static NSInteger tag = 0;
 }
 
 - (void)detailButtonClicked:(UIButton *)sender {
+#if Environment_Mode == 1
     if (sender.tag == 1000) {
         AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
         if (status == AVAuthorizationStatusAuthorized) {
@@ -610,6 +748,51 @@ static NSInteger tag = 0;
         
         
     }
+#elif Environment_Mode == 2
+    if (sender.tag == 1000) {
+        AddOrderViewController *addVC = [[AddOrderViewController alloc] init];
+        
+        
+    }else if (sender.tag == 1001) {
+        
+        
+        
+    }else if (sender.tag == 1002) {
+        
+        
+        
+    }else if (sender.tag == 1003) {
+        
+        
+        
+    }else if (sender.tag == 1004) {
+        
+        MyInfoViewController *infoVC = [[MyInfoViewController alloc]init];
+        infoVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:infoVC animated:YES];
+        
+    }else if (sender.tag == 1005) {
+        
+        MyAccountViewController *accountVC = [[MyAccountViewController alloc]init];
+        accountVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:accountVC animated:YES];
+        
+    }else if (sender.tag == 1006) {
+        
+        WithDrawViewController *withDrawVC = [[WithDrawViewController alloc]init];
+        withDrawVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:withDrawVC animated:YES];
+        
+        
+    }else if (sender.tag == 1007) {
+        
+        RechargeViewController *rechargeVC = [[RechargeViewController alloc] init];
+        rechargeVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:rechargeVC animated:YES];
+        
+    }
+    
+#endif
     
 }
 

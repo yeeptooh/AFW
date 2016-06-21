@@ -448,7 +448,7 @@ UITextFieldDelegate
     [self netWorking];
 }
 - (void)netWorking {
-    
+
     __weak typeof(self)weakSelf = self;
     
     self.manager = [AFHTTPSessionManager manager];
@@ -501,6 +501,7 @@ UITextFieldDelegate
         weakSelf.tableView.mj_footer.hidden = YES;
         return ;
     }];
+
     
 }
 

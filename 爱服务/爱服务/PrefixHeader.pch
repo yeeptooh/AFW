@@ -16,8 +16,13 @@
 #import "MJRefresh.h"
 #import <Foundation/Foundation.h>
 
-#define HomeURL @"http://i.51ifw.com/forapp/"
-//#define HomeURL @"http://192.168.1.228:90/forapp/"
+#if Environment_Mode == 1
+//#define HomeURL @"http://i.51ifw.com/forapp/"
+#define HomeURL @"http://192.168.1.228:90/forapp/"
+#elif Environment_Mode == 2
+#define HomeURL @"http://192.168.1.228:90/forapp2/"
+#endif
+
 
 
 #define myPartner @"2088011233310417"
@@ -36,5 +41,6 @@
 
 #define WXAppKey @"wx4a69b1f1418543b3"
 #define QQKey @"1105380638"
+
 
 #endif /* PrefixHeader_pch */
