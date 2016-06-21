@@ -16,8 +16,8 @@
 #import "MJRefresh.h"
 #import <Foundation/Foundation.h>
 
-//#define HomeURL @"http://i.51ifw.com/forapp/"
-#define HomeURL @"http://192.168.1.228:90/forapp/"
+#define HomeURL @"http://i.51ifw.com/forapp/"
+//#define HomeURL @"http://192.168.1.228:90/forapp/"
 
 
 #define myPartner @"2088011233310417"
@@ -26,7 +26,7 @@
 
 
 
-//#define myPublicKey @"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDd+e5U4XJOes5D4xQMn0tIC7mYH2Ak7O2Bh2C58HjBaivbvWCF1PMQA34kyHrOD9vBTDrQ10RdRD0NAnD81H+r1rICc48oxy4D1sgIchGkeafpEgys0J6o/FIgAoWLVWFWolrHQmKlwE5vheMM20gaT1N/sI2s9A9gx+9tEfasvwIDAQAB"
+//#define myPrivateKey @"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDd+e5U4XJOes5D4xQMn0tIC7mYH2Ak7O2Bh2C58HjBaivbvWCF1PMQA34kyHrOD9vBTDrQ10RdRD0NAnD81H+r1rICc48oxy4D1sgIchGkeafpEgys0J6o/FIgAoWLVWFWolrHQmKlwE5vheMM20gaT1N/sI2s9A9gx+9tEfasvwIDAQAB"
 
 
 #define kBadgeValueChanged @"badgeValueChanged"

@@ -25,10 +25,9 @@ UITextFieldDelegate
 @property (nonatomic, assign, getter=isHaveDot) BOOL haveDot;
 @property (nonatomic, strong) UIButton *rechargeButton;
 @property (nonatomic, strong) MoneyTableViewCell *cell;
-@property (nonatomic, assign) NSInteger i;
 @end
 
-
+static NSInteger i = 0;
 @implementation RechargeViewController
 
 - (UITableView *)tableView {
@@ -52,7 +51,6 @@ UITextFieldDelegate
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = color(239, 239, 244, 1);
     [self.view addSubview:self.tableView];
-    self.i = 0;
     [self setRechargeButton];
     [self setNaviTitle];
 }
@@ -137,7 +135,7 @@ UITextFieldDelegate
 - (void)rechargeButtonClicked:(UIButton *)sender {
     [self.view endEditing:YES];
     
-    if (self.i == 0) {
+    if (i == 0) {
         
         MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.view];
         hud.mode = MBProgressHUDModeText;
@@ -160,7 +158,7 @@ UITextFieldDelegate
     }
     
     
-    if (self.i == 1) {
+    if (i == 1) {
         
         Order *order = [[Order alloc] init];
         order.partner = myPartner;
@@ -278,7 +276,7 @@ UITextFieldDelegate
         [self.view endEditing:YES];
         if (indexPath.row == 0) {
             
-            self.i = 1;
+            i = 1;
             
             PayTableViewCell *cell1 = (PayTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
             cell1.chooseImageView.image = [UIImage imageNamed:@"rate_annoy_button_selected"];
@@ -290,7 +288,7 @@ UITextFieldDelegate
             
         }else {
             
-            self.i = 2;
+            i = 2;
             
             PayTableViewCell *cell1 = (PayTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
             cell1.chooseImageView.image = [UIImage imageNamed:@"rate_annoy_button_selected"];
