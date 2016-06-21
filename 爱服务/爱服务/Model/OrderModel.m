@@ -33,6 +33,11 @@
         self.productType = [NSString stringWithFormat:@"%@%@",dictionary[@"ProductBreed"],dictionary[@"ProductClassify"]];
         self.name = dictionary[@"BuyerName"];
         self.phone = dictionary[@"BuyerPhone"];
+        
+        if ([dictionary[@"BuyerPhone"] isEqualToString:@""] || !dictionary[@"BuyerPhone"]) {
+            self.phone = dictionary[@"BuyerTel"];
+        }
+        
         self.location = dictionary[@"BuyerAddress"];
         self.assess = dictionary[@"StateStr"];
         self.area = dictionary[@"BuyerDistrict"];
