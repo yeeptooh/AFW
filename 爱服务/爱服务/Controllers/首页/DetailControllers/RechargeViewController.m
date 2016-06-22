@@ -81,65 +81,197 @@ static NSInteger i = 0;
 
 - (void)editingChanged:(UITextField *)sender {
     
-    if ([sender.text rangeOfString:@"."].location==NSNotFound) {
+    if ([sender.text rangeOfString:@"."].location == NSNotFound) {
         
         self.haveDot=NO;
     }
+
     
-    if ([sender.text isEqualToString:@""]) {
+    if ([sender.text isEqualToString:@""] || [sender.text isEqualToString:@"0"] || [sender.text isEqualToString:@"0."]|| [sender.text isEqualToString:@"0.0"] || [sender.text isEqualToString:@"0.00"]) {
         self.rechargeButton.backgroundColor = color(144, 144, 144, 1);
         self.rechargeButton.enabled = NO;
+        
+        
     }
     
     if (sender.text.length > 0) {
-        
         unichar single=[sender.text characterAtIndex:sender.text.length - 1];
         
-        
-        
-        if (sender.text.length == 1 && (single == '.')) {
-            sender.text = @"";
-            self.haveDot=NO;
-            return;
+        if (sender.text.length == 1) {
+            self.haveDot = NO;
+            if (single == '0') {
+                
+            }else if (single == '.') {
+                sender.text = @"";
+                
+            }else{
+                self.rechargeButton.backgroundColor = color(231, 76, 60, 1);
+                self.rechargeButton.enabled = YES;
+
+            }
         }
         
-        if (sender.text.length == 2 && [sender.text isEqualToString:@"00"]) {
-            sender.text = @"0";
-        }
-        
-        self.rechargeButton.backgroundColor = color(231, 76, 60, 1);
-        self.rechargeButton.enabled = YES;
-        
-        if (single == '.') {
-            if (self.isHaveDot) {
-                NSString *str = [sender.text substringToIndex:sender.text.length - 1];
-                sender.text = str;
-                return;
+        if (sender.text.length == 2) {
+            NSString *firstCharacter = [sender.text substringToIndex:0];
+            NSLog(@"%@",firstCharacter);
+            if ([firstCharacter isEqualToString:@"0"]) {
+                if (single == '0') {
+                    sender.text = @"0";
+                }else if (single == '.') {
+                    self.haveDot = YES;
+                }else {
+                    sender.text = [NSString stringWithFormat:@"%@",@(single - 48)];
+                    self.rechargeButton.backgroundColor = color(231, 76, 60, 1);
+                    self.rechargeButton.enabled = YES;
+                    
+                }
             }else {
-                self.haveDot = YES;
+                if (single == '.') {
+                    self.haveDot = YES;
+                }
             }
         }
         
-        if (self.isHaveDot) {
-            NSRange range = [sender.text rangeOfString:@"."];
-            
-            NSUInteger length = sender.text.length - range.location;
-            if (length > 3) {
-                NSString *str = [sender.text substringToIndex:sender.text.length - 1];
-                sender.text = str;
-                return;
+        
+        if (sender.text.length == 3) {
+            if (self.isHaveDot) {
+                if (single == '0') {
+                    
+                }else if (single == '.') {
+                    sender.text = [sender.text substringToIndex:sender.text.length - 1];
+                     NSLog(@"%@",sender.text);
+                }else {
+                    NSString *firstCharacter = [sender.text substringToIndex:1];
+                    if ([firstCharacter isEqualToString:@"0"]) {
+                        self.rechargeButton.backgroundColor = color(231, 76, 60, 1);
+                        self.rechargeButton.enabled = YES;
+                    }else{
+                        
+                    }
+                }
+            }else {
+                if (single == '.') {
+                    self.haveDot = YES;
+                }
             }
+            
+        }
+        
+        if (sender.text.length == 4) {
+            
+            if (self.isHaveDot) {
+                
+                if (single == '.') {
+                    sender.text = [sender.text substringToIndex:sender.text.length - 1];
+                }else if (single == '0') {
+                    
+                }else {
+                    self.rechargeButton.backgroundColor = color(231, 76, 60, 1);
+                    self.rechargeButton.enabled = YES;
+                }
+                
+            }else {
+                if (single == '.') {
+                    self.haveDot = YES;
+                }
+            }
+
+        }
+        
+        
+        if (sender.text.length == 5) {
+            NSUInteger location = [sender.text rangeOfString:@"."].location;
+            
+            if (self.isHaveDot) {
+                if (location == 1) {
+                    sender.text = [sender.text substringToIndex:sender.text.length - 1];
+                    
+                }else if (location == 2) {
+                    if (single == '.') {
+                        sender.text = [sender.text substringToIndex:sender.text.length - 1];
+                    }
+                }else {
+                    if (single == '.') {
+                        sender.text = [sender.text substringToIndex:sender.text.length - 1];
+                    }
+                }
+            }else {
+                if (single == '.') {
+                    self.haveDot = YES;
+                }
+            }
+            
+            
         }
         
         if (sender.text.length == 6) {
-            if (!self.isHaveDot) {
-                sender.text = [sender.text substringToIndex:sender.text.length - 1];
+            NSUInteger location = [sender.text rangeOfString:@"."].location;
+            if (self.isHaveDot) {
+                if (location == 2) {
+                    
+                        sender.text = [sender.text substringToIndex:sender.text.length - 1];
+                
+                }else {
+                    if (single == '.') {
+                        sender.text = [sender.text substringToIndex:sender.text.length - 1];
+                    }
+
+                }
+            }else {
+                if (single == '.') {
+                    self.haveDot = YES;
+                }else {
+                    sender.text = [sender.text substringToIndex:sender.text.length - 1];
+                }
+            }
+        }
+        
+        
+        if (sender.text.length == 7) {
+            NSUInteger location = [sender.text rangeOfString:@"."].location;
+            if (self.isHaveDot) {
+                if (location == 3) {
+                    
+                    sender.text = [sender.text substringToIndex:sender.text.length - 1];
+                    
+                }else {
+                    if (single == '.') {
+                        sender.text = [sender.text substringToIndex:sender.text.length - 1];
+                    }
+                    
+                }
             }else {
                 
             }
         }
         
+        
+        
+        if (sender.text.length == 8) {
+            NSUInteger location = [sender.text rangeOfString:@"."].location;
+            if (self.isHaveDot) {
+                if (location == 4) {
+                    
+                    sender.text = [sender.text substringToIndex:sender.text.length - 1];
+                    
+                }else {
+                    if (single == '.') {
+                        sender.text = [sender.text substringToIndex:sender.text.length - 1];
+                    }
+                    
+                }
+            }else {
+                
+            }
+        }
+        
+        
+        if (sender.text.length == 9) {
+            sender.text = [sender.text substringToIndex:sender.text.length - 1];
+        }
+        
     }
+ 
   
 }
 
@@ -179,7 +311,7 @@ static NSInteger i = 0;
         order.body = @"账户充值";
         
         order.totalFee = [NSString stringWithFormat:@"%@",self.cell.moneyTextField.text];
-        order.notifyURL =  @"http://www.xxx.com";
+        order.notifyURL =  @"http://www.xxx.com";//支付宝服务器异步通知自己服务器回调的URL
         
         order.service = @"mobile.securitypay.pay";
         order.paymentType = @"1";

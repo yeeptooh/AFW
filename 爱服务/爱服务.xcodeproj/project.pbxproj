@@ -251,7 +251,6 @@
 		4A6424131D19396600F26BA9 /* MoneyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A52746D1D113D0500B056C6 /* MoneyTableViewCell.xib */; };
 		4A6424141D19396600F26BA9 /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4A7CA68D1CDAF2E9000232CB /* WeiboSDK.bundle */; };
 		4A6424151D19396600F26BA9 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4AF531C01D12970900F58754 /* loading.gif */; };
-		4A6424161D19396600F26BA9 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A4BD3041CB8F812009DA0B9 /* Info.plist */; };
 		4A6424171D19396600F26BA9 /* OverTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A7749951CC0C3EB008B9611 /* OverTableViewCell.xib */; };
 		4A6424201D19399900F26BA9 /* 爱服务厂商版-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A64241F1D19399900F26BA9 /* 爱服务厂商版-Info.plist */; };
 		4A64245D1D194D8C00F26BA9 /* AddOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A64245C1D194D8C00F26BA9 /* AddOrderViewController.m */; };
@@ -308,6 +307,8 @@
 		4A7749971CC0C3EB008B9611 /* OverTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A7749951CC0C3EB008B9611 /* OverTableViewCell.xib */; };
 		4A77499B1CC0C66C008B9611 /* AssessTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7749991CC0C66C008B9611 /* AssessTableViewCell.m */; };
 		4A77499C1CC0C66C008B9611 /* AssessTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A77499A1CC0C66C008B9611 /* AssessTableViewCell.xib */; };
+		4A78EADD1D1A444F0047E1B9 /* UserDetailTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A78EADC1D1A444F0047E1B9 /* UserDetailTableView.m */; };
+		4A78EAE01D1A75380047E1B9 /* ACCReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A78EADF1D1A75380047E1B9 /* ACCReviewViewController.m */; };
 		4A7CA6911CDAF2E9000232CB /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7CA6841CDAF2E9000232CB /* libWeiboSDK.a */; };
 		4A7CA6921CDAF2E9000232CB /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4A7CA68D1CDAF2E9000232CB /* WeiboSDK.bundle */; };
 		4A7CA6941CDAF365000232CB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7CA6931CDAF365000232CB /* QuartzCore.framework */; };
@@ -624,6 +625,10 @@
 		4A7749981CC0C66C008B9611 /* AssessTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssessTableViewCell.h; sourceTree = "<group>"; };
 		4A7749991CC0C66C008B9611 /* AssessTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssessTableViewCell.m; sourceTree = "<group>"; };
 		4A77499A1CC0C66C008B9611 /* AssessTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AssessTableViewCell.xib; sourceTree = "<group>"; };
+		4A78EADB1D1A444F0047E1B9 /* UserDetailTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDetailTableView.h; sourceTree = "<group>"; };
+		4A78EADC1D1A444F0047E1B9 /* UserDetailTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDetailTableView.m; sourceTree = "<group>"; };
+		4A78EADE1D1A75380047E1B9 /* ACCReviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACCReviewViewController.h; sourceTree = "<group>"; };
+		4A78EADF1D1A75380047E1B9 /* ACCReviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACCReviewViewController.m; sourceTree = "<group>"; };
 		4A7CA6841CDAF2E9000232CB /* libWeiboSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeiboSDK.a; sourceTree = "<group>"; };
 		4A7CA6851CDAF2E9000232CB /* WBHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBHttpRequest.h; sourceTree = "<group>"; };
 		4A7CA6861CDAF2E9000232CB /* WBHttpRequest+WeiboGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBHttpRequest+WeiboGame.h"; sourceTree = "<group>"; };
@@ -1315,6 +1320,8 @@
 			children = (
 				4A64245B1D194D8C00F26BA9 /* AddOrderViewController.h */,
 				4A64245C1D194D8C00F26BA9 /* AddOrderViewController.m */,
+				4A78EADE1D1A75380047E1B9 /* ACCReviewViewController.h */,
+				4A78EADF1D1A75380047E1B9 /* ACCReviewViewController.m */,
 			);
 			name = "爱服务厂商版";
 			sourceTree = "<group>";
@@ -1356,6 +1363,8 @@
 		4A6424291D1947FB00F26BA9 /* 爱服务厂商版 */ = {
 			isa = PBXGroup;
 			children = (
+				4A78EADB1D1A444F0047E1B9 /* UserDetailTableView.h */,
+				4A78EADC1D1A444F0047E1B9 /* UserDetailTableView.m */,
 			);
 			name = "爱服务厂商版";
 			sourceTree = "<group>";
@@ -1796,7 +1805,6 @@
 				4A6424131D19396600F26BA9 /* MoneyTableViewCell.xib in Resources */,
 				4A6424141D19396600F26BA9 /* WeiboSDK.bundle in Resources */,
 				4A6424151D19396600F26BA9 /* loading.gif in Resources */,
-				4A6424161D19396600F26BA9 /* Info.plist in Resources */,
 				4A6424171D19396600F26BA9 /* OverTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2075,6 +2083,7 @@
 				4A6423851D19396600F26BA9 /* RobViewController.m in Sources */,
 				4A6423861D19396600F26BA9 /* NSDataEx.m in Sources */,
 				4A6423871D19396600F26BA9 /* DetailViewController.m in Sources */,
+				4A78EADD1D1A444F0047E1B9 /* UserDetailTableView.m in Sources */,
 				4A6423881D19396600F26BA9 /* PTypeViewController.m in Sources */,
 				4A6423891D19396600F26BA9 /* UIImage+WebP.m in Sources */,
 				4A64238A1D19396600F26BA9 /* MASConstraint.m in Sources */,
@@ -2095,6 +2104,7 @@
 				4A6423991D19396600F26BA9 /* SDWebImageDecoder.m in Sources */,
 				4A64239A1D19396600F26BA9 /* UIButton+WebCache.m in Sources */,
 				4A64239B1D19396600F26BA9 /* DataSigner.m in Sources */,
+				4A78EAE01D1A75380047E1B9 /* ACCReviewViewController.m in Sources */,
 				4A64239C1D19396600F26BA9 /* RSADataVerifier.m in Sources */,
 				4A64239D1D19396600F26BA9 /* ChargeBackViewController.m in Sources */,
 				4A64239E1D19396600F26BA9 /* ChargeBackReasonViewController.m in Sources */,
