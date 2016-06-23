@@ -48,10 +48,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>aifuwu</string>
+			<string>aifuwuCS</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>aifuwu</string>
+				<string>aifuwuCS</string>
 			</array>
 		</dict>
 	</array>
