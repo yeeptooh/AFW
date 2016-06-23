@@ -503,7 +503,7 @@ UITextFieldDelegate
     
     [self.manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        NSLog(@"-0-%@",responseObject);
+        
         
         [weakSelf.HUD hideAnimated:YES];
         [weakSelf.HUD removeFromSuperViewOnHide];
@@ -556,53 +556,7 @@ UITextFieldDelegate
 
     }];
     
-//    [self.manager GET:URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        
-//        [weakSelf.HUD hideAnimated:YES];
-//        [weakSelf.HUD removeFromSuperViewOnHide];
-//        
-//        if (weakSelf.page == 1) {
-//            if (weakSelf.dicList) {
-//                [weakSelf.dicList removeAllObjects];
-//            }
-//        }
-//        for (NSDictionary *dic in responseObject[@"task"]) {
-//            OrderModel *ordelModel = [OrderModel orderFromDictionary:dic];
-//            [weakSelf.dicList addObject:ordelModel];
-//        }
-//       
-//        
-//        if (!weakSelf.dicList.count) {
-//            [weakSelf.view addSubview:weakSelf.noOrderView];
-//            return ;
-//        }
-//        [weakSelf.view addSubview:weakSelf.tableView];
-//        [weakSelf.tableView reloadData];
-//        
-//        if ([responseObject[@"ResponseInfo"][0][@"PageNow"] integerValue] == [responseObject[@"ResponseInfo"][0][@"PageRowCount"] integerValue]) {
-//            [weakSelf.tableView.mj_footer endRefreshing];
-//            weakSelf.tableView.mj_footer.hidden = YES;
-//            return ;
-//        }else {
-//            weakSelf.tableView.mj_footer.hidden = NO;
-//        }
-//        
-//        [weakSelf.tableView.mj_footer endRefreshing];
-//        
-//        
-//        return ;
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        
-//        [weakSelf.manager.operationQueue cancelAllOperations];
-//        [weakSelf.tableView.mj_footer endRefreshing];
-//        
-//        [weakSelf.HUD hideAnimated:YES];
-//        [weakSelf.HUD removeFromSuperViewOnHide];
-//            
-//        [weakSelf.view addSubview:weakSelf.noNetWorkingView];
-//        weakSelf.tableView.mj_footer.hidden = YES;
-//        return ;
-//    }];
+
 }
 
 #pragma mark - UITableViewDelegate And DataSource -
@@ -636,7 +590,7 @@ UITextFieldDelegate
         self.orderModel = self.searchResultList[indexPath.row];
     }
     
-    
+    cell.acceptDateLabel.text = self.orderModel.acceptDate;
     cell.dateLabel.text = self.orderModel.date;
     
     cell.serviceTypeLabel.text = self.orderModel.serviceType;

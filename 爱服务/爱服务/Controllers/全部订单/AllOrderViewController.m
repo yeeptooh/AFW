@@ -514,52 +514,7 @@ UITextFieldDelegate
         
     }];
     
-    
-    
-
-//    [self.manager GET:URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        NSLog(@"responseObject = %@",responseObject);
-//        [weakSelf.HUD hideAnimated:YES];
-//        [weakSelf.HUD removeFromSuperViewOnHide];
-//        
-//        for (NSDictionary *dic in responseObject[@"task"]) {
-////            NSLog(@"dic = %@",dic);
-//            OrderModel *ordelModel = [OrderModel orderFromDictionary:dic];
-//            [weakSelf.dicList addObject:ordelModel];
-//        }
-//        
-//        if (!weakSelf.dicList.count) {
-//            [weakSelf.view addSubview:weakSelf.noOrderView];
-//            return ;
-//        }
-//        [weakSelf.view addSubview:weakSelf.tableView];
-//        [weakSelf.tableView reloadData];
-//        NSLog(@"PageNow = %@",responseObject[@"PageNow"]);
-//        NSLog(@"PageRowCount = %@",responseObject[@"PageRowCount"]);
-//        if ([responseObject[@"ResponseInfo"][0][@"PageNow"] integerValue] == [responseObject[@"ResponseInfo"][0][@"PageRowCount"] integerValue]) {
-//            [weakSelf.tableView.mj_footer endRefreshing];
-//            weakSelf.tableView.mj_footer.hidden = YES;
-//            return ;
-//        }else {
-//            weakSelf.tableView.mj_footer.hidden = NO;
-//        }
-//        
-//        [weakSelf.tableView.mj_footer endRefreshing];
-//        
-//        
-//        return ;
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        [weakSelf.manager.operationQueue cancelAllOperations];
-//        weakSelf.HUD.showing = NO;
-//        [weakSelf.tableView.mj_footer endRefreshing];
-//        
-//        [weakSelf.HUD hideAnimated:YES];
-//        [weakSelf.HUD removeFromSuperViewOnHide];
-//        
-//        [weakSelf.view addSubview:weakSelf.noNetWorkingView];
-//        weakSelf.tableView.mj_footer.hidden = YES;
-//        return ;
-//    }];
+ 
 
 }
 
@@ -598,7 +553,7 @@ UITextFieldDelegate
     }else {
         cell.robButton.hidden = YES;
     }
-    
+    cell.acceptDateLabel.text = self.orderModel.acceptDate;
     cell.dateLabel.text = self.orderModel.date;
     
     cell.serviceTypeLabel.text = self.orderModel.serviceType;

@@ -2,7 +2,8 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x"
+      "scale" : "1x",
+      "filename" : "common_icon_arrow_highlighted.png"
     },
     {
       "idiom" : "universal",

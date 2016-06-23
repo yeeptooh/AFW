@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface MainTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *acceptDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *serviceTypeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *productTypeLabel;
