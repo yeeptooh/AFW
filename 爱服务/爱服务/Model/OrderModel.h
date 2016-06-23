@@ -20,6 +20,7 @@
 @property (nonatomic, strong) NSString *BuyerFullAddress_Incept;
 
 @property (nonatomic, assign) NSInteger ID;
+@property (nonatomic, strong) NSString *acceptDate;
 @property (nonatomic, strong) NSString *date;
 @property (nonatomic, strong) NSString *serviceType;
 @property (nonatomic, strong) NSString *productType;

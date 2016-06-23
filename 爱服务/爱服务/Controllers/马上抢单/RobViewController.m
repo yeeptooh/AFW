@@ -543,6 +543,7 @@ UITextFieldDelegate
     cell.robButton.tag = indexPath.row;
     cell.robButton.layer.cornerRadius = 3;
     cell.robButton.layer.masksToBounds = YES;
+    cell.acceptDateLabel.text = self.orderModel.acceptDate;
     cell.dateLabel.text = self.orderModel.date;
     
     cell.serviceTypeLabel.text = self.orderModel.serviceType;

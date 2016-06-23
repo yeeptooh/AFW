@@ -26,6 +26,39 @@
         self.BuyerCity = dictionary[@"BuyerCity"];
         
         self.ID = [dictionary[@"ID"] integerValue];
+        
+
+        NSString *timeString = dictionary[@"AddTime"];
+        
+        NSRange range = [timeString rangeOfString:@"("];
+        NSRange range1 = [timeString rangeOfString:@")"];
+        NSInteger loc = range.location;
+        NSInteger len = range1.location - range.location;
+        NSString *newtimeString = [timeString substringWithRange:NSMakeRange(loc + 1, len - 1)];
+        
+        // 时间戳转时间
+        double lastactivityInterval = [newtimeString doubleValue];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateStyle:NSDateFormatterMediumStyle];
+        
+        [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+        [formatter setDateFormat:@"yyyy年MM月dd日"];
+        NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:lastactivityInterval/1000];
+        NSDate *date = [NSDate date];
+        NSTimeZone *zone = [NSTimeZone systemTimeZone];
+        NSInteger interval = [zone secondsFromGMTForDate:date];
+        publishDate = [publishDate  dateByAddingTimeInterval: interval];
+        NSString *appointmentTime = [formatter stringFromDate:publishDate];
+        NSString *yearStr = [appointmentTime substringToIndex:4];
+        NSString *monthStr = [appointmentTime substringWithRange:NSMakeRange(5, 2)];
+        NSString *dayStr = [appointmentTime substringWithRange:NSMakeRange(8, 2)];
+        NSInteger month = [monthStr integerValue];
+        NSInteger day = [dayStr integerValue];
+        NSString *AddTime = [NSString stringWithFormat:@"%@年%@月%@日",yearStr,@(month),@(day)];
+        self.acceptDate = AddTime;
+        
+        
+        
         self.date = dictionary[@"ExpectantTimeStr"];
         self.serviceType = [NSString stringWithFormat:@"[%@]",dictionary[@"ServiceClassify"]];
         self.productBreed = dictionary[@"ProductBreed"];

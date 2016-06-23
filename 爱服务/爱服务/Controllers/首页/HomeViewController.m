@@ -28,6 +28,7 @@
 #import "RechargeViewController.h"
 
 
+#import "AddOrderViewController.h"
 #import "ACCReviewViewController.h"
 
 
@@ -753,7 +754,9 @@ static NSInteger tag = 0;
     }
 #elif Environment_Mode == 2
     if (sender.tag == 1000) {
-//        AddOrderViewController *addVC = [[AddOrderViewController alloc] init];
+        AddOrderViewController *addVC = [[AddOrderViewController alloc] init];
+        addVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:addVC animated:YES];
         
         
     }else if (sender.tag == 1001) {

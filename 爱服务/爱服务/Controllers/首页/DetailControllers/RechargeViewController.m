@@ -357,23 +357,42 @@ static NSInteger i = 0;
                 //获取私钥并将商户信息签名,外部商户可以根据情况存放私钥和签名,只需要遵循RSA签名规范,并将签名字符串base64编码和UrlEncode
                 id<DataSigner> signer = CreateRSADataSigner(myPrivateKey);
                 NSString *signedString = [signer signString:orderSpec];
+//
+//                NSLog(@"signedString = %@",signedString);
                 
-                NSString *orderString = nil;
-                
-                
-                if (signedString != nil) {
-                    orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
-                                   orderSpec, signedString, @"RSA"];
+                AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+                ///Payment/Alipay/Recharge.ashx?action=getsign&orderId=
+                NSString *url = [NSString stringWithFormat:@"http://192.168.1.173:90/forapp//Payment/Alipay/Recharge.ashx?action=getsign&orderId=%@",order.outTradeNO];
+                manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+                [manager GET:url parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                    NSDictionary *json = (NSDictionary *)[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
                     
-                    [[AlipaySDK defaultService] payOrder:orderString fromScheme:appScheme callback:^(NSDictionary *resultDic) {
+                    if ([json[@"status"] isEqualToString:@"ok"]) {
                         
-                        if ([resultDic[@"resultStatus"] integerValue] == 9000) {
-                            NSLog(@"%@",@"购买成功");
-                        }else {
-                            NSLog(@"%@",@"购买失败");
+                        NSString *signedString = json[@"data"];
+                        NSString *orderString = nil;
+                        
+                        if (signedString != nil) {
+                            orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
+                                           orderSpec, signedString, @"RSA"];
+                            NSLog(@"orderString = %@",orderString);
+                            
+                            [[AlipaySDK defaultService] payOrder:orderString fromScheme:appScheme callback:^(NSDictionary *resultDic) {
+                                
+                                if ([resultDic[@"resultStatus"] integerValue] == 9000) {
+                                    NSLog(@"%@",@"购买成功");
+                                }else {
+                                    NSLog(@"%@",@"购买失败");
+                                }
+                            }];
                         }
-                    }];
-                }
+                    }
+
+                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                    NSLog(@"error.userInfo = %@",error.userInfo);
+                }];
+                
+                
                 
             }
             

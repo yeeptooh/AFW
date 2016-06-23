@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		4477E4D8E79C479F30CEE9B8 /* libPods-爱服务.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53A43852900DC47A061580E4 /* libPods-爱服务.a */; };
+		4A1D9D991D1B831E00052B92 /* ProductDetailTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1D9D981D1B831E00052B92 /* ProductDetailTableView.m */; };
+		4A1D9D9C1D1B833A00052B92 /* BusinessDetailTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1D9D9B1D1B833A00052B92 /* BusinessDetailTableView.m */; };
+		4A1D9D9D1D1BB77700052B92 /* AddOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A64245C1D194D8C00F26BA9 /* AddOrderViewController.m */; };
+		4A1D9D9E1D1BBA8000052B92 /* ProductDetailTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1D9D981D1B831E00052B92 /* ProductDetailTableView.m */; };
+		4A1D9D9F1D1BBA8900052B92 /* BusinessDetailTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1D9D9B1D1B833A00052B92 /* BusinessDetailTableView.m */; };
+		4A1D9DA01D1BD1EA00052B92 /* UserDetailTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A78EADC1D1A444F0047E1B9 /* UserDetailTableView.m */; };
 		4A43DEE41CCF69250008BD96 /* BarCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A43DEE31CCF69250008BD96 /* BarCodeViewController.m */; };
 		4A4BD23E1CB895A1009DA0B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BD23D1CB895A1009DA0B9 /* main.m */; };
 		4A4BD2411CB895A1009DA0B9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BD2401CB895A1009DA0B9 /* AppDelegate.m */; };
@@ -365,6 +371,10 @@
 
 /* Begin PBXFileReference section */
 		3BF7D9418BD8C7C3248BF6D4 /* Pods-爱服务.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-爱服务.release.xcconfig"; path = "Pods/Target Support Files/Pods-爱服务/Pods-爱服务.release.xcconfig"; sourceTree = "<group>"; };
+		4A1D9D971D1B831E00052B92 /* ProductDetailTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductDetailTableView.h; sourceTree = "<group>"; };
+		4A1D9D981D1B831E00052B92 /* ProductDetailTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductDetailTableView.m; sourceTree = "<group>"; };
+		4A1D9D9A1D1B833A00052B92 /* BusinessDetailTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessDetailTableView.h; sourceTree = "<group>"; };
+		4A1D9D9B1D1B833A00052B92 /* BusinessDetailTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessDetailTableView.m; sourceTree = "<group>"; };
 		4A43DEE21CCF69250008BD96 /* BarCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarCodeViewController.h; sourceTree = "<group>"; };
 		4A43DEE31CCF69250008BD96 /* BarCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarCodeViewController.m; sourceTree = "<group>"; };
 		4A4BD2391CB895A1009DA0B9 /* 爱服务.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "爱服务.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1363,6 +1373,10 @@
 			children = (
 				4A78EADB1D1A444F0047E1B9 /* UserDetailTableView.h */,
 				4A78EADC1D1A444F0047E1B9 /* UserDetailTableView.m */,
+				4A1D9D971D1B831E00052B92 /* ProductDetailTableView.h */,
+				4A1D9D981D1B831E00052B92 /* ProductDetailTableView.m */,
+				4A1D9D9A1D1B833A00052B92 /* BusinessDetailTableView.h */,
+				4A1D9D9B1D1B833A00052B92 /* BusinessDetailTableView.m */,
 			);
 			name = "爱服务厂商版";
 			sourceTree = "<group>";
@@ -1905,6 +1919,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A1D9DA01D1BD1EA00052B92 /* UserDetailTableView.m in Sources */,
 				4A5229E21CBCA75B00DD2D9C /* PhoneNumberViewController.m in Sources */,
 				4A5274671D113A7E00B056C6 /* RechargeViewController.m in Sources */,
 				4A69736A1CBB3DB3002A036C /* RegisterViewController.m in Sources */,
@@ -1959,6 +1974,7 @@
 				4ADEDF141D17E89900FE3412 /* base64.m in Sources */,
 				4A5228B51CBC8C8D00DD2D9C /* DismissAnimation.m in Sources */,
 				4A6BABDB1CC62FAB000B94A2 /* MJRefreshFooter.m in Sources */,
+				4A1D9D991D1B831E00052B92 /* ProductDetailTableView.m in Sources */,
 				4A6BABE71CC62FAB000B94A2 /* MJRefreshConst.m in Sources */,
 				4A57F8891CD2F5390034E089 /* AFURLSessionManager.m in Sources */,
 				4A4BD2AA1CB8D61C009DA0B9 /* UIView+SDExtension.m in Sources */,
@@ -1990,6 +2006,7 @@
 				4A4BD2F21CB8F515009DA0B9 /* ReceiveViewController.m in Sources */,
 				4A4BD2F61CB8F515009DA0B9 /* HomeViewController.m in Sources */,
 				4A6BABE11CC62FAB000B94A2 /* MJRefreshBackNormalFooter.m in Sources */,
+				4A1D9D9C1D1B833A00052B92 /* BusinessDetailTableView.m in Sources */,
 				4A4BD2CF1CB8D903009DA0B9 /* SDImageCache.m in Sources */,
 				4A5228B21CBC8C8100DD2D9C /* PresentAnimation.m in Sources */,
 				4ADEDF1A1D17E89900FE3412 /* RSADataSigner.m in Sources */,
@@ -2054,6 +2071,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A1D9D9F1D1BBA8900052B92 /* BusinessDetailTableView.m in Sources */,
+				4A1D9D9E1D1BBA8000052B92 /* ProductDetailTableView.m in Sources */,
+				4A1D9D9D1D1BB77700052B92 /* AddOrderViewController.m in Sources */,
 				4A64236F1D19396600F26BA9 /* PhoneNumberViewController.m in Sources */,
 				4A6423701D19396600F26BA9 /* RechargeViewController.m in Sources */,
 				4A6423711D19396600F26BA9 /* RegisterViewController.m in Sources */,

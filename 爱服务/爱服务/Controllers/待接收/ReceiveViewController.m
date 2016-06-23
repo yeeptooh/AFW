@@ -536,7 +536,7 @@ UITextFieldDelegate
         self.orderModel = self.searchResultList[indexPath.row];
     }
     
-    
+    cell.acceptDateLabel.text = self.orderModel.acceptDate;
     cell.dateLabel.text = self.orderModel.date;
     
     cell.serviceTypeLabel.text = self.orderModel.serviceType;
