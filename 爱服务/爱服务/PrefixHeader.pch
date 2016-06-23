@@ -15,7 +15,7 @@
 #import "pop/POP.h"
 #import "MJRefresh.h"
 #import <Foundation/Foundation.h>
-
+#import "HYBModalTransition.h"
 #if Environment_Mode == 1
 //#define HomeURL @"http://i.51ifw.com/forapp/"
 #define HomeURL @"http://192.168.1.228:90/forapp/"

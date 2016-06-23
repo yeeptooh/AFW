@@ -46,7 +46,6 @@
 		4A4BD2F91CB8F565009DA0B9 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BD2F81CB8F565009DA0B9 /* BaseViewController.m */; };
 		4A4BD2FC1CB8F5C2009DA0B9 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BD2FB1CB8F5C2009DA0B9 /* LoginViewController.m */; };
 		4A4BD3021CB8F716009DA0B9 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BD3011CB8F716009DA0B9 /* UserModel.m */; };
-		4A4BD31E1CB8F812009DA0B9 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A4BD3041CB8F812009DA0B9 /* Info.plist */; };
 		4A4BD31F1CB8F812009DA0B9 /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BD3061CB8F812009DA0B9 /* MASCompositeConstraint.m */; };
 		4A4BD3201CB8F812009DA0B9 /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BD3091CB8F812009DA0B9 /* MASConstraint.m */; };
 		4A4BD3211CB8F812009DA0B9 /* MASConstraintMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BD30B1CB8F812009DA0B9 /* MASConstraintMaker.m */; };
@@ -252,7 +251,6 @@
 		4A6424141D19396600F26BA9 /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4A7CA68D1CDAF2E9000232CB /* WeiboSDK.bundle */; };
 		4A6424151D19396600F26BA9 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4AF531C01D12970900F58754 /* loading.gif */; };
 		4A6424171D19396600F26BA9 /* OverTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A7749951CC0C3EB008B9611 /* OverTableViewCell.xib */; };
-		4A6424201D19399900F26BA9 /* 爱服务厂商版-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A64241F1D19399900F26BA9 /* 爱服务厂商版-Info.plist */; };
 		4A64245D1D194D8C00F26BA9 /* AddOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A64245C1D194D8C00F26BA9 /* AddOrderViewController.m */; };
 		4A65B7D41CF82AE400331CD2 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A65B7D31CF82AE400331CD2 /* MapViewController.m */; };
 		4A65B7D61CF8319800331CD2 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A65B7D51CF8319800331CD2 /* MapKit.framework */; };
@@ -525,7 +523,6 @@
 		4A5D038D1CCDF8C000773139 /* ZDDModalTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZDDModalTransition.h; sourceTree = "<group>"; };
 		4A5D038E1CCDF8C000773139 /* ZDDModalTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZDDModalTransition.m; sourceTree = "<group>"; };
 		4A64241D1D19396600F26BA9 /* 爱服务厂商版.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "爱服务厂商版.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4A64241F1D19399900F26BA9 /* 爱服务厂商版-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "爱服务厂商版-Info.plist"; sourceTree = "<group>"; };
 		4A64245B1D194D8C00F26BA9 /* AddOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddOrderViewController.h; sourceTree = "<group>"; };
 		4A64245C1D194D8C00F26BA9 /* AddOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddOrderViewController.m; sourceTree = "<group>"; };
 		4A65B7D21CF82AE400331CD2 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
@@ -629,6 +626,7 @@
 		4A78EADC1D1A444F0047E1B9 /* UserDetailTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDetailTableView.m; sourceTree = "<group>"; };
 		4A78EADE1D1A75380047E1B9 /* ACCReviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACCReviewViewController.h; sourceTree = "<group>"; };
 		4A78EADF1D1A75380047E1B9 /* ACCReviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACCReviewViewController.m; sourceTree = "<group>"; };
+		4A78EB0A1D1A9C490047E1B9 /* 爱服务厂商版-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "爱服务厂商版-Info.plist"; sourceTree = "<group>"; };
 		4A7CA6841CDAF2E9000232CB /* libWeiboSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeiboSDK.a; sourceTree = "<group>"; };
 		4A7CA6851CDAF2E9000232CB /* WBHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBHttpRequest.h; sourceTree = "<group>"; };
 		4A7CA6861CDAF2E9000232CB /* WBHttpRequest+WeiboGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBHttpRequest+WeiboGame.h"; sourceTree = "<group>"; };
@@ -929,7 +927,7 @@
 				4A4BD27C1CB89FC1009DA0B9 /* MyDefine.h */,
 				4A4BD27F1CB8A2F1009DA0B9 /* PrefixHeader.pch */,
 				4A4BD24D1CB895A1009DA0B9 /* 爱服务-Info.plist */,
-				4A64241F1D19399900F26BA9 /* 爱服务厂商版-Info.plist */,
+				4A78EB0A1D1A9C490047E1B9 /* 爱服务厂商版-Info.plist */,
 				4A4BD23D1CB895A1009DA0B9 /* main.m */,
 				4A4BD2481CB895A1009DA0B9 /* Assets.xcassets */,
 				4A6BE9421CFC4863002F20C1 /* Push Config.plist */,
@@ -1766,7 +1764,6 @@
 				4A52746F1D113D0500B056C6 /* MoneyTableViewCell.xib in Resources */,
 				4A7CA6921CDAF2E9000232CB /* WeiboSDK.bundle in Resources */,
 				4AF531C11D12970900F58754 /* loading.gif in Resources */,
-				4A4BD31E1CB8F812009DA0B9 /* Info.plist in Resources */,
 				4A7749971CC0C3EB008B9611 /* OverTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1789,7 +1786,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A6424201D19399900F26BA9 /* 爱服务厂商版-Info.plist in Resources */,
 				4A6424071D19396600F26BA9 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				4A6424081D19396600F26BA9 /* DetailTaskPlanTableViewCell.xib in Resources */,
 				4A6424091D19396600F26BA9 /* ProductTableViewCell.xib in Resources */,

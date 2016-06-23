@@ -15,6 +15,7 @@
 #import <AlipaySDK/AlipaySDK.h>
 
 #import "MBProgressHUD.h"
+#import "AFNetworking.h"
 @interface RechargeViewController ()
 <
 UITableViewDelegate,
@@ -303,66 +304,103 @@ static NSInteger i = 0;
     
     if (i == 1) {
         
+        MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.view];
+        hud.mode = MBProgressHUDModeIndeterminate;
+        
+        [self.view addSubview:hud];
+        
+        [hud showAnimated:YES];
+        
         Order *order = [[Order alloc] init];
         order.partner = myPartner;
         order.sellerID = mySeller;
-        order.outTradeNO = [self generateTradeNO];
+        
         order.subject = @"账户充值";
         order.body = @"账户充值";
         
         order.totalFee = [NSString stringWithFormat:@"%@",self.cell.moneyTextField.text];
-        order.notifyURL =  @"http://www.xxx.com";//支付宝服务器异步通知自己服务器回调的URL
         
-        order.service = @"mobile.securitypay.pay";
-        order.paymentType = @"1";
-        order.goodsType = @"0";
-        order.inputCharset = @"utf-8";
-        order.itBPay = @"30m";
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+
         
-        NSString *appScheme = @"aifuwu";
-        
-        //将商品信息拼接成字符串
-        NSString *orderSpec = [order description];
-        
-        
-        //获取私钥并将商户信息签名,外部商户可以根据情况存放私钥和签名,只需要遵循RSA签名规范,并将签名字符串base64编码和UrlEncode
-        id<DataSigner> signer = CreateRSADataSigner(myPrivateKey);
-        NSString *signedString = [signer signString:orderSpec];
-        
-        NSString *orderString = nil;
-        
-        
-        if (signedString != nil) {
-            orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
-                           orderSpec, signedString, @"RSA"];
+        NSString *url = [NSString stringWithFormat:@"http://192.168.1.173:90/forapp/Payment/Alipay/Recharge.ashx?action=getorderid"];
+        NSDictionary *params = @{
+                                 @"title":order.subject,
+                                 @"content":order.body,
+                                 @"money":order.totalFee
+                                 };
+        url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        [manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            [hud hideAnimated:YES];
+            [hud removeFromSuperViewOnHide];
+            NSDictionary *json = (NSDictionary *)[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
             
-            [[AlipaySDK defaultService] payOrder:orderString fromScheme:appScheme callback:^(NSDictionary *resultDic) {
- 
-                if ([resultDic[@"resultStatus"] integerValue] == 9000) {
-                    NSLog(@"%@",@"购买成功");
-                }else {
-                    NSLog(@"%@",@"购买失败");
+            if ([json[@"status"] isEqualToString:@"ok"]) {
+                
+                order.notifyURL = @"www";//支付宝服务器异步通知自己服务器回调的URL
+                order.outTradeNO = json[@"data"];
+                order.service = @"mobile.securitypay.pay";
+                order.paymentType = @"1";
+                order.goodsType = @"0";
+                order.inputCharset = @"utf-8";
+                order.itBPay = @"30m";
+#if Environment_Mode == 1
+                NSString *appScheme = @"aifuwu";
+#elif Environment_Mode == 2
+                NSString *appScheme = @"aifuwuCS";
+#endif
+                //将商品信息拼接成字符串
+                NSString *orderSpec = [order description];
+                NSLog(@"%@",orderSpec);
+                
+                //获取私钥并将商户信息签名,外部商户可以根据情况存放私钥和签名,只需要遵循RSA签名规范,并将签名字符串base64编码和UrlEncode
+                id<DataSigner> signer = CreateRSADataSigner(myPrivateKey);
+                NSString *signedString = [signer signString:orderSpec];
+                
+                NSString *orderString = nil;
+                
+                
+                if (signedString != nil) {
+                    orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
+                                   orderSpec, signedString, @"RSA"];
+                    
+                    [[AlipaySDK defaultService] payOrder:orderString fromScheme:appScheme callback:^(NSDictionary *resultDic) {
+                        
+                        if ([resultDic[@"resultStatus"] integerValue] == 9000) {
+                            NSLog(@"%@",@"购买成功");
+                        }else {
+                            NSLog(@"%@",@"购买失败");
+                        }
+                    }];
                 }
-            }];
-        }
+                
+            }
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            [hud hideAnimated:YES];
+            [hud removeFromSuperViewOnHide];
+            MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.view];
+            HUD.mode = MBProgressHUDModeText;
+            
+            HUD.label.text = @"请检查网络";
+            CGFloat fontsize;
+            if (iPhone4_4s || iPhone5_5s) {
+                fontsize = 14;
+            }else {
+                fontsize = 16;
+            }
+            HUD.label.font = font(fontsize);
+            [self.view addSubview:HUD];
+            
+            [HUD showAnimated:YES];
+            
+            [HUD hideAnimated:YES afterDelay:0.75];
+            
+        }];
     }
 }
 
-
-- (NSString *)generateTradeNO {
-    
-    NSDate *date = [NSDate date];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"MMddHHmmss"];
-    
-    NSString *dateString = [formatter stringFromDate:date];
-    
-    u_int32_t rand = arc4random();
-    NSString *resultStr = [NSString stringWithFormat:@"%@%@",dateString,@(rand)];
-    resultStr = [resultStr substringWithRange:NSMakeRange(0, 15)];
-    
-    return resultStr;
-}
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

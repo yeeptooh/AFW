@@ -158,9 +158,8 @@ static BOOL isProduction = FALSE;
     if ([url.host isEqualToString:@"safepay"]) {
         [[AlipaySDK defaultService]
          processOrderWithPaymentResult:url
-         standbyCallback:^(NSDictionary *resultDic)
-         {
-             NSLog(@" ------result = %@",resultDic);//返回的支付结果
+         standbyCallback:^(NSDictionary *resultDic) {
+ 
          }];
     }
     
@@ -207,7 +206,7 @@ static BOOL isProduction = FALSE;
     [manager POST:URL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         if (responseObject != nil) {
-
+            
             UserModel *userModel = [[UserModel alloc]init];
 
             userModel.uid = [responseObject[@"user"][0][@"UserId"] integerValue];
@@ -224,8 +223,9 @@ static BOOL isProduction = FALSE;
             manager.responseSerializer = [AFHTTPResponseSerializer serializer];
             
             [manager GET:countString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                
+
                 NSString *allString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+                
                 NSArray *countList = [allString componentsSeparatedByString:@","];
                 NSLog(@"－－－%@",countList);
                 [[NSUserDefaults standardUserDefaults] setObject:countList forKey:@"countList"];
