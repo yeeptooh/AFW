@@ -16,6 +16,8 @@
 
 #import "MBProgressHUD.h"
 #import "AFNetworking.h"
+#import "UserModel.h"
+
 @interface RechargeViewController ()
 <
 UITableViewDelegate,
@@ -323,22 +325,26 @@ static NSInteger i = 0;
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 
         
-        NSString *url = [NSString stringWithFormat:@"http://192.168.1.173:90/forapp/Payment/Alipay/Recharge.ashx?action=getorderid"];
+        UserModel *userModel = [UserModel readUserModel];
+        
+        NSString *url = [NSString stringWithFormat:@"%@Payment/Alipay/Recharge.ashx?action=getorderid",HomeURL];
         NSDictionary *params = @{
                                  @"title":order.subject,
                                  @"content":order.body,
-                                 @"money":order.totalFee
+                                 @"money":order.totalFee,
+                                 @"userId":@(userModel.comid)
                                  };
         url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         [manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            
             [hud hideAnimated:YES];
             [hud removeFromSuperViewOnHide];
             NSDictionary *json = (NSDictionary *)[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
             
             if ([json[@"status"] isEqualToString:@"ok"]) {
                 
-                order.notifyURL = @"www";//支付宝服务器异步通知自己服务器回调的URL
+                order.notifyURL = @"http://i.51ifw.com/forapp/payment/alipay/notify.aspx";//支付宝服务器异步通知自己服务器回调的URL
                 order.outTradeNO = json[@"data"];
                 order.service = @"mobile.securitypay.pay";
                 order.paymentType = @"1";
@@ -352,31 +358,34 @@ static NSInteger i = 0;
 #endif
                 //将商品信息拼接成字符串
                 NSString *orderSpec = [order description];
-                NSLog(@"%@",orderSpec);
                 
                 //获取私钥并将商户信息签名,外部商户可以根据情况存放私钥和签名,只需要遵循RSA签名规范,并将签名字符串base64编码和UrlEncode
                 id<DataSigner> signer = CreateRSADataSigner(myPrivateKey);
                 NSString *signedString = [signer signString:orderSpec];
-//
-//                NSLog(@"signedString = %@",signedString);
+
+                NSLog(@"signedString1 = %@",signedString);
                 
                 AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-                ///Payment/Alipay/Recharge.ashx?action=getsign&orderId=
-                NSString *url = [NSString stringWithFormat:@"http://192.168.1.173:90/forapp//Payment/Alipay/Recharge.ashx?action=getsign&orderId=%@",order.outTradeNO];
+                
+                NSString *url = [NSString stringWithFormat:@"%@Payment/Alipay/Recharge.ashx?action=getsign&orderId=%@",HomeURL,order.outTradeNO];
                 manager.responseSerializer = [AFHTTPResponseSerializer serializer];
                 [manager GET:url parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                     NSDictionary *json = (NSDictionary *)[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
-                    
+                    NSLog(@"json2 = %@",json);
                     if ([json[@"status"] isEqualToString:@"ok"]) {
                         
                         NSString *signedString = json[@"data"];
+                        NSLog(@"signedString = %@",signedString);
+                        NSString *signerStr = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, /* allocator */(__bridge CFStringRef)signedString,NULL, /* charactersToLeaveUnescaped */(CFStringRef)@"!*'();:@&=+$,/?%#[]",kCFStringEncodingUTF8);
+                        NSLog(@"signerStr = %@",signerStr);
                         NSString *orderString = nil;
+                        
                         
                         if (signedString != nil) {
                             orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
-                                           orderSpec, signedString, @"RSA"];
-                            NSLog(@"orderString = %@",orderString);
+                                           orderSpec, signerStr, @"RSA"];
                             
+                            NSLog(@"orderString = %@",orderString);
                             [[AlipaySDK defaultService] payOrder:orderString fromScheme:appScheme callback:^(NSDictionary *resultDic) {
                                 
                                 if ([resultDic[@"resultStatus"] integerValue] == 9000) {
@@ -391,12 +400,11 @@ static NSInteger i = 0;
                 } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                     NSLog(@"error.userInfo = %@",error.userInfo);
                 }];
-                
-                
-                
+
             }
             
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            NSLog(@"%@",error.userInfo);
             [hud hideAnimated:YES];
             [hud removeFromSuperViewOnHide];
             MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.view];
