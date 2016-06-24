@@ -75,5 +75,7 @@
 //业务扩展参数，支付宝特定的业务需要添加该字段，json格式。 商户接入时和支付宝协商确定。
 @property (nonatomic, strong) NSMutableDictionary *outContext;
 
+//@property (nonatomic, strong) NSString *return_url;
+
 
 @end

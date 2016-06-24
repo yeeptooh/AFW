@@ -159,7 +159,21 @@ static BOOL isProduction = FALSE;
         [[AlipaySDK defaultService]
          processOrderWithPaymentResult:url
          standbyCallback:^(NSDictionary *resultDic) {
- 
+             
+             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+             NSString *url = [NSString stringWithFormat:@"%@/Payment/Alipay/Recharge.ashx?action=getorderstate&orderid=%@",@"http://192.168.1.173:90/forapp",[[NSUserDefaults standardUserDefaults] objectForKey:@"outTradeNO"]];
+             [manager GET:url parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                 NSLog(@"responseObject = %@",responseObject);
+                 
+                 
+             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                 NSLog(@"error.userInfo = %@",error.userInfo);
+             }];
+             
+             
+             
+             
+             
          }];
     }
     
