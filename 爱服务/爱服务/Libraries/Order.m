@@ -49,6 +49,9 @@
     if (self.itBPay) {
         [discription appendFormat:@"&it_b_pay=\"%@\"",self.itBPay];//30m
     }
+//    if (self.return_url) {
+//        [discription appendFormat:@"&return_url=\"%@\"",self.return_url];
+//    }
     if (self.showURL) {
         [discription appendFormat:@"&show_url=\"%@\"",self.showURL];//m.alipay.com
     }
