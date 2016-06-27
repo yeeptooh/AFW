@@ -790,6 +790,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A4C6CF51CD202EE0030B861 /* libc++.tbd in Frameworks */,
 				4ADEDF1D1D17E96500FE3412 /* CoreMotion.framework in Frameworks */,
 				4A6BE9411CFC481D002F20C1 /* CFNetwork.framework in Frameworks */,
 				4A65B7D61CF8319800331CD2 /* MapKit.framework in Frameworks */,
@@ -807,7 +808,6 @@
 				4A7CA6AD1CDB16FC000232CB /* TencentOpenAPI.framework in Frameworks */,
 				4A7CA6961CDAF36F000232CB /* ImageIO.framework in Frameworks */,
 				4A7CA6941CDAF365000232CB /* QuartzCore.framework in Frameworks */,
-				4A4C6CF51CD202EE0030B861 /* libc++.tbd in Frameworks */,
 				4A4C6CEB1CD201790030B861 /* SystemConfiguration.framework in Frameworks */,
 				4A4C6CE91CD2016C0030B861 /* libsqlite3.0.tbd in Frameworks */,
 				4ADEDD821D17E05600FE3412 /* libcrypto.a in Frameworks */,

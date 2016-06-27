@@ -49,6 +49,8 @@ UINavigationControllerDelegate
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) UIAlertController *alertController;
 
+@property (nonatomic, assign, getter=isFlag) BOOL flag;
+
 @end
 static NSInteger tag = 0;
 @implementation HomeViewController
@@ -104,9 +106,11 @@ static NSInteger tag = 0;
     
     [self setNaviTitle];
     [self setScrollView];
-    
+    [self updateUI];
     [self setDetailButton];
     [self setBreakLine];
+    
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"AVCan"];
     
     self.timer = [NSTimer scheduledTimerWithTimeInterval:5 * 60 target:self selector:@selector(updateUI) userInfo:nil repeats:YES];
 }
@@ -153,8 +157,11 @@ static NSInteger tag = 0;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-  
-    [self setBalance];
+    if (self.isFlag) {
+        [self updateUI];
+        self.flag = NO;
+    }
+    
     [self setBadgeValue];
     
 }
@@ -210,24 +217,7 @@ static NSInteger tag = 0;
                 [weakSelf.HUD hideAnimated:YES];
                 [weakSelf.HUD removeFromSuperViewOnHide];
             }];
-            
-            
-//            [manager GET:countString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//                NSString *allString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
-//                NSArray *countList = [allString componentsSeparatedByString:@","];
-//                
-//                [[NSUserDefaults standardUserDefaults] setObject:countList forKey:@"countList"];
-//                [[NSUserDefaults standardUserDefaults] synchronize];
-//                
-//                [weakSelf.HUD hideAnimated:YES];
-//                [weakSelf.HUD removeFromSuperViewOnHide];
-//                
-//            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                [weakSelf.HUD hideAnimated:YES];
-//                [weakSelf.HUD removeFromSuperViewOnHide];
-//            }];
-            
-            
+ 
         }else{
             
             [weakSelf.HUD hideAnimated:YES];
@@ -676,18 +666,25 @@ static NSInteger tag = 0;
 - (void)detailButtonClicked:(UIButton *)sender {
 #if Environment_Mode == 1
     if (sender.tag == 1000) {
-        AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
-        if (status == AVAuthorizationStatusAuthorized) {
+        
+        if (![[NSUserDefaults standardUserDefaults] boolForKey:@"AVCan"]) {
             PartsRequestViewController *partsRequestVC = [[PartsRequestViewController alloc]init];
             partsRequestVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:partsRequestVC animated:YES];
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"AVCan"];
         }else {
-            [self presentViewController:self.alertController animated:YES completion:nil];
+            AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+            if (status == AVAuthorizationStatusAuthorized) {
+                PartsRequestViewController *partsRequestVC = [[PartsRequestViewController alloc]init];
+                partsRequestVC.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:partsRequestVC animated:YES];
+
+            }else {
+                [self presentViewController:self.alertController animated:YES completion:nil];
+            }
         }
         
-        
-        
-        
+  
     }else if (sender.tag == 1001) {
         
         AppendFeesViewController *appendVC = [[AppendFeesViewController alloc]init];
@@ -744,6 +741,8 @@ static NSInteger tag = 0;
         withDrawVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:withDrawVC animated:YES];
     }else if (sender.tag == 1010) {
+        
+        self.flag = YES;
         RechargeViewController *rechargeVC = [[RechargeViewController alloc] init];
         rechargeVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:rechargeVC animated:YES];

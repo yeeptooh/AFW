@@ -17,6 +17,7 @@
 #import "MBProgressHUD.h"
 #import "AFNetworking.h"
 #import "UserModel.h"
+#import "WXApi.h"
 
 @interface RechargeViewController ()
 <
@@ -28,6 +29,7 @@ UITextFieldDelegate
 @property (nonatomic, assign, getter=isHaveDot) BOOL haveDot;
 @property (nonatomic, strong) UIButton *rechargeButton;
 @property (nonatomic, strong) MoneyTableViewCell *cell;
+@property (nonatomic, assign) NSInteger bitch;
 @end
 
 static NSInteger i = 0;
@@ -56,6 +58,15 @@ static NSInteger i = 0;
     [self.view addSubview:self.tableView];
     [self setRechargeButton];
     [self setNaviTitle];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMoney:) name:kUpdateMoney object:nil];
+    
+}
+
+- (void)updateMoney:(NSNotification *)noti {
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -115,8 +126,9 @@ static NSInteger i = 0;
         }
         
         if (sender.text.length == 2) {
-            NSString *firstCharacter = [sender.text substringToIndex:0];
-            NSLog(@"%@",firstCharacter);
+            NSString *firstCharacter = [sender.text substringToIndex:1];
+           
+            NSLog(@"firstCharacter = %@",firstCharacter);
             if ([firstCharacter isEqualToString:@"0"]) {
                 if (single == '0') {
                     sender.text = @"0";
@@ -306,13 +318,6 @@ static NSInteger i = 0;
     
     if (i == 1) {
         
-        MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.view];
-        hud.mode = MBProgressHUDModeIndeterminate;
-        
-        [self.view addSubview:hud];
-        
-        [hud showAnimated:YES];
-        
         Order *order = [[Order alloc] init];
         order.partner = myPartner;
         order.sellerID = mySeller;
@@ -338,12 +343,11 @@ static NSInteger i = 0;
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         [manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
-            [hud hideAnimated:YES];
-            [hud removeFromSuperViewOnHide];
+            
             NSDictionary *json = (NSDictionary *)[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
-            NSLog(@"json1 = %@",json);
+            
             if ([json[@"status"] isEqualToString:@"ok"]) {
-                
+                NSLog(@"json = %@",json);
                 order.notifyURL = @"http://notify.msp.hk/notify.htm";//@"http://i.51ifw.com/forapp/payment/alipay/notify.aspx";//支付宝服务器异步通知自己服务器回调的URL
                 order.outTradeNO = json[@"data"];
                 [[NSUserDefaults standardUserDefaults] setObject:order.outTradeNO forKey:@"outTradeNO"];
@@ -373,17 +377,14 @@ static NSInteger i = 0;
                 
                 NSString *url = [NSString stringWithFormat:@"%@Payment/Alipay/Recharge.ashx?action=getsign&orderId=%@",@"http://192.168.1.173:90/forapp/",order.outTradeNO];
                 manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-                [manager GET:url parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                     NSDictionary *json = (NSDictionary *)[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
-                    NSLog(@"json2 = %@",json);
+                    
                     if ([json[@"status"] isEqualToString:@"ok"]) {
                         
                         NSString *signedString = json[@"data"];
                         NSLog(@"signedString = %@",signedString);
                         NSString *signerStr = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, /* allocator */(__bridge CFStringRef)signedString, NULL, /* charactersToLeaveUnescaped */(CFStringRef)@"!*'();:@&=+$,/?%#[]", kCFStringEncodingUTF8);
-//                        NSString *signerStr = [signedString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-                        NSLog(@"signerStr = %@",signerStr);
-                        
 
                         NSString *orderString = nil;
                         
@@ -391,25 +392,13 @@ static NSInteger i = 0;
                         if (signedString != nil) {
                             orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",orderSpec, signerStr, @"RSA"];
                             
-                            NSLog(@"orderString = %@",orderString);
+                            
                             [[AlipaySDK defaultService] payOrder:orderString fromScheme:appScheme callback:^(NSDictionary *resultDic) {
-                                NSLog(@"order.outTradeNO = %@",order.outTradeNO);
-                                AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-                                NSString *url = [NSString stringWithFormat:@"%@/Payment/Alipay/Recharge.ashx?action=getorderstate&orderid=%@",@"http://192.168.1.173:90/forapp",order.outTradeNO];
-                                [manager GET:url parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                                    
-                                    NSLog(@"responseObject = %@",responseObject);
-                                    
-                                    
-                                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                                    NSLog(@"error.userInfo = %@",error.userInfo);
-                                }];
-                                
-                                if ([resultDic[@"resultStatus"] integerValue] == 9000) {
-                                    NSLog(@"%@",@"购买成功");
-                                }else {
-                                    NSLog(@"%@",@"购买失败");
+                                self.bitch = 0;
+                                if (self.bitch < 3) {
+                                    [self updateResponse:order];
                                 }
+                                
                             }];
                         }
                     }
@@ -422,8 +411,8 @@ static NSInteger i = 0;
             
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             NSLog(@"%@",error.userInfo);
-            [hud hideAnimated:YES];
-            [hud removeFromSuperViewOnHide];
+//            [hud hideAnimated:YES];
+//            [hud removeFromSuperViewOnHide];
             MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.view];
             HUD.mode = MBProgressHUDModeText;
             
@@ -443,6 +432,111 @@ static NSInteger i = 0;
             
         }];
     }
+    
+    if (i == 2) {
+        
+        PayReq *payReq = [[PayReq alloc] init];
+        
+        
+        [WXApi sendReq:payReq];
+        
+    }
+    
+    
+    
+}
+
+- (void)updateResponse:(Order *)order {
+    self.bitch ++;
+    __block BOOL flag = NO;
+    
+    dispatch_group_t group = dispatch_group_create();
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *url = [NSString stringWithFormat:@"%@/Payment/Alipay/Recharge.ashx?action=getorderstate&orderid=%@",@"http://192.168.1.173:90/forapp",order.outTradeNO];
+    dispatch_group_enter(group);
+    
+    
+    [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"responseObject = %@",responseObject);
+        if ([responseObject[@"data"] integerValue] ==  5) {
+            flag = YES;
+            MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.view];
+            hud.mode = MBProgressHUDModeCustomView;
+            [self.view addSubview:hud];
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 74, 74)];
+            imageView.image = [UIImage imageNamed:@"icon_joblist_loading"];
+            hud.customView = imageView;
+            //            [UIView animateWithDuration:1.25 animations:^{
+            //                hud.customView.layer.transform = CATransform3DRotate(hud.customView.layer.transform, M_PI_2*3, 0, 0, 1);
+            //            }];
+            
+            CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+            animation.toValue = @(M_PI*2);
+            animation.duration = 1.25;
+            [hud.customView.layer addAnimation:animation forKey:nil];
+            
+            
+            [hud showAnimated:YES];
+            
+            hud.offset = CGPointMake(0, Height/5);
+            
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                
+                UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 74, 74)];
+                imageView.image = [UIImage imageNamed:@"icon_jd_sendSucess"];
+                hud.customView = imageView;
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [hud hideAnimated:YES];
+                    [hud removeFromSuperViewOnHide];
+                    dispatch_group_leave(group);
+                });
+                
+            });
+            
+        }
+        
+        if ([responseObject[@"data"] integerValue] == 1) {
+            flag = YES;
+            MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.view];
+            hud.mode = MBProgressHUDModeText;
+            hud.label.text = @"支付取消";
+            CGFloat fontsize;
+            if (iPhone4_4s || iPhone5_5s) {
+                fontsize = 14;
+            }else {
+                fontsize = 16;
+            }
+            hud.label.font = font(fontsize);
+            [self.view addSubview:hud];
+            [hud showAnimated:YES];
+            hud.offset = CGPointMake(0, Height/5);
+            [hud hideAnimated:YES afterDelay:1.25];
+            [hud removeFromSuperViewOnHide];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                dispatch_group_leave(group);
+            });
+            
+        }
+        
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        dispatch_group_leave(group);
+        NSLog(@"error.userInfo = %@",error.userInfo);
+    }];
+    
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        if (flag) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateMoney object:nil];
+            self.bitch = 3;
+        }else {
+            [self updateResponse:order];
+        }
+        
+    });
 }
 
 
@@ -480,7 +574,7 @@ static NSInteger i = 0;
             cell.chooseImageView.image = [UIImage imageNamed:@"rate_annoy_button_normal"];
         }else {
             cell.payLabel.text = @"微信客户端支付";
-            cell.payImageView.image = [UIImage imageNamed:@"weixin"];
+            cell.payImageView.image = [UIImage imageNamed:@"WXPay"];
             cell.chooseImageView.image = [UIImage imageNamed:@"rate_annoy_button_normal"];
         }
         
@@ -580,6 +674,10 @@ static NSInteger i = 0;
 
 - (void)setNaviTitle {
     self.navigationItem.title = @"我要充值";
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
