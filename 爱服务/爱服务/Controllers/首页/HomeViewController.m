@@ -248,9 +248,9 @@ static NSInteger tag = 0;
 - (void)setNaviTitle {
     self.navigationItem.title = @"首页";
     
-    UIImageView *logoImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"mainicon"]];
-    
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:logoImageView];
+//    UIImageView *logoImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"mainicon"]];
+//    
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:logoImageView];
     
     UIButton *phoneButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [phoneButton setImage:[UIImage imageNamed:@"msg_room_toolbar_media_fct_notrace_norm_0"] forState:UIControlStateNormal];
@@ -671,7 +671,7 @@ static NSInteger tag = 0;
             PartsRequestViewController *partsRequestVC = [[PartsRequestViewController alloc]init];
             partsRequestVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:partsRequestVC animated:YES];
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"AVCan"];
+            
         }else {
             AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
             if (status == AVAuthorizationStatusAuthorized) {

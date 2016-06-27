@@ -456,6 +456,7 @@ static NSInteger number;
 
 - (void)barButtonClicked:(UIButton *)sender {
     [self.navigationController pushViewController:self.barVC animated:YES];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"AVCan"];
     [self.session startRunning];
 }
 
@@ -464,7 +465,7 @@ static NSInteger number;
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction *cameraAction = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSUInteger sourceType = UIImagePickerControllerSourceTypeCamera;
-        
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"AVCan"];
         UIImagePickerController *imagePickerController = [[UIImagePickerController alloc]init];
         imagePickerController.delegate = self;
         imagePickerController.allowsEditing = YES;
