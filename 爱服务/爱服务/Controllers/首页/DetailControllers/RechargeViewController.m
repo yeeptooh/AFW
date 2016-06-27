@@ -434,11 +434,27 @@ static NSInteger i = 0;
     }
     
     if (i == 2) {
+        NSString *urlString   = @"http://wxpay.weixin.qq.com/pub_v2/app/app_pay.php?plat=ios";
         
-        PayReq *payReq = [[PayReq alloc] init];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            PayReq *payReq = [[PayReq alloc] init];
+            
+            payReq.partnerId           = [responseObject objectForKey:@"partnerid"];
+//            NSLog(@"req.partnerId = %@",req.partnerId);
+            
+            payReq.prepayId            = [responseObject objectForKey:@"prepayid"];
+            payReq.nonceStr            = [responseObject objectForKey:@"noncestr"];
+            payReq.timeStamp           = [[responseObject objectForKey:@"timestamp"] intValue];
+            payReq.package             = [responseObject objectForKey:@"package"];
+            payReq.sign                = [responseObject objectForKey:@"sign"];
+            
+            [WXApi sendReq:payReq];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
+        }];
         
         
-        [WXApi sendReq:payReq];
         
     }
     
@@ -468,9 +484,7 @@ static NSInteger i = 0;
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 74, 74)];
             imageView.image = [UIImage imageNamed:@"icon_joblist_loading"];
             hud.customView = imageView;
-            //            [UIView animateWithDuration:1.25 animations:^{
-            //                hud.customView.layer.transform = CATransform3DRotate(hud.customView.layer.transform, M_PI_2*3, 0, 0, 1);
-            //            }];
+            
             
             CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
             animation.toValue = @(M_PI*2);

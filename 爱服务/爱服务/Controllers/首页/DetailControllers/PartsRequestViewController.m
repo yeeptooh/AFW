@@ -86,6 +86,9 @@ static NSInteger number;
 
 - (void)setScrollView {
     self.scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, Width, Height - StatusBarAndNavigationBarHeight)];
+    self.scrollView.bounces = NO;
+    self.scrollView.showsVerticalScrollIndicator = NO;
+    self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.backgroundColor = color(241, 241, 241, 1);
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.contentSize = CGSizeMake(Width,(Height - StatusBarAndNavigationBarHeight) * 19/12);
@@ -326,7 +329,7 @@ static NSInteger number;
         imagePickerController.delegate = self;
         imagePickerController.allowsEditing = YES;
         imagePickerController.sourceType = sourceType;
-        
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"AVCan"];
         [self presentViewController:imagePickerController animated:YES completion:^{
             
         }];
