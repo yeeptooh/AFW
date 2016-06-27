@@ -300,19 +300,6 @@ UIViewControllerTransitioningDelegate
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
-    
-    
-//    [manager POST:URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        AcceptViewController *aVC = [[AcceptViewController alloc]init];
-//        for (NSDictionary *dic in responseObject) {
-//            [aVC.wList addObject:dic];
-//        }
-//        aVC.ID = self.ID;
-//        [self.navigationController pushViewController:aVC animated:YES];
-//        
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        
-//    }];
 
 }
 
@@ -323,16 +310,23 @@ UIViewControllerTransitioningDelegate
 }
 
 - (void)completeButtonClicked {
-    AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
-    if (status == AVAuthorizationStatusAuthorized) {
     
-    CompleteButtonViewController *cbVC = [[CompleteButtonViewController alloc]init];
-    cbVC.ID = self.ID;
-    [self.navigationController pushViewController:cbVC animated:YES];
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"AVCan"]) {
+        CompleteButtonViewController *cbVC = [[CompleteButtonViewController alloc]init];
+        cbVC.ID = self.ID;
+        [self.navigationController pushViewController:cbVC animated:YES];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"AVCan"];
     }else {
-         [self presentViewController:self.alertController animated:YES completion:nil];
+        AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+        if (status == AVAuthorizationStatusAuthorized) {
+            
+            CompleteButtonViewController *cbVC = [[CompleteButtonViewController alloc]init];
+            cbVC.ID = self.ID;
+            [self.navigationController pushViewController:cbVC animated:YES];
+        }else {
+            [self presentViewController:self.alertController animated:YES completion:nil];
+        }
     }
-    
 }
 
 - (void)recedeButtonClicked {

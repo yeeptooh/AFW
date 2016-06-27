@@ -51,11 +51,12 @@
 
 
 #define kBadgeValueChanged @"badgeValueChanged"
+#define kUpdateMoney @"kUpdateMoney"
 
 #define WBAppKey @"551164628"
 #define WBRedirectURL @"https://api.weibo.com/oauth2/default.html"
 
-#define WXAppKey @"wx4a69b1f1418543b3"
+#define WXAppKey @"wx57a7ba97d643133d"//@"wx4a69b1f1418543b3"
 #define QQKey @"1105380638"
 
 

@@ -27,6 +27,8 @@
 
 #import <AlipaySDK/AlipaySDK.h>
 
+#import "MBProgressHUD.h"
+
 @interface AppDelegate ()
 
 <
@@ -34,6 +36,8 @@ WeiboSDKDelegate,
 WXApiDelegate,
 TencentApiInterfaceDelegate
 >
+
+@property (nonatomic, assign) NSInteger bitch;
 @end
 static NSString *jPushAppKey = @"832a598bcc7101ce08f1168d";
 static NSString *channel = @"App Store";
@@ -46,6 +50,18 @@ static BOOL isProduction = FALSE;
     [UINavigationBar appearance].barTintColor = color(30, 30, 30, 1);
     [UINavigationBar appearance].tintColor = color(245, 245, 245, 1);
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} ];
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"hadLaunched"]) {
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"firstLaunched"];
+    }else {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunched"];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hadLaunched"];
+    }
+    
+    
+    
+    
+    
 
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     self.tabBarController = [[MyTabBarController alloc]init];
@@ -156,28 +172,112 @@ static BOOL isProduction = FALSE;
     
     //跳转支付宝钱包进行支付，需要将支付宝钱包的支付结果回传给SDK（这个是将支付宝客户端的支付结果传回给SDK）
     if ([url.host isEqualToString:@"safepay"]) {
+ 
         [[AlipaySDK defaultService]
          processOrderWithPaymentResult:url
          standbyCallback:^(NSDictionary *resultDic) {
-             
-             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-             NSString *url = [NSString stringWithFormat:@"%@/Payment/Alipay/Recharge.ashx?action=getorderstate&orderid=%@",@"http://192.168.1.173:90/forapp",[[NSUserDefaults standardUserDefaults] objectForKey:@"outTradeNO"]];
-             [manager GET:url parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                 NSLog(@"responseObject = %@",responseObject);
-                 
-                 
-             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                 NSLog(@"error.userInfo = %@",error.userInfo);
-             }];
-             
-             
-             
-             
+             self.bitch = 0;
+             if (self.bitch < 3) {
+                 [self updateResponse];
+             }
              
          }];
     }
     
     return YES;
+}
+
+- (void)updateResponse {
+    self.bitch ++;
+    __block BOOL flag = NO;
+    
+    dispatch_group_t group = dispatch_group_create();
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *url = [NSString stringWithFormat:@"%@/Payment/Alipay/Recharge.ashx?action=getorderstate&orderid=%@",@"http://192.168.1.173:90/forapp",[[NSUserDefaults standardUserDefaults] objectForKey:@"outTradeNO"]];
+    dispatch_group_enter(group);
+    
+    
+    [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"responseObject = %@",responseObject);
+        if ([responseObject[@"data"] integerValue] ==  5) {
+            flag = YES;
+            MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.window];
+            hud.mode = MBProgressHUDModeCustomView;
+            [self.window addSubview:hud];
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 74, 74)];
+            imageView.image = [UIImage imageNamed:@"icon_joblist_loading"];
+            hud.customView = imageView;
+//            [UIView animateWithDuration:1.25 animations:^{
+//                hud.customView.layer.transform = CATransform3DRotate(hud.customView.layer.transform, M_PI_2*3, 0, 0, 1);
+//            }];
+            
+            CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+            animation.toValue = @(M_PI*2);
+            animation.duration = 1.25;
+            [hud.customView.layer addAnimation:animation forKey:nil];
+            
+            
+            [hud showAnimated:YES];
+            
+            hud.offset = CGPointMake(0, Height/5);
+            
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                
+                UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 74, 74)];
+                imageView.image = [UIImage imageNamed:@"icon_jd_sendSucess"];
+                hud.customView = imageView;
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [hud hideAnimated:YES];
+                    [hud removeFromSuperViewOnHide];
+                    dispatch_group_leave(group);
+                });
+                
+            });
+            
+        }
+        
+        if ([responseObject[@"data"] integerValue] == 1) {
+            flag = YES;
+            MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.window];
+            hud.mode = MBProgressHUDModeText;
+            hud.label.text = @"支付取消";
+            CGFloat fontsize;
+            if (iPhone4_4s || iPhone5_5s) {
+                fontsize = 14;
+            }else {
+                fontsize = 16;
+            }
+            hud.label.font = font(fontsize);
+            [self.window addSubview:hud];
+            [hud showAnimated:YES];
+            hud.offset = CGPointMake(0, Height/5);
+            [hud hideAnimated:YES afterDelay:1.25];
+            [hud removeFromSuperViewOnHide];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                dispatch_group_leave(group);
+            });
+            
+        }
+        
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        dispatch_group_leave(group);
+        NSLog(@"error.userInfo = %@",error.userInfo);
+    }];
+    
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        if (flag) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateMoney object:nil];
+            self.bitch = 3;
+        }else {
+            [self updateResponse];
+        }
+        
+    });
 }
 
 
@@ -281,6 +381,21 @@ static BOOL isProduction = FALSE;
 #pragma mark - WXApiDelegate -
 
 - (void)onResp:(BaseResp *)resp {
+    
+    if ([resp isKindOfClass:[PayReq class]]) {
+        PayResp *response = (PayResp *)resp;
+        
+        switch (response.errCode) {
+            case WXSuccess:
+                
+                break;
+                
+            default:
+                
+                break;
+        }
+        
+    }
     
 }
 
