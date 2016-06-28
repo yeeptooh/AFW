@@ -84,6 +84,7 @@
 		4A561D661CBDE9DE00BB26AC /* MainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A561D641CBDE9DE00BB26AC /* MainTableViewCell.m */; };
 		4A561D671CBDE9DE00BB26AC /* MainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A561D651CBDE9DE00BB26AC /* MainTableViewCell.xib */; };
 		4A561D701CBE490E00BB26AC /* OrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A561D6F1CBE490E00BB26AC /* OrderModel.m */; };
+		4A57C6CE1D221B210023A1B7 /* ACCReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A78EADF1D1A75380047E1B9 /* ACCReviewViewController.m */; };
 		4A57F8841CD2F5390034E089 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57F8781CD2F5390034E089 /* AFHTTPSessionManager.m */; };
 		4A57F8851CD2F5390034E089 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57F87B1CD2F5390034E089 /* AFNetworkReachabilityManager.m */; };
 		4A57F8861CD2F5390034E089 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57F87D1CD2F5390034E089 /* AFSecurityPolicy.m */; };
@@ -258,6 +259,19 @@
 		4A6424151D19396600F26BA9 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4AF531C01D12970900F58754 /* loading.gif */; };
 		4A6424171D19396600F26BA9 /* OverTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A7749951CC0C3EB008B9611 /* OverTableViewCell.xib */; };
 		4A64245D1D194D8C00F26BA9 /* AddOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A64245C1D194D8C00F26BA9 /* AddOrderViewController.m */; };
+		4A64A1021D22297400A3DC7C /* ProvinceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A64A1011D22297400A3DC7C /* ProvinceViewController.m */; };
+		4A64A1051D22298A00A3DC7C /* CityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A64A1041D22298A00A3DC7C /* CityViewController.m */; };
+		4A64A1081D2229AF00A3DC7C /* RegionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A64A1071D2229AF00A3DC7C /* RegionViewController.m */; };
+		4A64A10B1D2229B500A3DC7C /* StreetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A64A10A1D2229B500A3DC7C /* StreetViewController.m */; };
+		4A64A10F1D222AE600A3DC7C /* ProvinceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A64A1011D22297400A3DC7C /* ProvinceViewController.m */; };
+		4A64A1101D222AE600A3DC7C /* CityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A64A1041D22298A00A3DC7C /* CityViewController.m */; };
+		4A64A1111D222AE600A3DC7C /* RegionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A64A1071D2229AF00A3DC7C /* RegionViewController.m */; };
+		4A64A1121D222AE600A3DC7C /* StreetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A64A10A1D2229B500A3DC7C /* StreetViewController.m */; };
+		4A64A1571D22715100A3DC7C /* ProductTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A64A1561D22715100A3DC7C /* ProductTypeViewController.m */; };
+		4A64A15D1D2271A000A3DC7C /* ProductClassifyBigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A64A15C1D2271A000A3DC7C /* ProductClassifyBigViewController.m */; };
+		4A64A1601D2271B100A3DC7C /* ProductClassifySmallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A64A15F1D2271B100A3DC7C /* ProductClassifySmallViewController.m */; };
+		4A64A1661D2272DB00A3DC7C /* BaoXiuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A64A1651D2272DB00A3DC7C /* BaoXiuViewController.m */; };
+		4A64A1691D22867900A3DC7C /* ServiceTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A64A1681D22867900A3DC7C /* ServiceTypeViewController.m */; };
 		4A65B7D41CF82AE400331CD2 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A65B7D31CF82AE400331CD2 /* MapViewController.m */; };
 		4A65B7D61CF8319800331CD2 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A65B7D51CF8319800331CD2 /* MapKit.framework */; };
 		4A671C641CD05AAB00F70176 /* ChargeBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A671C631CD05AAB00F70176 /* ChargeBackViewController.m */; };
@@ -535,6 +549,24 @@
 		4A64241D1D19396600F26BA9 /* 爱服务厂商版.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "爱服务厂商版.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A64245B1D194D8C00F26BA9 /* AddOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddOrderViewController.h; sourceTree = "<group>"; };
 		4A64245C1D194D8C00F26BA9 /* AddOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddOrderViewController.m; sourceTree = "<group>"; };
+		4A64A1001D22297400A3DC7C /* ProvinceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProvinceViewController.h; sourceTree = "<group>"; };
+		4A64A1011D22297400A3DC7C /* ProvinceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProvinceViewController.m; sourceTree = "<group>"; };
+		4A64A1031D22298A00A3DC7C /* CityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CityViewController.h; path = ../../../View/CityViewController.h; sourceTree = "<group>"; };
+		4A64A1041D22298A00A3DC7C /* CityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CityViewController.m; path = ../../../View/CityViewController.m; sourceTree = "<group>"; };
+		4A64A1061D2229AF00A3DC7C /* RegionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegionViewController.h; sourceTree = "<group>"; };
+		4A64A1071D2229AF00A3DC7C /* RegionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegionViewController.m; sourceTree = "<group>"; };
+		4A64A1091D2229B500A3DC7C /* StreetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreetViewController.h; sourceTree = "<group>"; };
+		4A64A10A1D2229B500A3DC7C /* StreetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreetViewController.m; sourceTree = "<group>"; };
+		4A64A1551D22715100A3DC7C /* ProductTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductTypeViewController.h; sourceTree = "<group>"; };
+		4A64A1561D22715100A3DC7C /* ProductTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductTypeViewController.m; sourceTree = "<group>"; };
+		4A64A15B1D2271A000A3DC7C /* ProductClassifyBigViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductClassifyBigViewController.h; sourceTree = "<group>"; };
+		4A64A15C1D2271A000A3DC7C /* ProductClassifyBigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductClassifyBigViewController.m; sourceTree = "<group>"; };
+		4A64A15E1D2271B100A3DC7C /* ProductClassifySmallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductClassifySmallViewController.h; sourceTree = "<group>"; };
+		4A64A15F1D2271B100A3DC7C /* ProductClassifySmallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductClassifySmallViewController.m; sourceTree = "<group>"; };
+		4A64A1641D2272DB00A3DC7C /* BaoXiuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaoXiuViewController.h; sourceTree = "<group>"; };
+		4A64A1651D2272DB00A3DC7C /* BaoXiuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaoXiuViewController.m; sourceTree = "<group>"; };
+		4A64A1671D22867900A3DC7C /* ServiceTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceTypeViewController.h; sourceTree = "<group>"; };
+		4A64A1681D22867900A3DC7C /* ServiceTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceTypeViewController.m; sourceTree = "<group>"; };
 		4A65B7D21CF82AE400331CD2 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		4A65B7D31CF82AE400331CD2 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		4A65B7D51CF8319800331CD2 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -1330,6 +1362,24 @@
 				4A64245C1D194D8C00F26BA9 /* AddOrderViewController.m */,
 				4A78EADE1D1A75380047E1B9 /* ACCReviewViewController.h */,
 				4A78EADF1D1A75380047E1B9 /* ACCReviewViewController.m */,
+				4A64A1001D22297400A3DC7C /* ProvinceViewController.h */,
+				4A64A1011D22297400A3DC7C /* ProvinceViewController.m */,
+				4A64A1031D22298A00A3DC7C /* CityViewController.h */,
+				4A64A1041D22298A00A3DC7C /* CityViewController.m */,
+				4A64A1061D2229AF00A3DC7C /* RegionViewController.h */,
+				4A64A1071D2229AF00A3DC7C /* RegionViewController.m */,
+				4A64A1091D2229B500A3DC7C /* StreetViewController.h */,
+				4A64A10A1D2229B500A3DC7C /* StreetViewController.m */,
+				4A64A1551D22715100A3DC7C /* ProductTypeViewController.h */,
+				4A64A1561D22715100A3DC7C /* ProductTypeViewController.m */,
+				4A64A15B1D2271A000A3DC7C /* ProductClassifyBigViewController.h */,
+				4A64A15C1D2271A000A3DC7C /* ProductClassifyBigViewController.m */,
+				4A64A15E1D2271B100A3DC7C /* ProductClassifySmallViewController.h */,
+				4A64A15F1D2271B100A3DC7C /* ProductClassifySmallViewController.m */,
+				4A64A1641D2272DB00A3DC7C /* BaoXiuViewController.h */,
+				4A64A1651D2272DB00A3DC7C /* BaoXiuViewController.m */,
+				4A64A1671D22867900A3DC7C /* ServiceTypeViewController.h */,
+				4A64A1681D22867900A3DC7C /* ServiceTypeViewController.m */,
 			);
 			name = "爱服务厂商版";
 			sourceTree = "<group>";
@@ -1919,6 +1969,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A57C6CE1D221B210023A1B7 /* ACCReviewViewController.m in Sources */,
 				4A1D9DA01D1BD1EA00052B92 /* UserDetailTableView.m in Sources */,
 				4A5229E21CBCA75B00DD2D9C /* PhoneNumberViewController.m in Sources */,
 				4A5274671D113A7E00B056C6 /* RechargeViewController.m in Sources */,
@@ -1961,6 +2012,7 @@
 				4A6973641CBB36DF002A036C /* Foundation+Log.m in Sources */,
 				4A4BD2F91CB8F565009DA0B9 /* BaseViewController.m in Sources */,
 				4A4BD3251CB8F812009DA0B9 /* NSArray+MASAdditions.m in Sources */,
+				4A64A1021D22297400A3DC7C /* ProvinceViewController.m in Sources */,
 				4A6BABEA1CC62FAB000B94A2 /* UIView+MJExtension.m in Sources */,
 				4A4BD2D11CB8D903009DA0B9 /* SDWebImageDecoder.m in Sources */,
 				4A4BD2D61CB8D903009DA0B9 /* UIButton+WebCache.m in Sources */,
@@ -1980,10 +2032,12 @@
 				4A4BD2AA1CB8D61C009DA0B9 /* UIView+SDExtension.m in Sources */,
 				4A7749911CC09DC8008B9611 /* ChargebackTableViewCell.m in Sources */,
 				4AF52EB61CC4BEC600E25FC4 /* HYBModalTransition.m in Sources */,
+				4A64A1051D22298A00A3DC7C /* CityViewController.m in Sources */,
 				4A4BD2DB1CB8D903009DA0B9 /* UIImageView+WebCache.m in Sources */,
 				4A6973711CBB4D03002A036C /* PartsRequestViewController.m in Sources */,
 				4A4BD3021CB8F716009DA0B9 /* UserModel.m in Sources */,
 				4A4BD3221CB8F812009DA0B9 /* MASLayoutConstraint.m in Sources */,
+				4A64A1081D2229AF00A3DC7C /* RegionViewController.m in Sources */,
 				4A4BD2A71CB8D61C009DA0B9 /* TAPageControl.m in Sources */,
 				4A4BD23E1CB895A1009DA0B9 /* main.m in Sources */,
 				4A69738F1CBB769E002A036C /* MyTabBarController.m in Sources */,
@@ -2002,6 +2056,7 @@
 				4A671C671CD05F2E00F70176 /* AcceptViewController.m in Sources */,
 				4A4BD2D51CB8D903009DA0B9 /* SDWebImagePrefetcher.m in Sources */,
 				4AF52EA11CC4751900E25FC4 /* MBProgressHUD+Assoication.m in Sources */,
+				4A64A10B1D2229B500A3DC7C /* StreetViewController.m in Sources */,
 				4A6973891CBB4DA3002A036C /* MyAccountViewController.m in Sources */,
 				4A4BD2F21CB8F515009DA0B9 /* ReceiveViewController.m in Sources */,
 				4A4BD2F61CB8F515009DA0B9 /* HomeViewController.m in Sources */,
@@ -2071,6 +2126,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A64A10F1D222AE600A3DC7C /* ProvinceViewController.m in Sources */,
+				4A64A1101D222AE600A3DC7C /* CityViewController.m in Sources */,
+				4A64A1111D222AE600A3DC7C /* RegionViewController.m in Sources */,
+				4A64A1121D222AE600A3DC7C /* StreetViewController.m in Sources */,
 				4A1D9D9F1D1BBA8900052B92 /* BusinessDetailTableView.m in Sources */,
 				4A1D9D9E1D1BBA8000052B92 /* ProductDetailTableView.m in Sources */,
 				4A1D9D9D1D1BB77700052B92 /* AddOrderViewController.m in Sources */,
@@ -2125,6 +2184,7 @@
 				4A64239D1D19396600F26BA9 /* ChargeBackViewController.m in Sources */,
 				4A64239E1D19396600F26BA9 /* ChargeBackReasonViewController.m in Sources */,
 				4A64239F1D19396600F26BA9 /* MyInfoViewController.m in Sources */,
+				4A64A1661D2272DB00A3DC7C /* BaoXiuViewController.m in Sources */,
 				4A6423A01D19396600F26BA9 /* SDWebImageManager.m in Sources */,
 				4A6423A11D19396600F26BA9 /* MJRefreshComponent.m in Sources */,
 				4A6423A21D19396600F26BA9 /* base64.m in Sources */,
@@ -2133,6 +2193,7 @@
 				4A6423A51D19396600F26BA9 /* MJRefreshConst.m in Sources */,
 				4A6423A61D19396600F26BA9 /* AFURLSessionManager.m in Sources */,
 				4A6423A71D19396600F26BA9 /* UIView+SDExtension.m in Sources */,
+				4A64A1601D2271B100A3DC7C /* ProductClassifySmallViewController.m in Sources */,
 				4A6423A81D19396600F26BA9 /* ChargebackTableViewCell.m in Sources */,
 				4A6423A91D19396600F26BA9 /* HYBModalTransition.m in Sources */,
 				4A6423AA1D19396600F26BA9 /* UIImageView+WebCache.m in Sources */,
@@ -2168,10 +2229,12 @@
 				4A6423C81D19396600F26BA9 /* MainTableViewCell.m in Sources */,
 				4A6423C91D19396600F26BA9 /* MASViewConstraint.m in Sources */,
 				4A6423CA1D19396600F26BA9 /* ButtonDismissAnimation.m in Sources */,
+				4A64A1691D22867900A3DC7C /* ServiceTypeViewController.m in Sources */,
 				4A6423CB1D19396600F26BA9 /* MKAnnotationView+WebCache.m in Sources */,
 				4A6423CC1D19396600F26BA9 /* CompleteViewController.m in Sources */,
 				4A6423CD1D19396600F26BA9 /* MJRefreshAutoStateFooter.m in Sources */,
 				4A6423CE1D19396600F26BA9 /* MJRefreshAutoNormalFooter.m in Sources */,
+				4A64A15D1D2271A000A3DC7C /* ProductClassifyBigViewController.m in Sources */,
 				4A6423CF1D19396600F26BA9 /* MASConstraintMaker.m in Sources */,
 				4A6423D01D19396600F26BA9 /* EnsureOrderViewController.m in Sources */,
 				4A6423D11D19396600F26BA9 /* ButtonViewController.m in Sources */,
@@ -2191,6 +2254,7 @@
 				4A6423DF1D19396600F26BA9 /* openssl_wrapper.m in Sources */,
 				4A6423E01D19396600F26BA9 /* CompleteButtonViewController.m in Sources */,
 				4A6423E11D19396600F26BA9 /* UIView+WebCacheOperation.m in Sources */,
+				4A64A1571D22715100A3DC7C /* ProductTypeViewController.m in Sources */,
 				4A6423E21D19396600F26BA9 /* MJRefreshBackStateFooter.m in Sources */,
 				4A6423E31D19396600F26BA9 /* OrderModel.m in Sources */,
 				4A6423E41D19396600F26BA9 /* SDWebImageCompat.m in Sources */,
@@ -2308,6 +2372,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Yu Guancheng (7JFJ68W47N)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yu Guancheng (7JFJ68W47N)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/爱服务/Libraries/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -2353,6 +2418,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Yu Guancheng (FGP43E8495)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Yu Guancheng (FGP43E8495)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/爱服务/Libraries/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -2446,6 +2512,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yu Guancheng (7JFJ68W47N)";
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/爱服务/Libraries/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -2491,6 +2558,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Yu Guancheng (FGP43E8495)";
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/爱服务/Libraries/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",

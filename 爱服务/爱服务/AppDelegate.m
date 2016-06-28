@@ -52,9 +52,9 @@ static BOOL isProduction = FALSE;
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} ];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"hadLaunched"]) {
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"firstLaunched"];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"FirstLaunch"];
     }else {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunched"];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirstLaunch"];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hadLaunched"];
     }
     

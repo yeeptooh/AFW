@@ -9,10 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ProductDetailTableView : UITableView
-<
-UITableViewDelegate,
-UITableViewDataSource,
-UITextFieldDelegate
->
-@property (nonatomic, assign) CGRect baseFrame;
+
 @end

@@ -9,11 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface UserDetailTableView : UITableView
-<
-UITableViewDelegate,
-UITableViewDataSource,
-UITextFieldDelegate
->
 
-@property (nonatomic, assign) CGRect baseFrame;
 @end

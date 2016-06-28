@@ -385,6 +385,10 @@ static NSInteger tag = 0;
             
             [self.detailButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"a%ld",(long)tag]] forState:UIControlStateNormal];
             
+//            if (i == 2 && (j == 2 || j == 3)) {
+//                [self.detailButton setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+//            }
+            
             [self.detailButton addTarget:self action:@selector(detailButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
             
             

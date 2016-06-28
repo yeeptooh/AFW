@@ -9,10 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface BusinessDetailTableView : UITableView
-<
-UITableViewDelegate,
-UITableViewDataSource,
-UITextFieldDelegate
->
-@property (nonatomic, assign) CGRect baseFrame;
+
 @end
