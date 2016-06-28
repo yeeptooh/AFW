@@ -332,7 +332,8 @@ static NSInteger i = 0;
         
         UserModel *userModel = [UserModel readUserModel];
         
-        NSString *url = [NSString stringWithFormat:@"%@Payment/Alipay/Recharge.ashx?action=getorderid",@"http://192.168.1.173:90/forapp/"];//HomeURL];
+        NSString *url = [NSString stringWithFormat:@"%@Payment/Alipay/Recharge.ashx?action=getorderid",HomeURL];
+//        NSString *url = [NSString stringWithFormat:@"%@Payment/Alipay/Recharge.ashx?action=getorderid",@"http://192.168.1.173:90/forapp/"];
         NSDictionary *params = @{
                                  @"title":order.subject,
                                  @"content":order.body,
@@ -348,7 +349,8 @@ static NSInteger i = 0;
             
             if ([json[@"status"] isEqualToString:@"ok"]) {
                 NSLog(@"json = %@",json);
-                order.notifyURL = @"http://notify.msp.hk/notify.htm";//@"http://i.51ifw.com/forapp/payment/alipay/notify.aspx";//支付宝服务器异步通知自己服务器回调的URL
+                order.notifyURL = @"http://i.51ifw.com/forapp/payment/alipay/notify.aspx";//支付宝服务器异步通知自己服务器回调的URL
+//                order.notifyURL = @"http://notify.msp.hk/notify.htm";//支付宝服务器异步通知自己服务器回调的URL
                 order.outTradeNO = json[@"data"];
                 [[NSUserDefaults standardUserDefaults] setObject:order.outTradeNO forKey:@"outTradeNO"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
@@ -375,7 +377,8 @@ static NSInteger i = 0;
                 
                 AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
                 
-                NSString *url = [NSString stringWithFormat:@"%@Payment/Alipay/Recharge.ashx?action=getsign&orderId=%@",@"http://192.168.1.173:90/forapp/",order.outTradeNO];
+                NSString *url = [NSString stringWithFormat:@"%@Payment/Alipay/Recharge.ashx?action=getsign&orderId=%@",HomeURL,order.outTradeNO];
+//                NSString *url = [NSString stringWithFormat:@"%@Payment/Alipay/Recharge.ashx?action=getsign&orderId=%@",@"http://192.168.1.173:90/forapp/",order.outTradeNO];
                 manager.responseSerializer = [AFHTTPResponseSerializer serializer];
                 [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                     NSDictionary *json = (NSDictionary *)[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
@@ -469,7 +472,8 @@ static NSInteger i = 0;
     dispatch_group_t group = dispatch_group_create();
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    NSString *url = [NSString stringWithFormat:@"%@/Payment/Alipay/Recharge.ashx?action=getorderstate&orderid=%@",@"http://192.168.1.173:90/forapp",order.outTradeNO];
+//    NSString *url = [NSString stringWithFormat:@"%@/Payment/Alipay/Recharge.ashx?action=getorderstate&orderid=%@",@"http://192.168.1.173:90/forapp",order.outTradeNO];
+    NSString *url = [NSString stringWithFormat:@"%@/Payment/Alipay/Recharge.ashx?action=getorderstate&orderid=%@",HomeURL,order.outTradeNO];
     dispatch_group_enter(group);
     
     
