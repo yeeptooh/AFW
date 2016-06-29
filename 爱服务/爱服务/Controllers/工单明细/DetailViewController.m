@@ -9,9 +9,11 @@
 #import "DetailViewController.h"
 #import "AFNetworking.h"
 #import "UserModel.h"
+
 #import "ButtonViewController.h"
 #import "PTypeViewController.h"
 #import "DatePickerViewController.h"
+#import "DialogViewController.h"
 
 #import "ButtonPresentAnimation.h"
 #import "ButtonDismissAnimation.h"
@@ -21,6 +23,9 @@
 
 #import "RefuseViewController.h"
 #import "AcceptViewController.h"
+
+#import "DialogAnimation.h"
+
 
 #import "MBProgressHUD.h"
 #import <AVFoundation/AVFoundation.h>
@@ -38,9 +43,18 @@ UIViewControllerTransitioningDelegate
 @property (nonatomic, strong) ProductTableViewCell *cell;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIAlertController *alertController;
+
+@property (nonatomic, strong) NSMutableArray *diaLogList;
 @end
 
 @implementation DetailViewController
+
+- (NSMutableArray *)diaLogList {
+    if (!_diaLogList) {
+        _diaLogList = [NSMutableArray array];
+    }
+    return _diaLogList;
+}
 
 - (UIAlertController *)alertController {
     if (!_alertController) {
@@ -113,7 +127,7 @@ UIViewControllerTransitioningDelegate
     
     self.baseDetailInfoCell.phone = self.phone;
     
-    
+    [self.baseDetailInfoCell.dialogButton addTarget:self action:@selector(dialogButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     self.baseDetailInfoCell.phoneLabel.text = self.phone;
     self.baseDetailInfoCell.fromLabel.text = self.from;
     self.baseDetailInfoCell.fromPhoneLabel.text = self.fromPhone;
@@ -123,6 +137,31 @@ UIViewControllerTransitioningDelegate
     
     [self.view addSubview:self.baseDetailInfoCell];
     
+}
+
+- (void)dialogButtonClicked {
+    
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *url = [NSString stringWithFormat:@"%@Task.ashx?action=getfeedbacklist&taskid=%@",HomeURL,@(self.ID)];
+    [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"responseObject = %@",responseObject);
+        for (NSDictionary *dic in responseObject) {
+            [self.diaLogList addObject:dic];
+        }
+        
+        DialogViewController *dialogVC = [[DialogViewController alloc] init];
+        dialogVC.modalPresentationStyle = UIModalPresentationCustom;
+        dialogVC.transitioningDelegate = self;
+        dialogVC.dialogList = self.diaLogList;
+        [self presentViewController:dialogVC animated:YES completion:^{
+            [dialogVC.textView becomeFirstResponder];
+        }];
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"error = %@",error.userInfo);
+    }];
+
 }
 
 - (void)locationButtonClicked {
@@ -539,11 +578,22 @@ UIViewControllerTransitioningDelegate
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
-    return [[ButtonPresentAnimation alloc]init];
+//    NSLog(@"%@",[presented class]);
+    if ([presented isKindOfClass:[DialogViewController class]]) {
+        return [DialogAnimation dialogAnimationWithType:DialogAnimationTypePresent duration:0.75];
+    }else {
+        return [[ButtonPresentAnimation alloc]init];
+    }
+    
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
-    return [[ButtonDismissAnimation alloc]init];
+    if ([dismissed isKindOfClass:[DialogViewController class]]) {
+        return [DialogAnimation dialogAnimationWithType:DialogAnimationTypeDismiss duration:0.75];
+    }else {
+        return [[ButtonDismissAnimation alloc]init];
+    }
+    
 }
 
 

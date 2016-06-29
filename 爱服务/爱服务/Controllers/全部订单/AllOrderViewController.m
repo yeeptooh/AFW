@@ -470,7 +470,7 @@ UITextFieldDelegate
         [weakSelf.HUD removeFromSuperViewOnHide];
         
         for (NSDictionary *dic in responseObject[@"task"]) {
-            //            NSLog(@"dic = %@",dic);
+//                        NSLog(@"dic = %@",dic);
             OrderModel *ordelModel = [OrderModel orderFromDictionary:dic];
             [weakSelf.dicList addObject:ordelModel];
         }

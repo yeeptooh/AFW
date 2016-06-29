@@ -24,7 +24,7 @@ UIViewControllerTransitioningDelegate
 @implementation DetailTaskPlanTableViewCell
 
 - (void)awakeFromNib {
-    // Initialization code
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -72,7 +72,7 @@ UIViewControllerTransitioningDelegate
         }else if (call.callState ==CTCallStateDialing) {
               //拨号
         }else {
-            //NSLog(@"Nothing is done????????????2");
+            
         }
     };
 }
@@ -174,6 +174,7 @@ UIViewControllerTransitioningDelegate
         }];
     }
 }
+
 
 - (UIViewController*)viewController {
     for (UIView* next = [self superview]; next; next = next.superview) {
