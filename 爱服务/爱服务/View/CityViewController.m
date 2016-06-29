@@ -23,7 +23,15 @@ UIViewControllerTransitioningDelegate
     [super viewDidLoad];
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 25, Width, self.view.bounds.size.height - 250) style:UITableViewStylePlain];
+    NSInteger height;
+    if (iPhone5_5s || iPhone4_4s) {
+        height = 250;
+    }else if (iPhone6){
+        height = 350;
+    }else{
+        height = 420;
+    }
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 25, Width, self.view.bounds.size.height - height) style:UITableViewStylePlain];
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     backBtn.frame = CGRectMake(Width*6/7, 5, 20, 20);
     [backBtn setImage:[UIImage imageNamed:@"icon_login_close_pre"] forState:UIControlStateNormal];

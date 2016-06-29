@@ -9,5 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface ProductDetailTableView : UITableView
+@property (nonatomic, assign) NSInteger baoxiuIndex;
 
+@property (nonatomic, strong) NSString *FtypeID;
+@property (nonatomic, strong) NSString *FbigID;
+@property (nonatomic, strong) NSString *FsmallID;
 @end

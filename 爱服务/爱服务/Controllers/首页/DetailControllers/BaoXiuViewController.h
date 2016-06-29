@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-typedef void (^ReturnBaoxiu)(NSString *name);
+typedef void (^ReturnBaoxiu)(NSString *name, NSInteger row);
 @interface BaoXiuViewController : UIViewController
 @property (nonatomic, strong) NSMutableArray *List;
 @property (nonatomic, copy) ReturnBaoxiu returnInfo;

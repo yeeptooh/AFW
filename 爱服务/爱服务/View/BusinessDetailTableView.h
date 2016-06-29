@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface BusinessDetailTableView : UITableView
-
+@property (nonatomic, assign) NSInteger serviceID;
 @end

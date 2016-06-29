@@ -37,6 +37,9 @@ UITextFieldDelegate
 @property (nonatomic, strong) NSString *smallID;
 
 
+
+
+
 @end
 
 @implementation ProductDetailTableView
@@ -217,7 +220,7 @@ UITextFieldDelegate
         typeVC.List = self.typeList;
         typeVC.returnInfo = ^(NSString *name, NSInteger row){
             [sender setTitle:name forState:UIControlStateNormal];
-            
+            self.FtypeID = self.typeIDList[row];
             NSString *bigUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getproductclassify&comid=%@&uid=%@&breedid=%@",HomeURL,@(userModel.comid),@(userModel.uid),self.typeIDList[row]];
             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
             [manager GET:bigUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -231,6 +234,8 @@ UITextFieldDelegate
                     name = @"";
                     self.bigID = @"bitch";
                 }
+                
+                self.FbigID = self.bigID;
                 [button setTitle:name forState:UIControlStateNormal];
                 if (self.bigList.count != 0) {
                     [self.bigList removeAllObjects];
@@ -259,6 +264,7 @@ UITextFieldDelegate
                             name = @"";
                             self.smallID = @"bitch";
                         }
+                        self.FsmallID = self.smallID;
                         [button setTitle:name forState:UIControlStateNormal];
                         if (self.smallList.count != 0) {
                             [self.smallList removeAllObjects];
@@ -295,7 +301,7 @@ UITextFieldDelegate
         bigVC.returnInfo = ^(NSString *name, NSInteger row){
             
             [sender setTitle:name forState:UIControlStateNormal];
-            
+            self.FbigID = self.bigIDList[row];
             NSString *bigUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getproductclassify2&comid=%@&uid=%@&parent=%@",HomeURL,@(userModel.comid),@(userModel.uid),self.bigIDList[row]];
             
             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -311,6 +317,7 @@ UITextFieldDelegate
                     name = @"";
                     self.smallID = @"bitch";
                 }
+                self.FsmallID = self.smallID;
                 [button setTitle:name forState:UIControlStateNormal];
                 if (self.smallList.count != 0) {
                     [self.smallList removeAllObjects];
@@ -337,6 +344,7 @@ UITextFieldDelegate
         smallVC.List = self.smallList;
         smallVC.returnInfo = ^(NSString *name, NSInteger row){
             [sender setTitle:name forState:UIControlStateNormal];
+            self.FsmallID = self.smallIDList[row];
         };
         
         [[self viewController] presentViewController:smallVC animated:YES completion:nil];
@@ -344,8 +352,13 @@ UITextFieldDelegate
     }else if (sender.tag == 204) {
         BaoXiuViewController *bxVC = [[BaoXiuViewController alloc] init];
         bxVC.List = [NSMutableArray arrayWithArray:@[@"保内",@"保外"]];
-        bxVC.returnInfo = ^(NSString *name) {
+        bxVC.returnInfo = ^(NSString *name, NSInteger row) {
             [sender setTitle:name forState:UIControlStateNormal];
+            if (row == 0) {
+                self.baoxiuIndex = 1;
+            }else {
+                self.baoxiuIndex = 0;
+            }
         };
         
         [[self viewController] presentViewController:bxVC animated:YES completion:nil];
@@ -384,6 +397,7 @@ UITextFieldDelegate
 
 
 - (void)netWorkingRequest {
+    self.baoxiuIndex = 1;
     UserModel *userModel = [UserModel readUserModel];
     NSString *typeUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getproductbree&comid=%@&uid=%@",HomeURL,@(userModel.comid),@(userModel.uid)];
     
@@ -398,7 +412,7 @@ UITextFieldDelegate
             [self.typeList addObject:dic[@"n"]];
             [self.typeIDList addObject:dic[@"c"]];
         }
-        
+        self.FtypeID = self.typeIDList[0];
         
         NSString *bigUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getproductclassify&comid=%@&uid=%@&breedid=%@",HomeURL,@(userModel.comid),@(userModel.uid),self.typeIDList[0]];
         
@@ -413,7 +427,7 @@ UITextFieldDelegate
                 [self.bigList addObject:dic[@"n"]];
                 [self.bigIDList addObject:dic[@"c"]];
             }
-            
+            self.FbigID = self.bigIDList[0];
             
             NSString *bigUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getproductclassify2&comid=%@&uid=%@&parent=%@",HomeURL,@(userModel.comid),@(userModel.uid),self.bigIDList[0]];
             
@@ -427,6 +441,8 @@ UITextFieldDelegate
                     [self.smallList addObject:dic[@"n"]];
                     [self.smallIDList addObject:dic[@"c"]];
                 }
+                
+                self.FsmallID = self.smallIDList[0];
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 
             }];

@@ -20,8 +20,9 @@
     [aCoder encodeObject:[NSNumber numberWithInteger:self.cityid] forKey:@"cityid"];
     [aCoder encodeObject:[NSNumber numberWithInteger:self.districtid] forKey:@"districtid"];
     [aCoder encodeObject:self.name forKey:@"name"];
-    
-    
+    [aCoder encodeObject:self.companyName forKey:@"companyName"];
+    [aCoder encodeObject:self.masterName forKey:@"masterName"];
+    [aCoder encodeObject:self.userType forKey:@"userType"];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
@@ -35,7 +36,9 @@
         self.cityid = [[aDecoder decodeObjectForKey:@"cityid"] integerValue];
         self.districtid = [[aDecoder decodeObjectForKey:@"districtid"] integerValue];
         self.name = [aDecoder decodeObjectForKey:@"name"];
-        
+        self.companyName = [aDecoder decodeObjectForKey:@"companyName"];
+        self.masterName = [aDecoder decodeObjectForKey:@"masterName"];
+        self.userType = [aDecoder decodeObjectForKey:@"userType"];
     }
     return self;
 }

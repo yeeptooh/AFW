@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface UserDetailTableView : UITableView
-
+@property (nonatomic, strong) NSString *FprovinceID;
+@property (nonatomic, strong) NSString *FcityID;
+@property (nonatomic, strong) NSString *FregionID;
+@property (nonatomic, strong) NSString *FstreetID;
 @end

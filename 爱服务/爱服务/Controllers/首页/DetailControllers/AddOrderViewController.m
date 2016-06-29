@@ -41,6 +41,9 @@
 @property (nonatomic, strong) UITapGestureRecognizer *tapBusinessInfo;
 
 
+@property (nonatomic, strong) NSString *fromUserName;
+
+
 @end
 
 @implementation AddOrderViewController
@@ -351,6 +354,187 @@
 
 - (void)saveButtonClicked:(UIButton *)sender {
     
+    if (!((UITextField *)[self.userTableView viewWithTag:100]).text || [((UITextField *)[self.userTableView viewWithTag:100]).text isEqualToString:@""]) {
+        UIView *window = [[UIApplication sharedApplication].delegate window];
+        MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:window];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = @"请填写姓名";
+        CGFloat size;
+        if (iPhone4_4s || iPhone5_5s) {
+            size = 14;
+        }else {
+            size = 16;
+        }
+        hud.label.font = font(size);
+        [window addSubview:hud];
+        [hud showAnimated:YES];
+        [hud hideAnimated:YES afterDelay:0.75];
+        [hud removeFromSuperViewOnHide];
+        
+        return ;
+    }
+    
+    if (!((UITextField *)[self.userTableView viewWithTag:101]).text || [((UITextField *)[self.userTableView viewWithTag:101]).text isEqualToString:@""]) {
+        UIView *window = [[UIApplication sharedApplication].delegate window];
+        MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:window];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = @"请填写手机";
+        
+        CGFloat size;
+        if (iPhone4_4s || iPhone5_5s) {
+            size = 14;
+        }else {
+            size = 16;
+        }
+        hud.label.font = font(size);
+        [window addSubview:hud];
+        [hud showAnimated:YES];
+        [hud hideAnimated:YES afterDelay:0.75];
+        [hud removeFromSuperViewOnHide];
+        
+        return ;
+    }
+    
+    if (!((UITextField *)[self.userTableView viewWithTag:106]).text || [((UITextField *)[self.userTableView viewWithTag:106]).text isEqualToString:@""]) {
+        UIView *window = [[UIApplication sharedApplication].delegate window];
+        MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:window];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = @"请填写详细地址";
+        CGFloat size;
+        if (iPhone4_4s || iPhone5_5s) {
+            size = 14;
+        }else {
+            size = 16;
+        }
+        hud.label.font = font(size);
+        [window addSubview:hud];
+        [hud showAnimated:YES];
+        [hud hideAnimated:YES afterDelay:0.75];
+        [hud removeFromSuperViewOnHide];
+        
+        return ;
+    }
+    
+    
+    if (!((UITextField *)[self.productTableView viewWithTag:103]).text || [((UITextField *)[self.productTableView viewWithTag:103]).text isEqualToString:@""]) {
+        UIView *window = [[UIApplication sharedApplication].delegate window];
+        MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:window];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = @"请填写产品型号";
+        CGFloat size;
+        if (iPhone4_4s || iPhone5_5s) {
+            size = 14;
+        }else {
+            size = 16;
+        }
+        hud.label.font = font(size);
+        
+        [window addSubview:hud];
+        [hud showAnimated:YES];
+        [hud hideAnimated:YES afterDelay:0.75];
+        [hud removeFromSuperViewOnHide];
+        
+        return ;
+    }
+    
+    
+    
+    
+    
+    
+    UserModel *userModel = [UserModel readUserModel];
+    if (userModel.companyName) {
+        self.fromUserName = userModel.companyName;
+    }else if (userModel.masterName) {
+        self.fromUserName = userModel.masterName;
+    }else {
+        self.fromUserName = userModel.name;
+    }
+    
+    NSString *url = [NSString stringWithFormat:@"%@Task.ashx?action=addtask",HomeURL];
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    NSDictionary *params = @{
+                             @"from_user_name":self.fromUserName,
+                             @"is_free":@(self.productTableView.baoxiuIndex),
+                             @"service_classify_id":@(self.businessTableView.serviceID),
+                             @"product_big_classify_id":self.productTableView.FbigID,
+                             @"product_small_classify_id":self.productTableView.FsmallID,
+                             @"product_breed_id":self.productTableView.FtypeID,
+                             @"product_type":((UIButton *)[self.productTableView viewWithTag:200]).titleLabel.text,
+                             @"buy_time":((UIButton *)[self.productTableView viewWithTag:205]).titleLabel.text,
+                             @"buyer_name":((UITextField *)[self.userTableView viewWithTag:100]).text,
+                             @"buyerPhone":((UITextField *)[self.userTableView viewWithTag:101]).text,
+                             @"buyer_province_id":self.userTableView.FprovinceID,
+                             @"buyer_province":((UIButton *)[self.userTableView viewWithTag:202]).titleLabel.text,
+                             @"buyer_city_id":self.userTableView.FcityID,
+                             @"buyer_city":((UIButton *)[self.userTableView viewWithTag:203]).titleLabel.text,
+                             @"buyer_district_id":self.userTableView.FregionID,
+                             @"buyer_district":((UIButton *)[self.userTableView viewWithTag:204]).titleLabel.text,
+                             @"buyer_town_id":self.userTableView.FstreetID,
+                             @"buyer_town":((UIButton *)[self.userTableView viewWithTag:205]).titleLabel.text,
+                             @"buyer_address":((UITextField *)[self.userTableView viewWithTag:106]).text,
+                             @"expectant_time":((UIButton *)[self.businessTableView viewWithTag:201]).titleLabel.text,
+                             @"postscript":((UITextField *)[self.businessTableView viewWithTag:102]).text,
+                             @"handler_name":userModel.name,
+                             @"order_number":((UITextField *)[self.productTableView viewWithTag:103]).text,
+                             @"from_user_id":@(userModel.uid),
+                             @"from_user_type":userModel.userType,
+                             @"handler_id":@(userModel.uid)
+                             };
+    NSLog(@"%@",params);
+    
+    [manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if ([responseObject[@"ret"] integerValue] == 1) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kBadgeValueChanged object:nil];
+            MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.view];
+            hud.mode = MBProgressHUDModeText;
+            hud.label.text = @"下单成功";
+            CGFloat size;
+            if (iPhone4_4s || iPhone5_5s) {
+                size = 14;
+            }else {
+                size = 16;
+            }
+            hud.label.font = font(size);
+            [self.view addSubview:hud];
+            [hud showAnimated:YES];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.75 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [hud hideAnimated:YES];
+                [hud removeFromSuperViewOnHide];
+                
+                [self.navigationController popViewControllerAnimated:YES];
+                
+                
+            });
+            
+            
+            
+            
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.view];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = @"下单失败，请检查网络";
+        CGFloat size;
+        if (iPhone4_4s || iPhone5_5s) {
+            size = 14;
+        }else {
+            size = 16;
+        }
+        hud.label.font = font(size);
+        [self.view addSubview:hud];
+        [hud showAnimated:YES];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.75 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [hud hideAnimated:YES];
+            [hud removeFromSuperViewOnHide];
+
+        });
+    }];
+
 }
 
 

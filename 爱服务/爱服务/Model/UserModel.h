@@ -21,6 +21,13 @@ NSCoding
 @property (nonatomic, assign) NSInteger cityid;
 @property (nonatomic, assign) NSInteger districtid;
 
+
+@property (nonatomic, strong) NSString *companyName;
+@property (nonatomic, strong) NSString *masterName;
+@property (nonatomic, strong) NSString *userType;
+
+
+
 + (void)writeUserModel:(UserModel *)userModel;
 + (UserModel *)readUserModel;
 

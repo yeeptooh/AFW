@@ -51,7 +51,7 @@ UIViewControllerTransitioningDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return 2;
+    return self.List.count;
 }
 
 
@@ -72,7 +72,7 @@ UIViewControllerTransitioningDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
-    self.returnInfo(self.List[indexPath.row]);
+    self.returnInfo(self.List[indexPath.row], indexPath.row);
     
 }
 
