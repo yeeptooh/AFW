@@ -111,7 +111,7 @@ static NSInteger tag = 0;
     [self setBreakLine];
     
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"AVCan"];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(badgeValueChanged:) name:kBadgeValueChanged object:nil];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:5 * 60 target:self selector:@selector(updateUI) userInfo:nil repeats:YES];
 }
 
@@ -195,6 +195,9 @@ static NSInteger tag = 0;
             userModel.cityid = [responseObject[@"user"][0][@"CityID"] integerValue];
             userModel.districtid = [responseObject[@"user"][0][@"DistrictID"] integerValue];
             userModel.name = responseObject[@"user"][0][@"Name"];
+            userModel.companyName = responseObject[@"user"][0][@"CompanyName"];
+            userModel.masterName = responseObject[@"user"][0][@"MasterName"];
+            userModel.userType = responseObject[@"user"][0][@"UserType"];
             [UserModel writeUserModel:userModel];
             
 //            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -234,10 +237,10 @@ static NSInteger tag = 0;
 }
 
 - (void)updateUI {
-    
-    self.HUD = [[MBProgressHUD alloc]initWithView:self.view];
+    UIView *window = [[UIApplication sharedApplication].delegate window];
+    self.HUD = [[MBProgressHUD alloc]initWithView:window];
     self.HUD.mode = MBProgressHUDModeIndeterminate;
-    [self.view addSubview:self.HUD];
+    [window addSubview:self.HUD];
     
     [self upDateNetWorking];
     
@@ -808,6 +811,56 @@ static NSInteger tag = 0;
     
 }
 
+- (void)badgeValueChanged:(NSNotification *)noti {
+    UIViewController *receiveVC = [self.tabBarController viewControllers][1];
+    UIViewController *completeVC = [self.tabBarController viewControllers][2];
+    UIViewController *robVC = [self.tabBarController viewControllers][3];
+    UIViewController *allorderVC = [self.tabBarController viewControllers][4];
+    
+    UserModel *userModel = [UserModel readUserModel];
+    
+    //    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *countString = [NSString stringWithFormat:@"%@Task.ashx?action=gettaskcount&comid=%ld&uid=%ld&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    [manager GET:countString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSString *allString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSArray *countList = [allString componentsSeparatedByString:@","];
+        
+        [[NSUserDefaults standardUserDefaults] setObject:countList forKey:@"countList"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][1] isEqualToString:@"0"]) {
+            
+            receiveVC.tabBarItem.badgeValue = nil;
+        }else{
+            receiveVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][1];
+        }
+        
+        if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][2] isEqualToString:@"0"]) {
+            completeVC.tabBarItem.badgeValue = nil;
+        }else{
+            completeVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][2];
+        }
+        
+        if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][3] isEqualToString:@"0"]) {
+            robVC.tabBarItem.badgeValue = nil;
+        }else{
+            robVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][3];
+        }
+        
+        if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][0] isEqualToString:@"0"]) {
+            allorderVC.tabBarItem.badgeValue = nil;
+        }else{
+            allorderVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][0];
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+}
 
 
 #pragma mark - UIViewControllerTransitioningDelegate -

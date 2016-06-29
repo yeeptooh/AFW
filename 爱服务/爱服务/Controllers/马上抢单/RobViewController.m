@@ -280,7 +280,7 @@ UITextFieldDelegate
         
         NSString *allString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSArray *countList = [allString componentsSeparatedByString:@","];
-        NSLog(@"－－－%@",countList);
+        
         [[NSUserDefaults standardUserDefaults] setObject:countList forKey:@"countList"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
@@ -780,7 +780,7 @@ UITextFieldDelegate
         
         NSString *allString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSArray *countList = [allString componentsSeparatedByString:@","];
-        NSLog(@"－－－%@",countList);
+        
         [[NSUserDefaults standardUserDefaults] setObject:countList forKey:@"countList"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         

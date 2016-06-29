@@ -189,12 +189,14 @@ static BOOL isProduction = FALSE;
 
 - (void)updateResponse {
     self.bitch ++;
+    
     __block BOOL flag = NO;
     
     dispatch_group_t group = dispatch_group_create();
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    NSString *url = [NSString stringWithFormat:@"%@/Payment/Alipay/Recharge.ashx?action=getorderstate&orderid=%@",@"http://192.168.1.173:90/forapp",[[NSUserDefaults standardUserDefaults] objectForKey:@"outTradeNO"]];
+    NSString *url = [NSString stringWithFormat:@"%@/Payment/Alipay/Recharge.ashx?action=getorderstate&orderid=%@",HomeURL,[[NSUserDefaults standardUserDefaults] objectForKey:@"outTradeNO"]];
+    
     dispatch_group_enter(group);
     
     
@@ -238,35 +240,58 @@ static BOOL isProduction = FALSE;
                 
             });
             
+        }else {
+            if (self.bitch == 3) {
+                flag = YES;
+                MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.window];
+                hud.mode = MBProgressHUDModeText;
+                hud.label.text = @"支付取消";
+                CGFloat fontsize;
+                if (iPhone4_4s || iPhone5_5s) {
+                    fontsize = 14;
+                }else {
+                    fontsize = 16;
+                }
+                hud.label.font = font(fontsize);
+                [self.window addSubview:hud];
+                [hud showAnimated:YES];
+                hud.offset = CGPointMake(0, Height/5);
+                [hud hideAnimated:YES afterDelay:1.25];
+                [hud removeFromSuperViewOnHide];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.30 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    dispatch_group_leave(group);
+                });
+            }
         }
         
-        if ([responseObject[@"data"] integerValue] == 1) {
-            flag = YES;
-            MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.window];
-            hud.mode = MBProgressHUDModeText;
-            hud.label.text = @"支付取消";
-            CGFloat fontsize;
-            if (iPhone4_4s || iPhone5_5s) {
-                fontsize = 14;
-            }else {
-                fontsize = 16;
-            }
-            hud.label.font = font(fontsize);
-            [self.window addSubview:hud];
-            [hud showAnimated:YES];
-            hud.offset = CGPointMake(0, Height/5);
-            [hud hideAnimated:YES afterDelay:1.25];
-            [hud removeFromSuperViewOnHide];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                dispatch_group_leave(group);
-            });
-            
-        }
+//        if ([responseObject[@"data"] integerValue] == 1) {
+//            flag = YES;
+//            MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.window];
+//            hud.mode = MBProgressHUDModeText;
+//            hud.label.text = @"支付取消";
+//            CGFloat fontsize;
+//            if (iPhone4_4s || iPhone5_5s) {
+//                fontsize = 14;
+//            }else {
+//                fontsize = 16;
+//            }
+//            hud.label.font = font(fontsize);
+//            [self.window addSubview:hud];
+//            [hud showAnimated:YES];
+//            hud.offset = CGPointMake(0, Height/5);
+//            [hud hideAnimated:YES afterDelay:1.25];
+//            [hud removeFromSuperViewOnHide];
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                dispatch_group_leave(group);
+//            });
+//            
+//        }
         
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        dispatch_group_leave(group);
         NSLog(@"error.userInfo = %@",error.userInfo);
+        dispatch_group_leave(group);
+        
     }];
     
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
@@ -330,6 +355,9 @@ static BOOL isProduction = FALSE;
             userModel.cityid = [responseObject[@"user"][0][@"CityID"] integerValue];
             userModel.districtid = [responseObject[@"user"][0][@"DistrictID"] integerValue];
             userModel.name = responseObject[@"user"][0][@"Name"];
+            userModel.companyName = responseObject[@"user"][0][@"CompanyName"];
+            userModel.masterName = responseObject[@"user"][0][@"MasterName"];
+            userModel.userType = responseObject[@"user"][0][@"UserType"];
             [UserModel writeUserModel:userModel];
                         
             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -341,7 +369,7 @@ static BOOL isProduction = FALSE;
                 NSString *allString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
                 
                 NSArray *countList = [allString componentsSeparatedByString:@","];
-                NSLog(@"－－－%@",countList);
+                
                 [[NSUserDefaults standardUserDefaults] setObject:countList forKey:@"countList"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 

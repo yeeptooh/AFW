@@ -136,7 +136,7 @@ UITextFieldDelegate
         }else {
             if (indexPath.row == 0) {
                 NSString *name = [[NSUserDefaults standardUserDefaults] objectForKey:@"service"][0][@"n"];
-                NSLog(@"name = %@",name);
+                
                 [button setTitle:name forState:UIControlStateNormal];
             }
         }
@@ -159,6 +159,13 @@ UITextFieldDelegate
     [self endEditing:YES];
     if (sender.tag == 200) {
         
+        ServiceTypeViewController *serviceVC = [[ServiceTypeViewController alloc] init];
+        serviceVC.List = self.servceList;
+        serviceVC.returnInfo = ^(NSString *name, NSInteger row){
+            [sender setTitle:name forState:UIControlStateNormal];
+            self.serviceID = [self.serviceIDList[row] integerValue];
+        };
+        [[self viewController] presentViewController:serviceVC animated:YES completion:nil];
         
         
     }else if (sender.tag == 201) {
@@ -195,7 +202,7 @@ UITextFieldDelegate
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     [manager GET:typeUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@",responseObject);
+        NSLog(@"responseObject = %@",responseObject);
         [[NSUserDefaults standardUserDefaults] setObject:responseObject forKey:@"service"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
@@ -203,6 +210,8 @@ UITextFieldDelegate
             [self.servceList addObject:dic[@"n"]];
             [self.serviceIDList addObject:dic[@"c"]];
         }
+        self.serviceID = [self.serviceIDList[0] integerValue];
+        NSLog(@"self.servceList = %@",self.servceList);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];

@@ -260,6 +260,9 @@ UITextFieldDelegate
             userModel.cityid = [responseObject[@"user"][0][@"CityID"] integerValue];
             userModel.districtid = [responseObject[@"user"][0][@"DistrictID"] integerValue];
             userModel.name = responseObject[@"user"][0][@"Name"];
+            userModel.companyName = responseObject[@"user"][0][@"CompanyName"];
+            userModel.masterName = responseObject[@"user"][0][@"MasterName"];
+            userModel.userType = responseObject[@"user"][0][@"UserType"];
             [UserModel writeUserModel:userModel];
             
             [weakSelf.successHUD showAnimated:YES];

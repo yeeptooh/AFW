@@ -279,6 +279,11 @@
 		4A671C6A1CD0633C00F70176 /* ChargeBackReasonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A671C691CD0633C00F70176 /* ChargeBackReasonViewController.m */; };
 		4A671C761CD0C88E00F70176 /* RefuseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A671C751CD0C88E00F70176 /* RefuseViewController.m */; };
 		4A671C7C1CD0C94600F70176 /* RefuseReasonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A671C7B1CD0C94600F70176 /* RefuseReasonViewController.m */; };
+		4A67990F1D235FB000A8E0F5 /* ProductTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A64A1561D22715100A3DC7C /* ProductTypeViewController.m */; };
+		4A6799101D235FB000A8E0F5 /* ProductClassifyBigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A64A15C1D2271A000A3DC7C /* ProductClassifyBigViewController.m */; };
+		4A6799111D235FB000A8E0F5 /* ProductClassifySmallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A64A15F1D2271B100A3DC7C /* ProductClassifySmallViewController.m */; };
+		4A6799121D235FB000A8E0F5 /* BaoXiuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A64A1651D2272DB00A3DC7C /* BaoXiuViewController.m */; };
+		4A6799131D235FB000A8E0F5 /* ServiceTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A64A1681D22867900A3DC7C /* ServiceTypeViewController.m */; };
 		4A6973641CBB36DF002A036C /* Foundation+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6973631CBB36DF002A036C /* Foundation+Log.m */; };
 		4A69736A1CBB3DB3002A036C /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6973691CBB3DB3002A036C /* RegisterViewController.m */; };
 		4A69736D1CBB42C8002A036C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A69736C1CBB42C8002A036C /* MBProgressHUD.m */; };
@@ -1969,6 +1974,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A67990F1D235FB000A8E0F5 /* ProductTypeViewController.m in Sources */,
+				4A6799101D235FB000A8E0F5 /* ProductClassifyBigViewController.m in Sources */,
+				4A6799111D235FB000A8E0F5 /* ProductClassifySmallViewController.m in Sources */,
+				4A6799121D235FB000A8E0F5 /* BaoXiuViewController.m in Sources */,
+				4A6799131D235FB000A8E0F5 /* ServiceTypeViewController.m in Sources */,
 				4A57C6CE1D221B210023A1B7 /* ACCReviewViewController.m in Sources */,
 				4A1D9DA01D1BD1EA00052B92 /* UserDetailTableView.m in Sources */,
 				4A5229E21CBCA75B00DD2D9C /* PhoneNumberViewController.m in Sources */,
