@@ -176,10 +176,12 @@ static BOOL isProduction = FALSE;
         [[AlipaySDK defaultService]
          processOrderWithPaymentResult:url
          standbyCallback:^(NSDictionary *resultDic) {
-             self.bitch = 0;
-             if (self.bitch < 3) {
-                 [self updateResponse];
-             }
+//             self.bitch = 0;
+//             if (self.bitch < 3) {
+//                 [self updateResponse];
+//             }
+             
+             [self updateResponse];
              
          }];
     }
@@ -188,32 +190,24 @@ static BOOL isProduction = FALSE;
 }
 
 - (void)updateResponse {
-    self.bitch ++;
-    
-    __block BOOL flag = NO;
-    
-    dispatch_group_t group = dispatch_group_create();
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *url = [NSString stringWithFormat:@"%@/Payment/Alipay/Recharge.ashx?action=getorderstate&orderid=%@",HomeURL,[[NSUserDefaults standardUserDefaults] objectForKey:@"outTradeNO"]];
     
-    dispatch_group_enter(group);
-    
-    
+
     [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSLog(@"responseObject = %@",responseObject);
         if ([responseObject[@"data"] integerValue] ==  5) {
-            flag = YES;
+
+            
             MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.window];
             hud.mode = MBProgressHUDModeCustomView;
             [self.window addSubview:hud];
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 74, 74)];
             imageView.image = [UIImage imageNamed:@"icon_joblist_loading"];
             hud.customView = imageView;
-//            [UIView animateWithDuration:1.25 animations:^{
-//                hud.customView.layer.transform = CATransform3DRotate(hud.customView.layer.transform, M_PI_2*3, 0, 0, 1);
-//            }];
+
             
             CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
             animation.toValue = @(M_PI*2);
@@ -235,74 +229,41 @@ static BOOL isProduction = FALSE;
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [hud hideAnimated:YES];
                     [hud removeFromSuperViewOnHide];
-                    dispatch_group_leave(group);
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateMoney object:nil];
                 });
                 
             });
             
-        }else {
-            if (self.bitch == 3) {
-                flag = YES;
-                MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.window];
-                hud.mode = MBProgressHUDModeText;
-                hud.label.text = @"支付取消";
-                CGFloat fontsize;
-                if (iPhone4_4s || iPhone5_5s) {
-                    fontsize = 14;
-                }else {
-                    fontsize = 16;
-                }
-                hud.label.font = font(fontsize);
-                [self.window addSubview:hud];
-                [hud showAnimated:YES];
-                hud.offset = CGPointMake(0, Height/5);
-                [hud hideAnimated:YES afterDelay:1.25];
-                [hud removeFromSuperViewOnHide];
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.30 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    dispatch_group_leave(group);
-                });
-            }
         }
         
-//        if ([responseObject[@"data"] integerValue] == 1) {
-//            flag = YES;
-//            MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.window];
-//            hud.mode = MBProgressHUDModeText;
-//            hud.label.text = @"支付取消";
-//            CGFloat fontsize;
-//            if (iPhone4_4s || iPhone5_5s) {
-//                fontsize = 14;
-//            }else {
-//                fontsize = 16;
-//            }
-//            hud.label.font = font(fontsize);
-//            [self.window addSubview:hud];
-//            [hud showAnimated:YES];
-//            hud.offset = CGPointMake(0, Height/5);
-//            [hud hideAnimated:YES afterDelay:1.25];
-//            [hud removeFromSuperViewOnHide];
-//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//                dispatch_group_leave(group);
-//            });
-//            
-//        }
+        if ([responseObject[@"data"] integerValue] == 1) {
+
+            MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.window];
+            hud.mode = MBProgressHUDModeText;
+            hud.label.text = @"支付取消,如有疑问,请联系客服";
+            CGFloat fontsize;
+            if (iPhone4_4s || iPhone5_5s) {
+                fontsize = 14;
+            }else {
+                fontsize = 16;
+            }
+            hud.label.font = font(fontsize);
+            [self.window addSubview:hud];
+            [hud showAnimated:YES];
+            hud.offset = CGPointMake(0, Height/5);
+            [hud hideAnimated:YES afterDelay:1.5];
+            [hud removeFromSuperViewOnHide];
+            
+            
+        }
         
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error.userInfo = %@",error.userInfo);
-        dispatch_group_leave(group);
         
     }];
     
-    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
-        if (flag) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateMoney object:nil];
-            self.bitch = 3;
-        }else {
-            [self updateResponse];
-        }
-        
-    });
+    
 }
 
 
