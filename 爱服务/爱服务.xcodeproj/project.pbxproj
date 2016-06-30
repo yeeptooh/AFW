@@ -91,6 +91,8 @@
 		4A57F8871CD2F5390034E089 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57F87F1CD2F5390034E089 /* AFURLRequestSerialization.m */; };
 		4A57F8881CD2F5390034E089 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57F8811CD2F5390034E089 /* AFURLResponseSerialization.m */; };
 		4A57F8891CD2F5390034E089 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57F8831CD2F5390034E089 /* AFURLSessionManager.m */; };
+		4A5CBA241D24FA2000B36E6E /* MasterQueryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5CBA231D24FA2000B36E6E /* MasterQueryViewController.m */; };
+		4A5CBA251D24FA2000B36E6E /* MasterQueryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5CBA231D24FA2000B36E6E /* MasterQueryViewController.m */; };
 		4A5D038F1CCDF8C000773139 /* ZDDModalTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5D038E1CCDF8C000773139 /* ZDDModalTransition.m */; };
 		4A64236F1D19396600F26BA9 /* PhoneNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5229E11CBCA75B00DD2D9C /* PhoneNumberViewController.m */; };
 		4A6423701D19396600F26BA9 /* RechargeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5274661D113A7D00B056C6 /* RechargeViewController.m */; };
@@ -557,6 +559,8 @@
 		4A57F8811CD2F5390034E089 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		4A57F8821CD2F5390034E089 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		4A57F8831CD2F5390034E089 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		4A5CBA221D24FA2000B36E6E /* MasterQueryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterQueryViewController.h; sourceTree = "<group>"; };
+		4A5CBA231D24FA2000B36E6E /* MasterQueryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterQueryViewController.m; sourceTree = "<group>"; };
 		4A5D038D1CCDF8C000773139 /* ZDDModalTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZDDModalTransition.h; sourceTree = "<group>"; };
 		4A5D038E1CCDF8C000773139 /* ZDDModalTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZDDModalTransition.m; sourceTree = "<group>"; };
 		4A64241D1D19396600F26BA9 /* 爱服务厂商版.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "爱服务厂商版.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1404,6 +1408,8 @@
 				4A64A1651D2272DB00A3DC7C /* BaoXiuViewController.m */,
 				4A64A1671D22867900A3DC7C /* ServiceTypeViewController.h */,
 				4A64A1681D22867900A3DC7C /* ServiceTypeViewController.m */,
+				4A5CBA221D24FA2000B36E6E /* MasterQueryViewController.h */,
+				4A5CBA231D24FA2000B36E6E /* MasterQueryViewController.m */,
 			);
 			name = "爱服务厂商版";
 			sourceTree = "<group>";
@@ -2104,6 +2110,7 @@
 				4A4BD2D31CB8D903009DA0B9 /* SDWebImageDownloaderOperation.m in Sources */,
 				4A561D661CBDE9DE00BB26AC /* MainTableViewCell.m in Sources */,
 				4A4BD3241CB8F812009DA0B9 /* MASViewConstraint.m in Sources */,
+				4A5CBA241D24FA2000B36E6E /* MasterQueryViewController.m in Sources */,
 				4AF52EB31CC4B90400E25FC4 /* ButtonDismissAnimation.m in Sources */,
 				4A4BD2CD1CB8D903009DA0B9 /* MKAnnotationView+WebCache.m in Sources */,
 				4A4BD2F31CB8F515009DA0B9 /* CompleteViewController.m in Sources */,
@@ -2269,6 +2276,7 @@
 				4A6423C91D19396600F26BA9 /* MASViewConstraint.m in Sources */,
 				4A6423CA1D19396600F26BA9 /* ButtonDismissAnimation.m in Sources */,
 				4A64A1691D22867900A3DC7C /* ServiceTypeViewController.m in Sources */,
+				4A5CBA251D24FA2000B36E6E /* MasterQueryViewController.m in Sources */,
 				4A6423CB1D19396600F26BA9 /* MKAnnotationView+WebCache.m in Sources */,
 				4A6423CC1D19396600F26BA9 /* CompleteViewController.m in Sources */,
 				4A6423CD1D19396600F26BA9 /* MJRefreshAutoStateFooter.m in Sources */,

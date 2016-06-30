@@ -1,15 +1,16 @@
 //
-//  ACCReviewViewController.m
+//  MasterQueryViewController.m
 //  爱服务
 //
-//  Created by 张冬冬 on 16/6/22.
+//  Created by 张冬冬 on 16/6/30.
 //  Copyright © 2016年 张冬冬. All rights reserved.
 //
 
-#import "ACCReviewViewController.h"
+#import "MasterQueryViewController.h"
 #import "UserModel.h"
 #import <WebKit/WebKit.h>
-@interface ACCReviewViewController ()
+//http://192.168.1.228:90/forapp/MasterList.aspx?device=i
+@interface MasterQueryViewController ()
 <
 WKNavigationDelegate,
 WKUIDelegate
@@ -19,7 +20,7 @@ WKUIDelegate
 @property (nonatomic, strong) UIView *noNetWorkingView;
 @end
 
-@implementation ACCReviewViewController
+@implementation MasterQueryViewController
 
 - (UIView *)noNetWorkingView {
     
@@ -67,7 +68,7 @@ WKUIDelegate
 
 
 - (void)setWebView {
-    UserModel *userModel = [UserModel readUserModel];
+    
     self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, Width, Height - StatusBarAndNavigationBarHeight)];
     
     
@@ -77,7 +78,7 @@ WKUIDelegate
     
     self.webView.scrollView.bounces = NO;
     self.webView.scrollView.showsVerticalScrollIndicator = NO;
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/PartsCheck.aspx?comId=%ld&device=i",HomeURL,(long)userModel.comid]]]];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@MasterList.aspx?device=i",HomeURL]]]];
     [self.view addSubview:self.progressView];
     [self.view insertSubview:self.webView belowSubview:self.progressView];
     
@@ -88,7 +89,8 @@ WKUIDelegate
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:@"estimatedProgress"]) {
-        
+        //        self.progressView.hidden = self.webView.estimatedProgress == 1;
+        //        [self.progressView setProgress:self.webView.estimatedProgress animated:YES];
         self.progressView.progress = self.webView.estimatedProgress;
     }
     //加载完成
@@ -116,21 +118,15 @@ WKUIDelegate
 }
 
 - (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler {
+    UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleDefault handler:nil];
     
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
+    [controller addAction:action];
     
-    UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    [self presentViewController:controller animated:YES completion:^{
         completionHandler();
     }];
-    
-    
-    [alert addAction:action];
-    
-    [self presentViewController:alert animated:YES completion:nil];
-    
-    
 }
-
 
 
 - (void)dealloc {
@@ -138,8 +134,8 @@ WKUIDelegate
     [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];
     
 }
-- (void)setNaviTitle {
-    self.navigationItem.title = @"配件审核";
-}
 
+- (void)setNaviTitle {
+    self.navigationItem.title = @"师傅查询";
+}
 @end

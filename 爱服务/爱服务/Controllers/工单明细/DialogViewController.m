@@ -8,6 +8,8 @@
 
 #import "DialogViewController.h"
 #import "DialogTableViewCell.h"
+#import "AFNetworking.h"
+#import "MBProgressHUD.h"
 @interface DialogViewController ()
 <
 UITableViewDelegate,
@@ -15,6 +17,9 @@ UITableViewDataSource,
 UITextViewDelegate
 >
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UITapGestureRecognizer *tap;
+@property (nonatomic, strong) UIView *whiteView;
+
 @end
 
 @implementation DialogViewController
@@ -42,6 +47,7 @@ UITextViewDelegate
     self.textView.font = font(14);
     self.textView.returnKeyType = UIReturnKeyDone;
     self.textView.delegate = self;
+    
     [self.view addSubview:self.textView];
     
     UILabel *line = [[UILabel alloc] init];
@@ -60,11 +66,12 @@ UITextViewDelegate
     self.tableView.showsHorizontalScrollIndicator = NO;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    
     self.tableView.tableFooterView = [[UIView alloc]init];
-    
     [self.view addSubview:self.tableView];
+    self.tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
     
-    
+    [self.tableView addGestureRecognizer:self.tap];
     
     UIButton *sendButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [sendButton setTitle:@"发送" forState:UIControlStateNormal];
@@ -79,6 +86,11 @@ UITextViewDelegate
     
 
 }
+
+- (void)tapAction:(UITapGestureRecognizer *)tap {
+    [self.view endEditing:YES];
+}
+
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -100,24 +112,167 @@ UITextViewDelegate
     cell.dateLabel.text = [NSString stringWithFormat:@"%@ %@",yearStr,timeStr];
     cell.companyLabel.text = self.dialogList[indexPath.row][@"FromUserName"];
     
-    return [[UITableViewCell alloc] init];
+    return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.view endEditing:YES];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewAutomaticDimension;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 44;
+}
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
 }
 
 - (void)sendButtonClicked:(UIButton *)sender {
     
+    sender.userInteractionEnabled = NO;
+    sender.backgroundColor = color(144, 144, 144, 1);
+    
+    
+    [self.view endEditing:YES];
+    self.textView.text = [self.textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    if ([self.textView.text isEqualToString:@""]) {
+        MBProgressHUD *HUD = [[MBProgressHUD alloc]initWithView:self.view];
+        HUD.mode = MBProgressHUDModeText;
+        HUD.label.font = font(14);
+        HUD.label.text = @"请填写发送内容";
+        [self.view addSubview:HUD];
+        
+        [HUD showAnimated:YES];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [HUD hideAnimated:YES];
+            [HUD removeFromSuperViewOnHide];
+            sender.userInteractionEnabled = YES;
+            sender.backgroundColor = BlueColor;
+            
+        });
+        return ;
+    }
+    
+    
+    DialogTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0 ]];
+    
+    if ([cell.dialogLabel.text isEqualToString:self.textView.text]) {
+        MBProgressHUD *HUD = [[MBProgressHUD alloc]initWithView:self.view];
+        HUD.mode = MBProgressHUDModeText;
+        HUD.label.font = font(14);
+        HUD.label.text = @"请勿发送重复内容";
+        [self.view addSubview:HUD];
+        
+        [HUD showAnimated:YES];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [HUD hideAnimated:YES];
+            [HUD removeFromSuperViewOnHide];
+            sender.userInteractionEnabled = YES;
+            sender.backgroundColor = BlueColor;
+            
+        });
+        return ;
+    }
+
+    
+    NSString *toName = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, (__bridge CFStringRef)self.toUserName, NULL, (CFStringRef)@"!*’();:@&=+,/?%#[]", kCFStringEncodingUTF8);
+//    NSString *toName = [self.toUserName stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *fromName = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, (__bridge CFStringRef)self.fromUserName, NULL, (CFStringRef)@"!*’();:@&=+,/?%#[]", kCFStringEncodingUTF8);
+//    NSString *fromName = [self.fromUserName stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *content = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, (__bridge CFStringRef)self.textView.text, NULL, (CFStringRef)@"!*’();:@&=+,/?%#[]", kCFStringEncodingUTF8);
+//    NSString *content = [self.textView.text stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *url = [NSString stringWithFormat:@"%@Task.ashx?action=feedbackadd&taskid=%@&touserid=%@&tousername=%@&fromuserid=%@&fromusername=%@&content=%@",HomeURL,self.taskID,self.toUserID,toName,self.fromUserID,fromName,content];
+//    NSString *encodeUrl = [url stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSString *dataStr = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        if ([dataStr isEqualToString:@"1"]) {
+            
+            MBProgressHUD *HUD = [[MBProgressHUD alloc]initWithView:self.view];
+            HUD.mode = MBProgressHUDModeText;
+            HUD.label.font = font(14);
+            HUD.label.text = @"发送成功";
+            [self.view addSubview:HUD];
+            
+            [HUD showAnimated:YES];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [HUD hideAnimated:YES];
+                [HUD removeFromSuperViewOnHide];
+            });
+            
+            
+            AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+            NSString *url = [NSString stringWithFormat:@"%@Task.ashx?action=getfeedbacklist&taskid=%@",HomeURL,self.taskID];
+            [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                if (self.dialogList.count != 0) {
+                    [self.dialogList removeAllObjects];
+                }
+                
+                for (NSDictionary *dic in responseObject) {
+                    [self.dialogList addObject:dic];
+                }
+                sender.userInteractionEnabled = YES;
+                sender.backgroundColor = BlueColor;
+                [self.tableView reloadData];
+                
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                MBProgressHUD *HUD = [[MBProgressHUD alloc]initWithView:self.view];
+                HUD.mode = MBProgressHUDModeText;
+                HUD.label.font = font(14);
+                HUD.label.text = @"刷新列表失败,请检查网络";
+                [self.view addSubview:HUD];
+                
+                [HUD showAnimated:YES];
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.75 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [HUD hideAnimated:YES];
+                    [HUD removeFromSuperViewOnHide];
+                    sender.userInteractionEnabled = YES;
+                    sender.backgroundColor = BlueColor;
+                });
+            }];
+            
+        }else {
+            sender.userInteractionEnabled = YES;
+            sender.backgroundColor = BlueColor;
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        MBProgressHUD *HUD = [[MBProgressHUD alloc]initWithView:self.view];
+        HUD.mode = MBProgressHUDModeText;
+        HUD.label.font = font(14);
+        HUD.label.text = @"请检查网络";
+        [self.view addSubview:HUD];
+        
+        [HUD showAnimated:YES];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [HUD hideAnimated:YES];
+            [HUD removeFromSuperViewOnHide];
+            sender.userInteractionEnabled = YES;
+            sender.backgroundColor = BlueColor;
+        });
+        
+    }];
+ 
 }
 
 - (void)closeButtonClicked:(UIButton *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+- (void)dealloc {
+    [self.tableView removeGestureRecognizer:self.tap];
+    
 }
 
 

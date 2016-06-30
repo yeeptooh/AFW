@@ -11,8 +11,6 @@
 #import "MainTableViewCell.h"
 #import "UserModel.h"
 #import "MBProgressHUD.h"
-#import "MBProgressHUD+Assoication.h"
-
 #import "OrderModel.h"
 #import "DetailViewController.h"
 
@@ -49,9 +47,8 @@ UITextFieldDelegate
 @property (nonatomic, assign) NSInteger page;
 @property (nonatomic, assign) NSInteger searchPage;
 
-@property (nonatomic, strong) MBProgressHUD *HUD;
-@property (nonatomic, strong) MBProgressHUD *searchHUD;
-
+@property (nonatomic, strong) UIActivityIndicatorView *activityView;
+@property (nonatomic, strong) UIActivityIndicatorView *searchActivityView;
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
 
 #pragma mark 
@@ -68,6 +65,23 @@ UITextFieldDelegate
 @end
 
 @implementation CompleteViewController
+
+- (UIActivityIndicatorView *)activityView {
+    if (!_activityView) {
+        _activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        _activityView.center = CGPointMake(self.view.center.x, self.view.center.y - 40);
+        
+    }
+    return _activityView;
+}
+
+- (UIActivityIndicatorView *)searchActivityView {
+    if (!_searchActivityView) {
+        _searchActivityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        _searchActivityView.center = CGPointMake(self.view.center.x, self.view.center.y - 40);
+    }
+    return _searchActivityView;
+}
 
 - (instancetype)init {
     self = [super init];
@@ -179,7 +193,7 @@ UITextFieldDelegate
         
         self.searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.searchButton setTitle:@" 客户姓名／客户电话" forState:UIControlStateNormal];
-        [self.searchButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+        [self.searchButton setTitleColor:color(100, 100, 100, 1) forState:UIControlStateNormal];
         
         CGFloat fontSize;
         if (iPhone6 || iPhone6_plus) {
@@ -223,7 +237,7 @@ UITextFieldDelegate
         UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, SearchBarHeight - 0.7, Width, 0.7)];
         line.backgroundColor = color(210, 210, 210, 1);
         [_searchResultView addSubview:line];
-   
+        [_searchResultView addSubview:self.searchActivityView];
     }
     return _searchResultView;
 }
@@ -300,7 +314,7 @@ UITextFieldDelegate
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self setNaviTitle];
     [self setSearchButton];
-    
+    [self.view addSubview:self.activityView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(badgeValueChanged:) name:kBadgeValueChanged object:nil];
 
 }
@@ -441,19 +455,12 @@ UITextFieldDelegate
     self.page = 1;
     self.searchPage = 1;
     [self setBadgeValue];
-    
+    [self.activityView startAnimating];
+    [self loadNewDate];
     
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    self.HUD = [[MBProgressHUD alloc]initWithView:self.view];
-    self.HUD.mode = MBProgressHUDModeIndeterminate;
-    self.HUD.animationType = MBProgressHUDAnimationZoom;
-    [self.view addSubview:self.HUD];
-    [self.HUD showAnimated:YES];
-    [self loadNewDate];
-}
+
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -503,10 +510,8 @@ UITextFieldDelegate
     
     [self.manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
+        [self.activityView stopAnimating];
         
-        
-        [weakSelf.HUD hideAnimated:YES];
-        [weakSelf.HUD removeFromSuperViewOnHide];
         
         if (weakSelf.page == 1) {
             if (weakSelf.dicList) {
@@ -547,8 +552,8 @@ UITextFieldDelegate
         [weakSelf.manager.operationQueue cancelAllOperations];
         [weakSelf.tableView.mj_footer endRefreshing];
         
-        [weakSelf.HUD hideAnimated:YES];
-        [weakSelf.HUD removeFromSuperViewOnHide];
+        [self.activityView stopAnimating];
+
         
         [weakSelf.view addSubview:weakSelf.noNetWorkingView];
         weakSelf.tableView.mj_footer.hidden = YES;
@@ -724,6 +729,12 @@ UITextFieldDelegate
         detailVC.appointment = self.orderModel.appointment;
         detailVC.servicePs = self.orderModel.postScript;
         detailVC.chargeBackContent = self.orderModel.chargeBackContent;
+        
+        detailVC.fromUserID = self.orderModel.FromUserID;
+        detailVC.fromUserName = self.orderModel.fromUserName;
+        detailVC.toUserID = self.orderModel.ToUserID;
+        detailVC.toUserName = self.orderModel.ToUserName;
+        
         [self.navigationController pushViewController:detailVC animated:YES];
     }
 }
@@ -731,15 +742,19 @@ UITextFieldDelegate
 #pragma mark - UITextFieldDelegate -
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
-    __weak typeof(self)weakSelf = self;
-    self.searchHUD = [[MBProgressHUD alloc]initWithView:self.searchResultView];
-    self.searchHUD.mode = MBProgressHUDModeIndeterminate;
-    self.searchHUD.animationType = MBProgressHUDAnimationZoom;
-    [self.searchResultView addSubview:self.searchHUD];
-    self.searchHUD.showing = YES;
-    [self.searchHUD showAnimated:YES];
+    if (_noSearchResultView) {
+        [self.noSearchResultView removeFromSuperview];
+        self.noSearchResultView = nil;
+    }
     
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    if (_searchResultTableView) {
+        [self.searchResultTableView removeFromSuperview];
+        self.searchResultTableView = nil;
+    }
+    __weak typeof(self)weakSelf = self;
+
+    [self.searchActivityView startAnimating];
+
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     UserModel *userModel = [UserModel readUserModel];
     NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=getlist&comid=%ld&uid=%ld&state=5&page=%ld&query=%@&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)self.page,textField.text,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
@@ -752,9 +767,10 @@ UITextFieldDelegate
     
     [manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        [weakSelf.searchHUD hideAnimated:YES];
-        [weakSelf.searchHUD removeFromSuperViewOnHide];
-        
+        [self.searchActivityView stopAnimating];
+        if (self.searchResultList.count != 0) {
+            [self.searchResultList removeAllObjects];
+        }
         for (NSDictionary *dic in responseObject[@"task"]) {
             OrderModel *ordelModel = [OrderModel orderFromDictionary:dic];
             [weakSelf.searchResultList addObject:ordelModel];
@@ -783,59 +799,14 @@ UITextFieldDelegate
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
-        weakSelf.searchHUD.showing = NO;
         [weakSelf.searchResultTableView.mj_footer endRefreshing];
         
-        [weakSelf.searchHUD hideAnimated:YES];
-        [weakSelf.searchHUD removeFromSuperViewOnHide];
-        
+        [self.searchActivityView stopAnimating];
         [weakSelf.searchResultView addSubview:weakSelf.noNetWorkingView];
         weakSelf.searchResultTableView.mj_footer.hidden = YES;
         return ;
         
     }];
-    
-//    [manager GET:URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        
-//        [weakSelf.searchHUD hideAnimated:YES];
-//        [weakSelf.searchHUD removeFromSuperViewOnHide];
-//        
-//        for (NSDictionary *dic in responseObject[@"task"]) {
-//            OrderModel *ordelModel = [OrderModel orderFromDictionary:dic];
-//            [weakSelf.searchResultList addObject:ordelModel];
-//        }
-//        
-//        if (!weakSelf.searchResultList.count) {
-//            [weakSelf.searchResultView addSubview:weakSelf.noSearchResultView];
-//            return ;
-//        }
-//        [weakSelf.searchResultView addSubview:weakSelf.searchResultTableView];
-//        [weakSelf.searchResultTableView reloadData];
-//        
-//        if ([responseObject[@"ResponseInfo"][0][@"PageNow"] integerValue] == [responseObject[@"ResponseInfo"][0][@"PageRowCount"] integerValue]) {
-//            [weakSelf.searchResultTableView.mj_footer endRefreshing];
-//            weakSelf.searchResultTableView.mj_footer.hidden = YES;
-//            return ;
-//        }else {
-//            weakSelf.searchResultTableView.mj_footer.hidden = NO;
-//        }
-//        
-//        [weakSelf.searchResultTableView.mj_footer endRefreshing];
-//        
-//        
-//        return ;
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        
-//        weakSelf.searchHUD.showing = NO;
-//        [weakSelf.searchResultTableView.mj_footer endRefreshing];
-//        
-//        [weakSelf.searchHUD hideAnimated:YES];
-//        [weakSelf.searchHUD removeFromSuperViewOnHide];
-//        
-//        [weakSelf.searchResultView addSubview:weakSelf.noNetWorkingView];
-//        weakSelf.searchResultTableView.mj_footer.hidden = YES;
-//        return ;
-//    }];
 
     return YES;
 }
@@ -857,10 +828,10 @@ UITextFieldDelegate
     
     
     [manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        [weakSelf.searchHUD hideAnimated:YES];
-        [weakSelf.searchHUD removeFromSuperViewOnHide];
-        
+        [self.searchActivityView stopAnimating];
+//        [weakSelf.searchHUD hideAnimated:YES];
+//        [weakSelf.searchHUD removeFromSuperViewOnHide];
+//        
         for (NSDictionary *dic in responseObject[@"task"]) {
             OrderModel *ordelModel = [OrderModel orderFromDictionary:dic];
             [weakSelf.searchResultList addObject:ordelModel];
@@ -885,11 +856,11 @@ UITextFieldDelegate
         return ;
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        weakSelf.searchHUD.showing = NO;
-        [weakSelf.searchResultTableView.mj_footer endRefreshing];
         
-        [weakSelf.searchHUD hideAnimated:YES];
-        [weakSelf.searchHUD removeFromSuperViewOnHide];
+        [weakSelf.searchResultTableView.mj_footer endRefreshing];
+        [self.searchActivityView stopAnimating];
+//        [weakSelf.searchHUD hideAnimated:YES];
+//        [weakSelf.searchHUD removeFromSuperViewOnHide];
         
         [weakSelf.searchResultView addSubview:weakSelf.noNetWorkingView];
         weakSelf.searchResultTableView.mj_footer.hidden = YES;

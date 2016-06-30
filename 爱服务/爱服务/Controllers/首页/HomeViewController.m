@@ -30,6 +30,7 @@
 
 #import "AddOrderViewController.h"
 #import "ACCReviewViewController.h"
+#import "MasterQueryViewController.h"
 
 
 #import <CoreLocation/CoreLocation.h>
@@ -777,7 +778,9 @@ static NSInteger tag = 0;
         
         
     }else if (sender.tag == 1003) {
-        
+        MasterQueryViewController *ACCVC = [[MasterQueryViewController alloc] init];
+        ACCVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:ACCVC animated:YES];
         
         
     }else if (sender.tag == 1004) {

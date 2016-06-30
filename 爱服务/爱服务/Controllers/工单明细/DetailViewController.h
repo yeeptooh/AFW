@@ -49,4 +49,16 @@
 
 @property (nonatomic, strong) NSString *waiterName;
 
+
+@property (nonatomic, strong) NSString *fromUserID;
+@property (nonatomic, strong) NSString *fromUserName;
+@property (nonatomic, strong) NSString *toUserID;
+@property (nonatomic, strong) NSString *toUserName;
+
+
+
+
+
+
+
 @end

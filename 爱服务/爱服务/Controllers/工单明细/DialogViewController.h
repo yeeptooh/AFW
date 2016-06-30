@@ -11,4 +11,9 @@
 @interface DialogViewController : UIViewController
 @property (nonatomic, strong) UITextView *textView;
 @property (nonatomic, strong) NSMutableArray *dialogList;
+@property (nonatomic, strong) NSString *taskID;
+@property (nonatomic, strong) NSString *fromUserID;
+@property (nonatomic, strong) NSString *fromUserName;
+@property (nonatomic, strong) NSString *toUserID;
+@property (nonatomic, strong) NSString *toUserName;
 @end
