@@ -209,7 +209,7 @@
 
 - (void)userBtnClicked:(NSNotification *)sender {
     [self.view endEditing:YES];
-    //    sender.selected = !sender.selected;
+    
     self.userBtn.selected = !self.userBtn.selected;
     if (self.userInfoDetailView.bounds.size.height != 0) {
         
@@ -263,7 +263,7 @@
 
 - (void)productBtnClicked:(NSNotification *)sender {
     [self.view endEditing:YES];
-    //    sender.selected = !sender.selected;
+    
     self.productBtn.selected = !self.productBtn.selected;
     if (self.productInfoDetailView.bounds.size.height != 0) {
         [UIView animateWithDuration:0.4 animations:^{
@@ -312,7 +312,7 @@
 
 - (void)businessBtnClicked:(NSNotification *)sender {
     [self.view endEditing:YES];
-//        sender.selected = !sender.selected;
+
     self.businessBtn.selected = !self.businessBtn.selected;
     if (self.businessInfoDetailView.bounds.size.height != 0) {
         [UIView animateWithDuration:0.4 animations:^{

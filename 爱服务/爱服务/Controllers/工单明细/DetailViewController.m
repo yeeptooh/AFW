@@ -146,6 +146,10 @@ UIViewControllerTransitioningDelegate
     NSString *url = [NSString stringWithFormat:@"%@Task.ashx?action=getfeedbacklist&taskid=%@",HomeURL,@(self.ID)];
     [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"responseObject = %@",responseObject);
+        if (self.diaLogList.count != 0) {
+            [self.diaLogList removeAllObjects];
+        }
+        
         for (NSDictionary *dic in responseObject) {
             [self.diaLogList addObject:dic];
         }
@@ -154,8 +158,15 @@ UIViewControllerTransitioningDelegate
         dialogVC.modalPresentationStyle = UIModalPresentationCustom;
         dialogVC.transitioningDelegate = self;
         dialogVC.dialogList = self.diaLogList;
+        
+        dialogVC.taskID = [NSString stringWithFormat:@"%@",@(self.ID)];
+        dialogVC.fromUserName = self.fromUserName;
+        dialogVC.fromUserID = self.fromUserID;
+        dialogVC.toUserName = self.toUserName;
+        dialogVC.toUserID = self.toUserID;
+ 
         [self presentViewController:dialogVC animated:YES completion:^{
-            [dialogVC.textView becomeFirstResponder];
+//            [dialogVC.textView becomeFirstResponder];
         }];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
