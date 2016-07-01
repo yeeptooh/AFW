@@ -49,6 +49,7 @@
 #define beautifulColor color(7, 33, 57, 1)
 #define beautifulGray color(233, 229, 226, 1)
 
+#define RedColor color(231, 76, 60, 1)
 #define BlueColor color(59, 165, 249, 1)
 #define GrayColor color(241, 241, 241, 1)
 
