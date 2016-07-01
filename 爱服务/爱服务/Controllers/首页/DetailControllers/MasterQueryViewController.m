@@ -18,6 +18,8 @@ WKUIDelegate
 @property (nonatomic, strong) UIProgressView *progressView;
 @property (nonatomic, strong) WKWebView *webView;
 @property (nonatomic, strong) UIView *noNetWorkingView;
+@property (nonatomic, strong) NSMutableString *cookieString;
+@property (nonatomic, strong) NSMutableURLRequest *request;
 @end
 
 @implementation MasterQueryViewController
@@ -78,7 +80,19 @@ WKUIDelegate
     
     self.webView.scrollView.bounces = NO;
     self.webView.scrollView.showsVerticalScrollIndicator = NO;
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@MasterList.aspx?device=i",HomeURL]]]];
+    self.request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@MasterList.aspx?device=i",HomeURL]]];
+    
+    
+    
+    NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    self.cookieString = [[NSMutableString alloc] init];
+    NSHTTPCookie *cookie = [[cookieJar cookies] lastObject];
+    self.cookieString = [NSMutableString stringWithFormat:@"%@=%@;",cookie.name,cookie.value];
+    [self.request addValue:self.cookieString forHTTPHeaderField:@"Cookie"];
+
+
+    
+    [self.webView loadRequest:self.request];
     [self.view addSubview:self.progressView];
     [self.view insertSubview:self.webView belowSubview:self.progressView];
     
@@ -89,8 +103,7 @@ WKUIDelegate
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:@"estimatedProgress"]) {
-        //        self.progressView.hidden = self.webView.estimatedProgress == 1;
-        //        [self.progressView setProgress:self.webView.estimatedProgress animated:YES];
+
         self.progressView.progress = self.webView.estimatedProgress;
     }
     //加载完成
@@ -101,6 +114,8 @@ WKUIDelegate
     }
     
 }
+
+
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     [UIView animateWithDuration:0.5 animations:^{
@@ -128,6 +143,18 @@ WKUIDelegate
     }];
 }
 
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler{
+    
+    NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
+    NSArray *cookies =[NSHTTPCookie cookiesWithResponseHeaderFields:[response allHeaderFields] forURL:response.URL];
+    NSHTTPCookie *cookie = [cookies lastObject];
+
+    self.cookieString = [NSMutableString stringWithFormat:@"%@=%@;",cookie.name,cookie.value];
+    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+    [self.request addValue:self.cookieString forHTTPHeaderField:@"Cookie"];
+
+    decisionHandler(WKNavigationResponsePolicyAllow);
+}
 
 - (void)dealloc {
     
