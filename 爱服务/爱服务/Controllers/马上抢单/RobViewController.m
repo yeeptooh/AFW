@@ -181,7 +181,7 @@ UITextFieldDelegate
         
         self.cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.cancelButton setTitle:@"取消" forState:UIControlStateNormal];
-        [self.cancelButton setTitleColor:color(51, 102, 255, 1) forState:UIControlStateNormal];
+        [self.cancelButton setTitleColor:beautifulBlueColor forState:UIControlStateNormal];
         [self.cancelButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateHighlighted];
         [self.cancelButton addTarget:self action:@selector(cancelButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         CGFloat fontsize;
@@ -368,7 +368,7 @@ UITextFieldDelegate
         CGRect frame = self.whiteView.frame;
         frame.size.width = Width - 60;
         self.whiteView.frame = frame;
-        self.cancelButton.frame = CGRectMake(Width - 60, 7, 60, 30);
+        self.cancelButton.frame = CGRectMake(Width - 55, 7, 60, 30);
         [self.textfield becomeFirstResponder];
     } completion:^(BOOL finished) {
         
@@ -552,8 +552,10 @@ UITextFieldDelegate
     cell.acceptDateLabel.text = self.orderModel.acceptDate;
     cell.dateLabel.text = self.orderModel.date;
     
-    cell.serviceTypeLabel.text = self.orderModel.serviceType;
-    cell.productTypeLabel.text = self.orderModel.productType;
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@",self.orderModel.serviceType, self.orderModel.productType]];
+    
+    [attributedString addAttributes:@{NSForegroundColorAttributeName:beautifulBlueColor} range:[self.orderModel.serviceType rangeOfString:self.orderModel.serviceType]];
+    cell.productTypeLabel.attributedText = attributedString;
     cell.nameLabel.text = self.orderModel.name;
     cell.phoneLabel.text = @"接单后可见";
     if ([self.orderModel.location isEqualToString:@""]) {
