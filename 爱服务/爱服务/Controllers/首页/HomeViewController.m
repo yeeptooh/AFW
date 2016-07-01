@@ -178,7 +178,7 @@ static NSInteger tag = 0;
                              @"password":[[NSUserDefaults standardUserDefaults] objectForKey:@"password"]
                              };
     NSString *URL = [NSString stringWithFormat:@"%@Passport.ashx?action=login",HomeURL];
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = 5;
     __weak typeof(self)weakSelf = self;
@@ -201,7 +201,6 @@ static NSInteger tag = 0;
             userModel.userType = responseObject[@"user"][0][@"UserType"];
             [UserModel writeUserModel:userModel];
             
-//            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
             NSString *countString = [NSString stringWithFormat:@"%@Task.ashx?action=gettaskcount&comid=%ld&uid=%ld&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
             manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -346,7 +345,7 @@ static NSInteger tag = 0;
     [drawMoneyButton setTitle:@"提现" forState:UIControlStateNormal];
     [drawMoneyButton setTitleColor:color(80, 80, 80, 1) forState:UIControlStateNormal];
     [drawMoneyButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
-//    drawMoneyButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+
     drawMoneyButton.titleLabel.font = font(13);
     [drawMoneyButton setImage:[UIImage imageNamed:@"common_icon_arrow"] forState:UIControlStateNormal];
     [drawMoneyButton setImage:[UIImage imageNamed:@"common_icon_arrow_highlighted"] forState:UIControlStateHighlighted];

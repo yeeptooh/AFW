@@ -11,7 +11,6 @@
 @interface MainTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *acceptDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
-@property (weak, nonatomic) IBOutlet UILabel *serviceTypeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *productTypeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
