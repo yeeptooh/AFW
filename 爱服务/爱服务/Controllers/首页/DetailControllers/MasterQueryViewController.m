@@ -81,7 +81,7 @@ WKUIDelegate
     self.webView.scrollView.bounces = NO;
     self.webView.scrollView.showsVerticalScrollIndicator = NO;
     self.request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@MasterList.aspx?device=i",HomeURL]]];
-    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
     
     NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
@@ -118,6 +118,7 @@ WKUIDelegate
 
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [UIView animateWithDuration:0.5 animations:^{
         self.progressView.alpha = 0;
     }];
@@ -128,6 +129,7 @@ WKUIDelegate
         [UIView animateWithDuration:0.5 animations:^{
             self.progressView.alpha = 0;
         }];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         [self.view addSubview:self.noNetWorkingView];
     }
 }

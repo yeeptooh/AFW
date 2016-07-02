@@ -157,10 +157,10 @@ UITableViewDataSource
     
     [submit setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
     [submit addTarget:self action:@selector(submitClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    submit.backgroundColor = color(23, 133, 255, 1);
+   
+    submit.backgroundColor = BlueColor;//color(23, 133, 255, 1);
     submit.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*11/12, Width, (Height - StatusBarAndNavigationBarHeight)/12);
+    
     [self.view addSubview:submit];
     
 }

@@ -261,7 +261,7 @@ static NSInteger number;
     
     submit.layer.cornerRadius = 5;
     submit.layer.masksToBounds = YES;
-    submit.backgroundColor = color(23, 133, 255, 1);
+    submit.backgroundColor = BlueColor;//color(23, 133, 255, 1);
     submit.frame = CGRectMake(30, 5 + ((Height - StatusBarAndNavigationBarHeight)*(13)/12), Width - 60, (Height - StatusBarAndNavigationBarHeight)/12 - 10);
     [self.scrollView addSubview:submit];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
