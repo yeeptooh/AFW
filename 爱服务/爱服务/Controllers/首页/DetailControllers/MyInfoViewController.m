@@ -87,6 +87,7 @@ WKNavigationDelegate
     self.webView.scrollView.bounces = NO;
     self.webView.scrollView.showsVerticalScrollIndicator = NO;
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/page.aspx?type=user&comid=%ld&uid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid]]]];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [self.view addSubview:self.progressView];
     [self.view insertSubview:self.webView belowSubview:self.progressView];
     
@@ -111,6 +112,7 @@ WKNavigationDelegate
 }
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [UIView animateWithDuration:0.5 animations:^{
         self.progressView.alpha = 0;
     }];
@@ -121,6 +123,7 @@ WKNavigationDelegate
         [UIView animateWithDuration:0.5 animations:^{
             self.progressView.alpha = 0;
         }];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         [self.view addSubview:self.noNetWorkingView];
     }
 }

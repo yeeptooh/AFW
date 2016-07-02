@@ -194,12 +194,12 @@ UIViewControllerTransitioningDelegate
 - (void)setBottomButton {
     
     CGFloat height;
-    if (iPhone4_4s || iPhone5_5s) {
-        height = 35;
-    }else {
-        height = 44;
-    }
-    
+//    if (iPhone4_4s || iPhone5_5s) {
+//        height = 35;
+//    }else {
+//        height = 44;
+//    }
+    height = (Height - StatusBarAndNavigationBarHeight)/12;
     if (self.state == 4) {
         
         if (self.flag == 1) {

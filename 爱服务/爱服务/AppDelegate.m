@@ -176,10 +176,32 @@ static BOOL isProduction = FALSE;
         [[AlipaySDK defaultService]
          processOrderWithPaymentResult:url
          standbyCallback:^(NSDictionary *resultDic) {
-//             self.bitch = 0;
-//             if (self.bitch < 3) {
-//                 [self updateResponse];
-//             }
+            
+             [self updateResponse];
+             
+         }];
+    }
+    
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
+    
+    NSString *absoluteURL = [url absoluteString];
+    if ([absoluteURL rangeOfString:WBAppKey].location != NSNotFound) {
+        return [WeiboSDK handleOpenURL:url delegate:self];
+    }else if ([absoluteURL rangeOfString:WXAppKey].location != NSNotFound) {
+        return [WXApi handleOpenURL:url delegate:self];
+    }else if ([absoluteURL rangeOfString:QQKey].location != NSNotFound) {
+        return [TencentApiInterface handleOpenURL:url delegate:self];
+    }
+    
+    //跳转支付宝钱包进行支付，需要将支付宝钱包的支付结果回传给SDK（这个是将支付宝客户端的支付结果传回给SDK）
+    if ([url.host isEqualToString:@"safepay"]) {
+        
+        [[AlipaySDK defaultService]
+         processOrderWithPaymentResult:url
+         standbyCallback:^(NSDictionary *resultDic) {
              
              [self updateResponse];
              
@@ -371,16 +393,66 @@ static BOOL isProduction = FALSE;
 
 - (void)onResp:(BaseResp *)resp {
     
-    if ([resp isKindOfClass:[PayReq class]]) {
+    if ([resp isKindOfClass:[PayResp class]]) {
         PayResp *response = (PayResp *)resp;
+        NSLog(@"%@",@(response.errCode));
         
         switch (response.errCode) {
             case WXSuccess:
+            {
+                MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.window];
+                hud.mode = MBProgressHUDModeCustomView;
+                [self.window addSubview:hud];
+                UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 74, 74)];
+                imageView.image = [UIImage imageNamed:@"icon_joblist_loading"];
+                hud.customView = imageView;
                 
+                
+                CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+                animation.toValue = @(M_PI*2);
+                animation.duration = 1.25;
+                [hud.customView.layer addAnimation:animation forKey:nil];
+                
+                
+                [hud showAnimated:YES];
+                
+                hud.offset = CGPointMake(0, Height/5);
+                
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    
+                    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 74, 74)];
+                    imageView.image = [UIImage imageNamed:@"icon_jd_sendSucess"];
+                    hud.customView = imageView;
+                    
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [hud hideAnimated:YES];
+                        [hud removeFromSuperViewOnHide];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateMoney object:nil];
+                    });
+                    
+                });
+            }
                 break;
                 
             default:
-                
+            {
+                MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.window];
+                hud.mode = MBProgressHUDModeText;
+                hud.label.text = @"支付取消,如有疑问,请联系客服";
+                CGFloat fontsize;
+                if (iPhone4_4s || iPhone5_5s) {
+                    fontsize = 14;
+                }else {
+                    fontsize = 16;
+                }
+                hud.label.font = font(fontsize);
+                [self.window addSubview:hud];
+                [hud showAnimated:YES];
+                hud.offset = CGPointMake(0, Height/5);
+                [hud hideAnimated:YES afterDelay:1.5];
+                [hud removeFromSuperViewOnHide];
+            }
                 break;
         }
         

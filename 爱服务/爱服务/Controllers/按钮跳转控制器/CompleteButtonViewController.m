@@ -133,10 +133,10 @@ static NSInteger number;
     
     [submit setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
     [submit addTarget:self action:@selector(submitClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    submit.backgroundColor = color(23, 133, 255, 1);
+ 
+    submit.backgroundColor = BlueColor;//color(23, 133, 255, 1);
     submit.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*11/12, Width, (Height - StatusBarAndNavigationBarHeight)/12);
+    
     [self.view addSubview:submit];
 
 }
@@ -305,7 +305,7 @@ static NSInteger number;
         dateButton.tag = 500;
         dateButton.backgroundColor = [UIColor whiteColor];
         [dateButton setTitle:dateString forState:UIControlStateNormal];
-        [dateButton setTitleColor:color(51, 102, 255, 1) forState:UIControlStateNormal];
+        [dateButton setTitleColor:BlueColor forState:UIControlStateNormal];
         dateButton.frame = CGRectMake(Width*5/16, 5, Width*10/16, (Height - StatusBarAndNavigationBarHeight)/12 - 10);
         [dateButton addTarget:self action:@selector(dateButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         dateButton.titleLabel.font = font(fontsize);
@@ -332,7 +332,7 @@ static NSInteger number;
         barButton.layer.cornerRadius = 5;
         barButton.layer.masksToBounds = YES;
         barButton.titleLabel.font = font(fontsize);
-        barButton.backgroundColor = color(23, 133, 255, 1);
+        barButton.backgroundColor = BlueColor;//color(23, 133, 255, 1);
         barButton.frame = CGRectMake(Width * 13 / 16, 5, Width *2 / 16, (Height - StatusBarAndNavigationBarHeight)/12 - 10);
         [cell addSubview:barButton];
 

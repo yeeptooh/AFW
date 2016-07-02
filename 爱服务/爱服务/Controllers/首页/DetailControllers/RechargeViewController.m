@@ -19,6 +19,9 @@
 #import "UserModel.h"
 #import "WXApi.h"
 
+#import <ifaddrs.h>
+#import <arpa/inet.h>
+
 @interface RechargeViewController ()
 <
 UITableViewDelegate,
@@ -436,32 +439,63 @@ static NSInteger i = 0;
     }
     
     if (i == 2) {
-        NSString *urlString   = @"http://wxpay.weixin.qq.com/pub_v2/app/app_pay.php?plat=ios";
-        
+        NSLog(@"-------------------");
+        NSString *totalFee = [NSString stringWithFormat:@"%@",self.cell.moneyTextField.text];
+        NSString *ipAddress = [self getIPAddress];
+        UserModel *userModel = [UserModel readUserModel];
+        //userid  money  ip
+        NSString *urlString   = [NSString stringWithFormat:@"%@Payment/WeiXin/Recharge.ashx?action=getwxpayment&userid=%@&money=%@&ip=%@",@"http://192.168.1.173:90/forapp/",@(userModel.comid),totalFee,ipAddress];
+        NSLog(@"%@",urlString);
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+//        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            PayReq *payReq = [[PayReq alloc] init];
+            NSLog(@"responseObject = %@",responseObject);
             
-            payReq.partnerId           = [responseObject objectForKey:@"partnerid"];
-//            NSLog(@"req.partnerId = %@",req.partnerId);
-            
-            payReq.prepayId            = [responseObject objectForKey:@"prepayid"];
-            payReq.nonceStr            = [responseObject objectForKey:@"noncestr"];
-            payReq.timeStamp           = [[responseObject objectForKey:@"timestamp"] intValue];
-            payReq.package             = [responseObject objectForKey:@"package"];
-            payReq.sign                = [responseObject objectForKey:@"sign"];
-            
-            [WXApi sendReq:payReq];
+            if ([responseObject[@"status"] isEqualToString:@"ok"]) {
+                PayReq *payReq = [[PayReq alloc] init];
+                
+                payReq.prepayId = responseObject[@"data"][@"prepayid"];
+                payReq.partnerId = @"1357569202";
+                payReq.nonceStr = responseObject[@"data"][@"noncestr"];
+                payReq.timeStamp = [responseObject[@"data"][@"timestamp"] intValue];
+                payReq.package = @"Sign=WXPay";
+                payReq.sign = responseObject[@"data"][@"sign"];
+                [WXApi sendReq:payReq];
+                
+            }
+
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            
+            NSLog(@"%@",error.userInfo);
         }];
-        
-        
-        
+ 
     }
-    
-    
-    
+ 
+}
+
+- (NSString *)getIPAddress
+{
+    NSString *address = @"error";
+    struct ifaddrs *interfaces = NULL;
+    struct ifaddrs *temp_addr = NULL;
+    int success = 0;
+    // retrieve the current interfaces - returns 0 on success
+    success = getifaddrs(&interfaces);
+    if (success == 0) {
+        // Loop through linked list of interfaces
+        temp_addr = interfaces;
+        while (temp_addr != NULL) {
+            if( temp_addr->ifa_addr->sa_family == AF_INET) {
+                // Check if interface is en0 which is the wifi connection on the iPhone
+                if ([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"]) {
+                    // Get NSString from C String
+                    address = [NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr)];
+                }
+            }
+            temp_addr = temp_addr->ifa_next;
+        }
+    }
+    freeifaddrs(interfaces);
+    return address;
 }
 
 - (void)updateResponse:(Order *)order {
