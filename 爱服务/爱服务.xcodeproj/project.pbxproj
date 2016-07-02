@@ -2423,7 +2423,6 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/爱服务/Libraries/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 					"$(PROJECT_DIR)/爱服务/Libraries",
 					"$(PROJECT_DIR)/爱服务/Libraries/openssl",
 				);
@@ -2444,12 +2443,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/爱服务/Libraries/UMSocial_Sdk_5.1",
-					"$(PROJECT_DIR)/爱服务/Libraries/UMSocial_Sdk_Extra_Frameworks/AlipayShare",
-					"$(PROJECT_DIR)/爱服务/Libraries/UMSocial_Sdk_Extra_Frameworks/SinaSSO",
-					"$(PROJECT_DIR)/爱服务/Libraries/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
-					"$(PROJECT_DIR)/爱服务/Libraries/UMSocial_Sdk_Extra_Frameworks/Wechat",
-					"$(PROJECT_DIR)/爱服务/Libraries/SDK1.6.2",
 					"$(PROJECT_DIR)/爱服务/Libraries",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.51ifw;
@@ -2469,7 +2462,6 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/爱服务/Libraries/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 					"$(PROJECT_DIR)/爱服务/Libraries",
 					"$(PROJECT_DIR)/爱服务/Libraries/openssl",
 				);
@@ -2490,12 +2482,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/爱服务/Libraries/UMSocial_Sdk_5.1",
-					"$(PROJECT_DIR)/爱服务/Libraries/UMSocial_Sdk_Extra_Frameworks/AlipayShare",
-					"$(PROJECT_DIR)/爱服务/Libraries/UMSocial_Sdk_Extra_Frameworks/SinaSSO",
-					"$(PROJECT_DIR)/爱服务/Libraries/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
-					"$(PROJECT_DIR)/爱服务/Libraries/UMSocial_Sdk_Extra_Frameworks/Wechat",
-					"$(PROJECT_DIR)/爱服务/Libraries/SDK1.6.2",
 					"$(PROJECT_DIR)/爱服务/Libraries",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.51ifw;
