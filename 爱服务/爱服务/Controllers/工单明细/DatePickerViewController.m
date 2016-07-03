@@ -62,7 +62,7 @@ UIViewControllerTransitioningDelegate
     
     NSString *dateString = [formatter stringFromDate:self.datePicker.date];
     
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     UserModel *userModel = [UserModel readUserModel];
     NSString *name = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
@@ -83,13 +83,7 @@ UIViewControllerTransitioningDelegate
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
-//    [manager POST:URL parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//       
-//    }];
-    
-    
+
     self.returnDate(dateString);
     
     [self dismissViewControllerAnimated:YES completion:nil];

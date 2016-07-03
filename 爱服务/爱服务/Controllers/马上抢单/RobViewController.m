@@ -286,8 +286,7 @@ UITextFieldDelegate
     UIViewController *allorderVC = [self.tabBarController viewControllers][4];
     
     UserModel *userModel = [UserModel readUserModel];
-    
-    //    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *countString = [NSString stringWithFormat:@"%@Task.ashx?action=gettaskcount&comid=%ld&uid=%ld&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -656,8 +655,7 @@ UITextFieldDelegate
     [self.searchActivityView startAnimating];
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
     UserModel *userModel = [UserModel readUserModel];
     NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=getlist&comid=%ld&uid=%ld&state=22&page=%ld&query=%@&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)self.page,textField.text,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
     //297错误，URL中有中文，需转码
@@ -721,7 +719,7 @@ UITextFieldDelegate
     __weak typeof(self)weakSelf = self;
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
     UserModel *userModel = [UserModel readUserModel];
     NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=getlist&comid=%ld&uid=%ld&state=22&page=%ld&query=%@&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)self.searchPage,self.textfield.text,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
     //297错误，URL中有中文，需转码
@@ -787,8 +785,7 @@ UITextFieldDelegate
     UserModel *userModel = [UserModel readUserModel];
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
     NSString *countString = [NSString stringWithFormat:@"%@Task.ashx?action=gettaskcount&comid=%ld&uid=%ld&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     

@@ -283,7 +283,6 @@ UITextFieldDelegate
     
     UserModel *userModel = [UserModel readUserModel];
     
-    //    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *countString = [NSString stringWithFormat:@"%@Task.ashx?action=gettaskcount&comid=%ld&uid=%ld&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -465,8 +464,6 @@ UITextFieldDelegate
     
     [self.manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-//        [weakSelf.HUD hideAnimated:YES];
-//        [weakSelf.HUD removeFromSuperViewOnHide];
         [self.activityView stopAnimating];
         for (NSDictionary *dic in responseObject[@"task"]) {
             OrderModel *ordelModel = [OrderModel orderFromDictionary:dic];
@@ -501,8 +498,6 @@ UITextFieldDelegate
         [weakSelf.manager.operationQueue cancelAllOperations];
         [weakSelf.tableView.mj_footer endRefreshing];
         [self.activityView stopAnimating];
-//        [weakSelf.HUD hideAnimated:YES];
-//        [weakSelf.HUD removeFromSuperViewOnHide];
         
         [weakSelf.view addSubview:weakSelf.noNetWorkingView];
         weakSelf.tableView.mj_footer.hidden = YES;
@@ -670,8 +665,6 @@ UITextFieldDelegate
         
         [weakSelf.searchResultTableView.mj_footer endRefreshing];
         
-//        [weakSelf.searchHUD hideAnimated:YES];
-//        [weakSelf.searchHUD removeFromSuperViewOnHide];
         [self.searchActivityView stopAnimating];
         [weakSelf.searchResultView addSubview:weakSelf.noNetWorkingView];
         weakSelf.searchResultTableView.mj_footer.hidden = YES;
@@ -686,7 +679,7 @@ UITextFieldDelegate
     
     __weak typeof(self)weakSelf = self;
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
     UserModel *userModel = [UserModel readUserModel];
     NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=getlist&comid=%ld&uid=%ld&state=4&page=%ld&query=%@&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)self.searchPage,self.textfield.text,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
     //297错误，URL中有中文，需转码
@@ -698,8 +691,6 @@ UITextFieldDelegate
     
     [manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-//        [weakSelf.searchHUD hideAnimated:YES];
-//        [weakSelf.searchHUD removeFromSuperViewOnHide];
         [self.searchActivityView stopAnimating];
         for (NSDictionary *dic in responseObject[@"task"]) {
             OrderModel *ordelModel = [OrderModel orderFromDictionary:dic];
@@ -726,11 +717,8 @@ UITextFieldDelegate
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
-//        weakSelf.searchHUD.showing = NO;
         [weakSelf.searchResultTableView.mj_footer endRefreshing];
-        
-//        [weakSelf.searchHUD hideAnimated:YES];
-//        [weakSelf.searchHUD removeFromSuperViewOnHide];
+
         [self.searchActivityView stopAnimating];
         [weakSelf.searchResultView addSubview:weakSelf.noNetWorkingView];
         weakSelf.searchResultTableView.mj_footer.hidden = YES;
@@ -751,8 +739,7 @@ UITextFieldDelegate
     UIViewController *allorderVC = [self.tabBarController viewControllers][4];
     
     UserModel *userModel = [UserModel readUserModel];
-    
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *countString = [NSString stringWithFormat:@"%@Task.ashx?action=gettaskcount&comid=%ld&uid=%ld&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];

@@ -258,7 +258,6 @@
 		4A6424121D19396600F26BA9 /* AssessTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A77499A1CC0C66C008B9611 /* AssessTableViewCell.xib */; };
 		4A6424131D19396600F26BA9 /* MoneyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A52746D1D113D0500B056C6 /* MoneyTableViewCell.xib */; };
 		4A6424141D19396600F26BA9 /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4A7CA68D1CDAF2E9000232CB /* WeiboSDK.bundle */; };
-		4A6424151D19396600F26BA9 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4AF531C01D12970900F58754 /* loading.gif */; };
 		4A6424171D19396600F26BA9 /* OverTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A7749951CC0C3EB008B9611 /* OverTableViewCell.xib */; };
 		4A64245D1D194D8C00F26BA9 /* AddOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A64245C1D194D8C00F26BA9 /* AddOrderViewController.m */; };
 		4A64A1021D22297400A3DC7C /* ProvinceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A64A1011D22297400A3DC7C /* ProvinceViewController.m */; };
@@ -378,7 +377,6 @@
 		4AF52EB91CC4BEE400E25FC4 /* DatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF52EB81CC4BEE400E25FC4 /* DatePickerViewController.m */; };
 		4AF52EBF1CC4E19800E25FC4 /* PTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF52EBE1CC4E19800E25FC4 /* PTypeViewController.m */; };
 		4AF52EC31CC4E9A800E25FC4 /* CompleteButtonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF52EC21CC4E9A800E25FC4 /* CompleteButtonViewController.m */; };
-		4AF531C11D12970900F58754 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4AF531C01D12970900F58754 /* loading.gif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -836,7 +834,6 @@
 		4AF52EBE1CC4E19800E25FC4 /* PTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTypeViewController.m; sourceTree = "<group>"; };
 		4AF52EC11CC4E9A800E25FC4 /* CompleteButtonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompleteButtonViewController.h; sourceTree = "<group>"; };
 		4AF52EC21CC4E9A800E25FC4 /* CompleteButtonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompleteButtonViewController.m; sourceTree = "<group>"; };
-		4AF531C01D12970900F58754 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
 		53A43852900DC47A061580E4 /* libPods-爱服务.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-爱服务.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6032E1DFC75D2C8FD4F9E626 /* Pods-爱服务.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-爱服务.debug.xcconfig"; path = "Pods/Target Support Files/Pods-爱服务/Pods-爱服务.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -988,7 +985,6 @@
 		4A4BD23C1CB895A1009DA0B9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				4AF531C01D12970900F58754 /* loading.gif */,
 				4A6973631CBB36DF002A036C /* Foundation+Log.m */,
 				4A4BD27C1CB89FC1009DA0B9 /* MyDefine.h */,
 				4A4BD27F1CB8A2F1009DA0B9 /* PrefixHeader.pch */,
@@ -1861,7 +1857,6 @@
 				4A52746F1D113D0500B056C6 /* MoneyTableViewCell.xib in Resources */,
 				4A7CA6921CDAF2E9000232CB /* WeiboSDK.bundle in Resources */,
 				4A6799211D23DDEB00A8E0F5 /* DialogTableViewCell.xib in Resources */,
-				4AF531C11D12970900F58754 /* loading.gif in Resources */,
 				4A7749971CC0C3EB008B9611 /* OverTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1899,7 +1894,6 @@
 				4A6424131D19396600F26BA9 /* MoneyTableViewCell.xib in Resources */,
 				4A6424141D19396600F26BA9 /* WeiboSDK.bundle in Resources */,
 				4A6799221D23DDEB00A8E0F5 /* DialogTableViewCell.xib in Resources */,
-				4A6424151D19396600F26BA9 /* loading.gif in Resources */,
 				4A6424171D19396600F26BA9 /* OverTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
