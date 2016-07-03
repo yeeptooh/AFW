@@ -289,7 +289,6 @@ UITextFieldDelegate
     
     UserModel *userModel = [UserModel readUserModel];
     
-    //    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *countString = [NSString stringWithFormat:@"%@Task.ashx?action=gettaskcount&comid=%ld&uid=%ld&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -476,7 +475,6 @@ UITextFieldDelegate
         [self.activityView stopAnimating];
         
         for (NSDictionary *dic in responseObject[@"task"]) {
-//                        NSLog(@"dic = %@",dic);
             OrderModel *ordelModel = [OrderModel orderFromDictionary:dic];
             [weakSelf.dicList addObject:ordelModel];
         }
@@ -711,9 +709,8 @@ UITextFieldDelegate
 
 - (void)loadMoreSearchData {
     self.searchPage ++;
-    
     __weak typeof(self)weakSelf = self;
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     UserModel *userModel = [UserModel readUserModel];
     NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=getlist&comid=%ld&uid=%ld&state=-1&page=%ld&query=%@&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)self.searchPage,self.textfield.text,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
@@ -780,7 +777,6 @@ UITextFieldDelegate
     
     UserModel *userModel = [UserModel readUserModel];
     
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *countString = [NSString stringWithFormat:@"%@Task.ashx?action=gettaskcount&comid=%ld&uid=%ld&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];

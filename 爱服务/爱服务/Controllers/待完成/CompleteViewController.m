@@ -327,7 +327,6 @@ UITextFieldDelegate
     
     UserModel *userModel = [UserModel readUserModel];
     
-    //    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *countString = [NSString stringWithFormat:@"%@Task.ashx?action=gettaskcount&comid=%ld&uid=%ld&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -815,9 +814,8 @@ UITextFieldDelegate
 
 - (void)loadMoreSearchData {
     self.searchPage ++;
-    
     __weak typeof(self)weakSelf = self;
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     UserModel *userModel = [UserModel readUserModel];
     NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=getlist&comid=%ld&uid=%ld&state=5&page=%ld&query=%@&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)self.searchPage,self.textfield.text,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
@@ -831,9 +829,7 @@ UITextFieldDelegate
     
     [manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [self.searchActivityView stopAnimating];
-//        [weakSelf.searchHUD hideAnimated:YES];
-//        [weakSelf.searchHUD removeFromSuperViewOnHide];
-//        
+      
         for (NSDictionary *dic in responseObject[@"task"]) {
             OrderModel *ordelModel = [OrderModel orderFromDictionary:dic];
             [weakSelf.searchResultList addObject:ordelModel];
@@ -861,9 +857,7 @@ UITextFieldDelegate
         
         [weakSelf.searchResultTableView.mj_footer endRefreshing];
         [self.searchActivityView stopAnimating];
-//        [weakSelf.searchHUD hideAnimated:YES];
-//        [weakSelf.searchHUD removeFromSuperViewOnHide];
-        
+
         [weakSelf.searchResultView addSubview:weakSelf.noNetWorkingView];
         weakSelf.searchResultTableView.mj_footer.hidden = YES;
         return ;
@@ -882,8 +876,7 @@ UITextFieldDelegate
     UIViewController *allorderVC = [self.tabBarController viewControllers][4];
     
     UserModel *userModel = [UserModel readUserModel];
-    
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *countString = [NSString stringWithFormat:@"%@Task.ashx?action=gettaskcount&comid=%ld&uid=%ld&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];

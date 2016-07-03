@@ -821,7 +821,6 @@ static NSInteger tag = 0;
     
     UserModel *userModel = [UserModel readUserModel];
     
-    //    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *countString = [NSString stringWithFormat:@"%@Task.ashx?action=gettaskcount&comid=%ld&uid=%ld&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];

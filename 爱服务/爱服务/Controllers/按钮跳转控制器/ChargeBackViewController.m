@@ -196,7 +196,7 @@ UITableViewDataSource
     [self.view addSubview:HUD];
     [HUD showAnimated:YES];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     manager.requestSerializer.timeoutInterval = 5;
     UserModel *userModel = [UserModel readUserModel];
@@ -248,44 +248,7 @@ UITableViewDataSource
         });
         
     }];
-    
-    
-    
-//    [manager POST:URL parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        
-//        [HUD hideAnimated:YES];
-//        [HUD removeFromSuperViewOnHide];
-//        MBProgressHUD *successHUD = [[MBProgressHUD alloc]initWithView:self.view];
-//        successHUD.mode = MBProgressHUDModeText;
-//        successHUD.label.font = font(14);
-//        successHUD.label.text = @"退单成功";
-//        [weakSelf.view addSubview:successHUD];
-//        
-//        [successHUD showAnimated:YES];
-//        
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//            [successHUD hideAnimated:YES];
-//            [successHUD removeFromSuperViewOnHide];
-//            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
-//        });
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"error = %@",error.userInfo);
-//        [HUD hideAnimated:YES];
-//        [HUD removeFromSuperViewOnHide];
-//        MBProgressHUD *errorHUD = [[MBProgressHUD alloc]initWithView:self.view];
-//        errorHUD.mode = MBProgressHUDModeText;
-//        errorHUD.label.font = font(14);
-//        errorHUD.label.text = @"退单失败";
-//        [weakSelf.view addSubview:errorHUD];
-//        
-//        [errorHUD showAnimated:YES];
-//        
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//            [errorHUD hideAnimated:YES];
-//            [errorHUD removeFromSuperViewOnHide];
-//            
-//        });
-//    }];
+
 }
 
 - (void)setNaviTitle {

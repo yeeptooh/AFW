@@ -32,19 +32,10 @@ UIViewControllerTransitioningDelegate
 }
 
 - (void)configView {
-//    __weak typeof(self)weakSelf = self;
+
     self.serviceLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, Width - 10 - 20, (Width - 120)/4 - 10)];
-//    self.serviceLabel = [[UILabel alloc]init];
-    
+
     [self.view addSubview:self.serviceLabel];
-    
-//    [self.serviceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.mas_equalTo(5);
-//        make.left.mas_equalTo(10);
-//        make.width.mas_equalTo(weakSelf.view.bounds.size.width - 30);
-//        make.height.mas_equalTo((weakSelf.view.bounds.size.width - 120)/4 - 10);
-//    }];
-    
     
     CGFloat fontsize;
     if (iPhone4_4s || iPhone5_5s) {
@@ -57,19 +48,13 @@ UIViewControllerTransitioningDelegate
     self.serviceLabel.textColor = color(30, 30, 30, 1);
     
     UILabel *warningLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, (Width - 120)/4 + 5, (Width - 10) - 20, (Width - 120)/4 - 10)];
-//    UILabel *warningLabel = [[UILabel alloc]init];
     
     warningLabel.textColor = color(130, 130, 130, 1);
     warningLabel.text = @"填写跟用户了解并预约的情况：";
     warningLabel.font = font(fontsize);
     [self.view addSubview:warningLabel];
     
-//    [warningLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.mas_equalTo((weakSelf.view.bounds.size.width - 120)/4 + 5);
-//        make.left.mas_equalTo(10);
-//        make.width.mas_equalTo((weakSelf.view.bounds.size.width - 10) - 20);
-//        make.height.mas_equalTo((weakSelf.view.bounds.size.width - 120)/4 - 10);
-//    }];
+
     
     self.textfield = [[UITextField alloc]initWithFrame:CGRectMake(10, (Width - 120)*2/4 + 5, (Width - 10) - 20, (Width - 120)/4 - 10)];
     
@@ -86,12 +71,6 @@ UIViewControllerTransitioningDelegate
     
     [self.view addSubview:ensureButton];
     
-//    [ensureButton mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.mas_equalTo((weakSelf.view.bounds.size.width - 120)*3/4 + 5);
-//        make.left.mas_equalTo(0);
-//        make.width.mas_equalTo((weakSelf.view.bounds.size.width - 10)/2 - 0.25);
-//        make.height.mas_equalTo((weakSelf.view.bounds.size.width - 120)/4 - 5);
-//    }];
     
     [ensureButton addTarget:self action:@selector(ensureButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
@@ -103,12 +82,7 @@ UIViewControllerTransitioningDelegate
     quitButton.frame = CGRectMake((Width - 10)/2 + 0.5, (Width - 120)*3/4 + 5, (Width - 10)/2 - 0.25, (Width - 120)/4 - 5);
     
     [self.view addSubview:quitButton];
-//    [quitButton mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.mas_equalTo((weakSelf.view.bounds.size.width - 120)*3/4 + 5);
-//        make.left.mas_equalTo((weakSelf.view.bounds.size.width - 10)/2 + 0.5);
-//        make.width.mas_equalTo((weakSelf.view.bounds.size.width - 10)/2 - 0.25);
-//        make.height.mas_equalTo((weakSelf.view.bounds.size.width - 120)/4 - 5);
-//    }];
+
     
     [quitButton addTarget:self action:@selector(quitButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
@@ -116,7 +90,6 @@ UIViewControllerTransitioningDelegate
 
 - (void)ensureButtonClicked {
 
-    
     if ([self.textfield.text isEqualToString:@""] || !self.textfield.text) {
         MBProgressHUD *successHUD = [[MBProgressHUD alloc]initWithView:self.view];
         successHUD.mode = MBProgressHUDModeText;
@@ -136,13 +109,11 @@ UIViewControllerTransitioningDelegate
     
     [self.textfield resignFirstResponder];
     
-    
     MBProgressHUD *HUD = [[MBProgressHUD alloc]initWithView:self.view];
     HUD.mode = MBProgressHUDModeIndeterminate;
     [self.view addSubview:HUD];
     [HUD showAnimated:YES];
-    
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     manager.requestSerializer.timeoutInterval = 5;

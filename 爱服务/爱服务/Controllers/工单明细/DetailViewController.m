@@ -166,7 +166,7 @@ UIViewControllerTransitioningDelegate
         dialogVC.toUserID = self.toUserID;
  
         [self presentViewController:dialogVC animated:YES completion:^{
-//            [dialogVC.textView becomeFirstResponder];
+
         }];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -194,12 +194,12 @@ UIViewControllerTransitioningDelegate
 - (void)setBottomButton {
     
     CGFloat height;
-//    if (iPhone4_4s || iPhone5_5s) {
-//        height = 35;
-//    }else {
-//        height = 44;
-//    }
-    height = (Height - StatusBarAndNavigationBarHeight)/12;
+    if (iPhone4_4s || iPhone5_5s) {
+        height = 35;
+    }else {
+        height = 44;
+    }
+//    height = (Height - StatusBarAndNavigationBarHeight)/12;
     if (self.state == 4) {
         
         if (self.flag == 1) {
@@ -276,17 +276,11 @@ UIViewControllerTransitioningDelegate
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    manager.responseSerializer
+
     UserModel *userModel = [UserModel readUserModel];
     NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=grabsign&id=%ld&comid=%ld&uid=%ld&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)self.ID,(long)userModel.comid,(long)userModel.uid,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
     NSLog(@"%@",URL);
-//    [manager POST:URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        
-//        
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        
-//    }];
+
     [manager POST:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kBadgeValueChanged object:nil];
@@ -332,7 +326,6 @@ UIViewControllerTransitioningDelegate
 - (void)receiveButtonClicked {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     UserModel *userModel = [UserModel readUserModel];
     NSString *URL = [NSString stringWithFormat:@"%@Common.ashx?action=getwaiters&comid=%ld",HomeURL,(long)userModel.comid];
     __weak typeof(self)weakSelf = self;

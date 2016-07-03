@@ -89,7 +89,7 @@
 
 - (void)ensureButtonClicked {
     [self.textfield resignFirstResponder];
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     UserModel *userModel = [UserModel readUserModel];
     NSString *name = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
@@ -105,11 +105,6 @@
                              @"productType":self.textfield.text
                              
                              };
-//    [manager POST:URL parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        NSLog(@"%@",responseObject);
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"%@",error.userInfo);
-//    }];
     
     
     [manager POST:URL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
