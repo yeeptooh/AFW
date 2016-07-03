@@ -15,6 +15,12 @@
 		4A1D9D9F1D1BBA8900052B92 /* BusinessDetailTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1D9D9B1D1B833A00052B92 /* BusinessDetailTableView.m */; };
 		4A1D9DA01D1BD1EA00052B92 /* UserDetailTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A78EADC1D1A444F0047E1B9 /* UserDetailTableView.m */; };
 		4A43DEE41CCF69250008BD96 /* BarCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A43DEE31CCF69250008BD96 /* BarCodeViewController.m */; };
+		4A49545F1D28B4D400E05868 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A49545C1D28B4D300E05868 /* TencentOpenAPI.framework */; };
+		4A4954601D28B4D400E05868 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A49545C1D28B4D300E05868 /* TencentOpenAPI.framework */; };
+		4A4954631D28B55B00E05868 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4A4954611D28B55B00E05868 /* AlipaySDK.bundle */; };
+		4A4954641D28B55B00E05868 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4A4954611D28B55B00E05868 /* AlipaySDK.bundle */; };
+		4A4954651D28B55B00E05868 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4954621D28B55B00E05868 /* AlipaySDK.framework */; };
+		4A4954661D28B55B00E05868 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4954621D28B55B00E05868 /* AlipaySDK.framework */; };
 		4A4BD23E1CB895A1009DA0B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BD23D1CB895A1009DA0B9 /* main.m */; };
 		4A4BD2411CB895A1009DA0B9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BD2401CB895A1009DA0B9 /* AppDelegate.m */; };
 		4A4BD2491CB895A1009DA0B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A4BD2481CB895A1009DA0B9 /* Assets.xcassets */; };
@@ -225,7 +231,6 @@
 		4A6423F01D19396600F26BA9 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7CA6AE1CDB1744000232CB /* libiconv.tbd */; };
 		4A6423F11D19396600F26BA9 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7CA6A11CDAF3BB000232CB /* libsqlite3.tbd */; };
 		4A6423F21D19396600F26BA9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7CA69F1CDAF3A8000232CB /* CoreGraphics.framework */; };
-		4A6423F31D19396600F26BA9 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ADEDF1E1D17F3C100FE3412 /* AlipaySDK.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		4A6423F41D19396600F26BA9 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7CA6A31CDB104E000232CB /* libWeChatSDK.a */; };
 		4A6423F51D19396600F26BA9 /* jpush-ios-2.1.7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A6BE93D1CFC4697002F20C1 /* jpush-ios-2.1.7.a */; };
 		4A6423F61D19396600F26BA9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7CA69D1CDAF3A0000232CB /* Foundation.framework */; };
@@ -233,7 +238,6 @@
 		4A6423F81D19396600F26BA9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7CA69B1CDAF397000232CB /* UIKit.framework */; };
 		4A6423F91D19396600F26BA9 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7CA6991CDAF38B000232CB /* CoreText.framework */; };
 		4A6423FA1D19396600F26BA9 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7CA6971CDAF37D000232CB /* Security.framework */; };
-		4A6423FB1D19396600F26BA9 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7CA6AB1CDB16FC000232CB /* TencentOpenAPI.framework */; };
 		4A6423FC1D19396600F26BA9 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7CA6951CDAF36F000232CB /* ImageIO.framework */; };
 		4A6423FD1D19396600F26BA9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7CA6931CDAF365000232CB /* QuartzCore.framework */; };
 		4A6423FE1D19396600F26BA9 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4C6CF41CD202EE0030B861 /* libc++.tbd */; };
@@ -250,7 +254,6 @@
 		4A64240A1D19396600F26BA9 /* ChargebackTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A7749901CC09DC8008B9611 /* ChargebackTableViewCell.xib */; };
 		4A64240B1D19396600F26BA9 /* Push Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A6BE9421CFC4863002F20C1 /* Push Config.plist */; };
 		4A64240C1D19396600F26BA9 /* ServiceTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A77498B1CC09464008B9611 /* ServiceTypeTableViewCell.xib */; };
-		4A64240D1D19396600F26BA9 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4ADEDD7C1D17E05600FE3412 /* AlipaySDK.bundle */; };
 		4A64240E1D19396600F26BA9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A4BD2481CB895A1009DA0B9 /* Assets.xcassets */; };
 		4A64240F1D19396600F26BA9 /* MainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A561D651CBDE9DE00BB26AC /* MainTableViewCell.xib */; };
 		4A6424101D19396600F26BA9 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4A6BABCE1CC62FAB000B94A2 /* MJRefresh.bundle */; };
@@ -356,7 +359,6 @@
 		4A7CA6AD1CDB16FC000232CB /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7CA6AB1CDB16FC000232CB /* TencentOpenAPI.framework */; };
 		4A7CA6AF1CDB1744000232CB /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7CA6AE1CDB1744000232CB /* libiconv.tbd */; };
 		4ADEDD7B1D17E04E00FE3412 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ADEDD7A1D17E04E00FE3412 /* Order.m */; };
-		4ADEDD801D17E05600FE3412 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4ADEDD7C1D17E05600FE3412 /* AlipaySDK.bundle */; };
 		4ADEDD821D17E05600FE3412 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ADEDD7E1D17E05600FE3412 /* libcrypto.a */; };
 		4ADEDD831D17E05600FE3412 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ADEDD7F1D17E05600FE3412 /* libssl.a */; };
 		4ADEDF141D17E89900FE3412 /* base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ADEDEB81D17E89900FE3412 /* base64.m */; };
@@ -368,7 +370,6 @@
 		4ADEDF1A1D17E89900FE3412 /* RSADataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ADEDEC51D17E89900FE3412 /* RSADataSigner.m */; };
 		4ADEDF1B1D17E89900FE3412 /* RSADataVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ADEDEC71D17E89900FE3412 /* RSADataVerifier.m */; };
 		4ADEDF1D1D17E96500FE3412 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ADEDF1C1D17E96500FE3412 /* CoreMotion.framework */; };
-		4ADEDF1F1D17F3C100FE3412 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ADEDF1E1D17F3C100FE3412 /* AlipaySDK.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		4AF52EA11CC4751900E25FC4 /* MBProgressHUD+Assoication.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF52EA01CC4751900E25FC4 /* MBProgressHUD+Assoication.m */; };
 		4AF52EAD1CC4B2E900E25FC4 /* ButtonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF52EAC1CC4B2E900E25FC4 /* ButtonViewController.m */; };
 		4AF52EB01CC4B8F200E25FC4 /* ButtonPresentAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF52EAF1CC4B8F200E25FC4 /* ButtonPresentAnimation.m */; };
@@ -404,6 +405,10 @@
 		4A1D9D9B1D1B833A00052B92 /* BusinessDetailTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessDetailTableView.m; sourceTree = "<group>"; };
 		4A43DEE21CCF69250008BD96 /* BarCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarCodeViewController.h; sourceTree = "<group>"; };
 		4A43DEE31CCF69250008BD96 /* BarCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarCodeViewController.m; sourceTree = "<group>"; };
+		4A49545B1D28B4D300E05868 /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
+		4A49545C1D28B4D300E05868 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
+		4A4954611D28B55B00E05868 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
+		4A4954621D28B55B00E05868 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
 		4A4BD2391CB895A1009DA0B9 /* 爱服务.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "爱服务.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A4BD23D1CB895A1009DA0B9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4A4BD23F1CB895A1009DA0B9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -721,7 +726,6 @@
 		4A7CA6AE1CDB1744000232CB /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		4ADEDD791D17E04E00FE3412 /* Order.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Order.h; sourceTree = "<group>"; };
 		4ADEDD7A1D17E04E00FE3412 /* Order.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Order.m; sourceTree = "<group>"; };
-		4ADEDD7C1D17E05600FE3412 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		4ADEDD7E1D17E05600FE3412 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
 		4ADEDD7F1D17E05600FE3412 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
 		4ADEDEB71D17E89900FE3412 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
@@ -817,7 +821,6 @@
 		4ADEDF121D17E89900FE3412 /* x509_vfy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x509_vfy.h; sourceTree = "<group>"; };
 		4ADEDF131D17E89900FE3412 /* x509v3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x509v3.h; sourceTree = "<group>"; };
 		4ADEDF1C1D17E96500FE3412 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		4ADEDF1E1D17F3C100FE3412 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlipaySDK.framework; path = openssl/AlipaySDK.framework; sourceTree = "<group>"; };
 		4AF52E9F1CC4751900E25FC4 /* MBProgressHUD+Assoication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Assoication.h"; sourceTree = "<group>"; };
 		4AF52EA01CC4751900E25FC4 /* MBProgressHUD+Assoication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+Assoication.m"; sourceTree = "<group>"; };
 		4AF52EAB1CC4B2E900E25FC4 /* ButtonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonViewController.h; sourceTree = "<group>"; };
@@ -850,10 +853,10 @@
 				4A7CA6AF1CDB1744000232CB /* libiconv.tbd in Frameworks */,
 				4A7CA6A21CDAF3BB000232CB /* libsqlite3.tbd in Frameworks */,
 				4A7CA6A01CDAF3A8000232CB /* CoreGraphics.framework in Frameworks */,
-				4ADEDF1F1D17F3C100FE3412 /* AlipaySDK.framework in Frameworks */,
 				4A7CA6A71CDB104E000232CB /* libWeChatSDK.a in Frameworks */,
 				4A6BE93F1CFC4697002F20C1 /* jpush-ios-2.1.7.a in Frameworks */,
 				4A7CA69E1CDAF3A0000232CB /* Foundation.framework in Frameworks */,
+				4A49545F1D28B4D400E05868 /* TencentOpenAPI.framework in Frameworks */,
 				4ADEDD831D17E05600FE3412 /* libssl.a in Frameworks */,
 				4A7CA69C1CDAF397000232CB /* UIKit.framework in Frameworks */,
 				4A7CA69A1CDAF38B000232CB /* CoreText.framework in Frameworks */,
@@ -866,6 +869,7 @@
 				4ADEDD821D17E05600FE3412 /* libcrypto.a in Frameworks */,
 				4A7CA6911CDAF2E9000232CB /* libWeiboSDK.a in Frameworks */,
 				4A4C6CE71CD201610030B861 /* libz.tbd in Frameworks */,
+				4A4954651D28B55B00E05868 /* AlipaySDK.framework in Frameworks */,
 				4A4C6CE51CD1F3E50030B861 /* CoreTelephony.framework in Frameworks */,
 				4477E4D8E79C479F30CEE9B8 /* libPods-爱服务.a in Frameworks */,
 			);
@@ -890,12 +894,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A6423ED1D19396600F26BA9 /* CoreMotion.framework in Frameworks */,
+				4A4954601D28B4D400E05868 /* TencentOpenAPI.framework in Frameworks */,
 				4A6423EE1D19396600F26BA9 /* CFNetwork.framework in Frameworks */,
 				4A6423EF1D19396600F26BA9 /* MapKit.framework in Frameworks */,
 				4A6423F01D19396600F26BA9 /* libiconv.tbd in Frameworks */,
 				4A6423F11D19396600F26BA9 /* libsqlite3.tbd in Frameworks */,
+				4A4954661D28B55B00E05868 /* AlipaySDK.framework in Frameworks */,
 				4A6423F21D19396600F26BA9 /* CoreGraphics.framework in Frameworks */,
-				4A6423F31D19396600F26BA9 /* AlipaySDK.framework in Frameworks */,
 				4A6423F41D19396600F26BA9 /* libWeChatSDK.a in Frameworks */,
 				4A6423F51D19396600F26BA9 /* jpush-ios-2.1.7.a in Frameworks */,
 				4A6423F61D19396600F26BA9 /* Foundation.framework in Frameworks */,
@@ -903,7 +908,6 @@
 				4A6423F81D19396600F26BA9 /* UIKit.framework in Frameworks */,
 				4A6423F91D19396600F26BA9 /* CoreText.framework in Frameworks */,
 				4A6423FA1D19396600F26BA9 /* Security.framework in Frameworks */,
-				4A6423FB1D19396600F26BA9 /* TencentOpenAPI.framework in Frameworks */,
 				4A6423FC1D19396600F26BA9 /* ImageIO.framework in Frameworks */,
 				4A6423FD1D19396600F26BA9 /* QuartzCore.framework in Frameworks */,
 				4A6423FE1D19396600F26BA9 /* libc++.tbd in Frameworks */,
@@ -1077,10 +1081,12 @@
 		4A4BD2931CB8D5C2009DA0B9 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				4A4954611D28B55B00E05868 /* AlipaySDK.bundle */,
+				4A4954621D28B55B00E05868 /* AlipaySDK.framework */,
 				4ADEDEB61D17E89900FE3412 /* Util */,
 				4ADEDEC81D17E89900FE3412 /* openssl */,
-				4ADEDF1E1D17F3C100FE3412 /* AlipaySDK.framework */,
-				4ADEDD7C1D17E05600FE3412 /* AlipaySDK.bundle */,
+				4A49545B1D28B4D300E05868 /* TencentOpenApi_IOS_Bundle.bundle */,
+				4A49545C1D28B4D300E05868 /* TencentOpenAPI.framework */,
 				4ADEDD7E1D17E05600FE3412 /* libcrypto.a */,
 				4ADEDD7F1D17E05600FE3412 /* libssl.a */,
 				4ADEDD791D17E04E00FE3412 /* Order.h */,
@@ -1847,8 +1853,8 @@
 				4A7749881CC07ECA008B9611 /* ProductTableViewCell.xib in Resources */,
 				4A7749921CC09DC8008B9611 /* ChargebackTableViewCell.xib in Resources */,
 				4A6BE9431CFC4863002F20C1 /* Push Config.plist in Resources */,
+				4A4954631D28B55B00E05868 /* AlipaySDK.bundle in Resources */,
 				4A77498D1CC09464008B9611 /* ServiceTypeTableViewCell.xib in Resources */,
-				4ADEDD801D17E05600FE3412 /* AlipaySDK.bundle in Resources */,
 				4A4BD2491CB895A1009DA0B9 /* Assets.xcassets in Resources */,
 				4A561D671CBDE9DE00BB26AC /* MainTableViewCell.xib in Resources */,
 				4A6BABE61CC62FAB000B94A2 /* MJRefresh.bundle in Resources */,
@@ -1884,8 +1890,8 @@
 				4A6424091D19396600F26BA9 /* ProductTableViewCell.xib in Resources */,
 				4A64240A1D19396600F26BA9 /* ChargebackTableViewCell.xib in Resources */,
 				4A64240B1D19396600F26BA9 /* Push Config.plist in Resources */,
+				4A4954641D28B55B00E05868 /* AlipaySDK.bundle in Resources */,
 				4A64240C1D19396600F26BA9 /* ServiceTypeTableViewCell.xib in Resources */,
-				4A64240D1D19396600F26BA9 /* AlipaySDK.bundle in Resources */,
 				4A64240E1D19396600F26BA9 /* Assets.xcassets in Resources */,
 				4A64240F1D19396600F26BA9 /* MainTableViewCell.xib in Resources */,
 				4A6424101D19396600F26BA9 /* MJRefresh.bundle in Resources */,
@@ -2543,9 +2549,8 @@
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/爱服务/Libraries/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
-					"$(PROJECT_DIR)/爱服务/Libraries",
 					"$(PROJECT_DIR)/爱服务/Libraries/openssl",
+					"$(PROJECT_DIR)/爱服务/Libraries",
 				);
 				GCC_PREFIX_HEADER = "爱服务/PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2564,12 +2569,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/爱服务/Libraries/UMSocial_Sdk_5.1",
-					"$(PROJECT_DIR)/爱服务/Libraries/UMSocial_Sdk_Extra_Frameworks/AlipayShare",
-					"$(PROJECT_DIR)/爱服务/Libraries/UMSocial_Sdk_Extra_Frameworks/SinaSSO",
-					"$(PROJECT_DIR)/爱服务/Libraries/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
-					"$(PROJECT_DIR)/爱服务/Libraries/UMSocial_Sdk_Extra_Frameworks/Wechat",
-					"$(PROJECT_DIR)/爱服务/Libraries/SDK1.6.2",
 					"$(PROJECT_DIR)/爱服务/Libraries",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.51ifwcs;
@@ -2589,9 +2588,8 @@
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/爱服务/Libraries/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
-					"$(PROJECT_DIR)/爱服务/Libraries",
 					"$(PROJECT_DIR)/爱服务/Libraries/openssl",
+					"$(PROJECT_DIR)/爱服务/Libraries",
 				);
 				GCC_PREFIX_HEADER = "爱服务/PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2610,12 +2608,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/爱服务/Libraries/UMSocial_Sdk_5.1",
-					"$(PROJECT_DIR)/爱服务/Libraries/UMSocial_Sdk_Extra_Frameworks/AlipayShare",
-					"$(PROJECT_DIR)/爱服务/Libraries/UMSocial_Sdk_Extra_Frameworks/SinaSSO",
-					"$(PROJECT_DIR)/爱服务/Libraries/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
-					"$(PROJECT_DIR)/爱服务/Libraries/UMSocial_Sdk_Extra_Frameworks/Wechat",
-					"$(PROJECT_DIR)/爱服务/Libraries/SDK1.6.2",
 					"$(PROJECT_DIR)/爱服务/Libraries",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.51ifwcs;
