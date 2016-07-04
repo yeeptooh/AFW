@@ -100,7 +100,7 @@ static BOOL isProduction = FALSE;
     [WeiboSDK enableDebugMode:YES];
     [WeiboSDK registerApp:WBAppKey];
     TencentOAuth *oAuth = [[TencentOAuth alloc] initWithAppId:QQKey andDelegate:nil];
-    NSLog(@"--%@",oAuth.accessToken);
+    NSLog(@"%@",oAuth.accessToken);
     
     
     
@@ -281,7 +281,21 @@ static BOOL isProduction = FALSE;
         
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"error.userInfo = %@",error.userInfo);
+        MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.window];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = @"网络异常，如有疑问，请联系客服";
+        CGFloat fontsize;
+        if (iPhone4_4s || iPhone5_5s) {
+            fontsize = 14;
+        }else {
+            fontsize = 16;
+        }
+        hud.label.font = font(fontsize);
+        [self.window addSubview:hud];
+        [hud showAnimated:YES];
+        hud.offset = CGPointMake(0, Height/5);
+        [hud hideAnimated:YES afterDelay:1.5];
+        [hud removeFromSuperViewOnHide];
         
     }];
     

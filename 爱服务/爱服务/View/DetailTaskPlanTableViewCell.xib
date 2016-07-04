@@ -99,9 +99,6 @@
                             <constraint firstAttribute="width" constant="30" id="jH0-xy-YfF"/>
                         </constraints>
                         <state key="normal" image="taskmap"/>
-                        <connections>
-                            <action selector="mapButtonClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ndp-x7-PcX"/>
-                        </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dMB-fd-3L5">
                         <rect key="frame" x="8" y="71" width="304" height="22"/>
@@ -146,6 +143,7 @@
                 <outlet property="fromLabel" destination="twy-jE-V00" id="5I2-Yo-lTQ"/>
                 <outlet property="fromPhoneLabel" destination="AhT-HZ-r1S" id="9Mg-rg-6cB"/>
                 <outlet property="locationButton" destination="dMB-fd-3L5" id="MZS-Yu-qO9"/>
+                <outlet property="mapButton" destination="oWr-AM-EX2" id="7e5-qR-JCA"/>
                 <outlet property="nameLabel" destination="QMD-p8-eKl" id="6y7-3M-8t6"/>
                 <outlet property="phoneLabel" destination="Z04-fk-5lH" id="rtU-j9-vDk"/>
                 <outlet property="priceLabel" destination="FhO-Nu-CdV" id="7mm-P3-ucU"/>

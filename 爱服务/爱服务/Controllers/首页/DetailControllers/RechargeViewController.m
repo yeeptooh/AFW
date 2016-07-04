@@ -439,7 +439,7 @@ static NSInteger i = 0;
     }
     
     if (i == 2) {
-        NSLog(@"-------------------");
+        
         NSString *totalFee = [NSString stringWithFormat:@"%@",self.cell.moneyTextField.text];
         NSString *ipAddress = [self getIPAddress];
         UserModel *userModel = [UserModel readUserModel];
@@ -452,6 +452,8 @@ static NSInteger i = 0;
             NSLog(@"responseObject = %@",responseObject);
             
             if ([responseObject[@"status"] isEqualToString:@"ok"]) {
+                [[NSUserDefaults standardUserDefaults] setObject:responseObject[@"orderid"] forKey:@"WXOrderID"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
                 PayReq *payReq = [[PayReq alloc] init];
                 
                 payReq.prepayId = responseObject[@"data"][@"prepayid"];

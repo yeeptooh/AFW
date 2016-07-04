@@ -735,7 +735,7 @@ UITextFieldDelegate
         detailVC.fromUserName = self.orderModel.fromUserName;
         detailVC.toUserID = self.orderModel.ToUserID;
         detailVC.toUserName = self.orderModel.ToUserName;
-        
+        detailVC.BuyerFullAddress_Incept = self.orderModel.BuyerFullAddress_Incept;
         [self.navigationController pushViewController:detailVC animated:YES];
     }
 }
