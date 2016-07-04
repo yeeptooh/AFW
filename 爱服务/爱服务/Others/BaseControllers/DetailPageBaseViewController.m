@@ -30,6 +30,7 @@
 }
 
 - (void)backLastView:(UIBarButtonItem *)sender {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [self.navigationController popViewControllerAnimated:YES];
 }
 
