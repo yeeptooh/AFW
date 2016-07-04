@@ -14,18 +14,36 @@
 #import <WebKit/WebKit.h>
 @interface MyInfoViewController ()
 <
-WKNavigationDelegate
+WKNavigationDelegate,
+WKUIDelegate
 >
 @property (nonatomic, strong) UIProgressView *progressView;
 @property (nonatomic, strong) WKWebView *webView;
 @property (nonatomic, strong) UIView *noNetWorkingView;
+@property (nonatomic, strong) NSString *url;
+@property (nonatomic, strong) UIView *containerView;
 @end
 
 @implementation MyInfoViewController
 
+- (UIView *)containerView {
+    if (!_containerView) {
+        if (iPhone4_4s || iPhone5_5s) {
+            _containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, Width, Height - StatusBarAndNavigationBarHeight - TabbarHeight + 5)];
+        }else{
+            _containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, Width, Height - StatusBarAndNavigationBarHeight - TabbarHeight)];
+        }
+        
+        _containerView.backgroundColor = [UIColor whiteColor];
+        [_containerView addSubview:self.noNetWorkingView];
+    }
+    return _containerView;
+}
+
 - (UIView *)noNetWorkingView {
     
     if (!_noNetWorkingView) {
+        
         _noNetWorkingView = [[UIView alloc]initWithFrame:CGRectMake(0, SearchBarHeight, Width, Height - StatusBarAndNavigationBarHeight - TabbarHeight - SearchBarHeight)];
         _noNetWorkingView.backgroundColor = [UIColor whiteColor];
         UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"loding_wrong"]];
@@ -57,13 +75,14 @@ WKNavigationDelegate
     [self setWebView];
     [self setNaviTitle];
     [self setQuitButton];
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    if (_noNetWorkingView) {
-        [self.noNetWorkingView removeFromSuperview];
-        self.noNetWorkingView = nil;
+    if (_containerView) {
+        [self.containerView removeFromSuperview];
+        self.containerView = nil;
     }
 }
 
@@ -79,14 +98,19 @@ WKNavigationDelegate
     }
     self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, Width, Height - StatusBarAndNavigationBarHeight - height)];
     
-    
     self.webView.navigationDelegate = self;
-    
-    
-    
+    self.webView.UIDelegate = self;
+    self.webView.allowsBackForwardNavigationGestures = YES;
+
     self.webView.scrollView.bounces = NO;
     self.webView.scrollView.showsVerticalScrollIndicator = NO;
+#if Environment_Mode == 1
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/page.aspx?type=user&comid=%ld&uid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid]]]];
+#elif Environment_Mode == 2
+    self.url = [NSString stringWithFormat:@"%@/page.aspx?type=user&comid=%ld&uid=%ld&device=i",HomeURL,(long)userModel.comid,(long)userModel.uid];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.url]]];
+#endif
+    
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [self.view addSubview:self.progressView];
     [self.view insertSubview:self.webView belowSubview:self.progressView];
@@ -94,6 +118,17 @@ WKNavigationDelegate
     
     [self.webView addObserver:self
                    forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
+}
+
+- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler {
+    UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleDefault handler:nil];
+    
+    [controller addAction:action];
+    
+    [self presentViewController:controller animated:YES completion:^{
+        completionHandler();
+    }];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
@@ -124,7 +159,7 @@ WKNavigationDelegate
             self.progressView.alpha = 0;
         }];
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        [self.view addSubview:self.noNetWorkingView];
+        [self.view addSubview:self.containerView];
     }
 }
 
@@ -135,6 +170,13 @@ WKNavigationDelegate
     [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];
     
 }
+
+
+
+- (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(WKNavigation *)navigation {
+    
+}
+
 
 - (void)setQuitButton {
     UIButton *quitButton = [UIButton buttonWithType:0];
@@ -163,10 +205,29 @@ WKNavigationDelegate
     [[NSUserDefaults standardUserDefaults] synchronize];
     [self.navigationController popViewControllerAnimated:YES];
     NSArray *vcList = self.navigationController.viewControllers;
-
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [vcList[0] presentViewController:[[LoginViewController alloc]init] animated:YES completion:nil];
     
 }
+
+- (void)backLastView:(UIBarButtonItem *)sender {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    
+    if ([self.webView canGoBack]) {
+        if (self.webView.backForwardList.backList.count == 1) {
+            [self.webView goBack];
+            [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.url]]];
+        }else{
+            [self.webView goBack];
+        }
+        
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
+}
+
+
 
 - (void)setNaviTitle {
     self.navigationItem.title = @"我的信息";
