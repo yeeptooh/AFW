@@ -54,14 +54,10 @@ MKMapViewDelegate
     self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, Width, Height - height)];
     
     self.mapView.mapType = MKMapTypeStandard;
+    
     //设置代理
     self.mapView.delegate = self;
-    /*
-     self.BuyerProvince = dictionary[@"BuyerProvince"];
-     self.BuyerFullAddress_Incept = dictionary[@"BuyerFullAddress_Incept"];
-     self.BuyerAddress = dictionary[@"BuyerAddress"];
-     
-     */
+    
     
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     [geocoder geocodeAddressString:[NSString stringWithFormat:@"%@%@%@",self.BuyerProvince,self.BuyerFullAddress_Incept,self.BuyerAddress] completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
@@ -71,18 +67,17 @@ MKMapViewDelegate
         
         // 添加MapView
         MKCoordinateSpan span = MKCoordinateSpanMake(0.01, 0.01); //比例
-        MKCoordinateRegion region = MKCoordinateRegionMake(coordinate, span);	   // 范围、区域
-        [self.mapView setRegion:region];
+        MKCoordinateRegion region = MKCoordinateRegionMake(coordinate, span);// 范围、区域
+        [self.mapView setRegion:region]; //animated:YES];
         
         
         // 添加Annotation
-        MKPointAnnotation *annotaion = [[MKPointAnnotation alloc] init];
-        annotaion.coordinate = coordinate;
-        annotaion.title = self.BuyerFullAddress;
-        //annotaion.title = [NSString stringWithFormat:@"%@ %@",self.BuyerProvince, self.BuyerCity];
-        //annotaion.subtitle = self.BuyerAddress;
+        MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+        annotation.coordinate = coordinate;
+        annotation.title = [NSString stringWithFormat:@"%@ %@",self.BuyerProvince,self.BuyerFullAddress_Incept];
+        annotation.subtitle = self.BuyerAddress;
         
-        [self.mapView addAnnotation:annotaion];
+        [self.mapView addAnnotation:annotation];
     }];
     
     [self.view addSubview:self.mapView];
@@ -151,75 +146,77 @@ MKMapViewDelegate
     
 }
 
-- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
-    switch (status) {
-        case kCLAuthorizationStatusNotDetermined://用户还未决定
-        {
-            NSLog(@"用户还未决定");
-            break;
-        }
-        case kCLAuthorizationStatusRestricted://访问受限
-        {
-            NSLog(@"访问受限");
-            break;
-        }
-        case kCLAuthorizationStatusDenied://定位关闭时或用户APP授权为永不授权时调用
-        {
-            NSLog(@"定位关闭或者用户未授权");
-            break;
-        }
-        case kCLAuthorizationStatusAuthorizedAlways://获取前后台定位授权
-        {
-            NSLog(@"获取前后台定位授权");
-            [self.locationManager startUpdatingLocation];
-            break;
-        }
-        case kCLAuthorizationStatusAuthorizedWhenInUse://获得前台定位授权
-        {
-            NSLog(@"获得前台定位授权");
-            [self.locationManager startUpdatingLocation];
-            break;
-        }
-        default:break;
-    }
-    
-}
+//- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+//    switch (status) {
+//        case kCLAuthorizationStatusNotDetermined://用户还未决定
+//        {
+//            NSLog(@"用户还未决定");
+//            break;
+//        }
+//        case kCLAuthorizationStatusRestricted://访问受限
+//        {
+//            NSLog(@"访问受限");
+//            break;
+//        }
+//        case kCLAuthorizationStatusDenied://定位关闭时或用户APP授权为永不授权时调用
+//        {
+//            NSLog(@"定位关闭或者用户未授权");
+//            break;
+//        }
+//        case kCLAuthorizationStatusAuthorizedAlways://获取前后台定位授权
+//        {
+//            NSLog(@"获取前后台定位授权");
+//            [self.locationManager startUpdatingLocation];
+//            break;
+//        }
+//        case kCLAuthorizationStatusAuthorizedWhenInUse://获得前台定位授权
+//        {
+//            NSLog(@"获得前台定位授权");
+//            [self.locationManager startUpdatingLocation];
+//            break;
+//        }
+//        default:break;
+//    }
+//    
+//}
 
 
-- (void)locationManager:(CLLocationManager *)manager
-     didUpdateLocations:(NSArray<CLLocation*> *)locations
-{
-    CLLocation *location = [locations firstObject];//取出第一个位置
-    /*
-     使用位置前, 务必判断当前获取的位置是否有效
-     如果水平精确度小于零, 代表虽然可以获取位置对象, 但是数据错误, 不可用
-     */
-    if (location.horizontalAccuracy < 0)
-        return;
-    CLLocationCoordinate2D coordinate = location.coordinate;//位置坐标
-    CGFloat longitude = coordinate.longitude;//经度
-    CGFloat latitude = coordinate.latitude;//纬度
-    CGFloat altitude = location.altitude;//海拔
-    CGFloat course = location.course;//方向
-    CGFloat speed = location.speed;//速度
-    NSLog(@"经度:%f,纬度:%f",longitude,latitude);
-    NSLog(@"海拔:%f,方向:%f,速度:%f",altitude,course,speed);
-    //如果不需要实时定位，使用完即使关闭定位服务
-    [self.locationManager stopUpdatingLocation];
-}
+//- (void)locationManager:(CLLocationManager *)manager
+//     didUpdateLocations:(NSArray<CLLocation*> *)locations
+//{
+//    CLLocation *location = [locations firstObject];//取出第一个位置
+//    /*
+//     使用位置前, 务必判断当前获取的位置是否有效
+//     如果水平精确度小于零, 代表虽然可以获取位置对象, 但是数据错误, 不可用
+//     */
+//    if (location.horizontalAccuracy < 0)
+//        return;
+//    CLLocationCoordinate2D coordinate = location.coordinate;//位置坐标
+//    CGFloat longitude = coordinate.longitude;//经度
+//    CGFloat latitude = coordinate.latitude;//纬度
+//    CGFloat altitude = location.altitude;//海拔
+//    CGFloat course = location.course;//方向
+//    CGFloat speed = location.speed;//速度
+//    NSLog(@"经度:%f,纬度:%f",longitude,latitude);
+//    NSLog(@"海拔:%f,方向:%f,速度:%f",altitude,course,speed);
+//    //如果不需要实时定位，使用完即使关闭定位服务
+//    [self.locationManager stopUpdatingLocation];
+//}
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
-    MKPinAnnotationView *annotaionView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"PIN_ANNOTATION"];
-    if (annotaionView == nil) {
-        annotaionView = [[MKPinAnnotationView alloc] initWithAnnotation: annotation reuseIdentifier:@"PIN_ANNOTATION"];
+    MKPinAnnotationView *annotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"PIN_ANNOTATION"];
+    if (!annotationView) {
+        annotationView = [[MKPinAnnotationView alloc] initWithAnnotation: annotation reuseIdentifier:@"PIN_ANNOTATION"];
     }
     
-    annotaionView.pinColor = MKPinAnnotationColorRed;//标注点颜色
-    annotaionView.animatesDrop = YES;// 动画
-    annotaionView.canShowCallout = YES;// 插图编号
     
-    return annotaionView;
+    annotationView.pinColor = MKPinAnnotationColorRed;//标注点颜色
+    annotationView.animatesDrop = YES;// 动画
+    annotationView.canShowCallout = YES;//YES;// 插图编号
+
+    
+    return annotationView;
 }
 
 

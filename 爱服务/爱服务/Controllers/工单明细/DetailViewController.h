@@ -56,7 +56,7 @@
 @property (nonatomic, strong) NSString *toUserName;
 
 
-
+@property (nonatomic, strong) NSString *BuyerFullAddress_Incept;
 
 
 

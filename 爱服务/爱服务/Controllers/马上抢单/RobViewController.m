@@ -614,7 +614,7 @@ UITextFieldDelegate
     detailVC.fromUserName = self.orderModel.fromUserName;
     detailVC.toUserID = self.orderModel.ToUserID;
     detailVC.toUserName = self.orderModel.ToUserName;
-    
+    detailVC.BuyerFullAddress_Incept = self.orderModel.BuyerFullAddress_Incept;
     
     [self.navigationController pushViewController:detailVC animated:YES];
     
@@ -634,7 +634,7 @@ UITextFieldDelegate
     mapVC.BuyerFullAddress_Incept = orderModel.BuyerFullAddress_Incept;
     mapVC.BuyerProvince = orderModel.BuyerProvince;
     mapVC.BuyerCity = orderModel.BuyerCity;
-    mapVC.BuyerProvince = orderModel.BuyerAddress;
+    mapVC.BuyerAddress = orderModel.BuyerAddress;
     mapVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:mapVC animated:YES];
 }

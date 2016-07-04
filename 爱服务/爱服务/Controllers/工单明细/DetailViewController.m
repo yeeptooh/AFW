@@ -29,6 +29,7 @@
 
 #import "MBProgressHUD.h"
 #import <AVFoundation/AVFoundation.h>
+#import <MapKit/MapKit.h>
 //#define ButtonHeight 35
 #define BaseInfoViewHeight 150
 #define SectionHeaderHeight 32
@@ -38,7 +39,7 @@ UITableViewDelegate,
 UITableViewDataSource,
 UIViewControllerTransitioningDelegate
 >
-
+@property (nonatomic, assign) CLLocationCoordinate2D coordinate;
 @property (nonatomic, strong) DetailTaskPlanTableViewCell *baseDetailInfoCell;
 @property (nonatomic, strong) ProductTableViewCell *cell;
 @property (nonatomic, strong) UITableView *tableView;
@@ -128,11 +129,15 @@ UIViewControllerTransitioningDelegate
     self.baseDetailInfoCell.phone = self.phone;
     
     [self.baseDetailInfoCell.dialogButton addTarget:self action:@selector(dialogButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.baseDetailInfoCell.mapButton addTarget:self action:@selector(mapButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    
     self.baseDetailInfoCell.phoneLabel.text = self.phone;
     self.baseDetailInfoCell.fromLabel.text = self.from;
     self.baseDetailInfoCell.fromPhoneLabel.text = self.fromPhone;
     self.baseDetailInfoCell.priceLabel.text = self.price;
     [self.baseDetailInfoCell.locationButton setTitle:self.location forState:UIControlStateNormal];
+    NSLog(@"%@",self.location);
     [self.baseDetailInfoCell.locationButton addTarget:self action:@selector(locationButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:self.baseDetailInfoCell];
@@ -175,6 +180,97 @@ UIViewControllerTransitioningDelegate
 
 }
 
+- (void)mapButtonClick {
+    
+    __weak typeof(self) weakSelf = self;
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"baidumap://"]] || [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"iosamap://"]]) {
+
+        CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+        [geocoder geocodeAddressString:self.BuyerFullAddress_Incept completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+            //获取目的地地理坐标
+            CLPlacemark *placemark = [placemarks lastObject];
+            weakSelf.coordinate = placemark.location.coordinate;
+
+        }];
+
+
+        UIAlertAction *appleAction = [UIAlertAction actionWithTitle:@"苹果地图" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+
+            [geocoder geocodeAddressString:self.BuyerFullAddress_Incept completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+                //获取目的地地理坐标
+                CLPlacemark *placemark = [placemarks lastObject];
+                //Mapkit框架下的地标
+                MKPlacemark *mkPlacemark = [[MKPlacemark alloc] initWithPlacemark:placemark];
+                //目的地的item
+                MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:mkPlacemark];
+                MKMapItem *currentmapItem = [MKMapItem mapItemForCurrentLocation];
+                NSMutableDictionary *options = [NSMutableDictionary dictionary];
+                //MKLaunchOptionsDirectionsModeDriving:导航类型设置为驾车模式
+                options[MKLaunchOptionsDirectionsModeKey] = MKLaunchOptionsDirectionsModeDriving;
+                //设置地图显示类型为标准模式
+                options[MKLaunchOptionsMapTypeKey] = @(MKMapTypeStandard);
+                options[MKLaunchOptionsShowsTrafficKey] =@(YES);
+                //打开苹果地图应用
+                [MKMapItem openMapsWithItems:@[currentmapItem,mapItem] launchOptions:options];
+            }];
+        }];
+
+        UIAlertAction *baiduAction;
+        UIAlertAction *gdAction;
+        if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"baidumap://"]]) {
+            baiduAction = [UIAlertAction actionWithTitle:@"百度地图" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                NSString *urlString = [[NSString stringWithFormat:@"baidumap://map/direction?origin={{我的位置}}&destination=latlng:%f,%f|name=目的地&mode=driving&coord_type=gcj02",weakSelf.coordinate.latitude, weakSelf.coordinate.longitude] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
+            }];
+        }
+
+        if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"iosamap://"]]) {
+            gdAction = [UIAlertAction actionWithTitle:@"高德地图" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                NSString *urlString = [[NSString stringWithFormat:@"iosamap://navi?sourceApplication=%@&backScheme=%@&lat=%f&lon=%f&dev=0&style=2",@"爱服务",@"",weakSelf.coordinate.latitude, weakSelf.coordinate.longitude] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
+            }];
+        }
+
+        UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        [actionSheet addAction:appleAction];
+        if (baiduAction) {
+            [actionSheet addAction:baiduAction];
+        }
+        if (gdAction) {
+            [actionSheet addAction:gdAction];
+        }
+
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        [actionSheet addAction:cancelAction];
+
+        [self presentViewController:actionSheet animated:YES completion:nil];
+
+    }else{
+        //创建CLGeocoder对象
+        CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+        [geocoder geocodeAddressString:self.BuyerFullAddress_Incept completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+            //获取目的地地理坐标
+            CLPlacemark *placemark = [placemarks lastObject];
+            //Mapkit框架下的地标
+            MKPlacemark *mkPlacemark = [[MKPlacemark alloc] initWithPlacemark:placemark];
+            //目的地的item
+            MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:mkPlacemark];
+            MKMapItem *currentmapItem = [MKMapItem mapItemForCurrentLocation];
+            NSMutableDictionary *options = [NSMutableDictionary dictionary];
+            //MKLaunchOptionsDirectionsModeDriving:导航类型设置为驾车模式
+            options[MKLaunchOptionsDirectionsModeKey] = MKLaunchOptionsDirectionsModeDriving;
+            //设置地图显示类型为标准模式
+            options[MKLaunchOptionsMapTypeKey] = @(MKMapTypeStandard);
+            options[MKLaunchOptionsShowsTrafficKey] =@(YES);
+            //打开苹果地图应用
+            [MKMapItem openMapsWithItems:@[currentmapItem,mapItem] launchOptions:options];
+        }];
+    }
+    
+    
+}
+
 - (void)locationButtonClicked {
     
     ButtonViewController *buttonVC = [[ButtonViewController alloc]init];
@@ -189,6 +285,9 @@ UIViewControllerTransitioningDelegate
     };
     
     [self presentViewController:buttonVC animated:YES completion:nil];
+    
+
+    
 }
 
 - (void)setBottomButton {
