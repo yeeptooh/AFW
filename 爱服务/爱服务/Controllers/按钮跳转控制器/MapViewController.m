@@ -98,7 +98,7 @@ MKMapViewDelegate
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     UserModel *userModel = [UserModel readUserModel];
     NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=grabsign&id=%@&comid=%ld&uid=%ld&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,self.ID,(long)userModel.comid,(long)userModel.uid,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
-    NSLog(@"%@",URL);
+    
     MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.view];
     hud.mode = MBProgressHUDModeIndeterminate;
     [self.view addSubview:hud];

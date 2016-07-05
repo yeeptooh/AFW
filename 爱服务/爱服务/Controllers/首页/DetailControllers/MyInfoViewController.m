@@ -22,9 +22,30 @@ WKUIDelegate
 @property (nonatomic, strong) UIView *noNetWorkingView;
 @property (nonatomic, strong) NSString *url;
 @property (nonatomic, strong) UIView *containerView;
+@property (nonatomic, strong) UIButton *quitButton;
 @end
 
 @implementation MyInfoViewController
+
+- (UIButton *)quitButton {
+    if (!_quitButton) {
+        _quitButton = [UIButton buttonWithType:0];
+        
+        [_quitButton setTitle:@"退出登录" forState:UIControlStateNormal];
+        
+        [_quitButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
+        [_quitButton addTarget:self action:@selector(quitButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        CGFloat height;
+        if (iPhone4_4s || iPhone5_5s) {
+            height = 44;
+        }else {
+            height = 49;
+        }
+        _quitButton.frame = CGRectMake(0, Height - StatusBarAndNavigationBarHeight - height, Width, height);
+        _quitButton.backgroundColor = color(59, 165, 249, 1);
+    }
+    return _quitButton;
+}
 
 - (UIView *)containerView {
     if (!_containerView) {
@@ -63,7 +84,8 @@ WKUIDelegate
 - (UIProgressView *)progressView {
     if (!_progressView) {
         _progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 0, Width, 2)];
-        
+        _progressView.trackTintColor = [UIColor clearColor];
+        _progressView.progressTintColor = BlueColor;
     }
     return _progressView;
 }
@@ -96,6 +118,7 @@ WKUIDelegate
     }else {
         height = 49;
     }
+
     self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, Width, Height - StatusBarAndNavigationBarHeight - height)];
     
     self.webView.navigationDelegate = self;
@@ -118,6 +141,13 @@ WKUIDelegate
     
     [self.webView addObserver:self
                    forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
+#if Environment_Mode == 1
+#elif Environment_Mode == 2
+    [self.webView addObserver:self forKeyPath:@"canGoBack" options:NSKeyValueObservingOptionNew context:nil];
+#endif
+    
+    
+    
 }
 
 - (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler {
@@ -133,9 +163,11 @@ WKUIDelegate
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:@"estimatedProgress"]) {
-        //        self.progressView.hidden = self.webView.estimatedProgress == 1;
-        //        [self.progressView setProgress:self.webView.estimatedProgress animated:YES];
+        
         self.progressView.progress = self.webView.estimatedProgress;
+    }else if ([keyPath isEqualToString:@"canGoBack"]) {
+        
+        
     }
     //加载完成
     if (!self.webView.isLoading) {
@@ -168,6 +200,10 @@ WKUIDelegate
 - (void)dealloc {
     
     [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];
+#if Environment_Mode == 1
+#elif Environment_Mode == 2
+    [self.webView removeObserver:self forKeyPath:@"canGoBack"];
+#endif
     
 }
 
@@ -175,10 +211,15 @@ WKUIDelegate
 
 - (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(WKNavigation *)navigation {
     
+    
+    
 }
 
 
+
+
 - (void)setQuitButton {
+#if Environment_Mode == 1
     UIButton *quitButton = [UIButton buttonWithType:0];
     
     [quitButton setTitle:@"退出登录" forState:UIControlStateNormal];
@@ -194,6 +235,11 @@ WKUIDelegate
     quitButton.frame = CGRectMake(0, Height - StatusBarAndNavigationBarHeight - height, Width, height);
     quitButton.backgroundColor = color(59, 165, 249, 1);
     [self.view addSubview:quitButton];
+#elif Environment_Mode == 2
+    
+    [self.view addSubview:self.quitButton];
+#endif
+    
 }
 
 - (void)quitButtonClicked {
@@ -210,27 +256,17 @@ WKUIDelegate
     
 }
 
-- (void)backLastView:(UIBarButtonItem *)sender {
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    
-    if ([self.webView canGoBack]) {
-        if (self.webView.backForwardList.backList.count == 1) {
-            [self.webView goBack];
-            [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.url]]];
-        }else{
-            [self.webView goBack];
-        }
-        
-    }else{
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-    
-}
+
 
 
 
 - (void)setNaviTitle {
+#if Environment_Mode == 1
     self.navigationItem.title = @"我的信息";
+#elif Environment_Mode == 2
+    self.navigationItem.title = @"基础信息";
+#endif
+    
 }
 
 
