@@ -427,6 +427,7 @@ UIViewControllerTransitioningDelegate
     
     UserModel *userModel = [UserModel readUserModel];
     NSString *URL = [NSString stringWithFormat:@"%@Common.ashx?action=getwaiters&comid=%ld",HomeURL,(long)userModel.comid];
+    NSLog(@"%@",URL);
     __weak typeof(self)weakSelf = self;
     
     [manager POST:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

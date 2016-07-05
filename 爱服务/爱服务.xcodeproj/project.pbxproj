@@ -2426,7 +2426,7 @@
 					"$(PROJECT_DIR)/爱服务/Libraries",
 					"$(PROJECT_DIR)/爱服务/Libraries/openssl",
 				);
-				GCC_PREFIX_HEADER = "$(PRODUCT_NAME)/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "爱服务/PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
@@ -2459,13 +2459,14 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Yu Guancheng (FGP43E8495)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Yu Guancheng (FGP43E8495)";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/爱服务/Libraries",
 					"$(PROJECT_DIR)/爱服务/Libraries/openssl",
 				);
-				GCC_PREFIX_HEADER = "$(PRODUCT_NAME)/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "爱服务/PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
