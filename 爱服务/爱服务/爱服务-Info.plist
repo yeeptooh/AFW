@@ -99,5 +99,9 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>HYQiHei-55S.otf</string>
+	</array>
 </dict>
 </plist>

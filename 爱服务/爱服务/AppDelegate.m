@@ -136,7 +136,7 @@ static BOOL isProduction = FALSE;
         [[NSNotificationCenter defaultCenter] postNotificationName:kBadgeValueChanged object:nil];
         [alertView show];
     }
-    
+    NSLog(@"1234");
     // IOS 7 Support Required
     [JPUSHService handleRemoteNotification:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
@@ -343,6 +343,7 @@ static BOOL isProduction = FALSE;
         
         if (responseObject != nil) {
             
+            
             UserModel *userModel = [[UserModel alloc]init];
 
             userModel.uid = [responseObject[@"user"][0][@"UserId"] integerValue];
@@ -363,6 +364,7 @@ static BOOL isProduction = FALSE;
             
             [manager GET:countString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 
+                NSLog(@"responseObject = %@",responseObject);
                 NSString *allString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
                 
                 NSArray *countList = [allString componentsSeparatedByString:@","];
