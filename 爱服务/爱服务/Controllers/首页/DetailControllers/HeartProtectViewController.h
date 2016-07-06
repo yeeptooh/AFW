@@ -6,8 +6,8 @@
 //  Copyright © 2016年 张冬冬. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "DetailPageBaseViewController.h"
 
-@interface HeartProtectViewController : UIViewController
+@interface HeartProtectViewController : DetailPageBaseViewController
 
 @end

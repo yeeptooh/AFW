@@ -26,6 +26,8 @@
 #import "WithDrawViewController.h"
 #import "ShareViewController.h"
 #import "RechargeViewController.h"
+#import "HeartProtectViewController.h"
+#import "GatheringViewController.h"
 
 
 #import "AddOrderViewController.h"
@@ -36,7 +38,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <AVFoundation/AVFoundation.h>
 //#import "AddOrderViewController.h"
-#define  imageHeight 139
+
 @interface HomeViewController ()
 <
 SDCycleScrollViewDelegate,
@@ -49,6 +51,7 @@ UINavigationControllerDelegate
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) UIAlertController *alertController;
+@property (nonatomic, strong) UIView *containerView;
 
 @property (nonatomic, assign, getter=isFlag) BOOL flag;
 
@@ -79,9 +82,34 @@ static NSInteger tag = 0;
 }
 
 - (UIView *)balanceView {
+
+    NSInteger imageHeight;
+    if (iPhone4_4s || iPhone5_5s) {
+        imageHeight = 139;
+    }else if (iPhone6) {
+        imageHeight = 163;
+    }else if (iPhone6_plus) {
+        imageHeight = 180;
+    }else{
+        //如果都不是,默认按照6p设计
+        imageHeight = 180;
+    }
     if (!_balanceView) {
-        CGFloat height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/8;
+        CGFloat height;
+        if (iPhone4_4s) {
+            height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/8;
+        }else if (iPhone5_5s) {
+            height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/8;
+        }else if (iPhone6) {
+            height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/9;
+        }else if (iPhone6_plus) {
+            height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/9;
+        }else {
+            height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/9;
+        }
+        
         _balanceView = [[UIView alloc]initWithFrame:CGRectMake(0, imageHeight, Width, height)];
+        _balanceView.backgroundColor = [UIColor whiteColor];
         
     }
     return _balanceView;
@@ -104,7 +132,7 @@ static NSInteger tag = 0;
     self.navigationController.delegate = self;
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.automaticallyAdjustsScrollViewInsets = NO;
-    
+    self.view.backgroundColor = color(246, 246, 246, 1);
     [self setNaviTitle];
     [self setScrollView];
     [self updateUI];
@@ -274,6 +302,16 @@ static NSInteger tag = 0;
 }
 
 - (void)setScrollView {
+    NSInteger imageHeight;
+    if (iPhone4_4s || iPhone5_5s) {
+        imageHeight = 139;
+    }else if (iPhone6) {
+        imageHeight = 163;
+    }else if (iPhone6_plus) {
+        imageHeight = 180;
+    }else{
+        imageHeight = 180;
+    }
     
     UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, Width, imageHeight)];
     scrollView.contentSize = CGSizeMake(Width * PageCount, scrollView.bounds.size.height);
@@ -303,7 +341,24 @@ static NSInteger tag = 0;
 }
 
 - (void)setBalance {
-    CGFloat height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/8;
+    NSInteger imageHeight;
+    CGFloat height;
+    if (iPhone4_4s || iPhone5_5s) {
+        imageHeight = 139;
+        height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/8;
+
+    }else if (iPhone6) {
+        imageHeight = 163;
+        height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/9;
+    }else if (iPhone6_plus) {
+        imageHeight = 180;
+        height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/9;
+    }else{
+        imageHeight = 180;
+        height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/9;
+
+    }
+    
     if (self.balanceView != nil) {
         [self.balanceView removeFromSuperview];
         self.balanceView = nil;
@@ -338,8 +393,6 @@ static NSInteger tag = 0;
 #elif Environment_Mode == 2
 #endif
 
-    
-    
     UIButton *drawMoneyButton = [UIButton buttonWithType:UIButtonTypeCustom];
     drawMoneyButton.frame = CGRectMake(Width*4/5, 0, Width/5, self.balanceView.bounds.size.height);
     [drawMoneyButton setTitle:@"提现" forState:UIControlStateNormal];
@@ -369,104 +422,384 @@ static NSInteger tag = 0;
 }
 
 - (void)setDetailButton {
-#if Environment_Mode == 1
-    CGFloat height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/8;
-    UIView *containerView;
-    if (iPhone4_4s) {
-        containerView = [[UIView alloc]initWithFrame:CGRectMake(0, imageHeight + height, Width, height*7)];
+    
+    NSInteger imageHeight;
+    if (iPhone4_4s || iPhone5_5s) {
+        imageHeight = 139;
+    }else if (iPhone6) {
+        imageHeight = 163;
+    }else if (iPhone6_plus) {
+        imageHeight = 180;
     }else{
-        containerView = [[UIView alloc]initWithFrame:CGRectMake(0, imageHeight + height, Width, height*6)];
+        imageHeight = 180;
     }
+#if Environment_Mode == 1
     
+    CGFloat height;
     
-    [self.view addSubview:containerView];
-    for (NSInteger i = 0; i < 3; i ++) {
-        for (NSInteger j = 0;  j < 4; j ++) {
-            self.detailButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            self.detailButton.tag = tag + 1000;
-            tag ++;
-            
-            [self.detailButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"a%ld",(long)tag]] forState:UIControlStateNormal];
-            
-            if (i == 2 && (j == 2 || j == 3)) {
-                [self.detailButton setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+    UIScrollView *scrollView;
+    if (iPhone4_4s) {
+        height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/8;
+        self.containerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Width, height * 7 + height *7 / 3)];
+        self.containerView.backgroundColor = [UIColor whiteColor];
+        scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, imageHeight + height , Width, height * 7)];
+        scrollView.contentSize = CGSizeMake(Width, height * 7 + height *7 / 3);
+        scrollView.showsVerticalScrollIndicator = NO;
+        scrollView.showsHorizontalScrollIndicator = NO;
+        [scrollView addSubview:self.containerView];
+        [self.view addSubview:scrollView];
+        for (NSInteger i = 0; i < 4; i ++) {
+            for (NSInteger j = 0;  j < 4; j ++) {
+                self.detailButton = [UIButton buttonWithType:UIButtonTypeCustom];
+                self.detailButton.tag = tag + 1000;
+                tag ++;
+                
+                [self.detailButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"a%ld",(long)tag]] forState:UIControlStateNormal];
+                
+                //            if (i == 2 && (j == 2 || j == 3)) {
+                //                [self.detailButton setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+                //            }
+                
+                [self.detailButton addTarget:self action:@selector(detailButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+ 
+                self.detailButton.frame = CGRectMake(Width*j/4, height*7*i/3, Width/4, height*7/3);
+                
+                if (self.detailButton.tag == 1000) {
+                    [self.detailButton setTitle:@"配件申请" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1001) {
+                    [self.detailButton setTitle:@"追加费用" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1002) {
+                    [self.detailButton setTitle:@"保修政策" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1003) {
+                    [self.detailButton setTitle:@"通知公告" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1004) {
+                    [self.detailButton setTitle:@"收费标准" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1005) {
+                    [self.detailButton setTitle:@"我的信息" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1006) {
+                    [self.detailButton setTitle:@"二维码" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1007) {
+                    [self.detailButton setTitle:@"分享好友" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1008) {
+                    [self.detailButton setTitle:@"我的帐户" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if(self.detailButton.tag == 1009) {
+                    [self.detailButton setTitle:@"我要提现" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if(self.detailButton.tag == 1010) {
+                    [self.detailButton setTitle:@"我要充值" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if(self.detailButton.tag == 1011) {
+                    [self.detailButton setTitle:@"爱心保" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if(self.detailButton.tag == 1012) {
+                    [self.detailButton setTitle:@"我要收款" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }
+                CGFloat fontsize = 12;
+                
+                self.detailButton.titleLabel.font = font(fontsize);
+                CGSize imageSize = self.detailButton.imageView.bounds.size;
+                CGSize titleLabelSize = self.detailButton.titleLabel.bounds.size;
+                
+                self.detailButton.imageEdgeInsets = UIEdgeInsetsMake(- self.detailButton.bounds.size.height/3, 0, 0, -titleLabelSize.width);
+                self.detailButton.titleEdgeInsets = UIEdgeInsetsMake(self.detailButton.bounds.size.height/2, -imageSize.width, 0, 0);
+                
+                
+                [self.containerView addSubview:self.detailButton];
             }
-            
-            [self.detailButton addTarget:self action:@selector(detailButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-            
-            
-            if (iPhone4_4s) {
-                self.detailButton.frame = CGRectMake(Width*j/4, height*7*i/3, Width/4, height*6/3);
-            }else {
-                self.detailButton.frame = CGRectMake(Width*j/4, height*6*i/3, Width/4, height*6/3);
-            }
+        }
+    }else if (iPhone5_5s){
+        height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/8;
+        self.containerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Width, height * 8)];
+        self.containerView.backgroundColor = [UIColor whiteColor];
+        scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, imageHeight + height , Width, height * 7)];
+        scrollView.showsVerticalScrollIndicator = NO;
+        scrollView.showsHorizontalScrollIndicator = NO;
+        scrollView.contentSize = CGSizeMake(Width, height * 8);
+        [scrollView addSubview:self.containerView];
+        [self.view addSubview:scrollView];
+        for (NSInteger i = 0; i < 4; i ++) {
+            for (NSInteger j = 0;  j < 4; j ++) {
+                self.detailButton = [UIButton buttonWithType:UIButtonTypeCustom];
+                self.detailButton.tag = tag + 1000;
+                tag ++;
+                
+                [self.detailButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"a%ld",(long)tag]] forState:UIControlStateNormal];
+                
+                //            if (i == 2 && (j == 2 || j == 3)) {
+                //                [self.detailButton setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+                //            }
+                
+                [self.detailButton addTarget:self action:@selector(detailButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 
-            if (self.detailButton.tag == 1000) {
-                [self.detailButton setTitle:@"配件申请" forState:UIControlStateNormal];
-                [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
-                [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
-            }else if (self.detailButton.tag == 1001) {
-                [self.detailButton setTitle:@"追加费用" forState:UIControlStateNormal];
-                [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
-                [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
-            }else if (self.detailButton.tag == 1002) {
-                [self.detailButton setTitle:@"保修政策" forState:UIControlStateNormal];
-                [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
-                [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
-            }else if (self.detailButton.tag == 1003) {
-                [self.detailButton setTitle:@"通知公告" forState:UIControlStateNormal];
-                [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
-                [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
-            }else if (self.detailButton.tag == 1004) {
-                [self.detailButton setTitle:@"收费标准" forState:UIControlStateNormal];
-                [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
-                [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
-            }else if (self.detailButton.tag == 1005) {
-                [self.detailButton setTitle:@"我的信息" forState:UIControlStateNormal];
-                [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
-                [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
-            }else if (self.detailButton.tag == 1006) {
-                [self.detailButton setTitle:@"二维码" forState:UIControlStateNormal];
-                [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
-                [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
-            }else if (self.detailButton.tag == 1007) {
-                [self.detailButton setTitle:@"分享好友" forState:UIControlStateNormal];
-                [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
-                [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
-            }else if (self.detailButton.tag == 1008) {
-                [self.detailButton setTitle:@"我的帐户" forState:UIControlStateNormal];
-                [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
-                [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
-            }else if(self.detailButton.tag == 1009) {
-                [self.detailButton setTitle:@"我要提现" forState:UIControlStateNormal];
-                [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
-                [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
-            }else if(self.detailButton.tag == 1010) {
-//                [self.detailButton setTitle:@"我要充值" forState:UIControlStateNormal];
-//                [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
-//                [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
-            }else if(self.detailButton.tag == 1011) {
-//                [self.detailButton setTitle:@"爱心保" forState:UIControlStateNormal];
-//                [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
-//                [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
-            }
-            CGFloat fontsize;
-            if (iPhone4_4s || iPhone5_5s) {
-                fontsize = 12;
-            }else {
-                fontsize = 13;
-            }
-            self.detailButton.titleLabel.font = font(fontsize);
-            CGSize imageSize = self.detailButton.imageView.bounds.size;
-            CGSize titleLabelSize = self.detailButton.titleLabel.bounds.size;
-            
-            self.detailButton.imageEdgeInsets = UIEdgeInsetsMake(- self.detailButton.bounds.size.height/3, 0, 0, -titleLabelSize.width);
-            self.detailButton.titleEdgeInsets = UIEdgeInsetsMake(self.detailButton.bounds.size.height/2, -imageSize.width, 0, 0);
-            
+                self.detailButton.frame = CGRectMake(Width*j/4, height*2*i, Width/4, height*2);
+                
+                if (self.detailButton.tag == 1000) {
+                    [self.detailButton setTitle:@"配件申请" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1001) {
+                    [self.detailButton setTitle:@"追加费用" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1002) {
+                    [self.detailButton setTitle:@"保修政策" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1003) {
+                    [self.detailButton setTitle:@"通知公告" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1004) {
+                    [self.detailButton setTitle:@"收费标准" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1005) {
+                    [self.detailButton setTitle:@"我的信息" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1006) {
+                    [self.detailButton setTitle:@"二维码" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1007) {
+                    [self.detailButton setTitle:@"分享好友" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1008) {
+                    [self.detailButton setTitle:@"我的帐户" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if(self.detailButton.tag == 1009) {
+                    [self.detailButton setTitle:@"我要提现" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if(self.detailButton.tag == 1010) {
+                    [self.detailButton setTitle:@"我要充值" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if(self.detailButton.tag == 1011) {
+                    [self.detailButton setTitle:@"爱心保" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1012) {
+                    [self.detailButton setTitle:@"我要收款" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }
+                CGFloat fontsize = 12;
+                
+                self.detailButton.titleLabel.font = font(fontsize);
+                CGSize imageSize = self.detailButton.imageView.bounds.size;
+                CGSize titleLabelSize = self.detailButton.titleLabel.bounds.size;
+                
+                self.detailButton.imageEdgeInsets = UIEdgeInsetsMake(- self.detailButton.bounds.size.height/3, 0, 0, -titleLabelSize.width);
+                self.detailButton.titleEdgeInsets = UIEdgeInsetsMake(self.detailButton.bounds.size.height/2, -imageSize.width, 0, 0);
 
-            [containerView addSubview:self.detailButton];
+                [self.containerView addSubview:self.detailButton];
+            }
+        }
+        
+    }else if (iPhone6 || iPhone6_plus) {
+        height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/9;
+        self.containerView = [[UIView alloc]initWithFrame:CGRectMake(0, imageHeight + height, Width, height * 8)];
+        self.containerView.backgroundColor = [UIColor whiteColor];
+        [self.view addSubview:self.containerView];
+        for (NSInteger i = 0; i < 4; i ++) {
+            for (NSInteger j = 0;  j < 4; j ++) {
+                self.detailButton = [UIButton buttonWithType:UIButtonTypeCustom];
+                self.detailButton.tag = tag + 1000;
+                tag ++;
+                
+                [self.detailButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"a%ld",(long)tag]] forState:UIControlStateNormal];
+                
+                //            if (i == 2 && (j == 2 || j == 3)) {
+                //                [self.detailButton setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+                //            }
+                
+                [self.detailButton addTarget:self action:@selector(detailButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+
+                self.detailButton.frame = CGRectMake(Width*j/4, height*2*i, Width/4, height*2);
+               
+                if (self.detailButton.tag == 1000) {
+                    [self.detailButton setTitle:@"配件申请" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1001) {
+                    [self.detailButton setTitle:@"追加费用" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1002) {
+                    [self.detailButton setTitle:@"保修政策" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1003) {
+                    [self.detailButton setTitle:@"通知公告" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1004) {
+                    [self.detailButton setTitle:@"收费标准" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1005) {
+                    [self.detailButton setTitle:@"我的信息" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1006) {
+                    [self.detailButton setTitle:@"二维码" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1007) {
+                    [self.detailButton setTitle:@"分享好友" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1008) {
+                    [self.detailButton setTitle:@"我的帐户" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if(self.detailButton.tag == 1009) {
+                    [self.detailButton setTitle:@"我要提现" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if(self.detailButton.tag == 1010) {
+                    [self.detailButton setTitle:@"我要充值" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if(self.detailButton.tag == 1011) {
+                    [self.detailButton setTitle:@"爱心保" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1012) {
+                    [self.detailButton setTitle:@"我要收款" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }
+                CGFloat fontsize = 13;
+                
+                self.detailButton.titleLabel.font = font(fontsize);
+                CGSize imageSize = self.detailButton.imageView.bounds.size;
+                CGSize titleLabelSize = self.detailButton.titleLabel.bounds.size;
+                
+                self.detailButton.imageEdgeInsets = UIEdgeInsetsMake(- self.detailButton.bounds.size.height/3, 0, 0, -titleLabelSize.width);
+                self.detailButton.titleEdgeInsets = UIEdgeInsetsMake(self.detailButton.bounds.size.height/2, -imageSize.width, 0, 0);
+                
+                
+                [self.containerView addSubview:self.detailButton];
+            }
+        }
+        
+    }else {
+        height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/9;
+        self.containerView = [[UIView alloc]initWithFrame:CGRectMake(0, imageHeight + height, Width, height * 8)];
+        self.containerView.backgroundColor = [UIColor whiteColor];
+        [self.view addSubview:self.containerView];
+        for (NSInteger i = 0; i < 4; i ++) {
+            for (NSInteger j = 0;  j < 4; j ++) {
+                self.detailButton = [UIButton buttonWithType:UIButtonTypeCustom];
+                self.detailButton.tag = tag + 1000;
+                tag ++;
+                
+                [self.detailButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"a%ld",(long)tag]] forState:UIControlStateNormal];
+                
+                //            if (i == 2 && (j == 2 || j == 3)) {
+                //                [self.detailButton setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+                //            }
+                
+                [self.detailButton addTarget:self action:@selector(detailButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+                
+                self.detailButton.frame = CGRectMake(Width*j/4, height*2*i, Width/4, height*2);
+                
+                if (self.detailButton.tag == 1000) {
+                    [self.detailButton setTitle:@"配件申请" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1001) {
+                    [self.detailButton setTitle:@"追加费用" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1002) {
+                    [self.detailButton setTitle:@"保修政策" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1003) {
+                    [self.detailButton setTitle:@"通知公告" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1004) {
+                    [self.detailButton setTitle:@"收费标准" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1005) {
+                    [self.detailButton setTitle:@"我的信息" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1006) {
+                    [self.detailButton setTitle:@"二维码" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1007) {
+                    [self.detailButton setTitle:@"分享好友" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1008) {
+                    [self.detailButton setTitle:@"我的帐户" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if(self.detailButton.tag == 1009) {
+                    [self.detailButton setTitle:@"我要提现" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if(self.detailButton.tag == 1010) {
+                    [self.detailButton setTitle:@"我要充值" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if(self.detailButton.tag == 1011) {
+                    [self.detailButton setTitle:@"爱心保" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }else if (self.detailButton.tag == 1012) {
+                    [self.detailButton setTitle:@"我要收款" forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+                    [self.detailButton setTitleColor:color(140, 140, 140, 1) forState:UIControlStateHighlighted];
+                }
+                CGFloat fontsize = 13;
+                
+                self.detailButton.titleLabel.font = font(fontsize);
+                CGSize imageSize = self.detailButton.imageView.bounds.size;
+                CGSize titleLabelSize = self.detailButton.titleLabel.bounds.size;
+                
+                self.detailButton.imageEdgeInsets = UIEdgeInsetsMake(- self.detailButton.bounds.size.height/3, 0, 0, -titleLabelSize.width);
+                self.detailButton.titleEdgeInsets = UIEdgeInsetsMake(self.detailButton.bounds.size.height/2, -imageSize.width, 0, 0);
+                
+                
+                [self.containerView addSubview:self.detailButton];
+            }
         }
     }
+    
+  
 #elif Environment_Mode == 2
     CGFloat height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/8;
     UIView *containerView;
@@ -557,53 +890,107 @@ static NSInteger tag = 0;
 }
 
 - (void)setBreakLine {
+    NSInteger imageHeight;
+    if (iPhone4_4s || iPhone5_5s) {
+        imageHeight = 139;
+    }else if (iPhone6) {
+        imageHeight = 163;
+    }else if (iPhone6_plus) {
+        imageHeight = 180;
+    }else{
+        imageHeight = 180;
+    }
 #if Environment_Mode == 1
-    CGFloat height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/8;
     
     if (iPhone4_4s) {
-        UIView *H1Line = [[UIView alloc]initWithFrame:CGRectMake(0, imageHeight + height + height*7/3-0.5, Width, 0.5)];
+        CGFloat height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/8;
+        UIView *H1Line = [[UIView alloc]initWithFrame:CGRectMake(0, height*7/3-0.5, Width, 0.5)];
         H1Line.backgroundColor = color(200, 200, 200, 1);
-        [self.view addSubview:H1Line];
+        [self.containerView addSubview:H1Line];
         
-        UIView *H2Line = [[UIView alloc]initWithFrame:CGRectMake(0, imageHeight + height + height*7*2/3-0.5, Width, 0.5)];
+        UIView *H2Line = [[UIView alloc]initWithFrame:CGRectMake(0, height*7*2/3-0.5, Width, 0.5)];
         H2Line.backgroundColor = color(200, 200, 200, 1);
-        [self.view addSubview:H2Line];
+        [self.containerView addSubview:H2Line];
+        
+        UIView *H3Line = [[UIView alloc]initWithFrame:CGRectMake(0, height*7*3/3-0.5, Width, 0.5)];
+        H3Line.backgroundColor = color(200, 200, 200, 1);
+        [self.containerView addSubview:H3Line];
+        
+        UIView *H4Line = [[UIView alloc]initWithFrame:CGRectMake(0, height*7*4/3-0.5, Width, 0.5)];
+        H4Line.backgroundColor = color(200, 200, 200, 1);
+        [self.containerView addSubview:H4Line];
         
         
-        UIView *V1Line = [[UIView alloc]initWithFrame:CGRectMake(Width/4-0.5, imageHeight + height, 0.5, height*7)];
+        UIView *V1Line = [[UIView alloc]initWithFrame:CGRectMake(Width/4-0.5, imageHeight + height, 0.5, height*7 + height *7 / 3)];
         V1Line.backgroundColor = color(200, 200, 200, 1);
-        [self.view addSubview:V1Line];
+        [self.containerView addSubview:V1Line];
         
-        UIView *V2Line = [[UIView alloc]initWithFrame:CGRectMake(Width*2/4-0.5, imageHeight + height, 0.5, height*7)];
+        UIView *V2Line = [[UIView alloc]initWithFrame:CGRectMake(Width*2/4-0.5, imageHeight + height, 0.5, height*7 + height *7 / 3)];
         V2Line.backgroundColor = color(200, 200, 200, 1);
-        [self.view addSubview:V2Line];
+        [self.containerView addSubview:V2Line];
         
-        UIView *V3Line = [[UIView alloc]initWithFrame:CGRectMake(Width*3/4-0.5, imageHeight + height, 0.5, height*7)];
+        UIView *V3Line = [[UIView alloc]initWithFrame:CGRectMake(Width*3/4-0.5, imageHeight + height, 0.5, height*7 + height *7 / 3)];
         V3Line.backgroundColor = color(200, 200, 200, 1);
-        [self.view addSubview:V3Line];
-    }else{
-        UIView *H1Line = [[UIView alloc]initWithFrame:CGRectMake(0, imageHeight + height + height * 6 / 3 - 0.5, Width, 0.5)];
+        [self.containerView addSubview:V3Line];
+    }else if (iPhone5_5s){
+        CGFloat height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/8;
+        
+//        UIView *H0Line = [[UIView alloc]initWithFrame:CGRectMake(0, -0.5, Width, 0.5)];
+//        H0Line.backgroundColor = color(200, 200, 200, 1);
+//        [self.containerView addSubview:H0Line];
+        
+        UIView *H1Line = [[UIView alloc]initWithFrame:CGRectMake(0, height * 8 / 4 - 0.5, Width, 0.5)];
+        H1Line.backgroundColor = color(200, 200, 200, 1);
+        [self.containerView addSubview:H1Line];
+        
+        UIView *H2Line = [[UIView alloc]initWithFrame:CGRectMake(0, height * 8 * 2 / 4 - 0.5, Width, 0.5)];
+        H2Line.backgroundColor = color(200, 200, 200, 1);
+        [self.containerView addSubview:H2Line];
+        
+        UIView *H3Line = [[UIView alloc]initWithFrame:CGRectMake(0, height * 8 * 3 / 4  - 0.5, Width, 0.5)];
+        H3Line.backgroundColor = color(200, 200, 200, 1);
+        [self.containerView addSubview:H3Line];
+        
+        UIView *H4Line = [[UIView alloc]initWithFrame:CGRectMake(0, height * 8 * 4 / 4  - 0.5, Width, 0.5)];
+        H4Line.backgroundColor = color(200, 200, 200, 1);
+        [self.containerView addSubview:H4Line];
+        
+        
+        UIView *V1Line = [[UIView alloc]initWithFrame:CGRectMake(Width / 4 - 0.5, 0, 0.5, height * 8)];
+        V1Line.backgroundColor = color(200, 200, 200, 1);
+        [self.containerView addSubview:V1Line];
+        
+        UIView *V2Line = [[UIView alloc]initWithFrame:CGRectMake(Width * 2 / 4 - 0.5, 0, 0.5, height * 8)];
+        V2Line.backgroundColor = color(200, 200, 200, 1);
+        [self.containerView addSubview:V2Line];
+        
+        UIView *V3Line = [[UIView alloc]initWithFrame:CGRectMake(Width * 3 / 4 - 0.5, 0, 0.5, height * 8)];
+        V3Line.backgroundColor = color(200, 200, 200, 1);
+        [self.containerView addSubview:V3Line];
+    } else if (iPhone6 || iPhone6_plus) {
+        CGFloat height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/9;
+        UIView *H1Line = [[UIView alloc]initWithFrame:CGRectMake(0, imageHeight + height + height * 8 / 4 - 0.5, Width, 0.5)];
         H1Line.backgroundColor = color(200, 200, 200, 1);
         [self.view addSubview:H1Line];
         
-        UIView *H2Line = [[UIView alloc]initWithFrame:CGRectMake(0, imageHeight + height + height * 6 * 2 / 3 - 0.5, Width, 0.5)];
+        UIView *H2Line = [[UIView alloc]initWithFrame:CGRectMake(0, imageHeight + height + height * 8 * 2 / 4 - 0.5, Width, 0.5)];
         H2Line.backgroundColor = color(200, 200, 200, 1);
         [self.view addSubview:H2Line];
         
-        UIView *H3Line = [[UIView alloc]initWithFrame:CGRectMake(0, imageHeight + height + height * 6 - 0.5, Width, 0.5)];
+        UIView *H3Line = [[UIView alloc]initWithFrame:CGRectMake(0, imageHeight + height + height * 8 * 3 / 4 - 0.5, Width, 0.5)];
         H3Line.backgroundColor = color(200, 200, 200, 1);
         [self.view addSubview:H3Line];
         
         
-        UIView *V1Line = [[UIView alloc]initWithFrame:CGRectMake(Width / 4 - 0.5, imageHeight + height, 0.5, height * 6)];
+        UIView *V1Line = [[UIView alloc]initWithFrame:CGRectMake(Width / 4 - 0.5, imageHeight + height, 0.5, height * 8)];
         V1Line.backgroundColor = color(200, 200, 200, 1);
         [self.view addSubview:V1Line];
         
-        UIView *V2Line = [[UIView alloc]initWithFrame:CGRectMake(Width * 2 / 4 - 0.5, imageHeight + height, 0.5, height * 6)];
+        UIView *V2Line = [[UIView alloc]initWithFrame:CGRectMake(Width * 2 / 4 - 0.5, imageHeight + height, 0.5, height * 8)];
         V2Line.backgroundColor = color(200, 200, 200, 1);
         [self.view addSubview:V2Line];
         
-        UIView *V3Line = [[UIView alloc]initWithFrame:CGRectMake(Width * 3 / 4 - 0.5, imageHeight + height, 0.5, height * 6)];
+        UIView *V3Line = [[UIView alloc]initWithFrame:CGRectMake(Width * 3 / 4 - 0.5, imageHeight + height, 0.5, height * 8)];
         V3Line.backgroundColor = color(200, 200, 200, 1);
         [self.view addSubview:V3Line];
     }
@@ -655,11 +1042,8 @@ static NSInteger tag = 0;
         [self.view addSubview:V3Line];
     }
 #endif
-    
-    
+   
 }
-
-
 
 #pragma mark - buttonClicked -
 - (void)drawMoneyButtonClicked {
@@ -749,13 +1133,20 @@ static NSInteger tag = 0;
         [self.navigationController pushViewController:withDrawVC animated:YES];
     }else if (sender.tag == 1010) {
         
-//        self.flag = YES;
-//        RechargeViewController *rechargeVC = [[RechargeViewController alloc] init];
-//        rechargeVC.hidesBottomBarWhenPushed = YES;
-//        [self.navigationController pushViewController:rechargeVC animated:YES];
+        self.flag = YES;
+        RechargeViewController *rechargeVC = [[RechargeViewController alloc] init];
+        rechargeVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:rechargeVC animated:YES];
         
     }else if (sender.tag == 1011) {
+        HeartProtectViewController *heartVC = [[HeartProtectViewController alloc] init];
+        heartVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:heartVC animated:YES];
         
+    }else if (sender.tag == 1012) {
+        GatheringViewController *gatherVC = [[GatheringViewController alloc] init];
+        gatherVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:gatherVC animated:YES];
         
     }
     

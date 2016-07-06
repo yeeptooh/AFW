@@ -78,6 +78,9 @@
 		4A4EDB6B1CBF849D00A7D1E6 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4EDB6A1CBF849D00A7D1E6 /* DetailViewController.m */; };
 		4A4EDB721CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4EDB701CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.m */; };
 		4A4EDB731CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A4EDB711CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.xib */; };
+		4A4F99F21D2CF4A500374F9B /* GatheringViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F99F11D2CF4A500374F9B /* GatheringViewController.m */; };
+		4A4F99F41D2D016200374F9B /* HYQiHei-55S.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A4F99F31D2D016200374F9B /* HYQiHei-55S.otf */; };
+		4A4F99F51D2D016200374F9B /* HYQiHei-55S.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A4F99F31D2D016200374F9B /* HYQiHei-55S.otf */; };
 		4A5228B21CBC8C8100DD2D9C /* PresentAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5228B11CBC8C8100DD2D9C /* PresentAnimation.m */; };
 		4A5228B51CBC8C8D00DD2D9C /* DismissAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5228B41CBC8C8D00DD2D9C /* DismissAnimation.m */; };
 		4A5229E21CBCA75B00DD2D9C /* PhoneNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5229E11CBCA75B00DD2D9C /* PhoneNumberViewController.m */; };
@@ -528,6 +531,9 @@
 		4A4EDB6F1CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailTaskPlanTableViewCell.h; sourceTree = "<group>"; };
 		4A4EDB701CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailTaskPlanTableViewCell.m; sourceTree = "<group>"; };
 		4A4EDB711CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailTaskPlanTableViewCell.xib; sourceTree = "<group>"; };
+		4A4F99F01D2CF4A500374F9B /* GatheringViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GatheringViewController.h; sourceTree = "<group>"; };
+		4A4F99F11D2CF4A500374F9B /* GatheringViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GatheringViewController.m; sourceTree = "<group>"; };
+		4A4F99F31D2D016200374F9B /* HYQiHei-55S.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "HYQiHei-55S.otf"; sourceTree = "<group>"; };
 		4A5228B01CBC8C8100DD2D9C /* PresentAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentAnimation.h; sourceTree = "<group>"; };
 		4A5228B11CBC8C8100DD2D9C /* PresentAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PresentAnimation.m; sourceTree = "<group>"; };
 		4A5228B31CBC8C8D00DD2D9C /* DismissAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DismissAnimation.h; sourceTree = "<group>"; };
@@ -989,6 +995,7 @@
 		4A4BD23C1CB895A1009DA0B9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4A4F99F31D2D016200374F9B /* HYQiHei-55S.otf */,
 				4A6973631CBB36DF002A036C /* Foundation+Log.m */,
 				4A4BD27C1CB89FC1009DA0B9 /* MyDefine.h */,
 				4A4BD27F1CB8A2F1009DA0B9 /* PrefixHeader.pch */,
@@ -1381,6 +1388,8 @@
 				4A5274661D113A7D00B056C6 /* RechargeViewController.m */,
 				4A5274681D113ABA00B056C6 /* HeartProtectViewController.h */,
 				4A5274691D113ABA00B056C6 /* HeartProtectViewController.m */,
+				4A4F99F01D2CF4A500374F9B /* GatheringViewController.h */,
+				4A4F99F11D2CF4A500374F9B /* GatheringViewController.m */,
 			);
 			name = "爱服务";
 			sourceTree = "<group>";
@@ -1853,6 +1862,7 @@
 				4A7749881CC07ECA008B9611 /* ProductTableViewCell.xib in Resources */,
 				4A7749921CC09DC8008B9611 /* ChargebackTableViewCell.xib in Resources */,
 				4A6BE9431CFC4863002F20C1 /* Push Config.plist in Resources */,
+				4A4F99F41D2D016200374F9B /* HYQiHei-55S.otf in Resources */,
 				4A4954631D28B55B00E05868 /* AlipaySDK.bundle in Resources */,
 				4A77498D1CC09464008B9611 /* ServiceTypeTableViewCell.xib in Resources */,
 				4A4BD2491CB895A1009DA0B9 /* Assets.xcassets in Resources */,
@@ -1890,6 +1900,7 @@
 				4A6424091D19396600F26BA9 /* ProductTableViewCell.xib in Resources */,
 				4A64240A1D19396600F26BA9 /* ChargebackTableViewCell.xib in Resources */,
 				4A64240B1D19396600F26BA9 /* Push Config.plist in Resources */,
+				4A4F99F51D2D016200374F9B /* HYQiHei-55S.otf in Resources */,
 				4A4954641D28B55B00E05868 /* AlipaySDK.bundle in Resources */,
 				4A64240C1D19396600F26BA9 /* ServiceTypeTableViewCell.xib in Resources */,
 				4A64240E1D19396600F26BA9 /* Assets.xcassets in Resources */,
@@ -2112,6 +2123,7 @@
 				4A4BD3241CB8F812009DA0B9 /* MASViewConstraint.m in Sources */,
 				4A5CBA241D24FA2000B36E6E /* MasterQueryViewController.m in Sources */,
 				4AF52EB31CC4B90400E25FC4 /* ButtonDismissAnimation.m in Sources */,
+				4A4F99F21D2CF4A500374F9B /* GatheringViewController.m in Sources */,
 				4A4BD2CD1CB8D903009DA0B9 /* MKAnnotationView+WebCache.m in Sources */,
 				4A4BD2F31CB8F515009DA0B9 /* CompleteViewController.m in Sources */,
 				4A6BABDF1CC62FAB000B94A2 /* MJRefreshAutoStateFooter.m in Sources */,
@@ -2420,6 +2432,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Yu Guancheng (7JFJ68W47N)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yu Guancheng (7JFJ68W47N)";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2448,6 +2461,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.51ifw;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -2488,6 +2502,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.51ifw;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
 		};
