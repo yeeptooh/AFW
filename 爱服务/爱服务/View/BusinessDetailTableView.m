@@ -202,7 +202,7 @@ UITextFieldDelegate
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     [manager GET:typeUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"responseObject = %@",responseObject);
+        
         [[NSUserDefaults standardUserDefaults] setObject:responseObject forKey:@"service"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         

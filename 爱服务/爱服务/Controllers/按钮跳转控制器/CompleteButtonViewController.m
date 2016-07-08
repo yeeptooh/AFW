@@ -675,7 +675,7 @@ static NSInteger number;
         
     } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSString *str = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
-        NSLog(@"responseObject = %@",str);
+        
         
         if ([str isEqualToString:@"0"]) {
             [HUD hideAnimated:YES];

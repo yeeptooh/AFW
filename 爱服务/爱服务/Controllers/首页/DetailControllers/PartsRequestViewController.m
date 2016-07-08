@@ -588,7 +588,7 @@ static NSInteger number;
         
     } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 
-        NSLog(@"responseObject = %@",responseObject);
+        
         [HUD hideAnimated:YES];
         [HUD removeFromSuperViewOnHide];
         MBProgressHUD *successHUD = [[MBProgressHUD alloc]initWithView:self.view];

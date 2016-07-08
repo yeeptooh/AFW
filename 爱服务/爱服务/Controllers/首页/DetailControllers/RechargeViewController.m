@@ -122,7 +122,7 @@ static NSInteger i = 0;
                 sender.text = @"";
                 
             }else{
-                self.rechargeButton.backgroundColor = color(231, 76, 60, 1);
+                self.rechargeButton.backgroundColor = CZGreenColor;//BlueColor;//ALiBlueColor;//color(231, 76, 60, 1);
                 self.rechargeButton.enabled = YES;
 
             }
@@ -131,7 +131,7 @@ static NSInteger i = 0;
         if (sender.text.length == 2) {
             NSString *firstCharacter = [sender.text substringToIndex:1];
            
-            NSLog(@"firstCharacter = %@",firstCharacter);
+            
             if ([firstCharacter isEqualToString:@"0"]) {
                 if (single == '0') {
                     sender.text = @"0";
@@ -139,7 +139,7 @@ static NSInteger i = 0;
                     self.haveDot = YES;
                 }else {
                     sender.text = [NSString stringWithFormat:@"%@",@(single - 48)];
-                    self.rechargeButton.backgroundColor = color(231, 76, 60, 1);
+                    self.rechargeButton.backgroundColor = CZGreenColor;//BlueColor;//ALiBlueColor;//color(231, 76, 60, 1);
                     self.rechargeButton.enabled = YES;
                     
                 }
@@ -161,7 +161,7 @@ static NSInteger i = 0;
                 }else {
                     NSString *firstCharacter = [sender.text substringToIndex:1];
                     if ([firstCharacter isEqualToString:@"0"]) {
-                        self.rechargeButton.backgroundColor = color(231, 76, 60, 1);
+                        self.rechargeButton.backgroundColor = CZGreenColor;//BlueColor;//ALiBlueColor;//color(231, 76, 60, 1);
                         self.rechargeButton.enabled = YES;
                     }else{
                         
@@ -184,7 +184,7 @@ static NSInteger i = 0;
                 }else if (single == '0') {
                     
                 }else {
-                    self.rechargeButton.backgroundColor = color(231, 76, 60, 1);
+                    self.rechargeButton.backgroundColor = CZGreenColor;//BlueColor;//ALiBlueColor;//color(231, 76, 60, 1);
                     self.rechargeButton.enabled = YES;
                 }
                 
@@ -399,10 +399,9 @@ static NSInteger i = 0;
                             
                             
                             [[AlipaySDK defaultService] payOrder:orderString fromScheme:appScheme callback:^(NSDictionary *resultDic) {
-                                self.bitch = 0;
-                                if (self.bitch < 3) {
-                                    [self updateResponse:order];
-                                }
+                                
+                                    [self updateResponse:order.outTradeNO];
+                                
                                 
                             }];
                         }
@@ -444,7 +443,7 @@ static NSInteger i = 0;
         NSString *ipAddress = [self getIPAddress];
         UserModel *userModel = [UserModel readUserModel];
         //userid  money  ip
-        NSString *urlString   = [NSString stringWithFormat:@"%@Payment/WeiXin/Recharge.ashx?action=getwxpayment&userid=%@&money=%@&ip=%@",@"http://192.168.1.173:90/forapp/",@(userModel.comid),totalFee,ipAddress];
+        NSString *urlString   = [NSString stringWithFormat:@"%@Payment/WeiXin/Recharge.ashx?action=getwxpayment&userid=%@&money=%@&ip=%@",HomeURL,@(userModel.comid),totalFee,ipAddress];
         NSLog(@"%@",urlString);
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 //        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -452,7 +451,7 @@ static NSInteger i = 0;
             NSLog(@"responseObject = %@",responseObject);
             
             if ([responseObject[@"status"] isEqualToString:@"ok"]) {
-                [[NSUserDefaults standardUserDefaults] setObject:responseObject[@"orderid"] forKey:@"WXOrderID"];
+                [[NSUserDefaults standardUserDefaults] setObject:responseObject[@"data"][@"orderid"] forKey:@"WXOrderID"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 PayReq *payReq = [[PayReq alloc] init];
                 
@@ -500,80 +499,82 @@ static NSInteger i = 0;
     return address;
 }
 
-- (void)updateResponse:(Order *)order {
+- (void)updateResponse:(NSString *)orderID {
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//    NSString *url = [NSString stringWithFormat:@"%@/Payment/Alipay/Recharge.ashx?action=getorderstate&orderid=%@",@"http://192.168.1.173:90/forapp",order.outTradeNO];
-    NSString *url = [NSString stringWithFormat:@"%@/Payment/Alipay/Recharge.ashx?action=getorderstate&orderid=%@",HomeURL,order.outTradeNO];
+    NSString *url = [NSString stringWithFormat:@"%@/Payment/Alipay/Recharge.ashx?action=getorderstate&orderid=%@",HomeURL,orderID];
+    
+    
     [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        UIView *window = [[UIApplication sharedApplication].delegate window];
-       
+        
+        NSLog(@"responseObject = %@",responseObject);
         if ([responseObject[@"data"] integerValue] ==  5) {
             
-            
-            MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:window];
-            hud.mode = MBProgressHUDModeCustomView;
-            [window addSubview:hud];
-            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 74, 74)];
-            imageView.image = [UIImage imageNamed:@"icon_joblist_loading"];
-            hud.customView = imageView;
-            
-            
-            CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-            animation.toValue = @(M_PI*2);
-            animation.duration = 1.25;
-            [hud.customView.layer addAnimation:animation forKey:nil];
-            
-            
-            [hud showAnimated:YES];
-            
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+            hud.label.text = @"充值中..";
+            hud.mode = MBProgressHUDModeIndeterminate;
+            hud.minSize = CGSizeMake(100, 100);
             hud.offset = CGPointMake(0, Height/5);
-            
-            
+            hud.label.font = font(14);
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 
-                UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 74, 74)];
-                imageView.image = [UIImage imageNamed:@"icon_jd_sendSucess"];
+                MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+                UIImage *image = [[UIImage imageNamed:@"Checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
                 hud.customView = imageView;
-                
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [hud hideAnimated:YES];
-                    [hud removeFromSuperViewOnHide];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateMoney object:nil];
-                });
+                hud.mode = MBProgressHUDModeCustomView;
+                hud.label.text = NSLocalizedString(@"充值成功", @"HUD completed title");
+                [hud hideAnimated:YES afterDelay:0.75f];
+                [hud removeFromSuperViewOnHide];
                 
             });
             
         }
+        
         if ([responseObject[@"data"] integerValue] == 1) {
             
-            MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:window];
-            hud.mode = MBProgressHUDModeText;
-            hud.label.text = @"支付取消,如有疑问,请联系客服";
-            CGFloat fontsize;
-            if (iPhone4_4s || iPhone5_5s) {
-                fontsize = 14;
-            }else {
-                fontsize = 16;
-            }
-            hud.label.font = font(fontsize);
-            [window addSubview:hud];
-            [hud showAnimated:YES];
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+            hud.label.text = @"充值中..";
+            hud.mode = MBProgressHUDModeIndeterminate;
+            hud.minSize = CGSizeMake(100, 100);
             hud.offset = CGPointMake(0, Height/5);
-            [hud hideAnimated:YES afterDelay:1.5];
-            [hud removeFromSuperViewOnHide];
-            
+            hud.label.font = font(14);
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                
+                MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+                UIImage *image = [[UIImage imageNamed:@"Checkerror"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+                hud.customView = imageView;
+                hud.mode = MBProgressHUDModeCustomView;
+                hud.label.text = NSLocalizedString(@"充值失败", @"HUD completed title");
+                [hud hideAnimated:YES afterDelay:0.75f];
+                [hud removeFromSuperViewOnHide];
+            });
             
         }
         
-        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-        NSLog(@"error.userInfo = %@",error.userInfo);
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        hud.label.text = @"充值中..";
+        hud.mode = MBProgressHUDModeIndeterminate;
+        hud.minSize = CGSizeMake(100, 100);
+        hud.offset = CGPointMake(0, Height/5);
+        hud.label.font = font(14);
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
+            MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+            UIImage *image = [[UIImage imageNamed:@"Checkerror"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+            hud.customView = imageView;
+            hud.mode = MBProgressHUDModeCustomView;
+            hud.label.text = NSLocalizedString(@"网络异常", @"HUD completed title");
+            [hud hideAnimated:YES afterDelay:0.75f];
+            [hud removeFromSuperViewOnHide];
+            
+        });
     }];
-    
-   
 }
+
 
 
 
@@ -607,11 +608,11 @@ static NSInteger i = 0;
         if (indexPath.row == 0) {
             cell.payLabel.text = @"支付宝钱包支付";
             cell.payImageView.image = [UIImage imageNamed:@"alipay"];
-            cell.chooseImageView.image = [UIImage imageNamed:@"rate_annoy_button_normal"];
+            cell.chooseImageView.image = [UIImage imageNamed:@"unchecked"];
         }else {
             cell.payLabel.text = @"微信客户端支付";
             cell.payImageView.image = [UIImage imageNamed:@"WXPay"];
-            cell.chooseImageView.image = [UIImage imageNamed:@"rate_annoy_button_normal"];
+            cell.chooseImageView.image = [UIImage imageNamed:@"unchecked"];
         }
         
         return cell;
@@ -634,11 +635,11 @@ static NSInteger i = 0;
             i = 1;
             
             PayTableViewCell *cell1 = (PayTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-            cell1.chooseImageView.image = [UIImage imageNamed:@"rate_annoy_button_selected"];
+            cell1.chooseImageView.image = [UIImage imageNamed:@"success"];
             
             NSIndexPath *indexpath = [NSIndexPath indexPathForRow:1 inSection:1];
             PayTableViewCell *cell2 = (PayTableViewCell *)[tableView cellForRowAtIndexPath:indexpath];
-            cell2.chooseImageView.image = [UIImage imageNamed:@"rate_annoy_button_normal"];
+            cell2.chooseImageView.image = [UIImage imageNamed:@"unchecked"];
  
             
         }else {
@@ -646,11 +647,11 @@ static NSInteger i = 0;
             i = 2;
             
             PayTableViewCell *cell1 = (PayTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-            cell1.chooseImageView.image = [UIImage imageNamed:@"rate_annoy_button_selected"];
+            cell1.chooseImageView.image = [UIImage imageNamed:@"success"];
             
             NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:1];
             PayTableViewCell *cell2 = (PayTableViewCell *)[tableView cellForRowAtIndexPath:indexpath];
-            cell2.chooseImageView.image = [UIImage imageNamed:@"rate_annoy_button_normal"];
+            cell2.chooseImageView.image = [UIImage imageNamed:@"unchecked"];
         }
     }
 
@@ -713,6 +714,7 @@ static NSInteger i = 0;
 }
 
 - (void)dealloc {
+    i = 0;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

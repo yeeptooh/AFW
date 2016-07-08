@@ -8,6 +8,7 @@
 
 #import "HomeViewController.h"
 #import "AFNetworking.h"
+#import "UIImageView+WebCache.h"
 #import "UserModel.h"
 #import "PhoneNumberViewController.h"
 #import "PresentAnimation.h"
@@ -22,6 +23,7 @@
 #import "StandardFeeViewController.h"
 #import "MyInfoViewController.h"
 #import "QRCodeViewController.h"
+#import "ZDDQRCodeViewController.h"
 #import "MyAccountViewController.h"
 #import "WithDrawViewController.h"
 #import "ShareViewController.h"
@@ -186,6 +188,7 @@ static NSInteger tag = 0;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+//    self.navigationController.navigationBar.barTintColor = color(30, 30, 30, 1);
     if (self.isFlag) {
         [self updateUI];
         self.flag = NO;
@@ -1108,10 +1111,31 @@ static NSInteger tag = 0;
         
     }else if (sender.tag == 1006) {
         
-        QRCodeViewController *qrcodeVC = [[QRCodeViewController alloc]init];
-        qrcodeVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:qrcodeVC animated:YES];
+//        QRCodeViewController *qrcodeVC = [[QRCodeViewController alloc]init];
+//        qrcodeVC.hidesBottomBarWhenPushed = YES;
+//        [self.navigationController pushViewController:qrcodeVC animated:YES];
         
+        ZDDQRCodeViewController *qrcodeVC = [[ZDDQRCodeViewController alloc] init];
+        qrcodeVC.hidesBottomBarWhenPushed = YES;
+        
+        UIImage *image = [UIImage imageNamed:@"IMG_4188.jpg"];
+        
+        CIQRCodeFeature *QRCodeFeature = (CIQRCodeFeature *)[[self detectQRCodeWithImage:image] firstObject];
+        NSLog(@"%lu",(unsigned long)[self detectQRCodeWithImage:image].count);
+        
+        CIFilter *filter = [CIFilter filterWithName:@"CIQRCodeGenerator"];
+        
+        [filter setDefaults];
+        qrcodeVC.message = QRCodeFeature.messageString;
+        NSData *urlData = [QRCodeFeature.messageString dataUsingEncoding:NSUTF8StringEncoding];
+        
+        
+        [filter setValue:urlData forKey:@"inputMessage"];
+        CIImage *ciImage = [filter outputImage];
+        
+        UIImage *qrImage = [self createNonInterpolatedUIImageFromCIImage:ciImage withSize:qrcodeVC.imageView.bounds.size.width];
+        qrcodeVC.imageView.image = qrImage;
+        [self.navigationController pushViewController:qrcodeVC animated:YES];
         
     }else if (sender.tag == 1007) {
         
@@ -1144,9 +1168,24 @@ static NSInteger tag = 0;
         [self.navigationController pushViewController:heartVC animated:YES];
         
     }else if (sender.tag == 1012) {
+        UserModel *userModel = [UserModel readUserModel];
         GatheringViewController *gatherVC = [[GatheringViewController alloc] init];
         gatherVC.hidesBottomBarWhenPushed = YES;
+        id wx = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@WX",@(userModel.uid)]];
+        id al = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@AL",@(userModel.uid)]];
+        
+        if (wx) {
+            gatherVC.imageView1.image = [UIImage imageWithData:(NSData *)wx];
+        }
+        
+        if (al) {
+            gatherVC.imageView2.image = [UIImage imageWithData:(NSData *)al];
+        }
+        
+        //http://192.168.1.228:90/forapp/uploadFile.ashx?action=loadimages&userId=%@
+        
         [self.navigationController pushViewController:gatherVC animated:YES];
+        
         
     }
     
@@ -1273,6 +1312,41 @@ static NSInteger tag = 0;
     }
     
 }
+
+- (NSArray *)detectQRCodeWithImage:(UIImage *)QRCodeImage {
+    //通过type和options创建CIDetector的对象
+    CIDetector *detector = [CIDetector
+                            detectorOfType:CIDetectorTypeQRCode
+                            context:nil
+                            options:@{
+                                      CIDetectorAccuracy:CIDetectorAccuracyLow
+                                      }];
+    
+    CIImage *image = [CIImage imageWithCGImage:QRCodeImage.CGImage];
+    NSArray *features = [detector featuresInImage:image];
+    
+    return features;
+}
+
+- (UIImage *)createNonInterpolatedUIImageFromCIImage:(CIImage *)image withSize:(CGFloat)size {
+    CGRect extent = CGRectIntegral(image.extent);
+    CGFloat scale = MIN(size/CGRectGetWidth(extent), size/CGRectGetHeight(extent));
+    size_t width = scale * CGRectGetWidth(extent);
+    size_t height = scale * CGRectGetHeight(extent);
+    CGColorSpaceRef cs = CGColorSpaceCreateDeviceGray();
+    CGContextRef bitmapRef = CGBitmapContextCreate(nil, width, height, 8, 0, cs, kCGImageAlphaNone);
+    CIContext *context = [CIContext contextWithOptions:nil];
+    CGImageRef bitmapImage = [context createCGImage:image fromRect:extent];
+    CGContextSetInterpolationQuality(bitmapRef, kCGInterpolationNone);
+    CGContextScaleCTM(bitmapRef, scale, scale);
+    CGContextDrawImage(bitmapRef, extent, bitmapImage);
+    CGImageRef scaledImage = CGBitmapContextCreateImage(bitmapRef);
+    CGContextRelease(bitmapRef);
+    CGImageRelease(bitmapImage);
+    return [UIImage imageWithCGImage:scaledImage];
+    
+}
+
 
 - (void) dealloc {
     NSLog(@"HomeVC dealloc");
