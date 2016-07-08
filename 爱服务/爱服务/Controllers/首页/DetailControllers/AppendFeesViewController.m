@@ -214,8 +214,7 @@ WKNavigationDelegate
     __weak typeof(self)weakSelf = self;
     
     [manager POST:URL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSString *str = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
-        NSLog(@"responseObject = %@",str);
+        
         [HUD hideAnimated:YES];
         [HUD removeFromSuperViewOnHide];
         MBProgressHUD *successHUD = [[MBProgressHUD alloc]initWithView:self.view];

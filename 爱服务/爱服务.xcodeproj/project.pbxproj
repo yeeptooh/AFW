@@ -100,6 +100,10 @@
 		4A57F8871CD2F5390034E089 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57F87F1CD2F5390034E089 /* AFURLRequestSerialization.m */; };
 		4A57F8881CD2F5390034E089 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57F8811CD2F5390034E089 /* AFURLResponseSerialization.m */; };
 		4A57F8891CD2F5390034E089 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57F8831CD2F5390034E089 /* AFURLSessionManager.m */; };
+		4A5A39B71D2F89BC00DF3E87 /* ZDDQRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5A39B61D2F89BC00DF3E87 /* ZDDQRCodeViewController.m */; };
+		4A5A39B81D2F89BC00DF3E87 /* ZDDQRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5A39B61D2F89BC00DF3E87 /* ZDDQRCodeViewController.m */; };
+		4A5A39BD1D2F8F6E00DF3E87 /* FZSongKeBenXiuKaiS-R-GB.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 4A5A39BC1D2F8F6E00DF3E87 /* FZSongKeBenXiuKaiS-R-GB.TTF */; };
+		4A5A39BE1D2F8F6E00DF3E87 /* FZSongKeBenXiuKaiS-R-GB.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 4A5A39BC1D2F8F6E00DF3E87 /* FZSongKeBenXiuKaiS-R-GB.TTF */; };
 		4A5CBA241D24FA2000B36E6E /* MasterQueryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5CBA231D24FA2000B36E6E /* MasterQueryViewController.m */; };
 		4A5CBA251D24FA2000B36E6E /* MasterQueryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5CBA231D24FA2000B36E6E /* MasterQueryViewController.m */; };
 		4A5D038F1CCDF8C000773139 /* ZDDModalTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5D038E1CCDF8C000773139 /* ZDDModalTransition.m */; };
@@ -345,6 +349,7 @@
 		4A7749971CC0C3EB008B9611 /* OverTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A7749951CC0C3EB008B9611 /* OverTableViewCell.xib */; };
 		4A77499B1CC0C66C008B9611 /* AssessTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7749991CC0C66C008B9611 /* AssessTableViewCell.m */; };
 		4A77499C1CC0C66C008B9611 /* AssessTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A77499A1CC0C66C008B9611 /* AssessTableViewCell.xib */; };
+		4A77B2A01D2DE828000B6CE6 /* ZDDBezierPathView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A77B29F1D2DE828000B6CE6 /* ZDDBezierPathView.m */; };
 		4A78EADD1D1A444F0047E1B9 /* UserDetailTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A78EADC1D1A444F0047E1B9 /* UserDetailTableView.m */; };
 		4A78EAE01D1A75380047E1B9 /* ACCReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A78EADF1D1A75380047E1B9 /* ACCReviewViewController.m */; };
 		4A7CA6911CDAF2E9000232CB /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7CA6841CDAF2E9000232CB /* libWeiboSDK.a */; };
@@ -568,6 +573,9 @@
 		4A57F8811CD2F5390034E089 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		4A57F8821CD2F5390034E089 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		4A57F8831CD2F5390034E089 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		4A5A39B51D2F89BC00DF3E87 /* ZDDQRCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZDDQRCodeViewController.h; sourceTree = "<group>"; };
+		4A5A39B61D2F89BC00DF3E87 /* ZDDQRCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZDDQRCodeViewController.m; sourceTree = "<group>"; };
+		4A5A39BC1D2F8F6E00DF3E87 /* FZSongKeBenXiuKaiS-R-GB.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FZSongKeBenXiuKaiS-R-GB.TTF"; sourceTree = "<group>"; };
 		4A5CBA221D24FA2000B36E6E /* MasterQueryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterQueryViewController.h; sourceTree = "<group>"; };
 		4A5CBA231D24FA2000B36E6E /* MasterQueryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterQueryViewController.m; sourceTree = "<group>"; };
 		4A5D038D1CCDF8C000773139 /* ZDDModalTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZDDModalTransition.h; sourceTree = "<group>"; };
@@ -697,6 +705,8 @@
 		4A7749981CC0C66C008B9611 /* AssessTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssessTableViewCell.h; sourceTree = "<group>"; };
 		4A7749991CC0C66C008B9611 /* AssessTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssessTableViewCell.m; sourceTree = "<group>"; };
 		4A77499A1CC0C66C008B9611 /* AssessTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AssessTableViewCell.xib; sourceTree = "<group>"; };
+		4A77B29E1D2DE828000B6CE6 /* ZDDBezierPathView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZDDBezierPathView.h; sourceTree = "<group>"; };
+		4A77B29F1D2DE828000B6CE6 /* ZDDBezierPathView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZDDBezierPathView.m; sourceTree = "<group>"; };
 		4A78EADB1D1A444F0047E1B9 /* UserDetailTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDetailTableView.h; sourceTree = "<group>"; };
 		4A78EADC1D1A444F0047E1B9 /* UserDetailTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDetailTableView.m; sourceTree = "<group>"; };
 		4A78EADE1D1A75380047E1B9 /* ACCReviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACCReviewViewController.h; sourceTree = "<group>"; };
@@ -996,6 +1006,7 @@
 			isa = PBXGroup;
 			children = (
 				4A4F99F31D2D016200374F9B /* HYQiHei-55S.otf */,
+				4A5A39BC1D2F8F6E00DF3E87 /* FZSongKeBenXiuKaiS-R-GB.TTF */,
 				4A6973631CBB36DF002A036C /* Foundation+Log.m */,
 				4A4BD27C1CB89FC1009DA0B9 /* MyDefine.h */,
 				4A4BD27F1CB8A2F1009DA0B9 /* PrefixHeader.pch */,
@@ -1378,6 +1389,8 @@
 				4A69737F1CBB4D7E002A036C /* MyInfoViewController.m */,
 				4A6973811CBB4D8A002A036C /* QRCodeViewController.h */,
 				4A6973821CBB4D8A002A036C /* QRCodeViewController.m */,
+				4A5A39B51D2F89BC00DF3E87 /* ZDDQRCodeViewController.h */,
+				4A5A39B61D2F89BC00DF3E87 /* ZDDQRCodeViewController.m */,
 				4A6973841CBB4D97002A036C /* ShareViewController.h */,
 				4A6973851CBB4D97002A036C /* ShareViewController.m */,
 				4A6973871CBB4DA3002A036C /* MyAccountViewController.h */,
@@ -1455,6 +1468,8 @@
 				4A5274731D113F3E00B056C6 /* PayTableViewCell.h */,
 				4A5274741D113F3E00B056C6 /* PayTableViewCell.m */,
 				4A5274751D113F3E00B056C6 /* PayTableViewCell.xib */,
+				4A77B29E1D2DE828000B6CE6 /* ZDDBezierPathView.h */,
+				4A77B29F1D2DE828000B6CE6 /* ZDDBezierPathView.m */,
 			);
 			name = "爱服务";
 			sourceTree = "<group>";
@@ -1857,6 +1872,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A5A39BD1D2F8F6E00DF3E87 /* FZSongKeBenXiuKaiS-R-GB.TTF in Resources */,
 				4A7CA6AC1CDB16FC000232CB /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				4A4EDB731CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.xib in Resources */,
 				4A7749881CC07ECA008B9611 /* ProductTableViewCell.xib in Resources */,
@@ -1895,6 +1911,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A5A39BE1D2F8F6E00DF3E87 /* FZSongKeBenXiuKaiS-R-GB.TTF in Resources */,
 				4A6424071D19396600F26BA9 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				4A6424081D19396600F26BA9 /* DetailTaskPlanTableViewCell.xib in Resources */,
 				4A6424091D19396600F26BA9 /* ProductTableViewCell.xib in Resources */,
@@ -2039,6 +2056,7 @@
 				4A6BABE51CC62FAB000B94A2 /* MJRefreshStateHeader.m in Sources */,
 				4A6799191D23C4E400A8E0F5 /* DialogAnimation.m in Sources */,
 				4ADEDF171D17E89900FE3412 /* MD5DataSigner.m in Sources */,
+				4A77B2A01D2DE828000B6CE6 /* ZDDBezierPathView.m in Sources */,
 				4A4BD2A41CB8D61C009DA0B9 /* TAAbstractDotView.m in Sources */,
 				4ADEDF161D17E89900FE3412 /* DataVerifier.m in Sources */,
 				4A4BD31F1CB8F812009DA0B9 /* MASCompositeConstraint.m in Sources */,
@@ -2133,6 +2151,7 @@
 				4AF52EAD1CC4B2E900E25FC4 /* ButtonViewController.m in Sources */,
 				4A6BABE01CC62FAB000B94A2 /* MJRefreshBackGifFooter.m in Sources */,
 				4A77499B1CC0C66C008B9611 /* AssessTableViewCell.m in Sources */,
+				4A5A39B71D2F89BC00DF3E87 /* ZDDQRCodeViewController.m in Sources */,
 				4A6973771CBB4D3E002A036C /* GuaranteeViewController.m in Sources */,
 				4A43DEE41CCF69250008BD96 /* BarCodeViewController.m in Sources */,
 				4A4BD2D81CB8D903009DA0B9 /* UIImage+MultiFormat.m in Sources */,
@@ -2185,6 +2204,7 @@
 				4A67991A1D23C4FA00A8E0F5 /* DialogViewController.m in Sources */,
 				4A67991B1D23C4FA00A8E0F5 /* DialogAnimation.m in Sources */,
 				4A64A10F1D222AE600A3DC7C /* ProvinceViewController.m in Sources */,
+				4A5A39B81D2F89BC00DF3E87 /* ZDDQRCodeViewController.m in Sources */,
 				4A64A1101D222AE600A3DC7C /* CityViewController.m in Sources */,
 				4A64A1111D222AE600A3DC7C /* RegionViewController.m in Sources */,
 				4A64A1121D222AE600A3DC7C /* StreetViewController.m in Sources */,
@@ -2558,7 +2578,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6032E1DFC75D2C8FD4F9E626 /* Pods-爱服务.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yu Guancheng (7JFJ68W47N)";
@@ -2597,7 +2617,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3BF7D9418BD8C7C3248BF6D4 /* Pods-爱服务.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Yu Guancheng (FGP43E8495)";

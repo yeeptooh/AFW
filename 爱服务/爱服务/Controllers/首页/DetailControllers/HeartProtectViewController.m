@@ -20,6 +20,7 @@ UINavigationControllerDelegate
 @property (nonatomic, strong) UIProgressView *progressView;
 @property (nonatomic, strong) WKWebView *webView;
 @property (nonatomic, strong) UIView *noNetWorkingView;
+
 @end
 
 @implementation HeartProtectViewController
@@ -107,6 +108,8 @@ UINavigationControllerDelegate
 }
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+    
+    
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [UIView animateWithDuration:0.5 animations:^{
         self.progressView.alpha = 0;
@@ -154,10 +157,7 @@ UINavigationControllerDelegate
     }else{
         decisionHandler(WKNavigationActionPolicyAllow);
     }
-    
-    
-    
-    
+
 }
 
 #pragma mark - UIImagePickcerControllerDelegate -
@@ -168,18 +168,27 @@ UINavigationControllerDelegate
 //    NSURL *url = [NSURL URLWithString:@""];
     NSString *url = @"http://192.168.1.228:89/forapp/uploadFile.ashx?action=uploadimages";
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         NSData *data = UIImageJPEGRepresentation(image, 0.1);
         NSDate *date = [NSDate date];
         NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
         formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-        NSString *fileName = [NSString stringWithFormat:@"%@1.jpeg",[formatter stringFromDate:date]];
+        NSString *fileName = [NSString stringWithFormat:@"%@.jpeg",[formatter stringFromDate:date]];
         
         
         [formData appendPartWithFileData:data name:fileName fileName:fileName mimeType:@"image/jpeg"];
         
     } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"responseObject = %@",responseObject);
+        NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSLog(@"responseObject = %@",string);
+        
+        [self.webView evaluateJavaScript:[NSString stringWithFormat:@"getIOSImage(\"%@\")",string] completionHandler:^(id _Nullable js, NSError * _Nullable error) {
+            NSLog(@"js = %@",js);
+            NSLog(@"errorJS = %@",error.localizedDescription);
+        }];
+        
+        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error = %@",error);
     }];
@@ -191,6 +200,8 @@ UINavigationControllerDelegate
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
+
+
 
 
 
