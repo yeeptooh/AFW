@@ -115,7 +115,7 @@
 
 - (void)errorNotificationReceived:(NSNotification *)noti {
     
-    [self.presentedViewController dismissViewControllerAnimated:NO completion:^{
+    dispatch_async(dispatch_get_main_queue(), ^{
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
         UIImage *image = [[UIImage imageNamed:@"Checkerror"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
@@ -125,7 +125,7 @@
         hud.label.font = font(14);
         hud.label.text = NSLocalizedString(@"保存失败", @"HUD completed title");
         [hud hideAnimated:YES afterDelay:1.25f];
-    }];
+    });
  
 }
 
