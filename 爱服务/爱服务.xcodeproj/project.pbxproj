@@ -339,6 +339,8 @@
 		4A6BE93F1CFC4697002F20C1 /* jpush-ios-2.1.7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A6BE93D1CFC4697002F20C1 /* jpush-ios-2.1.7.a */; };
 		4A6BE9411CFC481D002F20C1 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A6BE9401CFC481D002F20C1 /* CFNetwork.framework */; };
 		4A6BE9431CFC4863002F20C1 /* Push Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A6BE9421CFC4863002F20C1 /* Push Config.plist */; };
+		4A6C3EA81D333801004E4C9F /* AddMoneyDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6C3EA71D333801004E4C9F /* AddMoneyDetailViewController.m */; };
+		4A6C3EA91D333918004E4C9F /* AddMoneyDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6C3EA71D333801004E4C9F /* AddMoneyDetailViewController.m */; };
 		4A7749871CC07ECA008B9611 /* ProductTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7749851CC07ECA008B9611 /* ProductTableViewCell.m */; };
 		4A7749881CC07ECA008B9611 /* ProductTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A7749861CC07ECA008B9611 /* ProductTableViewCell.xib */; };
 		4A77498C1CC09464008B9611 /* ServiceTypeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A77498A1CC09464008B9611 /* ServiceTypeTableViewCell.m */; };
@@ -690,6 +692,8 @@
 		4A6BE93E1CFC4697002F20C1 /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
 		4A6BE9401CFC481D002F20C1 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		4A6BE9421CFC4863002F20C1 /* Push Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Push Config.plist"; sourceTree = "<group>"; };
+		4A6C3EA61D333801004E4C9F /* AddMoneyDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddMoneyDetailViewController.h; sourceTree = "<group>"; };
+		4A6C3EA71D333801004E4C9F /* AddMoneyDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddMoneyDetailViewController.m; sourceTree = "<group>"; };
 		4A7749841CC07ECA008B9611 /* ProductTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductTableViewCell.h; sourceTree = "<group>"; };
 		4A7749851CC07ECA008B9611 /* ProductTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductTableViewCell.m; sourceTree = "<group>"; };
 		4A7749861CC07ECA008B9611 /* ProductTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductTableViewCell.xib; sourceTree = "<group>"; };
@@ -1434,6 +1438,8 @@
 				4A64A1681D22867900A3DC7C /* ServiceTypeViewController.m */,
 				4A5CBA221D24FA2000B36E6E /* MasterQueryViewController.h */,
 				4A5CBA231D24FA2000B36E6E /* MasterQueryViewController.m */,
+				4A6C3EA61D333801004E4C9F /* AddMoneyDetailViewController.h */,
+				4A6C3EA71D333801004E4C9F /* AddMoneyDetailViewController.m */,
 			);
 			name = "爱服务厂商版";
 			sourceTree = "<group>";
@@ -2053,6 +2059,7 @@
 				4A671C7C1CD0C94600F70176 /* RefuseReasonViewController.m in Sources */,
 				4A52746A1D113ABA00B056C6 /* HeartProtectViewController.m in Sources */,
 				4A4BD2A61CB8D61C009DA0B9 /* TADotView.m in Sources */,
+				4A6C3EA81D333801004E4C9F /* AddMoneyDetailViewController.m in Sources */,
 				4A6BABE51CC62FAB000B94A2 /* MJRefreshStateHeader.m in Sources */,
 				4A6799191D23C4E400A8E0F5 /* DialogAnimation.m in Sources */,
 				4ADEDF171D17E89900FE3412 /* MD5DataSigner.m in Sources */,
@@ -2201,6 +2208,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A6C3EA91D333918004E4C9F /* AddMoneyDetailViewController.m in Sources */,
 				4A67991A1D23C4FA00A8E0F5 /* DialogViewController.m in Sources */,
 				4A67991B1D23C4FA00A8E0F5 /* DialogAnimation.m in Sources */,
 				4A64A10F1D222AE600A3DC7C /* ProvinceViewController.m in Sources */,

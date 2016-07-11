@@ -59,11 +59,6 @@ static BOOL isProduction = FALSE;
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hadLaunched"];
     }
     
-    
-    
-    
-    
-
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     self.tabBarController = [[MyTabBarController alloc]init];
     UINavigationController *homeNaviController = [[UINavigationController alloc]initWithRootViewController:[[HomeViewController alloc]init]];
@@ -137,7 +132,7 @@ static BOOL isProduction = FALSE;
         [[NSNotificationCenter defaultCenter] postNotificationName:kBadgeValueChanged object:nil];
         [alertView show];
     }
-    NSLog(@"1234");
+    
     // IOS 7 Support Required
     [JPUSHService handleRemoteNotification:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
@@ -215,7 +210,12 @@ static BOOL isProduction = FALSE;
 - (void)updateResponse:(NSString *)orderID {
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+#if Environment_Mode == 1
     NSString *url = [NSString stringWithFormat:@"%@/Payment/Alipay/Recharge.ashx?action=getorderstate&orderid=%@",HomeURL,orderID];
+#elif Environment_Mode == 2
+    NSString *url = [NSString stringWithFormat:@"%@/Payment/Alipay/Recharge.ashx?action=getorderstate&orderid=%@",HomeURL,orderID];
+
+#endif
     
 
     [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

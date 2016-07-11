@@ -71,10 +71,8 @@ WKUIDelegate
     UserModel *userModel = [UserModel readUserModel];
     self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, Width, Height - StatusBarAndNavigationBarHeight)];
     
-    
     self.webView.navigationDelegate = self;
     self.webView.UIDelegate = self;
-    
     
     self.webView.scrollView.bounces = NO;
     self.webView.scrollView.showsVerticalScrollIndicator = NO;
@@ -90,8 +88,7 @@ WKUIDelegate
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:@"estimatedProgress"]) {
-        //        self.progressView.hidden = self.webView.estimatedProgress == 1;
-        //        [self.progressView setProgress:self.webView.estimatedProgress animated:YES];
+        
         self.progressView.progress = self.webView.estimatedProgress;
     }
     //加载完成
@@ -127,9 +124,11 @@ WKUIDelegate
     
     [controller addAction:action];
     
-    [self presentViewController:controller animated:YES completion:^{
-        completionHandler();
-    }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self presentViewController:controller animated:YES completion:^{
+            completionHandler();
+        }];
+    });
     
 }
 

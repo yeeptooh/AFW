@@ -35,7 +35,7 @@
 #import "AddOrderViewController.h"
 #import "ACCReviewViewController.h"
 #import "MasterQueryViewController.h"
-
+#import "AddMoneyDetailViewController.h"
 
 #import <CoreLocation/CoreLocation.h>
 #import <AVFoundation/AVFoundation.h>
@@ -59,6 +59,7 @@ UINavigationControllerDelegate
 
 @end
 static NSInteger tag = 0;
+static NSInteger flag = 0;
 @implementation HomeViewController
 
 - (UIAlertController *)alertController {
@@ -134,7 +135,12 @@ static NSInteger tag = 0;
     self.navigationController.delegate = self;
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.automaticallyAdjustsScrollViewInsets = NO;
+#if Environment_Mode == 1
     self.view.backgroundColor = color(246, 246, 246, 1);
+#elif Environment_Mode == 2
+    self.view.backgroundColor = [UIColor whiteColor];//color(246, 246, 246, 1);
+#endif
+    
     [self setNaviTitle];
     [self setScrollView];
     [self updateUI];
@@ -1168,23 +1174,53 @@ static NSInteger tag = 0;
         [self.navigationController pushViewController:heartVC animated:YES];
         
     }else if (sender.tag == 1012) {
+        if (flag == 1) {
+            flag = 0;
+            return;
+        }
+        flag = 1;
+        
         UserModel *userModel = [UserModel readUserModel];
+        
         GatheringViewController *gatherVC = [[GatheringViewController alloc] init];
         gatherVC.hidesBottomBarWhenPushed = YES;
-        id wx = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@WX",@(userModel.uid)]];
-        id al = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@AL",@(userModel.uid)]];
         
-        if (wx) {
-            gatherVC.imageView1.image = [UIImage imageWithData:(NSData *)wx];
-        }
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        NSString *url = [NSString stringWithFormat:@"%@uploadFile.ashx?action=loadimages&userId=%@",HomeURL, @(userModel.uid)];
+        [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            NSLog(@"%@",responseObject);
+            
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+            NSLog(@"%@",dic);
+            if (dic[@"wechatpay"] == 0) {
+                
+            }else {
+                //i.51ifw.com
+//                NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://i.51ifw.com", dic[@"wechatpay"]]]];
+                NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://192.168.1.228:90", dic[@"wechatpay"]]]];
+                gatherVC.imageView1.image = [UIImage imageWithData:data];
+                
+            }
+            if (dic[@"alipay"] == 0) {
+                
+            }else {
+//                NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://i.51ifw.com", dic[@"alipay"]]]];
+                NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://192.168.1.228:90", dic[@"alipay"]]]];
+                gatherVC.imageView2.image = [UIImage imageWithData:data];
+                
+            }
+            flag = 0;
+            [self.navigationController pushViewController:gatherVC animated:YES];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            flag = 0;
+            NSLog(@"%@",error.userInfo);
+            
+        }];
         
-        if (al) {
-            gatherVC.imageView2.image = [UIImage imageWithData:(NSData *)al];
-        }
+  
         
-        //http://192.168.1.228:90/forapp/uploadFile.ashx?action=loadimages&userId=%@
-        
-        [self.navigationController pushViewController:gatherVC animated:YES];
         
         
     }
@@ -1203,6 +1239,10 @@ static NSInteger tag = 0;
         
         
     }else if (sender.tag == 1002) {
+        
+        AddMoneyDetailViewController *addMoneyVC = [[AddMoneyDetailViewController alloc] init];
+        addMoneyVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:addMoneyVC animated:YES];
         
         
         
@@ -1232,7 +1272,7 @@ static NSInteger tag = 0;
         
         
     }else if (sender.tag == 1007) {
-        
+        self.flag = YES;
         RechargeViewController *rechargeVC = [[RechargeViewController alloc] init];
         rechargeVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:rechargeVC animated:YES];
@@ -1349,6 +1389,7 @@ static NSInteger tag = 0;
 
 
 - (void) dealloc {
+    flag = 0;
     NSLog(@"HomeVC dealloc");
 }
 @end
