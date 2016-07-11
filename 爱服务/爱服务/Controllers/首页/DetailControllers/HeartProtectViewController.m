@@ -133,9 +133,11 @@ UINavigationControllerDelegate
     
     [controller addAction:action];
     
-    [self presentViewController:controller animated:YES completion:^{
-        completionHandler();
-    }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self presentViewController:controller animated:YES completion:^{
+            completionHandler();
+        }];
+    });
     
 }
 

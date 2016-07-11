@@ -209,7 +209,7 @@ UITextFieldDelegate
         if (indexPath.row == 2) {
             
             if ([[NSUserDefaults standardUserDefaults]boolForKey:@"FirstLaunch"]) {
-                [button setTitle:@"北京市" forState:UIControlStateNormal];
+                [button setTitle:@"" forState:UIControlStateNormal];
             }else {
                 [button setTitle:[[NSUserDefaults standardUserDefaults] objectForKey:@"province"][0][@"n"] forState:UIControlStateNormal];
             }
@@ -218,7 +218,7 @@ UITextFieldDelegate
         
         if (indexPath.row == 3) {
             if ([[NSUserDefaults standardUserDefaults]boolForKey:@"FirstLaunch"]) {
-                [button setTitle:@"北京市" forState:UIControlStateNormal];
+                [button setTitle:@"" forState:UIControlStateNormal];
             }else {
                 [button setTitle:[[NSUserDefaults standardUserDefaults] objectForKey:@"city"][0][@"n"] forState:UIControlStateNormal];
             }
@@ -228,7 +228,7 @@ UITextFieldDelegate
         if (indexPath.row == 4) {
             
             if ([[NSUserDefaults standardUserDefaults]boolForKey:@"FirstLaunch"]) {
-                [button setTitle:@"东城区" forState:UIControlStateNormal];
+                [button setTitle:@"" forState:UIControlStateNormal];
             }else {
                 [button setTitle:[[NSUserDefaults standardUserDefaults] objectForKey:@"region"][0][@"n"] forState:UIControlStateNormal];
             }
@@ -238,7 +238,7 @@ UITextFieldDelegate
         if (indexPath.row == 5) {
             
             if ([[NSUserDefaults standardUserDefaults]boolForKey:@"FirstLaunch"]) {
-                [button setTitle:@"东华门街道" forState:UIControlStateNormal];
+                [button setTitle:@"" forState:UIControlStateNormal];
             }else {
                 [button setTitle:[[NSUserDefaults standardUserDefaults] objectForKey:@"street"][0][@"n"] forState:UIControlStateNormal];
             }

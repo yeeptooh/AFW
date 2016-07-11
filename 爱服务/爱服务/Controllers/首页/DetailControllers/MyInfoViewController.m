@@ -129,6 +129,8 @@ WKUIDelegate
     self.webView.scrollView.showsVerticalScrollIndicator = NO;
 #if Environment_Mode == 1
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/page.aspx?type=user&comid=%ld&uid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid]]]];
+    NSLog(@"%@",[NSString stringWithFormat:@"%@/page.aspx?type=user&comid=%ld&uid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid]);
+    
 #elif Environment_Mode == 2
     self.url = [NSString stringWithFormat:@"%@/page.aspx?type=user&comid=%ld&uid=%ld&device=i",HomeURL,(long)userModel.comid,(long)userModel.uid];
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.url]]];
@@ -156,9 +158,11 @@ WKUIDelegate
     
     [controller addAction:action];
     
-    [self presentViewController:controller animated:YES completion:^{
-        completionHandler();
-    }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self presentViewController:controller animated:YES completion:^{
+            completionHandler();
+        }];
+    });
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {

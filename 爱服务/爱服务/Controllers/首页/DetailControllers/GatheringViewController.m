@@ -247,15 +247,14 @@ UIScrollViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDeleg
             self.imageView1.image = qrImage;
             NSData *qrData = UIImagePNGRepresentation(qrImage);
             UserModel *userModel = [UserModel readUserModel];
-            [[NSUserDefaults standardUserDefaults] setObject:qrData forKey:[NSString stringWithFormat:@"%@WX",@(userModel.uid)]];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+            
             
             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
             manager.responseSerializer = [AFHTTPResponseSerializer serializer];
             manager.requestSerializer.timeoutInterval = 15;
-            NSString *url = [NSString stringWithFormat:@"%@uploadFile.ashx?action=uploadimages&userId=%@",HomeURL,@(userModel.uid)];
-            
-            [manager POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+            NSString *url = [NSString stringWithFormat:@"%@uploadFile.ashx?action=uploadimages",HomeURL];
+            NSDictionary *params = @{@"userId":@(userModel.uid)};
+            [manager POST:url parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
                 NSDate *date = [NSDate date];
                 NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
                 formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
@@ -265,15 +264,30 @@ UIScrollViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDeleg
             } progress:^(NSProgress * _Nonnull uploadProgress) {
                 NSLog(@"uploadProgress.fractionCompleted = %f",uploadProgress.fractionCompleted);
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
-                UIImage *image = [[UIImage imageNamed:@"Checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-                UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-                hud.customView = imageView;
-                hud.mode = MBProgressHUDModeCustomView;
-                hud.label.text = NSLocalizedString(@"上传成功", @"HUD completed title");
-                [hud hideAnimated:YES afterDelay:1.5f];
-                [hud removeFromSuperViewOnHide];
-                NSLog(@"responseObject = %@",responseObject);
+                NSString *response = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+                NSLog(@"response = %@",response);
+                if ([response isEqualToString:@"1"]) {
+                    MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+                    UIImage *image = [[UIImage imageNamed:@"Checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+                    hud.customView = imageView;
+                    hud.mode = MBProgressHUDModeCustomView;
+                    hud.label.text = NSLocalizedString(@"上传成功", @"HUD completed title");
+                    [hud hideAnimated:YES afterDelay:1.5f];
+                    [hud removeFromSuperViewOnHide];
+                }else {
+                    MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+                    UIImage *image = [[UIImage imageNamed:@"Checkerror"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+                    hud.customView = imageView;
+                    hud.mode = MBProgressHUDModeCustomView;
+                    hud.label.text = NSLocalizedString(@"上传失败", @"HUD completed title");
+                    [hud hideAnimated:YES afterDelay:1.5f];
+                    [hud removeFromSuperViewOnHide];
+                    
+                }
+                
+                
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
                 UIImage *image = [[UIImage imageNamed:@"Checkerror"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -292,13 +306,13 @@ UIScrollViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDeleg
             NSData *qrData = UIImagePNGRepresentation(qrImage);
             UserModel *userModel = [UserModel readUserModel];
             
-            [[NSUserDefaults standardUserDefaults] setObject:qrData forKey:[NSString stringWithFormat:@"%@AL",@(userModel.uid)]];
-            [[NSUserDefaults standardUserDefaults] synchronize];
             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
             manager.responseSerializer = [AFHTTPResponseSerializer serializer];
             manager.requestSerializer.timeoutInterval = 15;
-            NSString *url = [NSString stringWithFormat:@"%@uploadFile.ashx?action=uploadimages&userId=%@",HomeURL, @(userModel.uid)];
-            [manager POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+            NSString *url = [NSString stringWithFormat:@"%@uploadFile.ashx?action=uploadimages",HomeURL];
+            
+            NSDictionary *params = @{@"userId":@(userModel.uid)};
+            [manager POST:url parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
                 NSDate *date = [NSDate date];
                 NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
                 formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
@@ -306,16 +320,29 @@ UIScrollViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDeleg
                 
                 [formData appendPartWithFileData:qrData name:fileName fileName:fileName mimeType:@"image/jpeg"];
                 
-            } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
-                UIImage *image = [[UIImage imageNamed:@"Checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-                UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-                hud.customView = imageView;
-                hud.mode = MBProgressHUDModeCustomView;
-                hud.label.text = NSLocalizedString(@"上传成功", @"HUD completed title");
-                [hud hideAnimated:YES afterDelay:1.5f];
-                [hud removeFromSuperViewOnHide];
-                NSLog(@"responseObject = %@",responseObject);
+            } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {NSString *response = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+                if ([response isEqualToString:@"1"]) {
+                    MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+                    UIImage *image = [[UIImage imageNamed:@"Checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+                    hud.customView = imageView;
+                    hud.mode = MBProgressHUDModeCustomView;
+                    hud.label.text = NSLocalizedString(@"上传成功", @"HUD completed title");
+                    [hud hideAnimated:YES afterDelay:1.5f];
+                    [hud removeFromSuperViewOnHide];
+                }else {
+                    MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+                    UIImage *image = [[UIImage imageNamed:@"Checkerror"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+                    hud.customView = imageView;
+                    hud.mode = MBProgressHUDModeCustomView;
+                    hud.label.text = NSLocalizedString(@"上传失败", @"HUD completed title");
+                    [hud hideAnimated:YES afterDelay:1.5f];
+                    [hud removeFromSuperViewOnHide];
+                    
+                }
+                
+                
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
                 UIImage *image = [[UIImage imageNamed:@"Checkerror"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -337,18 +364,17 @@ UIScrollViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDeleg
 
         if ([picker isEqual:self.pickerController1]) {
             self.imageView1.image = image;
-            NSData *qrData = UIImagePNGRepresentation(image);
+            
             UserModel *userModel = [UserModel readUserModel];
-            [[NSUserDefaults standardUserDefaults] setObject:qrData forKey:[NSString stringWithFormat:@"%@WX",@(userModel.uid)]];
-            [[NSUserDefaults standardUserDefaults] synchronize];
             
             NSData *data = UIImageJPEGRepresentation(image, 0.1);
             
             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
             manager.responseSerializer = [AFHTTPResponseSerializer serializer];
             manager.requestSerializer.timeoutInterval = 15;
-            NSString *url = [NSString stringWithFormat:@"%@uploadFile.ashx?action=uploadimages&userId=%@",HomeURL, @(userModel.uid)];
-            [manager POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+            NSString *url = [NSString stringWithFormat:@"%@uploadFile.ashx?action=uploadimages",HomeURL];
+            NSDictionary *params = @{@"userId":@(userModel.uid)};
+            [manager POST:url parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
                 NSDate *date = [NSDate date];
                 NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
                 formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
@@ -356,16 +382,29 @@ UIScrollViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDeleg
                 
                 [formData appendPartWithFileData:data name:fileName fileName:fileName mimeType:@"image/jpeg"];
                 
-            } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
-                UIImage *image = [[UIImage imageNamed:@"Checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-                UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-                hud.customView = imageView;
-                hud.mode = MBProgressHUDModeCustomView;
-                hud.label.text = NSLocalizedString(@"上传成功", @"HUD completed title");
-                [hud hideAnimated:YES afterDelay:1.5f];
-                [hud removeFromSuperViewOnHide];
-                NSLog(@"responseObject = %@",responseObject);
+            } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {NSString *response = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+                if ([response isEqualToString:@"1"]) {
+                    MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+                    UIImage *image = [[UIImage imageNamed:@"Checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+                    hud.customView = imageView;
+                    hud.mode = MBProgressHUDModeCustomView;
+                    hud.label.text = NSLocalizedString(@"上传成功", @"HUD completed title");
+                    [hud hideAnimated:YES afterDelay:1.5f];
+                    [hud removeFromSuperViewOnHide];
+                }else {
+                    MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+                    UIImage *image = [[UIImage imageNamed:@"Checkerror"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+                    hud.customView = imageView;
+                    hud.mode = MBProgressHUDModeCustomView;
+                    hud.label.text = NSLocalizedString(@"上传失败", @"HUD completed title");
+                    [hud hideAnimated:YES afterDelay:1.5f];
+                    [hud removeFromSuperViewOnHide];
+                    
+                }
+                
+                
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
                 UIImage *image = [[UIImage imageNamed:@"Checkerror"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -380,16 +419,16 @@ UIScrollViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDeleg
         }
         if ([picker isEqual:self.pickerController2]) {
             self.imageView2.image = image;
-            NSData *qrData = UIImagePNGRepresentation(image);
+            
             UserModel *userModel = [UserModel readUserModel];
             NSData *data = UIImageJPEGRepresentation(image, 0.1);
-            [[NSUserDefaults standardUserDefaults] setObject:qrData forKey:[NSString stringWithFormat:@"%@AL",@(userModel.uid)]];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+            
             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
             manager.responseSerializer = [AFHTTPResponseSerializer serializer];
             manager.requestSerializer.timeoutInterval = 15;
-            NSString *url = [NSString stringWithFormat:@"%@uploadFile.ashx?action=uploadimages&userId=%@",HomeURL, @(userModel.uid)];
-            [manager POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+            NSString *url = [NSString stringWithFormat:@"%@uploadFile.ashx?action=uploadimages",HomeURL];
+            NSDictionary *params = @{@"userId":@(userModel.uid)};
+            [manager POST:url parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
                 NSDate *date = [NSDate date];
                 NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
                 formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
@@ -397,16 +436,29 @@ UIScrollViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDeleg
                 
                 [formData appendPartWithFileData:data name:fileName fileName:fileName mimeType:@"image/jpeg"];
                 
-            } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
-                UIImage *image = [[UIImage imageNamed:@"Checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-                UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-                hud.customView = imageView;
-                hud.mode = MBProgressHUDModeCustomView;
-                hud.label.text = NSLocalizedString(@"上传成功", @"HUD completed title");
-                [hud hideAnimated:YES afterDelay:1.5f];
-                [hud removeFromSuperViewOnHide];
-                NSLog(@"responseObject = %@",responseObject);
+            } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {NSString *response = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+                if ([response isEqualToString:@"1"]) {
+                    MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+                    UIImage *image = [[UIImage imageNamed:@"Checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+                    hud.customView = imageView;
+                    hud.mode = MBProgressHUDModeCustomView;
+                    hud.label.text = NSLocalizedString(@"上传成功", @"HUD completed title");
+                    [hud hideAnimated:YES afterDelay:1.5f];
+                    [hud removeFromSuperViewOnHide];
+                }else {
+                    MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+                    UIImage *image = [[UIImage imageNamed:@"Checkerror"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+                    hud.customView = imageView;
+                    hud.mode = MBProgressHUDModeCustomView;
+                    hud.label.text = NSLocalizedString(@"上传失败", @"HUD completed title");
+                    [hud hideAnimated:YES afterDelay:1.5f];
+                    [hud removeFromSuperViewOnHide];
+                    
+                }
+                
+                
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
                 UIImage *image = [[UIImage imageNamed:@"Checkerror"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];

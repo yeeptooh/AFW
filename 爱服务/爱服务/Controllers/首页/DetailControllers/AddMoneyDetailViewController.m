@@ -1,16 +1,15 @@
 //
-//  MasterQueryViewController.m
+//  AddMoneyDetailViewController.m
 //  爱服务
 //
-//  Created by 张冬冬 on 16/6/30.
+//  Created by 张冬冬 on 16/7/11.
 //  Copyright © 2016年 张冬冬. All rights reserved.
 //
 
-#import "MasterQueryViewController.h"
-#import "UserModel.h"
+#import "AddMoneyDetailViewController.h"
 #import <WebKit/WebKit.h>
-//http://192.168.1.228:90/forapp/MasterList.aspx?device=i
-@interface MasterQueryViewController ()
+#import "UserModel.h"
+@interface AddMoneyDetailViewController ()
 <
 WKNavigationDelegate,
 WKUIDelegate
@@ -22,7 +21,7 @@ WKUIDelegate
 @property (nonatomic, strong) NSMutableURLRequest *request;
 @end
 
-@implementation MasterQueryViewController
+@implementation AddMoneyDetailViewController
 
 - (UIView *)noNetWorkingView {
     
@@ -71,7 +70,7 @@ WKUIDelegate
 
 
 - (void)setWebView {
-    
+    UserModel *userModel = [UserModel readUserModel];
     self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, Width, Height - StatusBarAndNavigationBarHeight)];
     
     
@@ -81,7 +80,7 @@ WKUIDelegate
     
     self.webView.scrollView.bounces = NO;
     self.webView.scrollView.showsVerticalScrollIndicator = NO;
-    self.request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@MasterList.aspx?device=i",HomeURL]]];
+    self.request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@AddMoneyDetail.aspx?comId=%@",HomeURL,@(userModel.comid)]]];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
     
@@ -90,8 +89,8 @@ WKUIDelegate
     NSHTTPCookie *cookie = [[cookieJar cookies] lastObject];
     self.cookieString = [NSMutableString stringWithFormat:@"%@=%@;",cookie.name,cookie.value];
     [self.request addValue:self.cookieString forHTTPHeaderField:@"Cookie"];
-
-
+    
+    
     
     [self.webView loadRequest:self.request];
     [self.view addSubview:self.progressView];
@@ -104,7 +103,7 @@ WKUIDelegate
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:@"estimatedProgress"]) {
-
+        
         self.progressView.progress = self.webView.estimatedProgress;
     }
     //加载完成
@@ -153,11 +152,11 @@ WKUIDelegate
     NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
     NSArray *cookies =[NSHTTPCookie cookiesWithResponseHeaderFields:[response allHeaderFields] forURL:response.URL];
     NSHTTPCookie *cookie = [cookies lastObject];
-
+    
     self.cookieString = [NSMutableString stringWithFormat:@"%@=%@;",cookie.name,cookie.value];
     [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
     [self.request addValue:self.cookieString forHTTPHeaderField:@"Cookie"];
-
+    
     decisionHandler(WKNavigationResponsePolicyAllow);
 }
 
@@ -168,6 +167,7 @@ WKUIDelegate
 }
 
 - (void)setNaviTitle {
-    self.navigationItem.title = @"师傅查询";
+    self.navigationItem.title = @"追加审核";
 }
+
 @end

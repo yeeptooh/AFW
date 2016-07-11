@@ -72,7 +72,12 @@ UITextFieldDelegate
 - (instancetype)init {
     self = [super init];
     if (self) {
+#if Environment_Mode == 1
         self.tabBarItem.title = @"马上抢单";
+#elif Environment_Mode == 2
+        self.tabBarItem.title = @"待确认";
+#endif
+        
         self.tabBarItem.image = [UIImage imageNamed:@"drawable_no_select_qiangdan"];
         self.tabBarItem.selectedImage = [UIImage imageNamed:@"drawable_select_qiangdan"];
         
