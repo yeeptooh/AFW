@@ -9,7 +9,7 @@
 #import "MasterQueryViewController.h"
 #import "UserModel.h"
 #import <WebKit/WebKit.h>
-//http://192.168.1.228:90/forapp/MasterList.aspx?device=i
+
 @interface MasterQueryViewController ()
 <
 WKNavigationDelegate,

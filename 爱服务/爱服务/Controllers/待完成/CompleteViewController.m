@@ -9,6 +9,7 @@
 #import "CompleteViewController.h"
 #import "AFNetworking.h"
 #import "MainTableViewCell.h"
+#import "CSMainTableViewCell.h"
 #import "UserModel.h"
 #import "MBProgressHUD.h"
 #import "OrderModel.h"
@@ -508,7 +509,7 @@ UITextFieldDelegate
     self.manager.requestSerializer.timeoutInterval = 5;
     
     [self.manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
+        NSLog(@"%@",responseObject);
         [self.activityView stopAnimating];
         
         
@@ -580,14 +581,14 @@ UITextFieldDelegate
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+#if Environment_Mode == 1
     static NSString *identifier = @"Cell";
     MainTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[NSBundle mainBundle] loadNibNamed:@"MainTableViewCell" owner:self options:nil].lastObject;
         
     }
-
+    
     if (tableView.tag == 300) {
         self.orderModel = self.dicList[indexPath.row];
     }else{
@@ -608,6 +609,34 @@ UITextFieldDelegate
     cell.priceLabel.text = self.orderModel.price;
     cell.areaLabel.text = self.orderModel.area;
     cell.robButton.hidden = YES;
+#elif Environment_Mode == 2
+    static NSString *identifier = @"Cell";
+    CSMainTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (!cell) {
+        cell = [[NSBundle mainBundle] loadNibNamed:@"CSMainTableViewCell" owner:self options:nil].lastObject;
+        
+    }
+    
+    if (tableView.tag == 300) {
+        self.orderModel = self.dicList[indexPath.row];
+    }else{
+        self.orderModel = self.searchResultList[indexPath.row];
+    }
+    
+    
+    cell.dateLabel.text = self.orderModel.date;
+    
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@",self.orderModel.serviceType, self.orderModel.productType]];
+    
+    [attributedString addAttributes:@{NSForegroundColorAttributeName:beautifulBlueColor} range:[self.orderModel.serviceType rangeOfString:self.orderModel.serviceType]];
+    cell.productTypeLabel.attributedText = attributedString;
+    cell.nameLabel.text = self.orderModel.name;
+    cell.phoneLabel.text = self.orderModel.phone;
+    cell.locationLabel.text = self.orderModel.location;
+    cell.assessLabel.text = self.orderModel.assess;
+    cell.areaLabel.text = self.orderModel.area;
+#endif
+    
     return cell;
 }
 

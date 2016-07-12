@@ -339,7 +339,6 @@ static NSInteger i = 0;
 #elif Environment_Mode == 2
         
         NSString *url = [NSString stringWithFormat:@"%@Payment/Alipay/Recharge.ashx?action=getorderid",HomeURL];
-//        NSString *url = [NSString stringWithFormat:@"%@Payment/Alipay/Recharge.ashx?action=getorderid",@"http://192.168.1.173:90/forapp2/"];
 
 #endif
         
@@ -395,7 +394,7 @@ static NSInteger i = 0;
                 NSString *url = [NSString stringWithFormat:@"%@Payment/Alipay/Recharge.ashx?action=getsign&orderId=%@",HomeURL,order.outTradeNO];
 #elif Environment_Mode == 2
                 NSString *url = [NSString stringWithFormat:@"%@Payment/Alipay/Recharge.ashx?action=getsign&orderId=%@",HomeURL,order.outTradeNO];
-//                NSString *url = [NSString stringWithFormat:@"%@Payment/Alipay/Recharge.ashx?action=getsign&orderId=%@",@"http://192.168.1.173:90/forapp2/",order.outTradeNO];
+
 #endif
                 
                 manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -512,14 +511,12 @@ static NSInteger i = 0;
 }
 
 - (void)updateResponse:(NSString *)orderID {
-    //http://192.168.1.173:90/forapp2/
+    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 #if Environment_Mode == 1
     NSString *url = [NSString stringWithFormat:@"%@/Payment/Alipay/Recharge.ashx?action=getorderstate&orderid=%@",HomeURL,orderID];
 #elif Environment_Mode == 2
     NSString *url = [NSString stringWithFormat:@"%@/Payment/Alipay/Recharge.ashx?action=getorderstate&orderid=%@",HomeURL,orderID];
-//    NSString *url = [NSString stringWithFormat:@"%@/Payment/Alipay/Recharge.ashx?action=getorderstate&orderid=%@",@"http://192.168.1.173:90/forapp2/",orderID];
-
 #endif
     
     
