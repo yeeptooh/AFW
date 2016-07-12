@@ -10,16 +10,19 @@
 #import "UserModel.h"
 #import <WebKit/WebKit.h>
 #import "AFNetworking.h"
+#import "CommitHeartViewController.h"
 @interface HeartProtectViewController ()
 <
 WKNavigationDelegate,
 WKUIDelegate,
 UIImagePickerControllerDelegate,
-UINavigationControllerDelegate
+UINavigationControllerDelegate,
+WKScriptMessageHandler
 >
 @property (nonatomic, strong) UIProgressView *progressView;
 @property (nonatomic, strong) WKWebView *webView;
 @property (nonatomic, strong) UIView *noNetWorkingView;
+@property (nonatomic, strong) NSString *money;
 
 @end
 
@@ -73,7 +76,10 @@ UINavigationControllerDelegate
 
 - (void)setWebView {
 //    UserModel *userModel = [UserModel readUserModel];
-    self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, Width, Height - StatusBarAndNavigationBarHeight)];
+    WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
+    [config.userContentController addScriptMessageHandler:self name:@"PayMoney"];
+    
+    self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, Width, Height - StatusBarAndNavigationBarHeight) configuration:config];
     
     
     self.webView.navigationDelegate = self;
@@ -82,6 +88,8 @@ UINavigationControllerDelegate
     
     self.webView.scrollView.bounces = NO;
     self.webView.scrollView.showsVerticalScrollIndicator = NO;
+//    NSString *url = [NSString stringWithFormat:@"%@API/AiXinBao.aspx",@"http://i.51ifw.com/"];
+//    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://192.168.1.228:89/API/AiXinBao.aspx"]]]];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [self.view addSubview:self.progressView];
@@ -90,6 +98,12 @@ UINavigationControllerDelegate
     
     [self.webView addObserver:self
                    forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
+}
+
+- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
+    
+    self.money = ((NSDictionary *)message.body)[@"body"];
+    
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
@@ -156,7 +170,14 @@ UINavigationControllerDelegate
             
         }];
         decisionHandler(WKNavigationActionPolicyCancel);
-    }else{
+    }else if ([[URL.absoluteString lastPathComponent] isEqualToString:@"paymoney"]) {
+        
+        CommitHeartViewController *commitVC = [[CommitHeartViewController alloc] init];
+        commitVC.money = self.money;
+        [self presentViewController:commitVC animated:YES completion:nil];
+        
+        decisionHandler(WKNavigationActionPolicyCancel);
+    }else {
         decisionHandler(WKNavigationActionPolicyAllow);
     }
 

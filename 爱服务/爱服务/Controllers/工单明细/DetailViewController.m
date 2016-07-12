@@ -127,15 +127,24 @@ UIViewControllerTransitioningDelegate
     self.baseDetailInfoCell.taskId = [NSString stringWithFormat:@"%@",@(self.ID)];
     
     self.baseDetailInfoCell.phone = self.phone;
-    
+#if Environment_Mode == 1
     [self.baseDetailInfoCell.dialogButton addTarget:self action:@selector(dialogButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+#elif Environment_Mode == 2
+    self.baseDetailInfoCell.dialogButton.hidden = YES;
+#endif
+    
     
     [self.baseDetailInfoCell.mapButton addTarget:self action:@selector(mapButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
     self.baseDetailInfoCell.phoneLabel.text = self.phone;
     self.baseDetailInfoCell.fromLabel.text = self.from;
     self.baseDetailInfoCell.fromPhoneLabel.text = self.fromPhone;
+#if Environment_Mode == 1
     self.baseDetailInfoCell.priceLabel.text = self.price;
+#elif Environment_Mode == 2
+    self.baseDetailInfoCell.priceLabel.hidden = YES;
+#endif
+    
     [self.baseDetailInfoCell.locationButton setTitle:self.location forState:UIControlStateNormal];
     NSLog(@"%@",self.location);
     [self.baseDetailInfoCell.locationButton addTarget:self action:@selector(locationButtonClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -291,14 +300,14 @@ UIViewControllerTransitioningDelegate
 }
 
 - (void)setBottomButton {
-    
+#if Environment_Mode == 1
     CGFloat height;
     if (iPhone4_4s || iPhone5_5s) {
         height = 35;
     }else {
         height = 44;
     }
-//    height = (Height - StatusBarAndNavigationBarHeight)/12;
+    //    height = (Height - StatusBarAndNavigationBarHeight)/12;
     if (self.state == 4) {
         
         if (self.flag == 1) {
@@ -364,6 +373,66 @@ UIViewControllerTransitioningDelegate
         [self.view addSubview:recedeButton];
         
     }
+#elif Environment_Mode == 2
+    CGFloat height;
+    if (iPhone4_4s || iPhone5_5s) {
+        height = 35;
+    }else {
+        height = 44;
+    }
+    
+    if (self.state == 4) {
+        
+        if (self.flag == 1) {
+   
+        }else {
+            
+            UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            cancelButton.frame = CGRectMake(0, Height - StatusBarAndNavigationBarHeight - height, Width, height);
+            cancelButton.backgroundColor = BlueColor;
+            
+            [cancelButton setTitle:@"撤销" forState:UIControlStateNormal];
+            [cancelButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
+            [cancelButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateHighlighted];
+            [cancelButton addTarget:self action:@selector(cancelButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+            [self.view addSubview:cancelButton];
+            
+        }
+        
+    }else if (self.state == 5){
+    
+    }
+#endif
+    
+}
+
+- (void)cancelButtonClicked {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+//    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    UserModel *userModel = [UserModel readUserModel];
+    //m:347,url中有中文
+    NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=canceltask",HomeURL];
+    
+    NSDictionary *params = @{
+                             @"taskId":@(self.ID),
+                             @"comId":@(userModel.comid),
+                             @"username":userModel.name
+                             };
+    
+    URL = [URL stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    
+    [manager POST:URL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"%@",responseObject);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@",error.userInfo);
+    }];
+    
 }
 
 - (void)robButtonClicked {

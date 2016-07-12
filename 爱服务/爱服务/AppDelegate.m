@@ -224,7 +224,7 @@ static BOOL isProduction = FALSE;
         if ([responseObject[@"data"] integerValue] ==  5) {
          
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.window animated:YES];
-            hud.label.text = @"充值中..";
+            hud.label.text = @"付款中..";
             hud.mode = MBProgressHUDModeIndeterminate;
             hud.minSize = CGSizeMake(100, 100);
             hud.offset = CGPointMake(0, Height/5);
@@ -236,7 +236,7 @@ static BOOL isProduction = FALSE;
                 UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
                 hud.customView = imageView;
                 hud.mode = MBProgressHUDModeCustomView;
-                hud.label.text = NSLocalizedString(@"充值成功", @"HUD completed title");
+                hud.label.text = NSLocalizedString(@"付款成功", @"HUD completed title");
                 [hud hideAnimated:YES afterDelay:0.75f];
                 [hud removeFromSuperViewOnHide];
 
@@ -247,7 +247,7 @@ static BOOL isProduction = FALSE;
         if ([responseObject[@"data"] integerValue] == 1) {
             
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.window animated:YES];
-            hud.label.text = @"充值中..";
+            hud.label.text = @"付款中..";
             hud.mode = MBProgressHUDModeIndeterminate;
             hud.minSize = CGSizeMake(100, 100);
             hud.offset = CGPointMake(0, Height/5);
@@ -259,7 +259,7 @@ static BOOL isProduction = FALSE;
                 UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
                 hud.customView = imageView;
                 hud.mode = MBProgressHUDModeCustomView;
-                hud.label.text = NSLocalizedString(@"充值失败", @"HUD completed title");
+                hud.label.text = NSLocalizedString(@"付款失败", @"HUD completed title");
                 [hud hideAnimated:YES afterDelay:0.75f];
                 [hud removeFromSuperViewOnHide];
              });
@@ -268,7 +268,7 @@ static BOOL isProduction = FALSE;
   
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.window animated:YES];
-        hud.label.text = @"充值中..";
+        hud.label.text = @"付款中..";
         hud.mode = MBProgressHUDModeIndeterminate;
         hud.minSize = CGSizeMake(100, 100);
         hud.offset = CGPointMake(0, Height/5);

@@ -148,7 +148,7 @@
                 <outlet property="phoneLabel" destination="Z04-fk-5lH" id="rtU-j9-vDk"/>
                 <outlet property="priceLabel" destination="FhO-Nu-CdV" id="7mm-P3-ucU"/>
             </connections>
-            <point key="canvasLocation" x="543" y="-191"/>
+            <point key="canvasLocation" x="600" y="-175"/>
         </tableViewCell>
     </objects>
     <resources>

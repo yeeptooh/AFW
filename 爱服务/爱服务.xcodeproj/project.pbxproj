@@ -107,6 +107,10 @@
 		4A5CBA241D24FA2000B36E6E /* MasterQueryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5CBA231D24FA2000B36E6E /* MasterQueryViewController.m */; };
 		4A5CBA251D24FA2000B36E6E /* MasterQueryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5CBA231D24FA2000B36E6E /* MasterQueryViewController.m */; };
 		4A5D038F1CCDF8C000773139 /* ZDDModalTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5D038E1CCDF8C000773139 /* ZDDModalTransition.m */; };
+		4A5D25E41D347F6300630029 /* CSMainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5D25E21D347F6300630029 /* CSMainTableViewCell.m */; };
+		4A5D25E51D347F6300630029 /* CSMainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A5D25E31D347F6300630029 /* CSMainTableViewCell.xib */; };
+		4A5D25E81D348E0E00630029 /* CommitHeartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5D25E71D348E0E00630029 /* CommitHeartViewController.m */; };
+		4A5D25E91D34C73500630029 /* CommitHeartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5D25E71D348E0E00630029 /* CommitHeartViewController.m */; };
 		4A64236F1D19396600F26BA9 /* PhoneNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5229E11CBCA75B00DD2D9C /* PhoneNumberViewController.m */; };
 		4A6423701D19396600F26BA9 /* RechargeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5274661D113A7D00B056C6 /* RechargeViewController.m */; };
 		4A6423711D19396600F26BA9 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6973691CBB3DB3002A036C /* RegisterViewController.m */; };
@@ -582,6 +586,11 @@
 		4A5CBA231D24FA2000B36E6E /* MasterQueryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterQueryViewController.m; sourceTree = "<group>"; };
 		4A5D038D1CCDF8C000773139 /* ZDDModalTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZDDModalTransition.h; sourceTree = "<group>"; };
 		4A5D038E1CCDF8C000773139 /* ZDDModalTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZDDModalTransition.m; sourceTree = "<group>"; };
+		4A5D25E11D347F6300630029 /* CSMainTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSMainTableViewCell.h; sourceTree = "<group>"; };
+		4A5D25E21D347F6300630029 /* CSMainTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSMainTableViewCell.m; sourceTree = "<group>"; };
+		4A5D25E31D347F6300630029 /* CSMainTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSMainTableViewCell.xib; sourceTree = "<group>"; };
+		4A5D25E61D348E0E00630029 /* CommitHeartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommitHeartViewController.h; sourceTree = "<group>"; };
+		4A5D25E71D348E0E00630029 /* CommitHeartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommitHeartViewController.m; sourceTree = "<group>"; };
 		4A64241D1D19396600F26BA9 /* 爱服务厂商版.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "爱服务厂商版.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A64245B1D194D8C00F26BA9 /* AddOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddOrderViewController.h; sourceTree = "<group>"; };
 		4A64245C1D194D8C00F26BA9 /* AddOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddOrderViewController.m; sourceTree = "<group>"; };
@@ -1329,6 +1338,8 @@
 				4AF52EB81CC4BEE400E25FC4 /* DatePickerViewController.m */,
 				4A6799141D23C07200A8E0F5 /* DialogViewController.h */,
 				4A6799151D23C07200A8E0F5 /* DialogViewController.m */,
+				4A5D25E61D348E0E00630029 /* CommitHeartViewController.h */,
+				4A5D25E71D348E0E00630029 /* CommitHeartViewController.m */,
 			);
 			path = "工单明细";
 			sourceTree = "<group>";
@@ -1492,6 +1503,9 @@
 				4A67991C1D23DDEB00A8E0F5 /* DialogTableViewCell.h */,
 				4A67991D1D23DDEB00A8E0F5 /* DialogTableViewCell.m */,
 				4A67991E1D23DDEB00A8E0F5 /* DialogTableViewCell.xib */,
+				4A5D25E11D347F6300630029 /* CSMainTableViewCell.h */,
+				4A5D25E21D347F6300630029 /* CSMainTableViewCell.m */,
+				4A5D25E31D347F6300630029 /* CSMainTableViewCell.xib */,
 			);
 			name = "爱服务厂商版";
 			sourceTree = "<group>";
@@ -1924,6 +1938,7 @@
 				4A64240A1D19396600F26BA9 /* ChargebackTableViewCell.xib in Resources */,
 				4A64240B1D19396600F26BA9 /* Push Config.plist in Resources */,
 				4A4F99F51D2D016200374F9B /* HYQiHei-55S.otf in Resources */,
+				4A5D25E51D347F6300630029 /* CSMainTableViewCell.xib in Resources */,
 				4A4954641D28B55B00E05868 /* AlipaySDK.bundle in Resources */,
 				4A64240C1D19396600F26BA9 /* ServiceTypeTableViewCell.xib in Resources */,
 				4A64240E1D19396600F26BA9 /* Assets.xcassets in Resources */,
@@ -2124,6 +2139,7 @@
 				4A4BD2A81CB8D61C009DA0B9 /* SDCollectionViewCell.m in Sources */,
 				4A4BD2DA1CB8D903009DA0B9 /* UIImageView+HighlightedWebCache.m in Sources */,
 				4A4BD3271CB8F812009DA0B9 /* View+MASAdditions.m in Sources */,
+				4A5D25E81D348E0E00630029 /* CommitHeartViewController.m in Sources */,
 				4A4EDB721CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.m in Sources */,
 				4A4BD2FC1CB8F5C2009DA0B9 /* LoginViewController.m in Sources */,
 				4A4BD2D21CB8D903009DA0B9 /* SDWebImageDownloader.m in Sources */,
@@ -2208,6 +2224,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A5D25E91D34C73500630029 /* CommitHeartViewController.m in Sources */,
+				4A5D25E41D347F6300630029 /* CSMainTableViewCell.m in Sources */,
 				4A6C3EA91D333918004E4C9F /* AddMoneyDetailViewController.m in Sources */,
 				4A67991A1D23C4FA00A8E0F5 /* DialogViewController.m in Sources */,
 				4A67991B1D23C4FA00A8E0F5 /* DialogAnimation.m in Sources */,
