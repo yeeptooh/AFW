@@ -470,11 +470,9 @@ UITextFieldDelegate
     NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=getlist&comid=%ld&uid=%ld&state=-1&page=%ld&query=&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)self.page,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
     self.manager.requestSerializer.timeoutInterval = 5;
     
-    
     [self.manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         [self.activityView stopAnimating];
-        
         for (NSDictionary *dic in responseObject[@"task"]) {
             OrderModel *ordelModel = [OrderModel orderFromDictionary:dic];
             [weakSelf.dicList addObject:ordelModel];
@@ -623,8 +621,11 @@ UITextFieldDelegate
     }else{
         self.orderModel = self.searchResultList[indexPath.row];
     }
+    
     detailVC.ID = self.orderModel.ID;
     detailVC.state = [self.orderModel.state integerValue];
+    
+//    NSLog(@"%@",@(detailVC.state));
     
     detailVC.name = self.orderModel.name;
     detailVC.phone = self.orderModel.phone;

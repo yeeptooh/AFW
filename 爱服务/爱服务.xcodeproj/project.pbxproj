@@ -111,6 +111,12 @@
 		4A5D25E51D347F6300630029 /* CSMainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A5D25E31D347F6300630029 /* CSMainTableViewCell.xib */; };
 		4A5D25E81D348E0E00630029 /* CommitHeartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5D25E71D348E0E00630029 /* CommitHeartViewController.m */; };
 		4A5D25E91D34C73500630029 /* CommitHeartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5D25E71D348E0E00630029 /* CommitHeartViewController.m */; };
+		4A62D1EA1D35D95A009A80C3 /* CSDetailTaskTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A62D1E81D35D95A009A80C3 /* CSDetailTaskTableViewCell.m */; };
+		4A62D1EB1D35D95A009A80C3 /* CSDetailTaskTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A62D1E91D35D95A009A80C3 /* CSDetailTaskTableViewCell.xib */; };
+		4A62D1EE1D3616EB009A80C3 /* DispatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A62D1ED1D3616EB009A80C3 /* DispatchViewController.m */; };
+		4A62D1EF1D361900009A80C3 /* DispatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A62D1ED1D3616EB009A80C3 /* DispatchViewController.m */; };
+		4A62D1F31D361B38009A80C3 /* DispatchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A62D1F11D361B38009A80C3 /* DispatchTableViewCell.m */; };
+		4A62D1F41D361B38009A80C3 /* DispatchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A62D1F21D361B38009A80C3 /* DispatchTableViewCell.xib */; };
 		4A64236F1D19396600F26BA9 /* PhoneNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5229E11CBCA75B00DD2D9C /* PhoneNumberViewController.m */; };
 		4A6423701D19396600F26BA9 /* RechargeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5274661D113A7D00B056C6 /* RechargeViewController.m */; };
 		4A6423711D19396600F26BA9 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6973691CBB3DB3002A036C /* RegisterViewController.m */; };
@@ -591,6 +597,14 @@
 		4A5D25E31D347F6300630029 /* CSMainTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSMainTableViewCell.xib; sourceTree = "<group>"; };
 		4A5D25E61D348E0E00630029 /* CommitHeartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommitHeartViewController.h; sourceTree = "<group>"; };
 		4A5D25E71D348E0E00630029 /* CommitHeartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommitHeartViewController.m; sourceTree = "<group>"; };
+		4A62D1E71D35D95A009A80C3 /* CSDetailTaskTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSDetailTaskTableViewCell.h; sourceTree = "<group>"; };
+		4A62D1E81D35D95A009A80C3 /* CSDetailTaskTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSDetailTaskTableViewCell.m; sourceTree = "<group>"; };
+		4A62D1E91D35D95A009A80C3 /* CSDetailTaskTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSDetailTaskTableViewCell.xib; sourceTree = "<group>"; };
+		4A62D1EC1D3616EB009A80C3 /* DispatchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DispatchViewController.h; sourceTree = "<group>"; };
+		4A62D1ED1D3616EB009A80C3 /* DispatchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DispatchViewController.m; sourceTree = "<group>"; };
+		4A62D1F01D361B38009A80C3 /* DispatchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DispatchTableViewCell.h; sourceTree = "<group>"; };
+		4A62D1F11D361B38009A80C3 /* DispatchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DispatchTableViewCell.m; sourceTree = "<group>"; };
+		4A62D1F21D361B38009A80C3 /* DispatchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DispatchTableViewCell.xib; sourceTree = "<group>"; };
 		4A64241D1D19396600F26BA9 /* 爱服务厂商版.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "爱服务厂商版.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A64245B1D194D8C00F26BA9 /* AddOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddOrderViewController.h; sourceTree = "<group>"; };
 		4A64245C1D194D8C00F26BA9 /* AddOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddOrderViewController.m; sourceTree = "<group>"; };
@@ -1506,6 +1520,12 @@
 				4A5D25E11D347F6300630029 /* CSMainTableViewCell.h */,
 				4A5D25E21D347F6300630029 /* CSMainTableViewCell.m */,
 				4A5D25E31D347F6300630029 /* CSMainTableViewCell.xib */,
+				4A62D1E71D35D95A009A80C3 /* CSDetailTaskTableViewCell.h */,
+				4A62D1E81D35D95A009A80C3 /* CSDetailTaskTableViewCell.m */,
+				4A62D1E91D35D95A009A80C3 /* CSDetailTaskTableViewCell.xib */,
+				4A62D1F01D361B38009A80C3 /* DispatchTableViewCell.h */,
+				4A62D1F11D361B38009A80C3 /* DispatchTableViewCell.m */,
+				4A62D1F21D361B38009A80C3 /* DispatchTableViewCell.xib */,
 			);
 			name = "爱服务厂商版";
 			sourceTree = "<group>";
@@ -1739,6 +1759,8 @@
 				4A671C7B1CD0C94600F70176 /* RefuseReasonViewController.m */,
 				4A65B7D21CF82AE400331CD2 /* MapViewController.h */,
 				4A65B7D31CF82AE400331CD2 /* MapViewController.m */,
+				4A62D1EC1D3616EB009A80C3 /* DispatchViewController.h */,
+				4A62D1ED1D3616EB009A80C3 /* DispatchViewController.m */,
 			);
 			path = "按钮跳转控制器";
 			sourceTree = "<group>";
@@ -1938,12 +1960,14 @@
 				4A64240A1D19396600F26BA9 /* ChargebackTableViewCell.xib in Resources */,
 				4A64240B1D19396600F26BA9 /* Push Config.plist in Resources */,
 				4A4F99F51D2D016200374F9B /* HYQiHei-55S.otf in Resources */,
+				4A62D1F41D361B38009A80C3 /* DispatchTableViewCell.xib in Resources */,
 				4A5D25E51D347F6300630029 /* CSMainTableViewCell.xib in Resources */,
 				4A4954641D28B55B00E05868 /* AlipaySDK.bundle in Resources */,
 				4A64240C1D19396600F26BA9 /* ServiceTypeTableViewCell.xib in Resources */,
 				4A64240E1D19396600F26BA9 /* Assets.xcassets in Resources */,
 				4A64240F1D19396600F26BA9 /* MainTableViewCell.xib in Resources */,
 				4A6424101D19396600F26BA9 /* MJRefresh.bundle in Resources */,
+				4A62D1EB1D35D95A009A80C3 /* CSDetailTaskTableViewCell.xib in Resources */,
 				4A6424111D19396600F26BA9 /* PayTableViewCell.xib in Resources */,
 				4A6424121D19396600F26BA9 /* AssessTableViewCell.xib in Resources */,
 				4A6424131D19396600F26BA9 /* MoneyTableViewCell.xib in Resources */,
@@ -2126,6 +2150,7 @@
 				4A7749911CC09DC8008B9611 /* ChargebackTableViewCell.m in Sources */,
 				4AF52EB61CC4BEC600E25FC4 /* HYBModalTransition.m in Sources */,
 				4A64A1051D22298A00A3DC7C /* CityViewController.m in Sources */,
+				4A62D1EE1D3616EB009A80C3 /* DispatchViewController.m in Sources */,
 				4A4BD2DB1CB8D903009DA0B9 /* UIImageView+WebCache.m in Sources */,
 				4A6973711CBB4D03002A036C /* PartsRequestViewController.m in Sources */,
 				4A4BD3021CB8F716009DA0B9 /* UserModel.m in Sources */,
@@ -2224,6 +2249,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A62D1EF1D361900009A80C3 /* DispatchViewController.m in Sources */,
 				4A5D25E91D34C73500630029 /* CommitHeartViewController.m in Sources */,
 				4A5D25E41D347F6300630029 /* CSMainTableViewCell.m in Sources */,
 				4A6C3EA91D333918004E4C9F /* AddMoneyDetailViewController.m in Sources */,
@@ -2294,6 +2320,7 @@
 				4A6423A21D19396600F26BA9 /* base64.m in Sources */,
 				4A6423A31D19396600F26BA9 /* DismissAnimation.m in Sources */,
 				4A6423A41D19396600F26BA9 /* MJRefreshFooter.m in Sources */,
+				4A62D1F31D361B38009A80C3 /* DispatchTableViewCell.m in Sources */,
 				4A6423A51D19396600F26BA9 /* MJRefreshConst.m in Sources */,
 				4A6423A61D19396600F26BA9 /* AFURLSessionManager.m in Sources */,
 				4A6423A71D19396600F26BA9 /* UIView+SDExtension.m in Sources */,
@@ -2365,6 +2392,7 @@
 				4A6423E31D19396600F26BA9 /* OrderModel.m in Sources */,
 				4A6423E41D19396600F26BA9 /* SDWebImageCompat.m in Sources */,
 				4A6423E51D19396600F26BA9 /* TAAnimatedDotView.m in Sources */,
+				4A62D1EA1D35D95A009A80C3 /* CSDetailTaskTableViewCell.m in Sources */,
 				4A6423E61D19396600F26BA9 /* ZDDModalTransition.m in Sources */,
 				4A6423E71D19396600F26BA9 /* MBProgressHUD.m in Sources */,
 				4A6423E81D19396600F26BA9 /* ShareAnimation.m in Sources */,

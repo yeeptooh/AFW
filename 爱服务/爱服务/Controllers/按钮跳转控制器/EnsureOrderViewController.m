@@ -147,7 +147,7 @@ UIViewControllerTransitioningDelegate
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [successHUD hideAnimated:YES];
             [successHUD removeFromSuperViewOnHide];
-            AcceptViewController *parentView = (AcceptViewController *)[(UINavigationController *)[((UITabBarController *)[weakSelf presentingViewController] ) selectedViewController] topViewController];
+            AcceptViewController *parentView = (AcceptViewController *)[(UINavigationController *)[((UITabBarController *)[weakSelf presentingViewController]) selectedViewController] topViewController];
 
             [weakSelf dismissViewControllerAnimated:YES completion:^{
                 [parentView.navigationController popToRootViewControllerAnimated:YES];

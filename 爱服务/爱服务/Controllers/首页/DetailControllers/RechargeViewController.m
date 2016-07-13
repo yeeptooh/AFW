@@ -63,7 +63,7 @@ static NSInteger i = 0;
     [self setNaviTitle];
     
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMoney:) name:kUpdateMoney object:nil];
+    
     
 }
 

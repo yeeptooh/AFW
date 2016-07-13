@@ -24,6 +24,8 @@
 #define HomeURL @"http://192.168.1.228:90/forapp2/"
 
 #endif
+#define subHomeURL @"http://i.51ifw.com/"
+//#define subHomeURL @"http://192.168.1.228:89/"
 //13424596154
 //123456
 
