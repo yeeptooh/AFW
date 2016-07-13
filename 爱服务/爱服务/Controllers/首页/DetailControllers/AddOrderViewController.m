@@ -10,11 +10,12 @@
 #import "UserDetailTableView.h"
 #import "ProductDetailTableView.h"
 #import "BusinessDetailTableView.h"
-
+#import "DetailViewController.h"
 
 #import "AFNetworking.h"
 #import "UserModel.h"
 #import "MBProgressHUD.h"
+#import "OrderModel.h"
 
 @interface AddOrderViewController ()
 
@@ -43,7 +44,7 @@
 
 @property (nonatomic, strong) NSString *fromUserName;
 
-
+@property (nonatomic, strong) OrderModel *orderModel;
 @end
 
 @implementation AddOrderViewController
@@ -437,9 +438,10 @@
         return ;
     }
     
-    
-    
-    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.minSize = CGSizeMake(100, 100);
+    hud.label.font = font(14);
     
     
     UserModel *userModel = [UserModel readUserModel];
@@ -483,30 +485,63 @@
                              @"from_user_type":userModel.userType,
                              @"handler_id":@(userModel.uid)
                              };
-    NSLog(@"%@",params);
     
     [manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
         if ([responseObject[@"ret"] integerValue] == 1) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kBadgeValueChanged object:nil];
-            MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.view];
-            hud.mode = MBProgressHUDModeText;
-            hud.label.text = @"下单成功";
-            CGFloat size;
-            if (iPhone4_4s || iPhone5_5s) {
-                size = 14;
-            }else {
-                size = 16;
-            }
-            hud.label.font = font(size);
-            [self.view addSubview:hud];
-            [hud showAnimated:YES];
+            MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+            UIImage *image = [[UIImage imageNamed:@"Checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+            hud.customView = imageView;
+            hud.mode = MBProgressHUDModeCustomView;
+            hud.label.text = NSLocalizedString(@"下单成功", @"HUD completed title");
+            [hud hideAnimated:YES afterDelay:0.75f];
+            [hud removeFromSuperViewOnHide];
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.75 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [hud hideAnimated:YES];
-                [hud removeFromSuperViewOnHide];
                 
-                [self.navigationController popViewControllerAnimated:YES];
-                
+                AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+                NSString *url = [NSString stringWithFormat:@"%@/Task.ashx?action=gettaskbyid&id=%@",HomeURL,responseObject[@"msg"]];
+                [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                    self.orderModel = [OrderModel orderFromDictionary:responseObject];
+                    NSLog(@"%@",responseObject);
+                    DetailViewController *detailVC = [[DetailViewController alloc] init];
+                    detailVC.fromFuck = 1;
+                    detailVC.hidesBottomBarWhenPushed = YES;
+                    detailVC.ID = self.orderModel.ID;
+                    detailVC.state = [self.orderModel.state integerValue];
+                    
+                    detailVC.name = self.orderModel.name;
+                    detailVC.phone = self.orderModel.phone;
+                    detailVC.from = [NSString stringWithFormat:@"来源：%@",self.orderModel.fromUserName];
+                    detailVC.fromPhone = [NSString stringWithFormat:@"厂商电话：%@",self.orderModel.fromUserPhone];
+                    detailVC.price = [NSString stringWithFormat:@"价格：%@",self.orderModel.price];
+                    detailVC.location = self.orderModel.location;
+                    
+                    detailVC.productType = self.orderModel.productType;
+                    detailVC.model = self.orderModel.model;
+                    detailVC.buyDate = self.orderModel.buyDate;
+                    detailVC.productCode = self.orderModel.productCode;
+                    detailVC.orderCode = self.orderModel.orderCode;
+                    detailVC.inOut = self.orderModel.inOut;
+                    
+                    detailVC.serviceType = self.orderModel.serviceType;
+                    detailVC.appointment = self.orderModel.appointment;
+                    detailVC.servicePs = self.orderModel.postScript;
+                    detailVC.chargeBackContent = self.orderModel.chargeBackContent;
+                    
+                    detailVC.fromUserID = self.orderModel.FromUserID;
+                    detailVC.fromUserName = self.orderModel.fromUserName;
+                    detailVC.toUserID = self.orderModel.ToUserID;
+                    detailVC.toUserName = self.orderModel.ToUserName;
+                    detailVC.BuyerFullAddress_Incept = self.orderModel.BuyerFullAddress_Incept;
+                    
+                    [self.navigationController pushViewController:detailVC animated:YES];
+                    
+                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                    
+                }];
                 
             });
             

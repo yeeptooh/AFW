@@ -8,6 +8,7 @@
 
 #import "DetailPageBaseViewController.h"
 #import "DetailTaskPlanTableViewCell.h"
+#import "CSDetailTaskTableViewCell.h"
 #import "ProductTableViewCell.h"
 #import "ServiceTypeTableViewCell.h"
 #import "ChargebackTableViewCell.h"
@@ -15,6 +16,9 @@
 #import "AssessTableViewCell.h"
 
 @interface DetailViewController : DetailPageBaseViewController
+
+@property (nonatomic, assign) NSInteger fromFuck;
+
 @property (nonatomic, assign) NSInteger flag;
 
 @property (nonatomic, assign) NSInteger state;
@@ -58,7 +62,7 @@
 
 @property (nonatomic, strong) NSString *BuyerFullAddress_Incept;
 
-
+- (void)backLastView:(UIBarButtonItem *)sender;
 
 
 @end

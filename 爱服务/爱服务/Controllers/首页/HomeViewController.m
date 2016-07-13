@@ -59,7 +59,7 @@ UINavigationControllerDelegate
 
 @end
 static NSInteger tag = 0;
-static NSInteger flag = 0;
+
 @implementation HomeViewController
 
 - (UIAlertController *)alertController {
@@ -149,7 +149,13 @@ static NSInteger flag = 0;
     
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"AVCan"];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(badgeValueChanged:) name:kBadgeValueChanged object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMoney:) name:kUpdateMoney object:nil];
+    
     self.timer = [NSTimer scheduledTimerWithTimeInterval:5 * 60 target:self selector:@selector(updateUI) userInfo:nil repeats:YES];
+}
+
+- (void)updateMoney:(NSNotification *)sender {
+    [self updateUI];
 }
 
 - (void)setBadgeValue {
@@ -1169,23 +1175,12 @@ static NSInteger flag = 0;
         
     }else if (sender.tag == 1011) {
         
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-        hud.mode = MBProgressHUDModeText;
-        hud.label.text = @"敬请期待";
-        hud.label.font = font(14);
-        
-        [hud hideAnimated:YES afterDelay:1.2];
-        
-//        HeartProtectViewController *heartVC = [[HeartProtectViewController alloc] init];
-//        heartVC.hidesBottomBarWhenPushed = YES;
-//        [self.navigationController pushViewController:heartVC animated:YES];
+        self.flag = YES;
+        HeartProtectViewController *heartVC = [[HeartProtectViewController alloc] init];
+        heartVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:heartVC animated:YES];
         
     }else if (sender.tag == 1012) {
-        if (flag == 1) {
-            flag = 0;
-            return;
-        }
-        flag = 1;
         
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
         hud.mode = MBProgressHUDModeIndeterminate;
@@ -1223,14 +1218,14 @@ static NSInteger flag = 0;
                 gatherVC.imageView2.image = [UIImage imageWithData:data];
                 
             }
-            flag = 0;
+            
             MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
             
             [hud hideAnimated:YES];
             [hud removeFromSuperViewOnHide];
             [self.navigationController pushViewController:gatherVC animated:YES];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            flag = 0;
+            
             MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
             UIImage *image = [[UIImage imageNamed:@"Checkerror"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
             UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
@@ -1413,7 +1408,7 @@ static NSInteger flag = 0;
 
 
 - (void) dealloc {
-    flag = 0;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     NSLog(@"HomeVC dealloc");
 }
 @end

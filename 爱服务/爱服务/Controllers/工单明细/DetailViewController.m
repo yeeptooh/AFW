@@ -15,23 +15,26 @@
 #import "DatePickerViewController.h"
 #import "DialogViewController.h"
 
-#import "ButtonPresentAnimation.h"
-#import "ButtonDismissAnimation.h"
-
 #import "CompleteButtonViewController.h"
 #import "ChargeBackViewController.h"
-
 #import "RefuseViewController.h"
 #import "AcceptViewController.h"
+#import "DispatchViewController.h"
 
 #import "DialogAnimation.h"
-
+#import "ButtonPresentAnimation.h"
+#import "ButtonDismissAnimation.h"
 
 #import "MBProgressHUD.h"
 #import <AVFoundation/AVFoundation.h>
 #import <MapKit/MapKit.h>
 //#define ButtonHeight 35
+#if Environment_Mode == 1
 #define BaseInfoViewHeight 150
+#elif Environment_Mode == 2
+#define BaseInfoViewHeight 144
+#endif
+
 #define SectionHeaderHeight 32
 @interface DetailViewController ()
 <
@@ -40,15 +43,28 @@ UITableViewDataSource,
 UIViewControllerTransitioningDelegate
 >
 @property (nonatomic, assign) CLLocationCoordinate2D coordinate;
+#if Environment_Mode == 1
 @property (nonatomic, strong) DetailTaskPlanTableViewCell *baseDetailInfoCell;
+#elif Environment_Mode == 2
+@property (nonatomic, strong) CSDetailTaskTableViewCell *baseDetailInfoCell;
+#endif
+
 @property (nonatomic, strong) ProductTableViewCell *cell;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIAlertController *alertController;
 
 @property (nonatomic, strong) NSMutableArray *diaLogList;
+@property (nonatomic, strong) NSMutableArray *CSList;
 @end
 
 @implementation DetailViewController
+
+- (NSMutableArray *)CSList {
+    if (!_CSList) {
+        _CSList = [NSMutableArray array];
+    }
+    return _CSList;
+}
 
 - (NSMutableArray *)diaLogList {
     if (!_diaLogList) {
@@ -109,47 +125,59 @@ UIViewControllerTransitioningDelegate
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.automaticallyAdjustsScrollViewInsets = NO;
-    
     self.view.backgroundColor = [UIColor whiteColor];
     self.tableView.backgroundColor = [UIColor whiteColor];
     [self setNaviTitle];
     [self setBaseInfoView];
-
     [self setBottomButton];
     
 }
 
 - (void)setBaseInfoView {
+#if Environment_Mode == 1
     self.baseDetailInfoCell = [[[NSBundle mainBundle] loadNibNamed:@"DetailTaskPlanTableViewCell" owner:self options:nil]lastObject];
     self.baseDetailInfoCell.frame = CGRectMake(0, 0, Width, BaseInfoViewHeight);
     self.baseDetailInfoCell.nameLabel.text = self.name;
-
+    
     self.baseDetailInfoCell.taskId = [NSString stringWithFormat:@"%@",@(self.ID)];
     
     self.baseDetailInfoCell.phone = self.phone;
-#if Environment_Mode == 1
-    [self.baseDetailInfoCell.dialogButton addTarget:self action:@selector(dialogButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-#elif Environment_Mode == 2
-    self.baseDetailInfoCell.dialogButton.hidden = YES;
-#endif
     
+    [self.baseDetailInfoCell.dialogButton addTarget:self action:@selector(dialogButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
     [self.baseDetailInfoCell.mapButton addTarget:self action:@selector(mapButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
     self.baseDetailInfoCell.phoneLabel.text = self.phone;
     self.baseDetailInfoCell.fromLabel.text = self.from;
     self.baseDetailInfoCell.fromPhoneLabel.text = self.fromPhone;
-#if Environment_Mode == 1
+    
     self.baseDetailInfoCell.priceLabel.text = self.price;
-#elif Environment_Mode == 2
-    self.baseDetailInfoCell.priceLabel.hidden = YES;
-#endif
     
     [self.baseDetailInfoCell.locationButton setTitle:self.location forState:UIControlStateNormal];
     NSLog(@"%@",self.location);
     [self.baseDetailInfoCell.locationButton addTarget:self action:@selector(locationButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:self.baseDetailInfoCell];
+#elif Environment_Mode == 2
+    self.baseDetailInfoCell = [[[NSBundle mainBundle] loadNibNamed:@"CSDetailTaskTableViewCell" owner:self options:nil]lastObject];
+    self.baseDetailInfoCell.frame = CGRectMake(0, 0, Width, BaseInfoViewHeight);
+    self.baseDetailInfoCell.nameLabel.text = self.name;
+    self.baseDetailInfoCell.taskId = [NSString stringWithFormat:@"%@",@(self.ID)];
+    self.baseDetailInfoCell.phone = self.phone;
+    
+    [self.baseDetailInfoCell.mapButton addTarget:self action:@selector(mapButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.baseDetailInfoCell.phoneLabel.text = self.phone;
+    self.baseDetailInfoCell.fromLabel.text = self.from;
+    self.baseDetailInfoCell.fromPhoneLabel.text = self.fromPhone;
+    
+    [self.baseDetailInfoCell.locationButton setTitle:self.location forState:UIControlStateNormal];
+    
+    [self.baseDetailInfoCell.locationButton addTarget:self action:@selector(locationButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:self.baseDetailInfoCell];
+#endif
+    
     
 }
 
@@ -307,7 +335,7 @@ UIViewControllerTransitioningDelegate
     }else {
         height = 44;
     }
-    //    height = (Height - StatusBarAndNavigationBarHeight)/12;
+
     if (self.state == 4) {
         
         if (self.flag == 1) {
@@ -381,7 +409,56 @@ UIViewControllerTransitioningDelegate
         height = 44;
     }
     
-    if (self.state == 4) {
+    if (self.state == 1) {
+        UIButton *dispatchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        dispatchButton.frame = CGRectMake(5, Height - StatusBarAndNavigationBarHeight - height, Width/2 - 10, height);
+        dispatchButton.backgroundColor = BlueColor;
+        dispatchButton.layer.cornerRadius = 3;
+        dispatchButton.layer.masksToBounds = YES;
+        [dispatchButton setTitle:@"派工" forState:UIControlStateNormal];
+        [dispatchButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
+        [dispatchButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateHighlighted];
+        [dispatchButton addTarget:self action:@selector(dispatchButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:dispatchButton];
+        
+        
+        UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        cancelButton.frame = CGRectMake(Width - 5 - Width/2 + 10, Height - StatusBarAndNavigationBarHeight - height, Width/2 - 10, height);
+        cancelButton.backgroundColor = BlueColor;
+        cancelButton.layer.cornerRadius = 3;
+        cancelButton.layer.masksToBounds = YES;
+        [cancelButton setTitle:@"撤销" forState:UIControlStateNormal];
+        [cancelButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
+        [cancelButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateHighlighted];
+        [cancelButton addTarget:self action:@selector(cancelButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:cancelButton];
+        
+    }else if (self.state == 2) {
+        
+        UIButton *dispatchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        dispatchButton.frame = CGRectMake(5, Height - StatusBarAndNavigationBarHeight - height, Width/2 - 10, height);
+        dispatchButton.backgroundColor = BlueColor;
+        dispatchButton.layer.cornerRadius = 3;
+        dispatchButton.layer.masksToBounds = YES;
+        [dispatchButton setTitle:@"付款" forState:UIControlStateNormal];
+        [dispatchButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
+        [dispatchButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateHighlighted];
+        [dispatchButton addTarget:self action:@selector(payButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:dispatchButton];
+        
+        
+        UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        cancelButton.frame = CGRectMake(Width - 5 - Width/2 + 10, Height - StatusBarAndNavigationBarHeight - height, Width/2 - 10, height);
+        cancelButton.backgroundColor = BlueColor;
+        cancelButton.layer.cornerRadius = 3;
+        cancelButton.layer.masksToBounds = YES;
+        [cancelButton setTitle:@"撤销" forState:UIControlStateNormal];
+        [cancelButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
+        [cancelButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateHighlighted];
+        [cancelButton addTarget:self action:@selector(cancelButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:cancelButton];
+        
+    }else if (self.state == 4) {
         
         if (self.flag == 1) {
    
@@ -406,10 +483,97 @@ UIViewControllerTransitioningDelegate
     
 }
 
+- (void)payButtonClicked {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateMoney object:nil];
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.minSize = CGSizeMake(110, 100);
+    hud.label.font = font(14);
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=pay",HomeURL];
+    NSDictionary *params =@{@"taskId":@(self.ID)};
+    URL = [URL stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    
+    [manager POST:URL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if ([responseObject[@"ret"] integerValue] == 1) {
+            MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+            UIImage *image = [[UIImage imageNamed:@"Checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+            hud.customView = imageView;
+            hud.mode = MBProgressHUDModeCustomView;
+            hud.label.text = @"付款成功";
+            [hud hideAnimated:YES afterDelay:1.25f];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        }
+        
+        if ([responseObject[@"ret"] integerValue] == 0) {
+            MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+            
+            hud.mode = MBProgressHUDModeText;
+            hud.detailsLabel.text = [NSString stringWithFormat:@"%@",responseObject[@"msg"]];
+            hud.detailsLabel.font = font(14);
+            [hud hideAnimated:YES afterDelay:1.25f];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@",error.userInfo);
+    }];
+    
+}
+
+- (void)dispatchButtonClicked {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateMoney object:nil];
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.minSize = CGSizeMake(110, 100);
+    hud.label.font = font(14);
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    UserModel *userModel = [UserModel readUserModel];
+    
+    NSString *URL = [NSString stringWithFormat:@"%@Common.ashx?action=getassigner&taskId=%@&comId=%@",HomeURL,@(self.ID),@(userModel.comid)];
+    URL = [URL stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    [manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"%@",responseObject);
+        if (self.CSList.count != 0) {
+            [self.CSList removeAllObjects];
+        }
+        
+        for (NSDictionary *dic in responseObject) {
+            [self.CSList addObject:dic];
+        }
+
+        
+        MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+        [hud hideAnimated:YES];
+        DispatchViewController *dispatchVC = [[DispatchViewController alloc] init];
+        dispatchVC.List = self.CSList;
+        dispatchVC.taskId = [NSString stringWithFormat:@"%@",@(self.ID)];
+        dispatchVC.modalPresentationStyle = UIModalPresentationCustom;
+        dispatchVC.transitioningDelegate = self;
+        [self presentViewController:dispatchVC animated:YES completion:nil];
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@",error.userInfo);
+        MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+        UIImage *image = [[UIImage imageNamed:@"Checkerror"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+        hud.customView = imageView;
+        hud.mode = MBProgressHUDModeCustomView;
+        hud.label.text = NSLocalizedString(@"请检查网络", @"HUD completed title");
+        [hud hideAnimated:YES afterDelay:0.75f];
+        [hud removeFromSuperViewOnHide];
+    }];
+    
+    
+}
+
 - (void)cancelButtonClicked {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
-    
+    hud.minSize = CGSizeMake(100, 100);
+    hud.label.font = font(14);
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 //    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
@@ -428,9 +592,28 @@ UIViewControllerTransitioningDelegate
     [manager POST:URL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSLog(@"%@",responseObject);
+        MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+        UIImage *image = [[UIImage imageNamed:@"Checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+        hud.customView = imageView;
+        hud.mode = MBProgressHUDModeCustomView;
+        hud.label.text = NSLocalizedString(@"撤销成功", @"HUD completed title");
+        [hud hideAnimated:YES afterDelay:0.75f];
+        [hud removeFromSuperViewOnHide];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.75 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.navigationController popViewControllerAnimated:YES];
+        });
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error.userInfo);
+        MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+        UIImage *image = [[UIImage imageNamed:@"Checkerror"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+        hud.customView = imageView;
+        hud.mode = MBProgressHUDModeCustomView;
+        hud.label.text = NSLocalizedString(@"撤销失败", @"HUD completed title");
+        [hud hideAnimated:YES afterDelay:0.75f];
+        [hud removeFromSuperViewOnHide];
     }];
     
 }
@@ -752,7 +935,7 @@ UIViewControllerTransitioningDelegate
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
 //    NSLog(@"%@",[presented class]);
-    if ([presented isKindOfClass:[DialogViewController class]]) {
+    if ([presented isKindOfClass:[DialogViewController class]] || [presented isKindOfClass:[DispatchViewController class]]) {
         return [DialogAnimation dialogAnimationWithType:DialogAnimationTypePresent duration:0.75];
     }else {
         return [[ButtonPresentAnimation alloc]init];
@@ -761,7 +944,7 @@ UIViewControllerTransitioningDelegate
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
-    if ([dismissed isKindOfClass:[DialogViewController class]]) {
+    if ([dismissed isKindOfClass:[DialogViewController class]] || [dismissed isKindOfClass:[DispatchViewController class]]) {
         return [DialogAnimation dialogAnimationWithType:DialogAnimationTypeDismiss duration:0.75];
     }else {
         return [[ButtonDismissAnimation alloc]init];
@@ -802,5 +985,18 @@ UIViewControllerTransitioningDelegate
     }
     
 }
+#if Environment_Mode == 1
+#elif Environment_Mode == 2
+- (void)backLastView:(UIBarButtonItem *)sender {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    if (self.fromFuck == 1) {
+        [self.navigationController popToViewController:self.navigationController.viewControllers[0] animated:YES];
+    }else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
+}
+#endif
+
 
 @end

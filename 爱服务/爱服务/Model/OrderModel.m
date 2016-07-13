@@ -27,7 +27,7 @@
         
         self.ID = [dictionary[@"ID"] integerValue];
         
-
+#if Environment_Mode == 1
         NSString *timeString = dictionary[@"AddTime"];
         
         NSRange range = [timeString rangeOfString:@"("];
@@ -35,7 +35,6 @@
         NSInteger loc = range.location;
         NSInteger len = range1.location - range.location;
         NSString *newtimeString = [timeString substringWithRange:NSMakeRange(loc + 1, len - 1)];
-        
         // 时间戳转时间
         double lastactivityInterval = [newtimeString doubleValue];
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -44,6 +43,7 @@
         [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
         [formatter setDateFormat:@"yyyy年MM月dd日"];
         NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:lastactivityInterval/1000];
+        
         NSDate *date = [NSDate date];
         NSTimeZone *zone = [NSTimeZone systemTimeZone];
         NSInteger interval = [zone secondsFromGMTForDate:date];
@@ -57,7 +57,8 @@
         NSString *AddTime = [NSString stringWithFormat:@"%@年%@月%@日",yearStr,@(month),@(day)];
         self.acceptDate = AddTime;
         
-        
+#elif Environment_Mode == 2
+#endif
         
         self.date = dictionary[@"ExpectantTimeStr"];
         self.serviceType = [NSString stringWithFormat:@"[%@]",dictionary[@"ServiceClassify"]];
