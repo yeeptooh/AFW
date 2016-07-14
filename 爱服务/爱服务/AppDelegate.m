@@ -28,22 +28,56 @@
 #import <AlipaySDK/AlipaySDK.h>
 
 #import "MBProgressHUD.h"
-
+#import <CoreLocation/CoreLocation.h>
 @interface AppDelegate ()
 
 <
 WeiboSDKDelegate,
 WXApiDelegate,
-TencentApiInterfaceDelegate
+TencentApiInterfaceDelegate,
+CLLocationManagerDelegate,
+UIAlertViewDelegate
 >
 
 @property (nonatomic, assign) NSInteger bitch;
+
+#if Environment_Mode == 1
+@property (nonatomic, strong) CLLocationManager *locationManager;
+@property (nonatomic, strong) UIAlertController *locationAlertController;
+@property (nonatomic, strong) UIAlertController *appLocationAlertController;
+@property (nonatomic, strong) NSTimer *updateLocationTimer;
+
+#elif Environment_Mode == 2
+#endif
+
 @end
 static NSString *jPushAppKey = @"832a598bcc7101ce08f1168d";
 static NSString *channel = @"App Store";
 static BOOL isProduction = FALSE;
 @implementation AppDelegate
 
+#if Environment_Mode == 1
+
+- (CLLocationManager *)locationManager {
+    if (!_locationManager) {
+        
+        _locationManager = [[CLLocationManager alloc] init];
+        if (iOSVerson >= 9.0) {
+            _locationManager.allowsBackgroundLocationUpdates = YES;
+        }
+        if (iOSVerson >= 8.0) {
+            [_locationManager requestAlwaysAuthorization];
+        }
+        CLLocationDistance distance = 10;
+        _locationManager.distanceFilter = distance;
+        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        _locationManager.delegate = self;
+        _locationManager.pausesLocationUpdatesAutomatically = NO;
+    }
+    return _locationManager;
+}
+#elif Environment_Mode == 2
+#endif
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
@@ -113,8 +147,111 @@ static BOOL isProduction = FALSE;
             advertisingIdentifier:advertisingId];
   
     
+    
+#if Environment_Mode == 1
+    
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"FirstLaunch"]) {
+        if (![CLLocationManager locationServicesEnabled]) {
+            
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"此手机的定位功能已禁用" message:@"请点击确定打开手机的定位功能" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            alertView.tag = 10000;
+            [alertView show];
+        }else if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedAlways) {
+            
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"此应用的定位功能已禁用" message:@"请点击确定打开应用的定位功能" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            alertView.tag = 10001;
+            [alertView show];
+            
+        }else {
+            [self.locationManager startUpdatingLocation];
+            self.updateLocationTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(startUpdatingLocationWithLocationManager) userInfo:nil repeats:YES];
+            
+        }
+        
+    }else {
+        [self.locationManager startUpdatingLocation];
+        self.updateLocationTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(startUpdatingLocationWithLocationManager) userInfo:nil repeats:YES];
+        
+    }
+    
+    
+#elif Environment_Mode == 2
+#endif
+    
+    
+
+    
+
     return YES;
 }
+
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView.tag == 10000) {
+        if (buttonIndex == 1) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"prefs:root=LOCATION_SERVICES"]];
+            
+        }else {
+
+        }
+    }else if (alertView.tag == 10001) {
+        if (buttonIndex == 1) {
+            
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+        }else {
+            
+        }
+    }
+}
+
+#if Environment_Mode == 1
+
+- (void)startUpdatingLocationWithLocationManager {
+    [self.locationManager startUpdatingLocation];
+    NSTimeInterval backgroundTimeRemanging = [[UIApplication sharedApplication] backgroundTimeRemaining];
+    NSLog(@"%f",backgroundTimeRemanging);
+}
+
+
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    switch (status) {
+        case kCLAuthorizationStatusDenied:
+        {
+            
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"canLocationService"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"此应用的定位功能已禁用" message:@"请点击确定打开应用的定位功能" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            alertView.tag = 10001;
+            [alertView show];
+        }
+            break;
+        case kCLAuthorizationStatusAuthorizedAlways:
+        {
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"canLocationService"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+            
+        default:
+        {
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"canLocationService"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+            break;
+    }
+}
+
+
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
+    CLLocation *location = [locations lastObject];
+    
+    NSLog(@"%@%@",@(location.coordinate.latitude), @(location.coordinate.longitude));
+    
+    [manager stopUpdatingLocation];
+}
+
+#elif Environment_Mode == 2
+#endif
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(nonnull NSData *)deviceToken {
     [JPUSHService registerDeviceToken:deviceToken];
@@ -291,13 +428,53 @@ static BOOL isProduction = FALSE;
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     HomeViewController *homeVC = [[HomeViewController alloc]init];
     [homeVC.timer setFireDate:[NSDate distantFuture]];
+    
+#if Environment_Mode == 1
+    BOOL canLocationService = [[NSUserDefaults standardUserDefaults] boolForKey:@"canLocationService"];
+    if (canLocationService) {
+        UIApplication *app = [UIApplication sharedApplication];
+        
+        __block UIBackgroundTaskIdentifier identifier;
+        
+        identifier = [app beginBackgroundTaskWithExpirationHandler:^{
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                if (identifier != UIBackgroundTaskInvalid) {
+                    
+                    identifier = UIBackgroundTaskInvalid;
+                    
+                }
+                
+            });
+            
+        }];
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                if (identifier != UIBackgroundTaskInvalid) {
+                    
+                    identifier = UIBackgroundTaskInvalid;
+                    
+                }
+                
+            });
+            
+        });
+    }
+    
+#elif Environment_Mode == 2
+#endif
+    
+
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -314,6 +491,7 @@ static BOOL isProduction = FALSE;
         
         [self checkNetWorking];
     }
+    
 }
 
 - (void)checkNetWorking {

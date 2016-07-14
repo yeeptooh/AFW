@@ -711,6 +711,7 @@ UIViewControllerTransitioningDelegate
         cbVC.ID = self.ID;
         [self.navigationController pushViewController:cbVC animated:YES];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"AVCan"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }else {
         AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
         if (status == AVAuthorizationStatusAuthorized) {

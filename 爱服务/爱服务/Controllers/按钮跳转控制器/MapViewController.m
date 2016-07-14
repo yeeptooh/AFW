@@ -8,7 +8,6 @@
 
 #import "MapViewController.h"
 #import <MapKit/MapKit.h>
-#import <CoreLocation/CoreLocation.h>
 #import "AFNetworking.h"
 #import "UserModel.h"
 #import "MBProgressHUD.h"
@@ -16,35 +15,22 @@
 
 @interface MapViewController ()
 <
-CLLocationManagerDelegate,
 MKMapViewDelegate
 >
-@property (nonatomic, strong) CLLocationManager *locationManager;
+
 @property (nonatomic, strong) MKMapView *mapView;
 @end
 
 @implementation MapViewController
 
-- (CLLocationManager *)locationManager {
-    if (!_locationManager) {
-        _locationManager = [[CLLocationManager alloc] init];
-    }
-    return _locationManager;
-}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNaviTitle];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    
-    self.locationManager.delegate = self;
-    if (iOSVerson > 8.0) {
-        [self.locationManager requestWhenInUseAuthorization];
-    }
-    self.locationManager.distanceFilter = 100;
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    [self.locationManager startUpdatingLocation];
+
     CGFloat height;
     if (iPhone4_4s || iPhone5_5s) {
         height = 35;

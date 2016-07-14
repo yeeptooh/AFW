@@ -79,8 +79,13 @@ static NSInteger number;
     if (!_session) {
         _session = [[AVCaptureSession alloc]init];
         [_session setSessionPreset:AVCaptureSessionPresetHigh];
-        [_session addInput:self.input];
-        [_session addOutput:self.output];
+        if ([_session canAddInput:self.input]) {
+            [_session addInput:self.input];
+        }
+        if ([_session canAddOutput:self.output]) {
+            [_session addOutput:self.output];
+        }
+        
     }
     return _session;
 }
@@ -559,25 +564,25 @@ static NSInteger number;
     number = 1;
     //验证码不是否必填
     
-//    if ([((UITextField *)[self.tableView viewWithTag:1005]).text isEqualToString:@""] || !((UITextField *)[self.tableView viewWithTag:1005]).text) {
-//        MBProgressHUD *successHUD = [[MBProgressHUD alloc]initWithView:self.tableView];
-//        successHUD.mode = MBProgressHUDModeText;
-//        successHUD.label.font = font(14);
-//        successHUD.label.text = @"请输入验证码";
-//        [self.tableView addSubview:successHUD];
-//        
-//        [successHUD showAnimated:YES];
-//        
-//        
-//        [successHUD hideAnimated:YES afterDelay:1.2];
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//            number = 0;
-//        });
-//        [successHUD removeFromSuperViewOnHide];
-//        //                [weakSelf.navigationController popToRootViewControllerAnimated:YES];
-//        
-//        return ;
-//    }
+    if ([((UITextField *)[self.tableView viewWithTag:1005]).text isEqualToString:@""] || !((UITextField *)[self.tableView viewWithTag:1005]).text) {
+        MBProgressHUD *successHUD = [[MBProgressHUD alloc]initWithView:self.tableView];
+        successHUD.mode = MBProgressHUDModeText;
+        successHUD.label.font = font(14);
+        successHUD.label.text = @"请输入验证码";
+        [self.tableView addSubview:successHUD];
+        
+        [successHUD showAnimated:YES];
+        
+        
+        [successHUD hideAnimated:YES afterDelay:1.2];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            number = 0;
+        });
+        [successHUD removeFromSuperViewOnHide];
+        //                [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+        
+        return ;
+    }
     
     
     

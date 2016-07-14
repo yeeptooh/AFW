@@ -85,8 +85,8 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<true/>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>为了更好的管理师傅的位置,我们将在应用中使用定位服务</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>HYQiHei-55S.otf</string>
@@ -94,6 +94,7 @@
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
+		<string>location</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
