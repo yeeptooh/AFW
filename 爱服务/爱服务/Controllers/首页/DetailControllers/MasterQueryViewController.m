@@ -152,9 +152,11 @@ WKUIDelegate
     
     NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
     NSArray *cookies =[NSHTTPCookie cookiesWithResponseHeaderFields:[response allHeaderFields] forURL:response.URL];
+    NSLog(@"cookies = %@",cookies);
     NSHTTPCookie *cookie = [cookies lastObject];
 
     self.cookieString = [NSMutableString stringWithFormat:@"%@=%@;",cookie.name,cookie.value];
+    NSLog(@"%@",self.cookieString);
     [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
     [self.request addValue:self.cookieString forHTTPHeaderField:@"Cookie"];
 

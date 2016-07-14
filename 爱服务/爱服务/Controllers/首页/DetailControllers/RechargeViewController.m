@@ -454,7 +454,12 @@ static NSInteger i = 0;
         NSString *ipAddress = [self getIPAddress];
         UserModel *userModel = [UserModel readUserModel];
         //userid  money  ip
+#if Environment_Mode == 1
         NSString *urlString   = [NSString stringWithFormat:@"%@Payment/WeiXin/Recharge.ashx?action=getwxpayment&userid=%@&money=%@&ip=%@",HomeURL,@(userModel.comid),totalFee,ipAddress];
+#elif Environment_Mode == 2
+        NSString *urlString   = [NSString stringWithFormat:@"%@Payment/WeiXin/Recharge.ashx?action=getwxpayment&userid=%@&money=%@&ip=%@",HomeURL,@(userModel.comid),totalFee,ipAddress];
+#endif
+        
         NSLog(@"%@",urlString);
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 //        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -467,7 +472,12 @@ static NSInteger i = 0;
                 PayReq *payReq = [[PayReq alloc] init];
                 
                 payReq.prepayId = responseObject[@"data"][@"prepayid"];
+#if Environment_Mode == 1
                 payReq.partnerId = @"1357569202";
+#elif Environment_Mode == 2
+                payReq.partnerId = @"1364622402";
+#endif
+                
                 payReq.nonceStr = responseObject[@"data"][@"noncestr"];
                 payReq.timeStamp = [responseObject[@"data"][@"timestamp"] intValue];
                 payReq.package = @"Sign=WXPay";

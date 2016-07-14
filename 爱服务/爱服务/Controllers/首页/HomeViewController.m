@@ -37,7 +37,7 @@
 #import "MasterQueryViewController.h"
 #import "AddMoneyDetailViewController.h"
 
-#import <CoreLocation/CoreLocation.h>
+
 #import <AVFoundation/AVFoundation.h>
 //#import "AddOrderViewController.h"
 
@@ -51,21 +51,23 @@ UINavigationControllerDelegate
 @property (nonatomic, strong) UIView *balanceView;
 @property (nonatomic, strong) MBProgressHUD *HUD;
 
-@property (nonatomic, strong) CLLocationManager *locationManager;
+
 @property (nonatomic, strong) UIAlertController *alertController;
 @property (nonatomic, strong) UIView *containerView;
 
 @property (nonatomic, assign, getter=isFlag) BOOL flag;
+
 
 @end
 static NSInteger tag = 0;
 
 @implementation HomeViewController
 
+
+
 - (UIAlertController *)alertController {
     if (!_alertController) {
         _alertController = [UIAlertController alertControllerWithTitle:@"此应用的相机功能已禁用" message:@"请点击确定打开应用的相机功能" preferredStyle:UIAlertControllerStyleAlert];
-        
         
         UIAlertAction *openAction = [UIAlertAction actionWithTitle:@"打开" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
@@ -152,11 +154,15 @@ static NSInteger tag = 0;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMoney:) name:kUpdateMoney object:nil];
     
     self.timer = [NSTimer scheduledTimerWithTimeInterval:5 * 60 target:self selector:@selector(updateUI) userInfo:nil repeats:YES];
+    
 }
+
+
 
 - (void)updateMoney:(NSNotification *)sender {
     [self updateUI];
 }
+
 
 - (void)setBadgeValue {
     UIViewController *receiveVC = [self.tabBarController viewControllers][1];
@@ -299,9 +305,9 @@ static NSInteger tag = 0;
     
     UIButton *phoneButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [phoneButton setImage:[UIImage imageNamed:@"msg_room_toolbar_media_fct_notrace_norm_0"] forState:UIControlStateNormal];
-
-    [phoneButton setImage:[UIImage imageNamed:@"msg_room_toolbar_media_fct_notrace_pres_0"] forState:UIControlStateHighlighted];
-    phoneButton.frame = CGRectMake(0, 0, Width/10, StatusBarAndNavigationBarHeight);
+    
+    
+    phoneButton.frame = CGRectMake(0, 0, Width/10, Width/10);
     [phoneButton addTarget:self action:@selector(phoneButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:phoneButton];
@@ -1076,7 +1082,9 @@ static NSInteger tag = 0;
             PartsRequestViewController *partsRequestVC = [[PartsRequestViewController alloc]init];
             partsRequestVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:partsRequestVC animated:YES];
-            
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"AVCan"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+
         }else {
             AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
             if (status == AVAuthorizationStatusAuthorized) {
@@ -1198,23 +1206,23 @@ static NSInteger tag = 0;
         NSString *url = [NSString stringWithFormat:@"%@uploadFile.ashx?action=loadimages&userId=%@",HomeURL, @(userModel.uid)];
         [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSLog(@"%@",responseObject);
+        
             
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
             NSLog(@"%@",dic);
             if (dic[@"wechatpay"] == 0) {
                 
             }else {
-                //i.51ifw.com
-                NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://i.51ifw.com", dic[@"wechatpay"]]]];
-//                NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://192.168.1.228:90", dic[@"wechatpay"]]]];
+ 
+                NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",subHomeURL, dic[@"wechatpay"]]]];
                 gatherVC.imageView1.image = [UIImage imageWithData:data];
                 
             }
             if (dic[@"alipay"] == 0) {
                 
             }else {
-                NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://i.51ifw.com", dic[@"alipay"]]]];
-//                NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://192.168.1.228:90", dic[@"alipay"]]]];
+
+                NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",subHomeURL, dic[@"alipay"]]]];
                 gatherVC.imageView2.image = [UIImage imageWithData:data];
                 
             }

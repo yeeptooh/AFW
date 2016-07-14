@@ -62,7 +62,7 @@
 
 @property (nonatomic, strong) NSString *BuyerFullAddress_Incept;
 
-- (void)backLastView:(UIBarButtonItem *)sender;
+
 
 
 @end
