@@ -708,7 +708,9 @@ UIViewControllerTransitioningDelegate
     
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"AVCan"]) {
         CompleteButtonViewController *cbVC = [[CompleteButtonViewController alloc]init];
+        cbVC.inOut = self.inOut;
         cbVC.ID = self.ID;
+        
         [self.navigationController pushViewController:cbVC animated:YES];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"AVCan"];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -717,6 +719,7 @@ UIViewControllerTransitioningDelegate
         if (status == AVAuthorizationStatusAuthorized) {
             
             CompleteButtonViewController *cbVC = [[CompleteButtonViewController alloc]init];
+            cbVC.inOut = self.inOut;
             cbVC.ID = self.ID;
             [self.navigationController pushViewController:cbVC animated:YES];
         }else {

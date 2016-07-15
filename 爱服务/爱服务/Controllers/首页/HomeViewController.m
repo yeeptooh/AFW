@@ -55,9 +55,6 @@ UINavigationControllerDelegate
 @property (nonatomic, strong) UIAlertController *alertController;
 @property (nonatomic, strong) UIView *containerView;
 
-@property (nonatomic, assign, getter=isFlag) BOOL flag;
-
-
 @end
 static NSInteger tag = 0;
 
@@ -196,27 +193,6 @@ static NSInteger tag = 0;
     }
 
 }
-
-- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    [viewController viewWillAppear:animated];
-    
-}
-
-
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-//    self.navigationController.navigationBar.barTintColor = color(30, 30, 30, 1);
-    if (self.isFlag) {
-        [self updateUI];
-        self.flag = NO;
-    }
-    
-    [self setBadgeValue];
-    
-}
-
-
 
 - (void)upDateNetWorking {
     
@@ -1177,14 +1153,14 @@ static NSInteger tag = 0;
         [self.navigationController pushViewController:withDrawVC animated:YES];
     }else if (sender.tag == 1010) {
         
-        self.flag = YES;
+
         RechargeViewController *rechargeVC = [[RechargeViewController alloc] init];
         rechargeVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:rechargeVC animated:YES];
         
     }else if (sender.tag == 1011) {
         
-        self.flag = YES;
+        
         HeartProtectViewController *heartVC = [[HeartProtectViewController alloc] init];
         heartVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:heartVC animated:YES];
@@ -1300,7 +1276,7 @@ static NSInteger tag = 0;
         
         
     }else if (sender.tag == 1007) {
-        self.flag = YES;
+        
         RechargeViewController *rechargeVC = [[RechargeViewController alloc] init];
         rechargeVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:rechargeVC animated:YES];
