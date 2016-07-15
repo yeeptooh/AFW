@@ -311,7 +311,7 @@ UIViewControllerTransitioningDelegate
 - (void)locationButtonClicked {
     
     ButtonViewController *buttonVC = [[ButtonViewController alloc]init];
-    buttonVC.modalTransitionStyle = UIModalPresentationCustom;
+    buttonVC.modalPresentationStyle = UIModalPresentationCustom;
     buttonVC.transitioningDelegate = self;
     buttonVC.text = self.baseDetailInfoCell.locationButton.titleLabel.text;
     buttonVC.ID = self.ID;
@@ -708,7 +708,9 @@ UIViewControllerTransitioningDelegate
     
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"AVCan"]) {
         CompleteButtonViewController *cbVC = [[CompleteButtonViewController alloc]init];
+        cbVC.inOut = self.inOut;
         cbVC.ID = self.ID;
+        
         [self.navigationController pushViewController:cbVC animated:YES];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"AVCan"];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -717,6 +719,7 @@ UIViewControllerTransitioningDelegate
         if (status == AVAuthorizationStatusAuthorized) {
             
             CompleteButtonViewController *cbVC = [[CompleteButtonViewController alloc]init];
+            cbVC.inOut = self.inOut;
             cbVC.ID = self.ID;
             [self.navigationController pushViewController:cbVC animated:YES];
         }else {
@@ -902,7 +905,7 @@ UIViewControllerTransitioningDelegate
 
 - (void)typeButtonClicked {
     PTypeViewController *ptypeVC = [[PTypeViewController alloc]init];
-    ptypeVC.modalTransitionStyle = UIModalPresentationCustom;
+    ptypeVC.modalPresentationStyle = UIModalPresentationCustom;
     ptypeVC.transitioningDelegate = self;
     ptypeVC.text = self.cell.typeButton.titleLabel.text;
     ptypeVC.ID = self.ID;

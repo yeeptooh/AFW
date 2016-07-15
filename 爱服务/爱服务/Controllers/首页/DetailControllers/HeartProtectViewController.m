@@ -77,6 +77,7 @@ UINavigationControllerDelegate
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateMoney object:nil];
     if (_containerView) {
         [self.containerView removeFromSuperview];
         self.containerView = nil;
@@ -86,7 +87,7 @@ UINavigationControllerDelegate
 
 
 - (void)setWebView {
-//    UserModel *userModel = [UserModel readUserModel];
+    UserModel *userModel = [UserModel readUserModel];
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
     
     
@@ -99,9 +100,10 @@ UINavigationControllerDelegate
     
     self.webView.scrollView.bounces = NO;
     self.webView.scrollView.showsVerticalScrollIndicator = NO;
-//    NSString *url = [NSString stringWithFormat:@"%@API/AiXinBao.aspx",@"http://i.51ifw.com/"];
-//    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://192.168.1.228:89/API/AiXinBao.aspx"]]]];
+    NSString *url = [NSString stringWithFormat:@"%@API/AiXinBao.aspx?comId=%@",heartProHomeURL,@(userModel.uid)];
+    NSLog(@"%@",url);
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
+//    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://192.168.1.228:89/API/AiXinBao.aspx"]]]];
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [self.view addSubview:self.progressView];
@@ -151,7 +153,6 @@ UINavigationControllerDelegate
     
     UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *action = [UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-//
     }];
     
     [controller addAction:action];
@@ -197,7 +198,7 @@ UINavigationControllerDelegate
     
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
 
-    NSString *url = [NSString stringWithFormat:@"%@forapp/uploadFile.ashx?action=uploadimages",subHomeURL];
+    NSString *url = [NSString stringWithFormat:@"%@forapp/uploadFile.ashx?action=uploadimages",heartProHomeURL];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {

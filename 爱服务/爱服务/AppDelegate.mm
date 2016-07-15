@@ -29,6 +29,7 @@
 
 #import "MBProgressHUD.h"
 #import <CoreLocation/CoreLocation.h>
+
 @interface AppDelegate ()
 
 <
@@ -164,23 +165,19 @@ static BOOL isProduction = FALSE;
             
         }else {
             [self.locationManager startUpdatingLocation];
-            self.updateLocationTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(startUpdatingLocationWithLocationManager) userInfo:nil repeats:YES];
+            self.updateLocationTimer = [NSTimer scheduledTimerWithTimeInterval:2*60 target:self selector:@selector(startUpdatingLocationWithLocationManager) userInfo:nil repeats:YES];
             
         }
         
     }else {
         [self.locationManager startUpdatingLocation];
-        self.updateLocationTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(startUpdatingLocationWithLocationManager) userInfo:nil repeats:YES];
+        self.updateLocationTimer = [NSTimer scheduledTimerWithTimeInterval:2*60 target:self selector:@selector(startUpdatingLocationWithLocationManager) userInfo:nil repeats:YES];
         
     }
     
     
 #elif Environment_Mode == 2
 #endif
-    
-    
-
-    
 
     return YES;
 }
@@ -208,18 +205,15 @@ static BOOL isProduction = FALSE;
 
 - (void)startUpdatingLocationWithLocationManager {
     [self.locationManager startUpdatingLocation];
-    NSTimeInterval backgroundTimeRemanging = [[UIApplication sharedApplication] backgroundTimeRemaining];
-    NSLog(@"%f",backgroundTimeRemanging);
 }
 
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    
     switch (status) {
         case kCLAuthorizationStatusDenied:
         {
             
-            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"canLocationService"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"此应用的定位功能已禁用" message:@"请点击确定打开应用的定位功能" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
             alertView.tag = 10001;
             [alertView show];
@@ -227,14 +221,13 @@ static BOOL isProduction = FALSE;
             break;
         case kCLAuthorizationStatusAuthorizedAlways:
         {
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"canLocationService"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            
         }
             
         default:
         {
-            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"canLocationService"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+            
         }
             break;
     }
@@ -244,8 +237,24 @@ static BOOL isProduction = FALSE;
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
     CLLocation *location = [locations lastObject];
+    UserModel *userModel = [UserModel readUserModel];
     
     NSLog(@"%@%@",@(location.coordinate.latitude), @(location.coordinate.longitude));
+//    /common.ashx?action=update_user_lng_lat
+    //userid,lng,lat
+    NSString *URL = [NSString stringWithFormat:@"%@common.ashx?action=update_user_lng_lat",HomeURL];
+    NSDictionary *dic = @{
+                          @"userid":@(userModel.uid),
+                          @"lng":@(location.coordinate.longitude),
+                          @"lat":@(location.coordinate.latitude)
+                          };
+    AFHTTPSessionManager *afManager = [AFHTTPSessionManager manager];
+    afManager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [afManager POST:URL parameters:dic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//        NSLog(@"%@",responseObject);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//        NSLog(@"%@",error.userInfo);
+    }];
     
     [manager stopUpdatingLocation];
 }
@@ -357,7 +366,7 @@ static BOOL isProduction = FALSE;
 
     [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        NSLog(@"responseObject = %@",responseObject);
+        
         if ([responseObject[@"data"] integerValue] ==  5) {
          
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.window animated:YES];
@@ -436,8 +445,7 @@ static BOOL isProduction = FALSE;
     [homeVC.timer setFireDate:[NSDate distantFuture]];
     
 #if Environment_Mode == 1
-    BOOL canLocationService = [[NSUserDefaults standardUserDefaults] boolForKey:@"canLocationService"];
-    if (canLocationService) {
+    
         UIApplication *app = [UIApplication sharedApplication];
         
         __block UIBackgroundTaskIdentifier identifier;
@@ -469,7 +477,7 @@ static BOOL isProduction = FALSE;
             });
             
         });
-    }
+    
     
 #elif Environment_Mode == 2
 #endif

@@ -27,7 +27,7 @@ UIViewControllerTransitioningDelegate
     self.view.layer.masksToBounds = YES;
     self.view.backgroundColor = [UIColor whiteColor];
     self.transitioningDelegate = self;
-    self.modalTransitionStyle = UIModalPresentationCustom;
+    self.modalPresentationStyle = UIModalPresentationCustom;
     [self configView];
 }
 

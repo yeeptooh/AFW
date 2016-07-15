@@ -10,4 +10,6 @@
 
 @interface CompleteButtonViewController : DetailPageBaseViewController
 @property (nonatomic, assign) NSInteger ID;
+
+@property (nonatomic, strong) NSString *inOut;
 @end

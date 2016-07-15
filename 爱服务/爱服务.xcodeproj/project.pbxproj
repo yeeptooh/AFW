@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4477E4D8E79C479F30CEE9B8 /* libPods-爱服务.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53A43852900DC47A061580E4 /* libPods-爱服务.a */; };
+		4A15177C1D388DA4009DBB00 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4C63E11D3878FD002B15FF /* AdSupport.framework */; };
 		4A1D9D991D1B831E00052B92 /* ProductDetailTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1D9D981D1B831E00052B92 /* ProductDetailTableView.m */; };
 		4A1D9D9C1D1B833A00052B92 /* BusinessDetailTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1D9D9B1D1B833A00052B92 /* BusinessDetailTableView.m */; };
 		4A1D9D9D1D1BB77700052B92 /* AddOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A64245C1D194D8C00F26BA9 /* AddOrderViewController.m */; };
@@ -22,7 +23,7 @@
 		4A4954651D28B55B00E05868 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4954621D28B55B00E05868 /* AlipaySDK.framework */; };
 		4A4954661D28B55B00E05868 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4954621D28B55B00E05868 /* AlipaySDK.framework */; };
 		4A4BD23E1CB895A1009DA0B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BD23D1CB895A1009DA0B9 /* main.m */; };
-		4A4BD2411CB895A1009DA0B9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BD2401CB895A1009DA0B9 /* AppDelegate.m */; };
+		4A4BD2411CB895A1009DA0B9 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BD2401CB895A1009DA0B9 /* AppDelegate.mm */; };
 		4A4BD2491CB895A1009DA0B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A4BD2481CB895A1009DA0B9 /* Assets.xcassets */; };
 		4A4BD2571CB895A1009DA0B9 /* ___Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BD2561CB895A1009DA0B9 /* ___Tests.m */; };
 		4A4BD2621CB895A1009DA0B9 /* ___UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BD2611CB895A1009DA0B9 /* ___UITests.m */; };
@@ -68,6 +69,11 @@
 		4A4BD3261CB8F812009DA0B9 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BD3181CB8F812009DA0B9 /* NSLayoutConstraint+MASDebugAdditions.m */; };
 		4A4BD3271CB8F812009DA0B9 /* View+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BD31A1CB8F812009DA0B9 /* View+MASAdditions.m */; };
 		4A4BD3281CB8F812009DA0B9 /* ViewController+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BD31D1CB8F812009DA0B9 /* ViewController+MASAdditions.m */; };
+		4A4C57971D37A77D00ACFCF8 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4C57961D37A77D00ACFCF8 /* MessageUI.framework */; };
+		4A4C57991D37A79800ACFCF8 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4C57981D37A79800ACFCF8 /* OpenGLES.framework */; };
+		4A4C579B1D37A7A700ACFCF8 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4C579A1D37A7A700ACFCF8 /* CoreLocation.framework */; };
+		4A4C63E01D387846002B15FF /* libstdc++.6.0.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4C63DF1D387846002B15FF /* libstdc++.6.0.9.tbd */; };
+		4A4C63E21D3878FD002B15FF /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4C63E11D3878FD002B15FF /* AdSupport.framework */; };
 		4A4C6C781CD1A60A0030B861 /* EnsureOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4C6C771CD1A60A0030B861 /* EnsureOrderViewController.m */; };
 		4A4C6CE51CD1F3E50030B861 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4C6CE41CD1F3E50030B861 /* CoreTelephony.framework */; };
 		4A4C6CE71CD201610030B861 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4C6CE61CD201610030B861 /* libz.tbd */; };
@@ -137,7 +143,7 @@
 		4A6423801D19396600F26BA9 /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BD3061CB8F812009DA0B9 /* MASCompositeConstraint.m */; };
 		4A6423811D19396600F26BA9 /* MASViewAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BD3111CB8F812009DA0B9 /* MASViewAttribute.m */; };
 		4A6423821D19396600F26BA9 /* MJRefreshHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6BABB61CC62FAB000B94A2 /* MJRefreshHeader.m */; };
-		4A6423831D19396600F26BA9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BD2401CB895A1009DA0B9 /* AppDelegate.m */; };
+		4A6423831D19396600F26BA9 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BD2401CB895A1009DA0B9 /* AppDelegate.mm */; };
 		4A6423841D19396600F26BA9 /* WithDrawViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A69738B1CBB4DD9002A036C /* WithDrawViewController.m */; };
 		4A6423851D19396600F26BA9 /* RobViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BD2E91CB8F515009DA0B9 /* RobViewController.m */; };
 		4A6423861D19396600F26BA9 /* NSDataEx.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ADEDEC11D17E89900FE3412 /* NSDataEx.m */; };
@@ -432,7 +438,7 @@
 		4A4BD2391CB895A1009DA0B9 /* 爱服务.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "爱服务.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A4BD23D1CB895A1009DA0B9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4A4BD23F1CB895A1009DA0B9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		4A4BD2401CB895A1009DA0B9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		4A4BD2401CB895A1009DA0B9 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		4A4BD2481CB895A1009DA0B9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4A4BD24D1CB895A1009DA0B9 /* 爱服务-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "爱服务-Info.plist"; sourceTree = "<group>"; };
 		4A4BD2521CB895A1009DA0B9 /* 爱服务Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "爱服务Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -534,6 +540,11 @@
 		4A4BD31B1CB8F812009DA0B9 /* View+MASShorthandAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "View+MASShorthandAdditions.h"; sourceTree = "<group>"; };
 		4A4BD31C1CB8F812009DA0B9 /* ViewController+MASAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ViewController+MASAdditions.h"; sourceTree = "<group>"; };
 		4A4BD31D1CB8F812009DA0B9 /* ViewController+MASAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ViewController+MASAdditions.m"; sourceTree = "<group>"; };
+		4A4C57961D37A77D00ACFCF8 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		4A4C57981D37A79800ACFCF8 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		4A4C579A1D37A7A700ACFCF8 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		4A4C63DF1D387846002B15FF /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
+		4A4C63E11D3878FD002B15FF /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		4A4C6C761CD1A60A0030B861 /* EnsureOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnsureOrderViewController.h; sourceTree = "<group>"; };
 		4A4C6C771CD1A60A0030B861 /* EnsureOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnsureOrderViewController.m; sourceTree = "<group>"; };
 		4A4C6CE41CD1F3E50030B861 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -671,8 +682,8 @@
 		4A6973881CBB4DA3002A036C /* MyAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAccountViewController.m; sourceTree = "<group>"; };
 		4A69738A1CBB4DD9002A036C /* WithDrawViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WithDrawViewController.h; sourceTree = "<group>"; };
 		4A69738B1CBB4DD9002A036C /* WithDrawViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WithDrawViewController.m; sourceTree = "<group>"; };
-		4A69738D1CBB769E002A036C /* MyTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTabBarController.h; sourceTree = "<group>"; };
-		4A69738E1CBB769E002A036C /* MyTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTabBarController.m; sourceTree = "<group>"; };
+		4A69738D1CBB769E002A036C /* MyTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyTabBarController.h; path = ../../Controllers/MyTabBarController.h; sourceTree = "<group>"; };
+		4A69738E1CBB769E002A036C /* MyTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyTabBarController.m; path = ../../Controllers/MyTabBarController.m; sourceTree = "<group>"; };
 		4A6BABAD1CC62FAB000B94A2 /* MJRefreshAutoFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshAutoFooter.h; sourceTree = "<group>"; };
 		4A6BABAE1CC62FAB000B94A2 /* MJRefreshAutoFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshAutoFooter.m; sourceTree = "<group>"; };
 		4A6BABAF1CC62FAB000B94A2 /* MJRefreshBackFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBackFooter.h; sourceTree = "<group>"; };
@@ -889,6 +900,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A4C63E21D3878FD002B15FF /* AdSupport.framework in Frameworks */,
+				4A4C63E01D387846002B15FF /* libstdc++.6.0.9.tbd in Frameworks */,
+				4A4C579B1D37A7A700ACFCF8 /* CoreLocation.framework in Frameworks */,
+				4A4C57991D37A79800ACFCF8 /* OpenGLES.framework in Frameworks */,
+				4A4C57971D37A77D00ACFCF8 /* MessageUI.framework in Frameworks */,
 				4A4C6CF51CD202EE0030B861 /* libc++.tbd in Frameworks */,
 				4ADEDF1D1D17E96500FE3412 /* CoreMotion.framework in Frameworks */,
 				4A6BE9411CFC481D002F20C1 /* CFNetwork.framework in Frameworks */,
@@ -936,6 +952,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A15177C1D388DA4009DBB00 /* AdSupport.framework in Frameworks */,
 				4A6423ED1D19396600F26BA9 /* CoreMotion.framework in Frameworks */,
 				4A4954601D28B4D400E05868 /* TencentOpenAPI.framework in Frameworks */,
 				4A6423EE1D19396600F26BA9 /* CFNetwork.framework in Frameworks */,
@@ -970,6 +987,11 @@
 		206814E9B00D48764B3EB052 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4A4C63E11D3878FD002B15FF /* AdSupport.framework */,
+				4A4C63DF1D387846002B15FF /* libstdc++.6.0.9.tbd */,
+				4A4C579A1D37A7A700ACFCF8 /* CoreLocation.framework */,
+				4A4C57981D37A79800ACFCF8 /* OpenGLES.framework */,
+				4A4C57961D37A77D00ACFCF8 /* MessageUI.framework */,
 				4ADEDF1C1D17E96500FE3412 /* CoreMotion.framework */,
 				4A6BE9401CFC481D002F20C1 /* CFNetwork.framework */,
 				4A65B7D51CF8319800331CD2 /* MapKit.framework */,
@@ -1019,7 +1041,7 @@
 			isa = PBXGroup;
 			children = (
 				4A4BD23F1CB895A1009DA0B9 /* AppDelegate.h */,
-				4A4BD2401CB895A1009DA0B9 /* AppDelegate.m */,
+				4A4BD2401CB895A1009DA0B9 /* AppDelegate.mm */,
 				4A4BD26F1CB89DFE009DA0B9 /* Controllers */,
 				4A4BD2701CB89DFE009DA0B9 /* View */,
 				4A4BD2711CB89E09009DA0B9 /* Model */,
@@ -1067,8 +1089,6 @@
 		4A4BD26F1CB89DFE009DA0B9 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				4A69738D1CBB769E002A036C /* MyTabBarController.h */,
-				4A69738E1CBB769E002A036C /* MyTabBarController.m */,
 				4A4BD2F01CB8F515009DA0B9 /* Login */,
 				4A4BD2F11CB8F515009DA0B9 /* Register */,
 				4A4BD2ED1CB8F515009DA0B9 /* 首页 */,
@@ -1119,6 +1139,8 @@
 				4A4BD2F81CB8F565009DA0B9 /* BaseViewController.m */,
 				4A4BD2901CB8A893009DA0B9 /* DetailPageBaseViewController.h */,
 				4A4BD2911CB8A893009DA0B9 /* DetailPageBaseViewController.m */,
+				4A69738D1CBB769E002A036C /* MyTabBarController.h */,
+				4A69738E1CBB769E002A036C /* MyTabBarController.m */,
 			);
 			path = BaseControllers;
 			sourceTree = "<group>";
@@ -2108,7 +2130,7 @@
 				4A4BD31F1CB8F812009DA0B9 /* MASCompositeConstraint.m in Sources */,
 				4A4BD3231CB8F812009DA0B9 /* MASViewAttribute.m in Sources */,
 				4A6BABDC1CC62FAB000B94A2 /* MJRefreshHeader.m in Sources */,
-				4A4BD2411CB895A1009DA0B9 /* AppDelegate.m in Sources */,
+				4A4BD2411CB895A1009DA0B9 /* AppDelegate.mm in Sources */,
 				4A69738C1CBB4DD9002A036C /* WithDrawViewController.m in Sources */,
 				4A4BD2F41CB8F515009DA0B9 /* RobViewController.m in Sources */,
 				4ADEDF181D17E89900FE3412 /* NSDataEx.m in Sources */,
@@ -2283,7 +2305,7 @@
 				4A6423801D19396600F26BA9 /* MASCompositeConstraint.m in Sources */,
 				4A6423811D19396600F26BA9 /* MASViewAttribute.m in Sources */,
 				4A6423821D19396600F26BA9 /* MJRefreshHeader.m in Sources */,
-				4A6423831D19396600F26BA9 /* AppDelegate.m in Sources */,
+				4A6423831D19396600F26BA9 /* AppDelegate.mm in Sources */,
 				4A6423841D19396600F26BA9 /* WithDrawViewController.m in Sources */,
 				4A6423851D19396600F26BA9 /* RobViewController.m in Sources */,
 				4A6423861D19396600F26BA9 /* NSDataEx.m in Sources */,
@@ -2504,6 +2526,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Yu Guancheng (7JFJ68W47N)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yu Guancheng (7JFJ68W47N)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -2513,6 +2536,7 @@
 					"$(PROJECT_DIR)/爱服务/Libraries",
 					"$(PROJECT_DIR)/爱服务/Libraries/openssl",
 				);
+				GCC_INPUT_FILETYPE = automatic;
 				GCC_PREFIX_HEADER = "爱服务/PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -2545,6 +2569,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Yu Guancheng (FGP43E8495)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Yu Guancheng (FGP43E8495)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -2554,6 +2579,7 @@
 					"$(PROJECT_DIR)/爱服务/Libraries",
 					"$(PROJECT_DIR)/爱服务/Libraries/openssl",
 				);
+				GCC_INPUT_FILETYPE = automatic;
 				GCC_PREFIX_HEADER = "爱服务/PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -2636,7 +2662,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yu Guancheng (7JFJ68W47N)";
-				ENABLE_BITCODE = YES;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/爱服务/Libraries/openssl",
@@ -2675,7 +2701,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Yu Guancheng (FGP43E8495)";
-				ENABLE_BITCODE = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/爱服务/Libraries/openssl",

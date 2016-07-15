@@ -62,15 +62,13 @@ static NSInteger i = 0;
     [self setRechargeButton];
     [self setNaviTitle];
     
-    
-    
-    
 }
 
-- (void)updateMoney:(NSNotification *)noti {
-    
-    [self.navigationController popViewControllerAnimated:YES];
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateMoney object:nil];
 }
+
 
 
 - (void)setRechargeButton {
@@ -740,6 +738,7 @@ static NSInteger i = 0;
 
 - (void)dealloc {
     i = 0;
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

@@ -29,7 +29,7 @@ UIViewControllerTransitioningDelegate
     [self.datePicker setDatePickerMode:UIDatePickerModeDate];
     [self.view addSubview:self.datePicker];
     self.transitioningDelegate = self;
-    self.modalTransitionStyle = UIModalPresentationCustom;
+    self.modalPresentationStyle = UIModalPresentationCustom;
     
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [backBtn setTitle:@"取消" forState:UIControlStateNormal];

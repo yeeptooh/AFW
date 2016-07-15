@@ -54,7 +54,7 @@
         NSString *dayStr = [appointmentTime substringWithRange:NSMakeRange(8, 2)];
         NSInteger month = [monthStr integerValue];
         NSInteger day = [dayStr integerValue];
-        NSString *AddTime = [NSString stringWithFormat:@"%@年%@月%@日",yearStr,@(month),@(day)];
+        NSString *AddTime = [NSString stringWithFormat:@"%@-%02ld-%02ld",yearStr,(long)month,(long)day];
         self.acceptDate = AddTime;
         
 #elif Environment_Mode == 2
