@@ -36,7 +36,7 @@ UIViewControllerTransitioningDelegate
     self.tableView.tableFooterView = [[UIView alloc]init];
     
     self.transitioningDelegate = self;
-    self.modalTransitionStyle = UIModalPresentationCustom;
+    self.modalPresentationStyle = UIModalPresentationCustom;
     
     [self.view addSubview:self.tableView];
 }

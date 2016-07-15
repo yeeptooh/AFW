@@ -311,7 +311,7 @@ UIViewControllerTransitioningDelegate
 - (void)locationButtonClicked {
     
     ButtonViewController *buttonVC = [[ButtonViewController alloc]init];
-    buttonVC.modalTransitionStyle = UIModalPresentationCustom;
+    buttonVC.modalPresentationStyle = UIModalPresentationCustom;
     buttonVC.transitioningDelegate = self;
     buttonVC.text = self.baseDetailInfoCell.locationButton.titleLabel.text;
     buttonVC.ID = self.ID;
@@ -902,7 +902,7 @@ UIViewControllerTransitioningDelegate
 
 - (void)typeButtonClicked {
     PTypeViewController *ptypeVC = [[PTypeViewController alloc]init];
-    ptypeVC.modalTransitionStyle = UIModalPresentationCustom;
+    ptypeVC.modalPresentationStyle = UIModalPresentationCustom;
     ptypeVC.transitioningDelegate = self;
     ptypeVC.text = self.cell.typeButton.titleLabel.text;
     ptypeVC.ID = self.ID;

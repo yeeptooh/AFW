@@ -36,7 +36,7 @@ static NSInteger i = 0;
     self.view.backgroundColor = [UIColor whiteColor];
     
     self.transitioningDelegate = self;
-    self.modalTransitionStyle = UIModalPresentationCustom;
+    self.modalPresentationStyle = UIModalPresentationCustom;
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, Width, 50)];
     headerView.backgroundColor = [UIColor whiteColor];

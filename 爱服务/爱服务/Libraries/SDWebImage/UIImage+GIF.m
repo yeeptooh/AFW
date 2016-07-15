@@ -56,15 +56,15 @@
     float frameDuration = 0.1f;
     CFDictionaryRef cfFrameProperties = CGImageSourceCopyPropertiesAtIndex(source, index, nil);
     NSDictionary *frameProperties = (__bridge NSDictionary *)cfFrameProperties;
-    NSDictionary *gifProperties = frameProperties[(NSString *)kCGImagePropertyGIFDictionary];
+    NSDictionary *gifProperties = frameProperties[(NSString *)CFBridgingRelease(kCGImagePropertyGIFDictionary)];
 
-    NSNumber *delayTimeUnclampedProp = gifProperties[(NSString *)kCGImagePropertyGIFUnclampedDelayTime];
+    NSNumber *delayTimeUnclampedProp = gifProperties[(NSString *)CFBridgingRelease(kCGImagePropertyGIFUnclampedDelayTime)];
     if (delayTimeUnclampedProp) {
         frameDuration = [delayTimeUnclampedProp floatValue];
     }
     else {
 
-        NSNumber *delayTimeProp = gifProperties[(NSString *)kCGImagePropertyGIFDelayTime];
+        NSNumber *delayTimeProp = gifProperties[(NSString *)CFBridgingRelease(kCGImagePropertyGIFDelayTime)];
         if (delayTimeProp) {
             frameDuration = [delayTimeProp floatValue];
         }

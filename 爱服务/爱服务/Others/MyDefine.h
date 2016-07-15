@@ -9,7 +9,7 @@
 #ifndef MyDefine_h
 #define MyDefine_h
 //机器唯一标识
-#define  UUID                              [[UIDevice currentDevice].identifierForVendor UUIDString]
+//#define  UUID                              [[UIDevice currentDevice].identifierForVendor UUIDString]
 
 //系统版本
 #define iOSVerson                         [[UIDevice currentDevice] systemVersion].floatValue

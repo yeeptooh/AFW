@@ -105,5 +105,7 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>CFBundleDisplayName</key>
+	<string>爱服务师傅</string>
 </dict>
 </plist>

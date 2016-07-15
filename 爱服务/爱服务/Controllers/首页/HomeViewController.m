@@ -1087,6 +1087,7 @@ static NSInteger tag = 0;
 
         }else {
             AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+            NSLog(@"%ld",(long)status);
             if (status == AVAuthorizationStatusAuthorized) {
                 PartsRequestViewController *partsRequestVC = [[PartsRequestViewController alloc]init];
                 partsRequestVC.hidesBottomBarWhenPushed = YES;
