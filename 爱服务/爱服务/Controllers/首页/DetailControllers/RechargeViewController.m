@@ -40,7 +40,7 @@ static NSInteger i = 0;
 
 - (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, Width, 44*3+60) style:UITableViewStyleGrouped];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, Width, 44*4+60) style:UITableViewStyleGrouped];
         
         _tableView.bounces = NO;
         _tableView.scrollEnabled = NO;
@@ -61,6 +61,7 @@ static NSInteger i = 0;
     [self.view addSubview:self.tableView];
     [self setRechargeButton];
     [self setNaviTitle];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCell) name:kReloadCell object:nil];
     
 }
 
@@ -88,7 +89,7 @@ static NSInteger i = 0;
     }else {
         height = 49;
     }
-    self.rechargeButton.frame = CGRectMake(40, 44*3+60 + 20, Width - 80, height);
+    self.rechargeButton.frame = CGRectMake(40, 44*4+60 + 20, Width - 80, height);
     [self.view addSubview:self.rechargeButton];
 
 }
@@ -608,7 +609,7 @@ static NSInteger i = 0;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return 1;
+        return 2;
     }else {
         return 2;
     }
@@ -618,13 +619,23 @@ static NSInteger i = 0;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section == 0) {
-        self.cell = [[[NSBundle mainBundle] loadNibNamed:@"MoneyTableViewCell" owner:self options:nil] lastObject];
-        self.cell.moneyTextField.delegate = self;
-        self.cell.moneyTextField.keyboardType = UIKeyboardTypeDecimalPad;
-        [self.cell.moneyTextField addTarget:self action:@selector(editingChanged:) forControlEvents:UIControlEventEditingChanged];
-        
-        self.cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return self.cell;
+        if (indexPath.row == 0) {
+            UserModel *userModel = [UserModel readUserModel];
+            UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+            cell.textLabel.text = [NSString stringWithFormat:@"当前账户可用余额:%.02f元",userModel.money];
+            cell.textLabel.font = font(14);
+            cell.textLabel.textColor = color(130, 130, 130, 1);
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+        }else {
+            self.cell = [[[NSBundle mainBundle] loadNibNamed:@"MoneyTableViewCell" owner:self options:nil] lastObject];
+            self.cell.moneyTextField.delegate = self;
+            self.cell.moneyTextField.keyboardType = UIKeyboardTypeDecimalPad;
+            [self.cell.moneyTextField addTarget:self action:@selector(editingChanged:) forControlEvents:UIControlEventEditingChanged];
+            
+            self.cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return self.cell;
+        }
     }else {
         PayTableViewCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"PayTableViewCell" owner:self options:nil]lastObject];
         
@@ -649,8 +660,12 @@ static NSInteger i = 0;
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 0) {
-        MoneyTableViewCell *cell = (MoneyTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-        [cell.moneyTextField becomeFirstResponder];
+        if (indexPath.row == 0) {
+            
+        }else {
+            MoneyTableViewCell *cell = (MoneyTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+            [cell.moneyTextField becomeFirstResponder];
+        }
     }else {
         [self.view endEditing:YES];
         if (indexPath.row == 0) {
@@ -735,6 +750,50 @@ static NSInteger i = 0;
 - (void)setNaviTitle {
     self.navigationItem.title = @"我要充值";
 }
+
+- (void)reloadCell {
+    
+    NSDictionary *params = @{
+                             @"name":[[NSUserDefaults standardUserDefaults] objectForKey:@"username"],
+                             @"password":[[NSUserDefaults standardUserDefaults] objectForKey:@"password"],
+                             @"imei":@""
+                             };
+    NSString *URL = [NSString stringWithFormat:@"%@Passport.ashx?action=login",HomeURL];
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer.timeoutInterval = 5;
+    
+    [manager POST:URL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        if (responseObject != nil) {
+            
+            UserModel *userModel = [[UserModel alloc]init];
+            
+            userModel.uid = [responseObject[@"user"][0][@"UserId"] integerValue];
+            userModel.comid = [responseObject[@"user"][0][@"CompanyID"] integerValue];
+            userModel.money = [responseObject[@"user"][0][@"Money"] floatValue];
+            userModel.provinceid = [responseObject[@"user"][0][@"ProvinceID"] integerValue];
+            userModel.cityid = [responseObject[@"user"][0][@"CityID"] integerValue];
+            userModel.districtid = [responseObject[@"user"][0][@"DistrictID"] integerValue];
+            userModel.name = responseObject[@"user"][0][@"Name"];
+            userModel.companyName = responseObject[@"user"][0][@"CompanyName"];
+            userModel.masterName = responseObject[@"user"][0][@"MasterName"];
+            userModel.userType = responseObject[@"user"][0][@"UserType"];
+            [UserModel writeUserModel:userModel];
+        }
+        
+        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:0];
+        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        
+    }];
+    
+    
+}
+
+
 
 - (void)dealloc {
     i = 0;

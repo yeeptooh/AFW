@@ -37,12 +37,14 @@
 
 
 #define myPartner @"2088011233310417"
-#define mySeller @"1933218116@qq.com"//@"2088011233310417"//
+#define mySeller @"1933218116@qq.com"
 
 
 
 #define kBadgeValueChanged @"badgeValueChanged"
 #define kUpdateMoney @"kUpdateMoney"
+#define kReloadCell @"kReloadCell"
+#define kOtherDeviceLogin @"kOtherDeviceLogin"
 
 #define WBAppKey @"551164628"
 #define WBRedirectURL @"https://api.weibo.com/oauth2/default.html"

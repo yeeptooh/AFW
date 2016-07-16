@@ -24,7 +24,7 @@ UITextFieldDelegate
 @property (nonatomic, strong) UIImageView *imageView;
 
 @property (nonatomic, strong) UITextField *accountTextField;
-@property (nonatomic, strong) UITextField *passwordTextField;
+
 
 @property (nonatomic, strong) MBProgressHUD *HUD;
 @property (nonatomic, strong) MBProgressHUD *successHUD;
@@ -223,9 +223,11 @@ UITextFieldDelegate
     [self.view addSubview:_HUD];
     
     [self.HUD showAnimated:YES];
+    NSString *UUID = [[UIDevice currentDevice].identifierForVendor UUIDString];
     NSDictionary *params = @{
                              @"name":self.accountTextField.text,
-                             @"password":self.passwordTextField.text
+                             @"password":self.passwordTextField.text,
+                             @"imei":UUID
                              };
     NSString *URL = [NSString stringWithFormat:@"%@Passport.ashx?action=login",HomeURL];
 

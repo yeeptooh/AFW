@@ -205,6 +205,7 @@ static BOOL isProduction = FALSE;
 
 - (void)startUpdatingLocationWithLocationManager {
     [self.locationManager startUpdatingLocation];
+    
 }
 
 
@@ -246,17 +247,68 @@ static BOOL isProduction = FALSE;
     NSDictionary *dic = @{
                           @"userid":@(userModel.uid),
                           @"lng":@(location.coordinate.longitude),
-                          @"lat":@(location.coordinate.latitude)
-                          };
+                         };
     AFHTTPSessionManager *afManager = [AFHTTPSessionManager manager];
     afManager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [afManager POST:URL parameters:dic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 //        NSLog(@"%@",responseObject);
+        /*
+        NSString *UUID = [[UIDevice currentDevice].identifierForVendor UUIDString];
+        if (![responseObject[@"result"] isEqualToString:UUID]) {
+            
+                LoginViewController *loginVC = [[LoginViewController alloc] init];
+                loginVC.passwordTextField.text = @"";
+                [[self activityViewController] presentViewController:loginVC animated:YES completion:nil];
+                [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"logOut"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"hadLaunch"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            
+        }
+         */
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
 //        NSLog(@"%@",error.userInfo);
     }];
     
     [manager stopUpdatingLocation];
+}
+
+- (UIViewController *)activityViewController
+{
+    UIViewController* activityViewController = nil;
+    
+    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+    if(window.windowLevel != UIWindowLevelNormal)
+    {
+        NSArray *windows = [[UIApplication sharedApplication] windows];
+        for(UIWindow *tmpWin in windows)
+        {
+            if(tmpWin.windowLevel == UIWindowLevelNormal)
+            {
+                window = tmpWin;
+                break;
+            }
+        }
+    }
+    
+    NSArray *viewsArray = [window subviews];
+    if([viewsArray count] > 0)
+    {
+        UIView *frontView = [viewsArray objectAtIndex:0];
+        
+        id nextResponder = [frontView nextResponder];
+        
+        if([nextResponder isKindOfClass:[UIViewController class]])
+        {
+            activityViewController = nextResponder;
+        }
+        else
+        {
+            activityViewController = window.rootViewController;
+        }
+    }
+    
+    return activityViewController;
 }
 
 #elif Environment_Mode == 2
@@ -368,7 +420,7 @@ static BOOL isProduction = FALSE;
         
         
         if ([responseObject[@"data"] integerValue] ==  5) {
-         
+            [[NSNotificationCenter defaultCenter] postNotificationName:kReloadCell object:nil];
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.window animated:YES];
             hud.label.text = @"付款中..";
             hud.mode = MBProgressHUDModeIndeterminate;
@@ -506,7 +558,8 @@ static BOOL isProduction = FALSE;
     
     NSDictionary *params = @{
                              @"name":[[NSUserDefaults standardUserDefaults] objectForKey:@"username"],
-                             @"password":[[NSUserDefaults standardUserDefaults] objectForKey:@"password"]
+                             @"password":[[NSUserDefaults standardUserDefaults] objectForKey:@"password"],
+                             @"imei":@""
                              };
     NSString *URL = [NSString stringWithFormat:@"%@Passport.ashx?action=login",HomeURL];
     
