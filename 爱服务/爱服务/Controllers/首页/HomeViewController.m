@@ -49,7 +49,7 @@ UINavigationControllerDelegate
 >
 @property (nonatomic, strong) UIButton *detailButton;
 @property (nonatomic, strong) UIView *balanceView;
-@property (nonatomic, strong) MBProgressHUD *HUD;
+//@property (nonatomic, strong) MBProgressHUD *HUD;
 
 
 @property (nonatomic, strong) UIAlertController *alertController;
@@ -196,17 +196,15 @@ static NSInteger tag = 0;
 
 - (void)upDateNetWorking {
     
-    [self.HUD showAnimated:YES];
-    
     NSDictionary *params = @{
                              @"name":[[NSUserDefaults standardUserDefaults] objectForKey:@"username"],
-                             @"password":[[NSUserDefaults standardUserDefaults] objectForKey:@"password"]
+                             @"password":[[NSUserDefaults standardUserDefaults] objectForKey:@"password"],
+                             @"imei":@""
                              };
     NSString *URL = [NSString stringWithFormat:@"%@Passport.ashx?action=login",HomeURL];
 
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = 5;
-    __weak typeof(self)weakSelf = self;
     
     [manager POST:URL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -238,34 +236,24 @@ static NSInteger tag = 0;
                 [[NSUserDefaults standardUserDefaults] setObject:countList forKey:@"countList"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 
-                [weakSelf.HUD hideAnimated:YES];
-                [weakSelf.HUD removeFromSuperViewOnHide];
+                
                 
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                [weakSelf.HUD hideAnimated:YES];
-                [weakSelf.HUD removeFromSuperViewOnHide];
+                
             }];
  
         }else{
             
-            [weakSelf.HUD hideAnimated:YES];
-            [weakSelf.HUD removeFromSuperViewOnHide];
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
-        [weakSelf.HUD hideAnimated:YES];
-        [weakSelf.HUD removeFromSuperViewOnHide];
         
     }];
 
 }
 
 - (void)updateUI {
-    UIView *window = [[UIApplication sharedApplication].delegate window];
-    self.HUD = [[MBProgressHUD alloc]initWithView:window];
-    self.HUD.mode = MBProgressHUDModeIndeterminate;
-    [window addSubview:self.HUD];
     
     [self upDateNetWorking];
     [self setBalance];
@@ -275,9 +263,6 @@ static NSInteger tag = 0;
 - (void)setNaviTitle {
     self.navigationItem.title = @"首页";
     
-//    UIImageView *logoImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"mainicon"]];
-//    
-//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:logoImageView];
     
     UIButton *phoneButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [phoneButton setImage:[UIImage imageNamed:@"msg_room_toolbar_media_fct_notrace_norm_0"] forState:UIControlStateNormal];
@@ -1153,8 +1138,8 @@ static NSInteger tag = 0;
         [self.navigationController pushViewController:withDrawVC animated:YES];
     }else if (sender.tag == 1010) {
         
-
         RechargeViewController *rechargeVC = [[RechargeViewController alloc] init];
+        
         rechargeVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:rechargeVC animated:YES];
         

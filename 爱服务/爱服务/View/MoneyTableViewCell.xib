@@ -15,29 +15,26 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="金额(元)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ouh-vF-U7U">
-                        <rect key="frame" x="8" y="5" width="75" height="33.5"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="75" id="fMG-RL-jO1"/>
-                        </constraints>
+                        <rect key="frame" x="15" y="5" width="52" height="33.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" red="0.043137254899999998" green="0.61568627450000002" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wq6-x5-GFr">
-                        <rect key="frame" x="83" y="5" width="229" height="33.5"/>
+                        <rect key="frame" x="67" y="5" width="245" height="33.5"/>
                         <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
                     </textField>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="Wq6-x5-GFr" secondAttribute="trailing" constant="8" id="1fg-EB-EQc"/>
-                    <constraint firstItem="Wq6-x5-GFr" firstAttribute="leading" secondItem="ouh-vF-U7U" secondAttribute="trailing" id="CCD-tf-9CE"/>
-                    <constraint firstAttribute="bottom" secondItem="Wq6-x5-GFr" secondAttribute="bottom" constant="5" id="HcW-HH-vtE"/>
-                    <constraint firstItem="ouh-vF-U7U" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="PEP-gI-FTl"/>
-                    <constraint firstItem="ouh-vF-U7U" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="frl-ed-ddG"/>
-                    <constraint firstAttribute="bottom" secondItem="ouh-vF-U7U" secondAttribute="bottom" constant="5" id="hxs-j4-XkE"/>
-                    <constraint firstItem="Wq6-x5-GFr" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="qzN-Tj-x94"/>
+                    <constraint firstAttribute="bottom" secondItem="Wq6-x5-GFr" secondAttribute="bottom" constant="5" id="1ba-s5-rO4"/>
+                    <constraint firstItem="ouh-vF-U7U" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="21g-4d-9T9"/>
+                    <constraint firstItem="Wq6-x5-GFr" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="Mb0-ZY-Yee"/>
+                    <constraint firstItem="ouh-vF-U7U" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="Pje-bo-byF"/>
+                    <constraint firstAttribute="trailing" secondItem="Wq6-x5-GFr" secondAttribute="trailing" constant="8" id="TJD-nO-S1n"/>
+                    <constraint firstAttribute="bottom" secondItem="ouh-vF-U7U" secondAttribute="bottom" constant="5" id="qkY-Ht-uDL"/>
+                    <constraint firstItem="Wq6-x5-GFr" firstAttribute="leading" secondItem="ouh-vF-U7U" secondAttribute="trailing" id="r74-1j-pug"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

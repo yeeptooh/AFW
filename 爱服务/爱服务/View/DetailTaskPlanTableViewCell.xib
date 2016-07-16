@@ -23,7 +23,7 @@
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="价格：50元" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FhO-Nu-CdV">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="价格: 50元" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FhO-Nu-CdV">
                         <rect key="frame" x="229" y="46" width="83" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="4Hf-LO-LFY"/>
@@ -65,17 +65,7 @@
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="13378986757" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z04-fk-5lH">
-                        <rect key="frame" x="8" y="46" width="100" height="17"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="17" id="R2k-sp-gG6"/>
-                            <constraint firstAttribute="width" constant="100" id="gfc-0w-7dF"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="厂商电话：40008588890" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AhT-HZ-r1S">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="厂商电话: 40008588890" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AhT-HZ-r1S">
                         <rect key="frame" x="8" y="124" width="304" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="SUZ-sJ-OFP"/>
@@ -111,8 +101,18 @@
                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="13378986757" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z04-fk-5lH">
+                        <rect key="frame" x="8" y="46" width="150" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="17" id="R2k-sp-gG6"/>
+                            <constraint firstAttribute="width" constant="150" id="gfc-0w-7dF"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
-                <color key="backgroundColor" red="0.13725490196078433" green="0.61960784313725492" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                <color key="backgroundColor" red="0.035294117647058823" green="0.59607843137254901" blue="0.80392156862745101" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="PYN-0P-ChC" secondAttribute="trailing" constant="8" id="2aQ-JY-cZH"/>
                     <constraint firstItem="PYN-0P-ChC" firstAttribute="leading" secondItem="oWr-AM-EX2" secondAttribute="trailing" constant="8" id="8DO-S7-Yf1"/>
@@ -148,7 +148,7 @@
                 <outlet property="phoneLabel" destination="Z04-fk-5lH" id="rtU-j9-vDk"/>
                 <outlet property="priceLabel" destination="FhO-Nu-CdV" id="7mm-P3-ucU"/>
             </connections>
-            <point key="canvasLocation" x="479" y="-115"/>
+            <point key="canvasLocation" x="691" y="20"/>
         </tableViewCell>
     </objects>
     <resources>

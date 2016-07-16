@@ -12,5 +12,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *appointmentLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *psLabel;
+@property (weak, nonatomic) IBOutlet UILabel *serviceLabel;
 
 @end

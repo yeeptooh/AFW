@@ -68,6 +68,8 @@
 #define ALiBlueColor color(40, 117, 191, 1)
 //#define ALiBlueColor color(74, 174, 223, 1)
 
+#define  MainBlueColor color(9, 152, 205, 1)
+
 //#define currentPageControlTintColor color(255, 219, 2, 1)
 #define currentPageControlTintColor color(224, 226, 213, 1)
 

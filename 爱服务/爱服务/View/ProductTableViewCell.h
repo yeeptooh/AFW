@@ -12,6 +12,8 @@
 <
 UIViewControllerTransitioningDelegate
 >
+
+@property (weak, nonatomic) IBOutlet UILabel *proTypeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *typeButton;
 @property (weak, nonatomic) IBOutlet UIButton *dateButton;
 @property (weak, nonatomic) IBOutlet UILabel *productCodeLabel;

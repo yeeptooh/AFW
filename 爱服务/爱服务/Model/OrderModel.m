@@ -98,9 +98,8 @@
         
         
         self.appointment = dictionary[@"ExpectantTimeStr"];
+        
         self.postScript = dictionary[@"Postscript"];
-        
-        
         
         self.chargeBackContent = dictionary[@"BacktrackRemark"];
         self.refuseContent = dictionary[@"RefuseRemark"];

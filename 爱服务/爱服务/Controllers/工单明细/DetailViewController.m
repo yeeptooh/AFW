@@ -112,10 +112,10 @@ UIViewControllerTransitioningDelegate
         }
         
         
-        _tableView = [[UITableView alloc] initWithFrame:frame style:UITableViewStyleGrouped];
+        _tableView = [[UITableView alloc] initWithFrame:frame style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self.view addSubview:_tableView];
     }
     return _tableView;
@@ -147,7 +147,7 @@ UIViewControllerTransitioningDelegate
     
     [self.baseDetailInfoCell.mapButton addTarget:self action:@selector(mapButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
-    self.baseDetailInfoCell.phoneLabel.text = self.phone;
+    self.baseDetailInfoCell.phoneLabel.text = [NSString stringWithFormat:@"电话:  %@",self.phone];
     self.baseDetailInfoCell.fromLabel.text = self.from;
     self.baseDetailInfoCell.fromPhoneLabel.text = self.fromPhone;
     
@@ -342,7 +342,7 @@ UIViewControllerTransitioningDelegate
             
             UIButton *robButton = [UIButton buttonWithType:UIButtonTypeCustom];
             robButton.frame = CGRectMake(0, Height - StatusBarAndNavigationBarHeight - height, Width, height);
-            robButton.backgroundColor = BlueColor;
+            robButton.backgroundColor = MainBlueColor;
             
             [robButton setTitle:@"立即抢单" forState:UIControlStateNormal];
             [robButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
@@ -354,7 +354,7 @@ UIViewControllerTransitioningDelegate
             
             UIButton *receiveButton = [UIButton buttonWithType:UIButtonTypeCustom];
             receiveButton.frame = CGRectMake(5, Height - StatusBarAndNavigationBarHeight - height, Width/2 - 10, height);
-            receiveButton.backgroundColor = BlueColor;
+            receiveButton.backgroundColor = MainBlueColor;
             receiveButton.layer.cornerRadius = 3;
             receiveButton.layer.masksToBounds = YES;
             [receiveButton setTitle:@"接收" forState:UIControlStateNormal];
@@ -365,7 +365,7 @@ UIViewControllerTransitioningDelegate
             
             UIButton *refuseButton = [UIButton buttonWithType:UIButtonTypeCustom];
             refuseButton.frame = CGRectMake(Width -5 - Width/2 + 10, Height - StatusBarAndNavigationBarHeight - height, Width/2 - 10, height);
-            refuseButton.backgroundColor = BlueColor;
+            refuseButton.backgroundColor = MainBlueColor;
             refuseButton.layer.cornerRadius = 3;
             refuseButton.layer.masksToBounds = YES;
             [refuseButton setTitle:@"拒绝" forState:UIControlStateNormal];
@@ -380,7 +380,7 @@ UIViewControllerTransitioningDelegate
         
         UIButton *completeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         completeButton.frame = CGRectMake(5, Height - StatusBarAndNavigationBarHeight - height, Width/2 - 10, height);
-        completeButton.backgroundColor = BlueColor;
+        completeButton.backgroundColor = MainBlueColor;
         completeButton.layer.cornerRadius = 3;
         completeButton.layer.masksToBounds = YES;
         [completeButton setTitle:@"完成" forState:UIControlStateNormal];
@@ -391,7 +391,7 @@ UIViewControllerTransitioningDelegate
         
         UIButton *recedeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         recedeButton.frame = CGRectMake(Width - 5 - Width/2 + 10, Height - StatusBarAndNavigationBarHeight - height, Width/2 - 10, height);
-        recedeButton.backgroundColor = BlueColor;
+        recedeButton.backgroundColor = MainBlueColor;
         recedeButton.layer.cornerRadius = 3;
         recedeButton.layer.masksToBounds = YES;
         [recedeButton setTitle:@"退单" forState:UIControlStateNormal];
@@ -478,8 +478,41 @@ UIViewControllerTransitioningDelegate
         
     }else if (self.state == 5){
     
+    }else if (self.state == 6){
+        
+        UIButton *agreeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        agreeButton.frame = CGRectMake(5, Height - StatusBarAndNavigationBarHeight - height, Width/2 - 10, height);
+        agreeButton.backgroundColor = BlueColor;
+        agreeButton.layer.cornerRadius = 3;
+        agreeButton.layer.masksToBounds = YES;
+        [agreeButton setTitle:@"付款" forState:UIControlStateNormal];
+        [agreeButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
+        [agreeButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateHighlighted];
+        [agreeButton addTarget:self action:@selector(agreeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:agreeButton];
+        
+        
+        UIButton *disagreeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        disagreeButton.frame = CGRectMake(Width - 5 - Width/2 + 10, Height - StatusBarAndNavigationBarHeight - height, Width/2 - 10, height);
+        disagreeButton.backgroundColor = BlueColor;
+        disagreeButton.layer.cornerRadius = 3;
+        disagreeButton.layer.masksToBounds = YES;
+        [disagreeButton setTitle:@"撤销" forState:UIControlStateNormal];
+        [disagreeButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
+        [disagreeButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateHighlighted];
+        [disagreeButton addTarget:self action:@selector(disagreeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:disagreeButton];
+        
     }
 #endif
+    
+}
+
+- (void)agreeButtonClicked {
+    
+}
+
+- (void)disagreeButtonClicked {
     
 }
 
@@ -743,6 +776,12 @@ UIViewControllerTransitioningDelegate
 #pragma mark - UITableViewDataSource -
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
+    return 1;
+    
+
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 2;
     //接口没做好，先只显示两个section
     if (self.state == 6 || self.state == 7 ||(self.state >= 10 && self.state <15)) {
@@ -752,39 +791,41 @@ UIViewControllerTransitioningDelegate
     }else {
         return 2;
     }
-
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (indexPath.section == 0) {
+    if (indexPath.row == 0) {
         
         self.cell = [[[NSBundle mainBundle] loadNibNamed:@"ProductTableViewCell" owner:self options:nil] lastObject];
+        
         [self.cell.typeButton setTitle:self.model forState:UIControlStateNormal];
         [self.cell.dateButton setTitle:self.buyDate forState:UIControlStateNormal];
         [self.cell.typeButton addTarget:self action:@selector(typeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
         [self.cell.dateButton addTarget:self action:@selector(dateButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        self.cell.proTypeLabel.text = self.productType;
         self.cell.productCodeLabel.text = self.productCode;
         self.cell.orderCodeLabel.text = self.orderCode;
         self.cell.inOutLabel.text = self.inOut;
         self.cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return self.cell;
-    }else if (indexPath.section == 1) {
+    }else if (indexPath.row == 1) {
         ServiceTypeTableViewCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"ServiceTypeTableViewCell" owner:self options:nil] lastObject];
         if (!self.appointment) {
             self.appointment = @"";
         }
-        cell.appointmentLabel.text = [NSString stringWithFormat:@"预约：%@",self.appointment];
+        cell.appointmentLabel.text = [NSString stringWithFormat:@"预约: %@",self.appointment];
+        if (!self.servicePs || [self.servicePs isEqualToString:@""]) {
+            self.servicePs = @" ";
+        }
         
-        cell.psLabel.text = self.servicePs;
-        
+        cell.psLabel.text = [NSString stringWithFormat:@"备注: %@",self.servicePs];
+        NSString *str = [self.serviceType substringFromIndex:1];
+        NSInteger length = str.length;
+        cell.serviceLabel.text = [str substringToIndex:length-1];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
-    }else if (indexPath.section == 2) {
+    }else if (indexPath.row == 2) {
         if (self.state == 6) {
             ChargebackTableViewCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"ChargebackTableViewCell" owner:self options:nil] lastObject];
             cell.chargeBackContentLabel.text = self.chargeBackContent;
@@ -801,7 +842,7 @@ UIViewControllerTransitioningDelegate
             
         }else if (self.state >= 10) {
             OverTableViewCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"OverTableViewCell" owner:self options:nil] lastObject];
-            cell.overDateLabel.text = [NSString stringWithFormat:@"完工时间：%@",@"2015年12月12日"];//self.overDate;
+            cell.overDateLabel.text = [NSString stringWithFormat:@"完工时间: %@",@"2015年12月12日"];//self.overDate;
             cell.psLabel.text = self.overPs;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
@@ -820,17 +861,14 @@ UIViewControllerTransitioningDelegate
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-        if ([self.orderCode isEqualToString:@""]) {
-            return 108;
-        }
-        return 140;
-    }else if (indexPath.section == 1) {
+    if (indexPath.row == 0) {
+        return 166;
+    }else if (indexPath.row == 1) {
         if ([self.servicePs isEqualToString:@""]) {
             return 44;
         }
         return UITableViewAutomaticDimension;
-    }else if (indexPath.section == 2) {
+    }else if (indexPath.row == 2) {
         if (self.state == 6) {
             if ([self.chargeBackContent isEqualToString:@""]) {
                 return 44;
@@ -861,7 +899,7 @@ UIViewControllerTransitioningDelegate
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 44;
 }
-
+/*
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Width, SectionHeaderHeight)];
     UILabel *infoLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, Width/4, SectionHeaderHeight)];
@@ -894,14 +932,8 @@ UIViewControllerTransitioningDelegate
     return headerView;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return SectionHeaderHeight;
-}
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return CGFLOAT_MIN;
-}
-
+*/
 
 - (void)typeButtonClicked {
     PTypeViewController *ptypeVC = [[PTypeViewController alloc]init];
