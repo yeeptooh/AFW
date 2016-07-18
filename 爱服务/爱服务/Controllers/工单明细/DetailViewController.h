@@ -14,6 +14,7 @@
 #import "ChargebackTableViewCell.h"
 #import "OverTableViewCell.h"
 #import "AssessTableViewCell.h"
+#import "PayMoneyTableViewCell.h"
 
 @interface DetailViewController : DetailPageBaseViewController
 
@@ -62,7 +63,8 @@
 
 @property (nonatomic, strong) NSString *BuyerFullAddress_Incept;
 
-
+@property (nonatomic, strong) NSString *payMoneyStr;
+@property (nonatomic, strong) NSString *priceStr;
 
 
 @end

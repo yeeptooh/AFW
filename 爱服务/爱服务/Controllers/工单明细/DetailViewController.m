@@ -21,9 +21,13 @@
 #import "AcceptViewController.h"
 #import "DispatchViewController.h"
 
+
 #import "DialogAnimation.h"
 #import "ButtonPresentAnimation.h"
 #import "ButtonDismissAnimation.h"
+
+#import "AddOrderViewController.h"
+
 
 #import "MBProgressHUD.h"
 #import <AVFoundation/AVFoundation.h>
@@ -413,7 +417,7 @@ UIViewControllerTransitioningDelegate
     if (self.state == 1) {
         UIButton *dispatchButton = [UIButton buttonWithType:UIButtonTypeCustom];
         dispatchButton.frame = CGRectMake(5, Height - StatusBarAndNavigationBarHeight - height, Width/2 - 10, height);
-        dispatchButton.backgroundColor = BlueColor;
+        dispatchButton.backgroundColor = MainBlueColor;
         dispatchButton.layer.cornerRadius = 3;
         dispatchButton.layer.masksToBounds = YES;
         [dispatchButton setTitle:@"派工" forState:UIControlStateNormal];
@@ -425,7 +429,7 @@ UIViewControllerTransitioningDelegate
         
         UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
         cancelButton.frame = CGRectMake(Width - 5 - Width/2 + 10, Height - StatusBarAndNavigationBarHeight - height, Width/2 - 10, height);
-        cancelButton.backgroundColor = BlueColor;
+        cancelButton.backgroundColor = MainBlueColor;
         cancelButton.layer.cornerRadius = 3;
         cancelButton.layer.masksToBounds = YES;
         [cancelButton setTitle:@"撤销" forState:UIControlStateNormal];
@@ -438,7 +442,7 @@ UIViewControllerTransitioningDelegate
         
         UIButton *dispatchButton = [UIButton buttonWithType:UIButtonTypeCustom];
         dispatchButton.frame = CGRectMake(5, Height - StatusBarAndNavigationBarHeight - height, Width/2 - 10, height);
-        dispatchButton.backgroundColor = BlueColor;
+        dispatchButton.backgroundColor = MainBlueColor;
         dispatchButton.layer.cornerRadius = 3;
         dispatchButton.layer.masksToBounds = YES;
         [dispatchButton setTitle:@"付款" forState:UIControlStateNormal];
@@ -450,13 +454,13 @@ UIViewControllerTransitioningDelegate
         
         UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
         cancelButton.frame = CGRectMake(Width - 5 - Width/2 + 10, Height - StatusBarAndNavigationBarHeight - height, Width/2 - 10, height);
-        cancelButton.backgroundColor = BlueColor;
+        cancelButton.backgroundColor = MainBlueColor;
         cancelButton.layer.cornerRadius = 3;
         cancelButton.layer.masksToBounds = YES;
-        [cancelButton setTitle:@"撤销" forState:UIControlStateNormal];
+        [cancelButton setTitle:@"修改" forState:UIControlStateNormal];
         [cancelButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
         [cancelButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateHighlighted];
-        [cancelButton addTarget:self action:@selector(cancelButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        [cancelButton addTarget:self action:@selector(changeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:cancelButton];
         
     }else if (self.state == 4) {
@@ -467,7 +471,7 @@ UIViewControllerTransitioningDelegate
             
             UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
             cancelButton.frame = CGRectMake(0, Height - StatusBarAndNavigationBarHeight - height, Width, height);
-            cancelButton.backgroundColor = BlueColor;
+            cancelButton.backgroundColor = MainBlueColor;
             
             [cancelButton setTitle:@"撤销" forState:UIControlStateNormal];
             [cancelButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
@@ -483,10 +487,10 @@ UIViewControllerTransitioningDelegate
         
         UIButton *agreeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         agreeButton.frame = CGRectMake(5, Height - StatusBarAndNavigationBarHeight - height, Width/2 - 10, height);
-        agreeButton.backgroundColor = BlueColor;
+        agreeButton.backgroundColor = MainBlueColor;
         agreeButton.layer.cornerRadius = 3;
         agreeButton.layer.masksToBounds = YES;
-        [agreeButton setTitle:@"付款" forState:UIControlStateNormal];
+        [agreeButton setTitle:@"同意" forState:UIControlStateNormal];
         [agreeButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
         [agreeButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateHighlighted];
         [agreeButton addTarget:self action:@selector(agreeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -495,10 +499,10 @@ UIViewControllerTransitioningDelegate
         
         UIButton *disagreeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         disagreeButton.frame = CGRectMake(Width - 5 - Width/2 + 10, Height - StatusBarAndNavigationBarHeight - height, Width/2 - 10, height);
-        disagreeButton.backgroundColor = BlueColor;
+        disagreeButton.backgroundColor = MainBlueColor;
         disagreeButton.layer.cornerRadius = 3;
         disagreeButton.layer.masksToBounds = YES;
-        [disagreeButton setTitle:@"撤销" forState:UIControlStateNormal];
+        [disagreeButton setTitle:@"不同意" forState:UIControlStateNormal];
         [disagreeButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
         [disagreeButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateHighlighted];
         [disagreeButton addTarget:self action:@selector(disagreeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -509,12 +513,112 @@ UIViewControllerTransitioningDelegate
     
 }
 
-- (void)agreeButtonClicked {
+- (void)changeButtonClicked {
+    
     
 }
 
-- (void)disagreeButtonClicked {
+- (void)agreeButtonClicked {
+    UserModel *userModel = [UserModel readUserModel];
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.minSize = CGSizeMake(110, 100);
+    hud.label.font = font(14);
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=backtrack",HomeURL];
+    NSDictionary *params =@{
+                            @"userId":@(userModel.uid),
+                            @"taskId":@(self.ID)
+                            };
+    URL = [URL stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     
+    [manager POST:URL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        if ([string isEqualToString:@"1"]) {
+            MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+            UIImage *image = [[UIImage imageNamed:@"Checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+            hud.customView = imageView;
+            hud.mode = MBProgressHUDModeCustomView;
+            hud.label.text = @"同意成功";
+            [hud hideAnimated:YES afterDelay:1.25f];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        }else {
+            MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+            UIImage *image = [[UIImage imageNamed:@"Checkerror"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+            hud.customView = imageView;
+            hud.mode = MBProgressHUDModeCustomView;
+            hud.label.text = @"同意失败";
+            [hud hideAnimated:YES afterDelay:1.25f];
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+        UIImage *image = [[UIImage imageNamed:@"Checkerror"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+        hud.customView = imageView;
+        hud.mode = MBProgressHUDModeCustomView;
+        hud.label.text = @"同意失败";
+        [hud hideAnimated:YES afterDelay:1.25f];
+        
+    }];
+}
+
+- (void)disagreeButtonClicked {
+    UserModel *userModel = [UserModel readUserModel];
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.minSize = CGSizeMake(110, 100);
+    hud.label.font = font(14);
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=notbacktrack",HomeURL];
+    NSDictionary *params =@{
+                            @"userId":@(userModel.uid),
+                            @"taskId":@(self.ID)
+                            };
+    URL = [URL stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    
+    [manager POST:URL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        if ([string isEqualToString:@"1"]) {
+            MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+            UIImage *image = [[UIImage imageNamed:@"Checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+            hud.customView = imageView;
+            hud.mode = MBProgressHUDModeCustomView;
+            hud.label.text = @"不同意成功";
+            [hud hideAnimated:YES afterDelay:1.25f];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        }else {
+            MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+            UIImage *image = [[UIImage imageNamed:@"Checkerror"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+            hud.customView = imageView;
+            hud.mode = MBProgressHUDModeCustomView;
+            hud.label.text = @"不同意失败";
+            [hud hideAnimated:YES afterDelay:1.25f];
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+        UIImage *image = [[UIImage imageNamed:@"Checkerror"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+        hud.customView = imageView;
+        hud.mode = MBProgressHUDModeCustomView;
+        hud.label.text = @"不同意失败";
+        [hud hideAnimated:YES afterDelay:1.25f];
+        
+    }];
 }
 
 - (void)payButtonClicked {
@@ -537,7 +641,7 @@ UIViewControllerTransitioningDelegate
             hud.mode = MBProgressHUDModeCustomView;
             hud.label.text = @"付款成功";
             [hud hideAnimated:YES afterDelay:1.25f];
-            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateMoney object:nil];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.navigationController popViewControllerAnimated:YES];
             });
@@ -569,7 +673,7 @@ UIViewControllerTransitioningDelegate
     NSString *URL = [NSString stringWithFormat:@"%@Common.ashx?action=getassigner&taskId=%@&comId=%@",HomeURL,@(self.ID),@(userModel.comid)];
     URL = [URL stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     [manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@",responseObject);
+        
         if (self.CSList.count != 0) {
             [self.CSList removeAllObjects];
         }
@@ -739,12 +843,14 @@ UIViewControllerTransitioningDelegate
 }
 
 - (void)completeButtonClicked {
-    
+    NSString *str = [self.serviceType substringFromIndex:1];
+    NSInteger length = str.length;
+    NSString *type = [str substringToIndex:length-1];
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"AVCan"]) {
         CompleteButtonViewController *cbVC = [[CompleteButtonViewController alloc]init];
         cbVC.inOut = self.inOut;
         cbVC.ID = self.ID;
-        
+        cbVC.type = type;
         [self.navigationController pushViewController:cbVC animated:YES];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"AVCan"];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -755,6 +861,7 @@ UIViewControllerTransitioningDelegate
             CompleteButtonViewController *cbVC = [[CompleteButtonViewController alloc]init];
             cbVC.inOut = self.inOut;
             cbVC.ID = self.ID;
+            cbVC.type = type;
             [self.navigationController pushViewController:cbVC animated:YES];
         }else {
             [self presentViewController:self.alertController animated:YES completion:nil];
@@ -783,6 +890,7 @@ UIViewControllerTransitioningDelegate
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+#if Environment_Mode == 1
     return 2;
     //接口没做好，先只显示两个section
     if (self.state == 6 || self.state == 7 ||(self.state >= 10 && self.state <15)) {
@@ -792,10 +900,29 @@ UIViewControllerTransitioningDelegate
     }else {
         return 2;
     }
+#elif Environment_Mode == 2
+    
+    if ([self.priceStr floatValue] > 0) {
+        return 3;
+    }else {
+        return 2;
+    }
+    
+    //接口没做好，先只显示两个section
+    if (self.state == 6 || self.state == 7 ||(self.state >= 10 && self.state <15)) {
+        return 3;
+    }else if (self.state >= 15) {
+        return 4;
+    }else {
+        return 2;
+    }
+#endif
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+#if Environment_Mode == 1
+
     if (indexPath.row == 0) {
         
         self.cell = [[[NSBundle mainBundle] loadNibNamed:@"ProductTableViewCell" owner:self options:nil] lastObject];
@@ -858,6 +985,54 @@ UIViewControllerTransitioningDelegate
             return cell;
         }
     }
+#elif Environment_Mode == 2
+    
+    if (indexPath.row == 0) {
+        
+        self.cell = [[[NSBundle mainBundle] loadNibNamed:@"ProductTableViewCell" owner:self options:nil] lastObject];
+        
+        [self.cell.typeButton setTitle:self.model forState:UIControlStateNormal];
+        [self.cell.dateButton setTitle:self.buyDate forState:UIControlStateNormal];
+        [self.cell.typeButton addTarget:self action:@selector(typeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        [self.cell.dateButton addTarget:self action:@selector(dateButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        self.cell.proTypeLabel.text = self.productType;
+        self.cell.productCodeLabel.text = self.productCode;
+        self.cell.orderCodeLabel.text = self.orderCode;
+        self.cell.inOutLabel.text = self.inOut;
+        self.cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return self.cell;
+    }else if (indexPath.row == 1) {
+        ServiceTypeTableViewCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"ServiceTypeTableViewCell" owner:self options:nil] lastObject];
+        if (!self.appointment) {
+            self.appointment = @"";
+        }
+        cell.appointmentLabel.text = [NSString stringWithFormat:@"预约: %@",self.appointment];
+        if (!self.servicePs || [self.servicePs isEqualToString:@""]) {
+            self.servicePs = @" ";
+        }
+        
+        cell.psLabel.text = [NSString stringWithFormat:@"备注: %@",self.servicePs];
+        NSString *str = [self.serviceType substringFromIndex:1];
+        NSInteger length = str.length;
+        cell.serviceLabel.text = [str substringToIndex:length-1];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+    }else if (indexPath.row == 2) {
+        PayMoneyTableViewCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"PayMoneyTableViewCell" owner:self options:nil] lastObject];
+        
+        if (![self.payMoneyStr floatValue]) {
+            cell.hadPayMoneyLabel.text = @"未付款";
+        }else {
+            cell.hadPayMoneyLabel.text = @"已付款";
+        }
+        
+        cell.payMoneyInfoLabel.text = [NSString stringWithFormat:@"金额: %@",self.payMoneyStr];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+        
+    }
+    
+#endif
     return nil;
 }
 

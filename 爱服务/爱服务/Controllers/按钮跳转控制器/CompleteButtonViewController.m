@@ -735,8 +735,51 @@ static NSInteger number;
     }
     
     number = 1;
-    //验证码不是否必填
+    
+    if ([self.type containsString:@"安装"]) {
+        
+        if (!self.firstImageView.image && !self.secondImageView.image && !self.thirdImageView.image) {
+            MBProgressHUD *successHUD = [[MBProgressHUD alloc]initWithView:self.tableView];
+            successHUD.mode = MBProgressHUDModeText;
+            successHUD.label.font = font(14);
+            successHUD.label.text = @"安装单请上传照片";
+            [self.tableView addSubview:successHUD];
+            
+            [successHUD showAnimated:YES];
+            
+            
+            [successHUD hideAnimated:YES afterDelay:1.2];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                number = 0;
+            });
+            [successHUD removeFromSuperViewOnHide];
+            
+            return ;
+        }
+    }else if ([self.type containsString:@"维修"]){
+        if ([((UITextField *)[self.tableView viewWithTag:1002]).text isEqualToString:@""] || !((UITextField *)[self.tableView viewWithTag:1002]).text) {
+            MBProgressHUD *successHUD = [[MBProgressHUD alloc]initWithView:self.tableView];
+            successHUD.mode = MBProgressHUDModeText;
+            successHUD.label.font = font(14);
+            successHUD.label.text = @"维修单请输入故障原因";
+            [self.tableView addSubview:successHUD];
+            
+            [successHUD showAnimated:YES];
+            
+            
+            [successHUD hideAnimated:YES afterDelay:1.2];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                number = 0;
+            });
+            [successHUD removeFromSuperViewOnHide];
+            
+            return ;
+        }
+    }
+    
+    
     if ([self.inOut isEqualToString:@"保外"]) {
+        
         
         if ([((UITextField *)[self.tableView viewWithTag:1006]).text isEqualToString:@""] || !((UITextField *)[self.tableView viewWithTag:1006]).text) {
             MBProgressHUD *successHUD = [[MBProgressHUD alloc]initWithView:self.tableView];

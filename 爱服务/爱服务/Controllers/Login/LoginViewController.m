@@ -218,17 +218,25 @@ UITextFieldDelegate
 }
 
 - (void)loginNetWorking {
+    
     _HUD = [[MBProgressHUD alloc]initWithView:self.view];
     _HUD.mode = MBProgressHUDModeIndeterminate;
     [self.view addSubview:_HUD];
-    
     [self.HUD showAnimated:YES];
+    
+#if Environment_Mode == 1
     NSString *UUID = [[UIDevice currentDevice].identifierForVendor UUIDString];
     NSDictionary *params = @{
                              @"name":self.accountTextField.text,
                              @"password":self.passwordTextField.text,
                              @"imei":UUID
                              };
+#elif Environment_Mode == 2
+    NSDictionary *params = @{
+                             @"name":self.accountTextField.text,
+                             @"password":self.passwordTextField.text
+                             };
+#endif
     NSString *URL = [NSString stringWithFormat:@"%@Passport.ashx?action=login",HomeURL];
 
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -272,13 +280,13 @@ UITextFieldDelegate
 
             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
             NSString *countString = [NSString stringWithFormat:@"%@Task.ashx?action=gettaskcount&comid=%ld&uid=%ld&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
-            NSLog(@"countString = %@",countString);
+            
             manager.responseSerializer = [AFHTTPResponseSerializer serializer];
             [manager GET:countString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 
                 NSString *allString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
                 NSArray *countList = [allString componentsSeparatedByString:@","];
-                NSLog(@"%@",countList);
+                
                 [[NSUserDefaults standardUserDefaults] setObject:countList forKey:@"countList"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateMoney object:nil];

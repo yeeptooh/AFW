@@ -21,13 +21,13 @@
                             <constraint firstAttribute="width" constant="70" id="trj-Nb-Yds"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7yt-Qd-186">
                         <rect key="frame" x="10" y="39" width="300" height="50.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -44,7 +44,7 @@
                 <outlet property="chargeBackContentLabel" destination="7yt-Qd-186" id="GId-vg-JHE"/>
                 <outlet property="chargeBackReasonLabel" destination="lK2-nl-New" id="hxv-o9-Phb"/>
             </connections>
-            <point key="canvasLocation" x="258" y="274"/>
+            <point key="canvasLocation" x="304" y="270"/>
         </tableViewCell>
     </objects>
 </document>

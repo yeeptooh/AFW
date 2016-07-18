@@ -46,7 +46,7 @@ UITableViewDataSource
     }else {
         closeButton.frame = CGRectMake(0, Height - 200 - 50, (self.view.bounds.size.width - 40)/2-0.3, 50);
     }
-    closeButton.backgroundColor = BlueColor;
+    closeButton.backgroundColor = MainBlueColor;
     [closeButton addTarget:self action:@selector(closeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:closeButton];
     
@@ -163,7 +163,9 @@ UITableViewDataSource
                 hud.detailsLabel.font = font(14);
                 [hud hideAnimated:YES afterDelay:1.25];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [self.detailVC.navigationController popToRootViewControllerAnimated:YES];
+                    [self dismissViewControllerAnimated:YES completion:^{
+                        [self.detailVC.navigationController popToRootViewControllerAnimated:YES];
+                    }];
                 });
             }
             

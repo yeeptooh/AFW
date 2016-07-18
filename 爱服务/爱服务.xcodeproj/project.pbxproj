@@ -396,6 +396,10 @@
 		4ADEDF1A1D17E89900FE3412 /* RSADataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ADEDEC51D17E89900FE3412 /* RSADataSigner.m */; };
 		4ADEDF1B1D17E89900FE3412 /* RSADataVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ADEDEC71D17E89900FE3412 /* RSADataVerifier.m */; };
 		4ADEDF1D1D17E96500FE3412 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ADEDF1C1D17E96500FE3412 /* CoreMotion.framework */; };
+		4AEFBE2C1D3CC99A001BB252 /* PayMoneyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AEFBE2A1D3CC99A001BB252 /* PayMoneyTableViewCell.m */; };
+		4AEFBE2D1D3CC99A001BB252 /* PayMoneyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AEFBE2A1D3CC99A001BB252 /* PayMoneyTableViewCell.m */; };
+		4AEFBE2E1D3CC99A001BB252 /* PayMoneyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AEFBE2B1D3CC99A001BB252 /* PayMoneyTableViewCell.xib */; };
+		4AEFBE2F1D3CC99A001BB252 /* PayMoneyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AEFBE2B1D3CC99A001BB252 /* PayMoneyTableViewCell.xib */; };
 		4AF52EA11CC4751900E25FC4 /* MBProgressHUD+Assoication.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF52EA01CC4751900E25FC4 /* MBProgressHUD+Assoication.m */; };
 		4AF52EAD1CC4B2E900E25FC4 /* ButtonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF52EAC1CC4B2E900E25FC4 /* ButtonViewController.m */; };
 		4AF52EB01CC4B8F200E25FC4 /* ButtonPresentAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF52EAF1CC4B8F200E25FC4 /* ButtonPresentAnimation.m */; };
@@ -875,6 +879,9 @@
 		4ADEDF121D17E89900FE3412 /* x509_vfy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x509_vfy.h; sourceTree = "<group>"; };
 		4ADEDF131D17E89900FE3412 /* x509v3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x509v3.h; sourceTree = "<group>"; };
 		4ADEDF1C1D17E96500FE3412 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		4AEFBE291D3CC99A001BB252 /* PayMoneyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayMoneyTableViewCell.h; sourceTree = "<group>"; };
+		4AEFBE2A1D3CC99A001BB252 /* PayMoneyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayMoneyTableViewCell.m; sourceTree = "<group>"; };
+		4AEFBE2B1D3CC99A001BB252 /* PayMoneyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayMoneyTableViewCell.xib; sourceTree = "<group>"; };
 		4AF52E9F1CC4751900E25FC4 /* MBProgressHUD+Assoication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Assoication.h"; sourceTree = "<group>"; };
 		4AF52EA01CC4751900E25FC4 /* MBProgressHUD+Assoication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+Assoication.m"; sourceTree = "<group>"; };
 		4AF52EAB1CC4B2E900E25FC4 /* ButtonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonViewController.h; sourceTree = "<group>"; };
@@ -1523,6 +1530,9 @@
 				4A5274751D113F3E00B056C6 /* PayTableViewCell.xib */,
 				4A77B29E1D2DE828000B6CE6 /* ZDDBezierPathView.h */,
 				4A77B29F1D2DE828000B6CE6 /* ZDDBezierPathView.m */,
+				4AEFBE291D3CC99A001BB252 /* PayMoneyTableViewCell.h */,
+				4AEFBE2A1D3CC99A001BB252 /* PayMoneyTableViewCell.m */,
+				4AEFBE2B1D3CC99A001BB252 /* PayMoneyTableViewCell.xib */,
 			);
 			name = "爱服务";
 			sourceTree = "<group>";
@@ -1940,6 +1950,7 @@
 				4A7CA6AC1CDB16FC000232CB /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				4A4EDB731CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.xib in Resources */,
 				4A7749881CC07ECA008B9611 /* ProductTableViewCell.xib in Resources */,
+				4AEFBE2E1D3CC99A001BB252 /* PayMoneyTableViewCell.xib in Resources */,
 				4A7749921CC09DC8008B9611 /* ChargebackTableViewCell.xib in Resources */,
 				4A6BE9431CFC4863002F20C1 /* Push Config.plist in Resources */,
 				4A4F99F41D2D016200374F9B /* HYQiHei-55S.otf in Resources */,
@@ -1986,6 +1997,7 @@
 				4A5D25E51D347F6300630029 /* CSMainTableViewCell.xib in Resources */,
 				4A4954641D28B55B00E05868 /* AlipaySDK.bundle in Resources */,
 				4A64240C1D19396600F26BA9 /* ServiceTypeTableViewCell.xib in Resources */,
+				4AEFBE2F1D3CC99A001BB252 /* PayMoneyTableViewCell.xib in Resources */,
 				4A64240E1D19396600F26BA9 /* Assets.xcassets in Resources */,
 				4A64240F1D19396600F26BA9 /* MainTableViewCell.xib in Resources */,
 				4A6424101D19396600F26BA9 /* MJRefresh.bundle in Resources */,
@@ -2172,6 +2184,7 @@
 				4A7749911CC09DC8008B9611 /* ChargebackTableViewCell.m in Sources */,
 				4AF52EB61CC4BEC600E25FC4 /* HYBModalTransition.m in Sources */,
 				4A64A1051D22298A00A3DC7C /* CityViewController.m in Sources */,
+				4AEFBE2C1D3CC99A001BB252 /* PayMoneyTableViewCell.m in Sources */,
 				4A62D1EE1D3616EB009A80C3 /* DispatchViewController.m in Sources */,
 				4A4BD2DB1CB8D903009DA0B9 /* UIImageView+WebCache.m in Sources */,
 				4A6973711CBB4D03002A036C /* PartsRequestViewController.m in Sources */,
@@ -2399,6 +2412,7 @@
 				4A6423D61D19396600F26BA9 /* UIImage+MultiFormat.m in Sources */,
 				4A6799201D23DDEB00A8E0F5 /* DialogTableViewCell.m in Sources */,
 				4A6423D71D19396600F26BA9 /* MJRefreshBackFooter.m in Sources */,
+				4AEFBE2D1D3CC99A001BB252 /* PayMoneyTableViewCell.m in Sources */,
 				4A6423D81D19396600F26BA9 /* PayTableViewCell.m in Sources */,
 				4A6423D91D19396600F26BA9 /* Order.m in Sources */,
 				4A6423DA1D19396600F26BA9 /* ViewController+MASAdditions.m in Sources */,
