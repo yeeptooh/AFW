@@ -472,6 +472,7 @@ UITextFieldDelegate
     
     [self.manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
+        NSLog(@"responseObject =%@",responseObject);
         [self.activityView stopAnimating];
         for (NSDictionary *dic in responseObject[@"task"]) {
             OrderModel *ordelModel = [OrderModel orderFromDictionary:dic];
@@ -589,7 +590,7 @@ UITextFieldDelegate
     
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@",self.orderModel.serviceType, self.orderModel.productType]];
     
-    [attributedString addAttributes:@{NSForegroundColorAttributeName:beautifulBlueColor} range:[self.orderModel.serviceType rangeOfString:self.orderModel.serviceType]];
+    [attributedString addAttributes:@{NSForegroundColorAttributeName:color(248, 89, 34, 1)} range:[self.orderModel.serviceType rangeOfString:self.orderModel.serviceType]];
     cell.productTypeLabel.attributedText = attributedString;
     cell.nameLabel.text = self.orderModel.name;
     cell.phoneLabel.text = self.orderModel.phone;
@@ -651,6 +652,10 @@ UITextFieldDelegate
     detailVC.toUserName = self.orderModel.ToUserName;
     detailVC.BuyerFullAddress_Incept = self.orderModel.BuyerFullAddress_Incept;
     
+    detailVC.payMoneyStr = self.orderModel.PayMoney;
+    detailVC.priceStr = self.orderModel.priceStr;
+    NSLog(@"self.orderModel.price = %@",[self.orderModel.price substringToIndex:self.orderModel.price.length - 1]);
+    NSLog(@"detailVC.priceStr = %@",detailVC.priceStr);
     [self.navigationController pushViewController:detailVC animated:YES];
     
 }

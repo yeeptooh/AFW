@@ -12,4 +12,6 @@
 @property (nonatomic, assign) NSInteger ID;
 
 @property (nonatomic, strong) NSString *inOut;
+
+@property (nonatomic, strong) NSString *type;
 @end

@@ -172,12 +172,19 @@ static NSInteger tag = 0;
 }
 
 - (void)upDateNetWorking {
-    
+#if Environment_Mode == 1
     NSDictionary *params = @{
                              @"name":[[NSUserDefaults standardUserDefaults] objectForKey:@"username"],
                              @"password":[[NSUserDefaults standardUserDefaults] objectForKey:@"password"],
                              @"imei":@"1"
                              };
+#elif Environment_Mode == 2
+    NSDictionary *params = @{
+                             @"name":[[NSUserDefaults standardUserDefaults] objectForKey:@"username"],
+                             @"password":[[NSUserDefaults standardUserDefaults] objectForKey:@"password"]
+                             };
+#endif
+    
     NSString *URL = [NSString stringWithFormat:@"%@Passport.ashx?action=login",HomeURL];
 
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];

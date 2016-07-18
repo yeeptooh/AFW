@@ -81,6 +81,9 @@
         }else{
             self.price = [NSString stringWithFormat:@"%@元",dictionary[@"PriceAdvice"]];
         }
+        
+        self.priceStr = dictionary[@"Price"];
+        
         self.PayMoney = dictionary[@"PayMoney"];
         self.AddMoney = dictionary[@"AddMoney"];
         

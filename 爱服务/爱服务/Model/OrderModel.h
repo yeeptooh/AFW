@@ -69,6 +69,8 @@
 @property (nonatomic, strong) NSString *ProductClassify2Name;
 @property (nonatomic, strong) NSString *WaiterName;
 
+@property (nonatomic, strong) NSString *priceStr;
+
 + (instancetype)orderFromDictionary:(NSDictionary *)dictionary;
 
 @end

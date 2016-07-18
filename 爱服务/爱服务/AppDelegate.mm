@@ -41,12 +41,15 @@ UIAlertViewDelegate
 >
 
 @property (nonatomic, assign) NSInteger bitch;
+@property (nonatomic, assign) NSInteger fuckUBaby;
 
 #if Environment_Mode == 1
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) UIAlertController *locationAlertController;
 @property (nonatomic, strong) UIAlertController *appLocationAlertController;
 @property (nonatomic, strong) NSTimer *updateLocationTimer;
+
+
 
 #elif Environment_Mode == 2
 #endif
@@ -178,7 +181,7 @@ static BOOL isProduction = FALSE;
     
 #elif Environment_Mode == 2
 #endif
-
+    self.fuckUBaby = 0;
     return YES;
 }
 
@@ -239,13 +242,12 @@ static BOOL isProduction = FALSE;
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
     CLLocation *location = [locations lastObject];
     UserModel *userModel = [UserModel readUserModel];
-    
-    NSLog(@"%@%@",@(location.coordinate.latitude), @(location.coordinate.longitude));
 
     NSString *URL = [NSString stringWithFormat:@"%@common.ashx?action=update_user_lng_lat",HomeURL];
     NSDictionary *dic = @{
                           @"userid":@(userModel.uid),
                           @"lng":@(location.coordinate.longitude),
+                          @"lat":@(location.coordinate.latitude)
                          };
     AFHTTPSessionManager *afManager = [AFHTTPSessionManager manager];
     afManager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -256,14 +258,31 @@ static BOOL isProduction = FALSE;
             NSDictionary *dic = (NSDictionary *)jsonObj;
             
             NSString *UUID = [[UIDevice currentDevice].identifierForVendor UUIDString];
-            NSLog(@"%@",UUID);
+
             if (![dic[@"imei"] isEqualToString:UUID]) {
                 
-                if (![[self activityViewController] isMemberOfClass:[LoginViewController class]]) {
+                if (![[self activityViewController] isKindOfClass:[LoginViewController class]]) {
+                    
+                    NSLog(@"12345");
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        LoginViewController *loginVC = [[LoginViewController alloc] init];
-                        loginVC.passwordTextField.text = @"";
-                        [[self activityViewController] presentViewController:loginVC animated:YES completion:nil];
+                        
+                        if (self.fuckUBaby) {
+                            LoginViewController *loginVC = [[LoginViewController alloc] init];
+                            loginVC.passwordTextField.text = @"";
+                            [[self activityViewController] presentViewController:loginVC animated:YES completion:nil];
+                        }else {
+                            UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"本账号已在另一台设备登录" preferredStyle:UIAlertControllerStyleAlert];
+                            UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                                LoginViewController *loginVC = [[LoginViewController alloc] init];
+                                loginVC.passwordTextField.text = @"";
+                                [[self activityViewController] presentViewController:loginVC animated:YES completion:nil];
+                            }];
+                            
+                            [alert addAction:action];
+                            
+                            [[self activityViewController] presentViewController:alert animated:YES completion:nil];
+                        }
+                        
                     });
                     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"logOut"];
                     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -275,7 +294,7 @@ static BOOL isProduction = FALSE;
         }
        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        NSLog(@"%@",error.userInfo);
+
     }];
     
     [manager stopUpdatingLocation];
@@ -332,7 +351,7 @@ static BOOL isProduction = FALSE;
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-//    application.applicationIconBadgeNumber ++;
+
     if (application.applicationState == UIApplicationStateActive) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"有可抢工单" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:kBadgeValueChanged object:nil];
@@ -503,7 +522,7 @@ static BOOL isProduction = FALSE;
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     HomeViewController *homeVC = [[HomeViewController alloc]init];
     [homeVC.timer setFireDate:[NSDate distantFuture]];
-    
+    self.fuckUBaby = 1;
 #if Environment_Mode == 1
     
         UIApplication *app = [UIApplication sharedApplication];
@@ -551,6 +570,7 @@ static BOOL isProduction = FALSE;
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     application.applicationIconBadgeNumber = 0;
+    self.fuckUBaby = 0;
     [JPUSHService resetBadge];
     HomeViewController *homeVC = [[HomeViewController alloc]init];
     [homeVC.timer setFireDate:[NSDate distantPast]];
@@ -563,12 +583,19 @@ static BOOL isProduction = FALSE;
 }
 
 - (void)checkNetWorking {
-    
+#if Environment_Mode == 1
     NSDictionary *params = @{
                              @"name":[[NSUserDefaults standardUserDefaults] objectForKey:@"username"],
                              @"password":[[NSUserDefaults standardUserDefaults] objectForKey:@"password"],
                              @"imei":@"1"
                              };
+#elif Environment_Mode == 2
+    NSDictionary *params = @{
+                             @"name":[[NSUserDefaults standardUserDefaults] objectForKey:@"username"],
+                             @"password":[[NSUserDefaults standardUserDefaults] objectForKey:@"password"]
+                             };
+#endif
+    
     NSString *URL = [NSString stringWithFormat:@"%@Passport.ashx?action=login",HomeURL];
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
