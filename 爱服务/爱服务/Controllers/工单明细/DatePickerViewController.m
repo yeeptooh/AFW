@@ -36,7 +36,7 @@ UIViewControllerTransitioningDelegate
     backBtn.frame = CGRectMake(Width/2 + Width/8, 260, Width/4, 40);
     backBtn.layer.cornerRadius = 5;
     backBtn.layer.masksToBounds = YES;
-    backBtn.backgroundColor = color(59, 165, 249, 1);
+    backBtn.backgroundColor = MainBlueColor;
     [backBtn setTitleColor:color(245, 245, 245, 1) forState:UIControlStateNormal];
     [backBtn setTitleColor:color(210, 210, 210, 1) forState:UIControlStateHighlighted];
     [backBtn addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -47,7 +47,7 @@ UIViewControllerTransitioningDelegate
     [saveBtn setTitle:@"确定" forState:UIControlStateNormal];
     saveBtn.layer.cornerRadius = 5;
     saveBtn.layer.masksToBounds = YES;
-    saveBtn.backgroundColor = color(59, 165, 249, 1);
+    saveBtn.backgroundColor = MainBlueColor;
     [saveBtn setTitleColor:color(245, 245, 245, 1) forState:UIControlStateNormal];
     [saveBtn setTitleColor:color(210, 210, 210, 1) forState:UIControlStateHighlighted];
     [saveBtn addTarget:self action:@selector(saveButtonClicked:) forControlEvents:UIControlEventTouchUpInside];

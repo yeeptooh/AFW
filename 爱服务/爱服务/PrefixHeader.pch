@@ -16,10 +16,22 @@
 #import "MJRefresh.h"
 #import <Foundation/Foundation.h>
 #import "HYBModalTransition.h"
+
+
+#define NSLog(format, ...) do {                                                                          \
+fprintf(stderr, "<%s : %d> %s\n",                                           \
+        [[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String],  \
+        __LINE__, __func__);                                                        \
+(NSLog)((format), ##__VA_ARGS__);                                           \
+fprintf(stderr, "-------\n");                                               \
+} while (0)
+
+
 #if Environment_Mode == 1
+
 #define HomeURL @"http://i.51ifw.com/forapp/"
 //18038664988
-//#define HomeURL @"http://192.168.1.228:90/forapp/"
+//#define HomeURL @"http://192.168.1.173:90/forapp/"
 #elif Environment_Mode == 2
 #define HomeURL @"http://i.51ifw.com/forapp2/"
 //#define HomeURL @"http://?192.168.1.228:90/forapp2/"

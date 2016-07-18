@@ -237,7 +237,7 @@ WKUIDelegate
         height = 49;
     }
     quitButton.frame = CGRectMake(0, Height - StatusBarAndNavigationBarHeight - height, Width, height);
-    quitButton.backgroundColor = color(59, 165, 249, 1);
+    quitButton.backgroundColor = MainBlueColor;
     [self.view addSubview:quitButton];
 #elif Environment_Mode == 2
     
@@ -256,7 +256,9 @@ WKUIDelegate
     [self.navigationController popViewControllerAnimated:YES];
     NSArray *vcList = self.navigationController.viewControllers;
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    [vcList[0] presentViewController:[[LoginViewController alloc]init] animated:YES completion:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [vcList[0] presentViewController:[[LoginViewController alloc]init] animated:YES completion:nil];
+    });
     
 }
 

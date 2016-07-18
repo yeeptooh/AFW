@@ -241,8 +241,7 @@ static BOOL isProduction = FALSE;
     UserModel *userModel = [UserModel readUserModel];
     
     NSLog(@"%@%@",@(location.coordinate.latitude), @(location.coordinate.longitude));
-//    /common.ashx?action=update_user_lng_lat
-    //userid,lng,lat
+
     NSString *URL = [NSString stringWithFormat:@"%@common.ashx?action=update_user_lng_lat",HomeURL];
     NSDictionary *dic = @{
                           @"userid":@(userModel.uid),
@@ -251,21 +250,30 @@ static BOOL isProduction = FALSE;
     AFHTTPSessionManager *afManager = [AFHTTPSessionManager manager];
     afManager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [afManager POST:URL parameters:dic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        NSLog(@"%@",responseObject);
-        /*
-        NSString *UUID = [[UIDevice currentDevice].identifierForVendor UUIDString];
-        if (![responseObject[@"result"] isEqualToString:UUID]) {
+        
+        id jsonObj = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        if ([jsonObj isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *dic = (NSDictionary *)jsonObj;
             
-                LoginViewController *loginVC = [[LoginViewController alloc] init];
-                loginVC.passwordTextField.text = @"";
-                [[self activityViewController] presentViewController:loginVC animated:YES completion:nil];
-                [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"logOut"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"hadLaunch"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-            
+            NSString *UUID = [[UIDevice currentDevice].identifierForVendor UUIDString];
+            NSLog(@"%@",UUID);
+            if (![dic[@"imei"] isEqualToString:UUID]) {
+                
+                if (![[self activityViewController] isMemberOfClass:[LoginViewController class]]) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        LoginViewController *loginVC = [[LoginViewController alloc] init];
+                        loginVC.passwordTextField.text = @"";
+                        [[self activityViewController] presentViewController:loginVC animated:YES completion:nil];
+                    });
+                    [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"logOut"];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"hadLaunch"];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                }
+                
+            }
         }
-         */
+       
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
 //        NSLog(@"%@",error.userInfo);
     }];
@@ -559,7 +567,7 @@ static BOOL isProduction = FALSE;
     NSDictionary *params = @{
                              @"name":[[NSUserDefaults standardUserDefaults] objectForKey:@"username"],
                              @"password":[[NSUserDefaults standardUserDefaults] objectForKey:@"password"],
-                             @"imei":@""
+                             @"imei":@"1"
                              };
     NSString *URL = [NSString stringWithFormat:@"%@Passport.ashx?action=login",HomeURL];
     

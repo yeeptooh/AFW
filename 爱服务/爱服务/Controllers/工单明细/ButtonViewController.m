@@ -62,7 +62,7 @@
     [ensureButton setTitle:@"确定" forState:UIControlStateNormal];
     
     [ensureButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
-    ensureButton.backgroundColor = color(59, 165, 249, 1);
+    ensureButton.backgroundColor = MainBlueColor;
     ensureButton.frame = CGRectMake(0, height*2/3, width/2 - 0.25, height/3);
     
     
@@ -73,7 +73,7 @@
     [quitButton setTitle:@"取消" forState:UIControlStateNormal];
     
     [quitButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
-    quitButton.backgroundColor = color(59, 165, 249, 1);
+    quitButton.backgroundColor = MainBlueColor;
     quitButton.frame = CGRectMake(width/2 + 0.5, height*2/3, width/2 - 0.25, height/3);
     
     [self.view addSubview:quitButton];

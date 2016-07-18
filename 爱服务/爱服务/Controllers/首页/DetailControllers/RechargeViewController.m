@@ -756,7 +756,7 @@ static NSInteger i = 0;
     NSDictionary *params = @{
                              @"name":[[NSUserDefaults standardUserDefaults] objectForKey:@"username"],
                              @"password":[[NSUserDefaults standardUserDefaults] objectForKey:@"password"],
-                             @"imei":@""
+                             @"imei":@"1"
                              };
     NSString *URL = [NSString stringWithFormat:@"%@Passport.ashx?action=login",HomeURL];
     

@@ -60,29 +60,6 @@ static NSInteger tag = 0;
 
 @implementation HomeViewController
 
-
-
-- (UIAlertController *)alertController {
-    if (!_alertController) {
-        _alertController = [UIAlertController alertControllerWithTitle:@"此应用的相机功能已禁用" message:@"请点击确定打开应用的相机功能" preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *openAction = [UIAlertAction actionWithTitle:@"打开" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-            
-        }];
-        
-        UIAlertAction *closeAction = [UIAlertAction actionWithTitle:@"关闭" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-        }];
-        
-        [_alertController addAction:openAction];
-        [_alertController addAction:closeAction];
-        
-    }
-    return _alertController;
-}
-
 - (UIView *)balanceView {
 
     NSInteger imageHeight;
@@ -199,7 +176,7 @@ static NSInteger tag = 0;
     NSDictionary *params = @{
                              @"name":[[NSUserDefaults standardUserDefaults] objectForKey:@"username"],
                              @"password":[[NSUserDefaults standardUserDefaults] objectForKey:@"password"],
-                             @"imei":@""
+                             @"imei":@"1"
                              };
     NSString *URL = [NSString stringWithFormat:@"%@Passport.ashx?action=login",HomeURL];
 
@@ -1039,26 +1016,10 @@ static NSInteger tag = 0;
 #if Environment_Mode == 1
     if (sender.tag == 1000) {
         
-        if (![[NSUserDefaults standardUserDefaults] boolForKey:@"AVCan"]) {
-            PartsRequestViewController *partsRequestVC = [[PartsRequestViewController alloc]init];
-            partsRequestVC.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:partsRequestVC animated:YES];
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"AVCan"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-
-        }else {
-            AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
-            NSLog(@"%ld",(long)status);
-            if (status == AVAuthorizationStatusAuthorized) {
-                PartsRequestViewController *partsRequestVC = [[PartsRequestViewController alloc]init];
-                partsRequestVC.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:partsRequestVC animated:YES];
-
-            }else {
-                [self presentViewController:self.alertController animated:YES completion:nil];
-            }
-        }
-        
+        PartsRequestViewController *partsRequestVC = [[PartsRequestViewController alloc]init];
+        partsRequestVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:partsRequestVC animated:YES];
+                
   
     }else if (sender.tag == 1001) {
         

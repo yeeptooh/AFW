@@ -154,7 +154,7 @@ UIViewControllerTransitioningDelegate
     self.baseDetailInfoCell.priceLabel.text = self.price;
     
     [self.baseDetailInfoCell.locationButton setTitle:self.location forState:UIControlStateNormal];
-    NSLog(@"%@",self.location);
+    
     [self.baseDetailInfoCell.locationButton addTarget:self action:@selector(locationButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:self.baseDetailInfoCell];
@@ -348,6 +348,7 @@ UIViewControllerTransitioningDelegate
             [robButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
             [robButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateHighlighted];
             [robButton addTarget:self action:@selector(robButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+
             [self.view addSubview:robButton];
             
         }else {
