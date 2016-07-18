@@ -487,8 +487,7 @@ UITextFieldDelegate
             weakSelf.tableView.alpha = 1;
         }];
         [weakSelf.tableView reloadData];
-        NSLog(@"PageNow = %@",responseObject[@"PageNow"]);
-        NSLog(@"PageRowCount = %@",responseObject[@"PageRowCount"]);
+
         if ([responseObject[@"ResponseInfo"][0][@"PageNow"] integerValue] == [responseObject[@"ResponseInfo"][0][@"PageRowCount"] integerValue]) {
             [weakSelf.tableView.mj_footer endRefreshing];
             weakSelf.tableView.mj_footer.hidden = YES;

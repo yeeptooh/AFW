@@ -65,7 +65,7 @@ UIViewControllerTransitioningDelegate
     [ensureButton setTitle:@"确定" forState:UIControlStateNormal];
     
     [ensureButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
-    ensureButton.backgroundColor = color(59, 165, 249, 1);
+    ensureButton.backgroundColor = MainBlueColor;
     ensureButton.frame = CGRectMake(0, (Width - 120)*3/4 + 5, (Width - 10)/2 - 0.25, (Width - 120)/4 - 5);
     
     
@@ -78,7 +78,7 @@ UIViewControllerTransitioningDelegate
     [quitButton setTitle:@"取消" forState:UIControlStateNormal];
     
     [quitButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
-    quitButton.backgroundColor = color(59, 165, 249, 1);
+    quitButton.backgroundColor = MainBlueColor;
     quitButton.frame = CGRectMake((Width - 10)/2 + 0.5, (Width - 120)*3/4 + 5, (Width - 10)/2 - 0.25, (Width - 120)/4 - 5);
     
     [self.view addSubview:quitButton];

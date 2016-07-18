@@ -157,9 +157,14 @@ UITableViewDataSource
     
     [submit setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
     [submit addTarget:self action:@selector(submitClicked:) forControlEvents:UIControlEventTouchUpInside];
-   
-    submit.backgroundColor = BlueColor;//color(23, 133, 255, 1);
-    submit.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*11/12, Width, (Height - StatusBarAndNavigationBarHeight)/12);
+    CGFloat height;
+    if (iPhone4_4s || iPhone5_5s) {
+        height = 35;
+    }else {
+        height = 44;
+    }
+    submit.backgroundColor = MainBlueColor;//color(23, 133, 255, 1);
+    submit.frame = CGRectMake(0, Height - StatusBarAndNavigationBarHeight - height, Width, height);
     
     [self.view addSubview:submit];
     

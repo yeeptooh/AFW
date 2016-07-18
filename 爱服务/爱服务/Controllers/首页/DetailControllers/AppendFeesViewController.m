@@ -144,8 +144,8 @@ WKNavigationDelegate
     
     submit.layer.cornerRadius = 5;
     submit.layer.masksToBounds = YES;
-    submit.backgroundColor = BlueColor;//color(23, 133, 255, 1);
-    submit.frame = CGRectMake(30, 5 + ((Height - StatusBarAndNavigationBarHeight)*7/12), Width - 60, (Height - StatusBarAndNavigationBarHeight)/12 - 10);
+    submit.backgroundColor = MainBlueColor;
+    submit.frame = CGRectMake(20, ((Height - StatusBarAndNavigationBarHeight)*7/12), Width - 40, (Height - StatusBarAndNavigationBarHeight)/12);
     
     [self.view addSubview:submit];
     

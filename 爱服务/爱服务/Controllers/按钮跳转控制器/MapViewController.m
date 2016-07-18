@@ -70,7 +70,7 @@ MKMapViewDelegate
     
     UIButton *robButton = [UIButton buttonWithType:UIButtonTypeCustom];
     robButton.frame = CGRectMake(0, Height - StatusBarAndNavigationBarHeight - height, Width, height);
-    robButton.backgroundColor = BlueColor;
+    robButton.backgroundColor = MainBlueColor;
     
     [robButton setTitle:@"立即抢单" forState:UIControlStateNormal];
     [robButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];

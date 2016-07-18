@@ -472,7 +472,7 @@ UITextFieldDelegate
     self.manager.requestSerializer.timeoutInterval = 5;
     
     [self.manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@",responseObject);
+        
         [self.activityView stopAnimating];
         
         for (NSDictionary *dic in responseObject[@"task"]) {

@@ -272,6 +272,7 @@ UITextFieldDelegate
 
             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
             NSString *countString = [NSString stringWithFormat:@"%@Task.ashx?action=gettaskcount&comid=%ld&uid=%ld&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
+            NSLog(@"countString = %@",countString);
             manager.responseSerializer = [AFHTTPResponseSerializer serializer];
             [manager GET:countString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 

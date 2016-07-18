@@ -38,7 +38,7 @@ UITextViewDelegate
     [closeButton setTitle:@"关闭" forState:UIControlStateNormal];
     [closeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     closeButton.frame = CGRectMake(0, Height - 200 - 50, self.view.bounds.size.width - 40, 50);
-    closeButton.backgroundColor = BlueColor;
+    closeButton.backgroundColor = MainBlueColor;
     [closeButton addTarget:self action:@selector(closeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:closeButton];
     
@@ -79,7 +79,7 @@ UITextViewDelegate
     sendButton.frame = CGRectMake(Width - 140 + 10, 15, Width - 40 - (Width - 140) - 20, 40);
     sendButton.layer.cornerRadius = 5;
     sendButton.layer.masksToBounds = YES;
-    sendButton.backgroundColor = BlueColor;
+    sendButton.backgroundColor = MainBlueColor;
     [sendButton addTarget:self action:@selector(sendButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:sendButton];
     
@@ -151,7 +151,7 @@ UITextViewDelegate
             [HUD hideAnimated:YES];
             [HUD removeFromSuperViewOnHide];
             sender.userInteractionEnabled = YES;
-            sender.backgroundColor = BlueColor;
+            sender.backgroundColor = MainBlueColor;
             
         });
         return ;
@@ -173,7 +173,7 @@ UITextViewDelegate
             [HUD hideAnimated:YES];
             [HUD removeFromSuperViewOnHide];
             sender.userInteractionEnabled = YES;
-            sender.backgroundColor = BlueColor;
+            sender.backgroundColor = MainBlueColor;
             
         });
         return ;
@@ -220,7 +220,7 @@ UITextViewDelegate
                     [self.dialogList addObject:dic];
                 }
                 sender.userInteractionEnabled = YES;
-                sender.backgroundColor = BlueColor;
+                sender.backgroundColor = MainBlueColor;
                 [self.tableView reloadData];
                 
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -236,13 +236,13 @@ UITextViewDelegate
                     [HUD hideAnimated:YES];
                     [HUD removeFromSuperViewOnHide];
                     sender.userInteractionEnabled = YES;
-                    sender.backgroundColor = BlueColor;
+                    sender.backgroundColor = MainBlueColor;
                 });
             }];
             
         }else {
             sender.userInteractionEnabled = YES;
-            sender.backgroundColor = BlueColor;
+            sender.backgroundColor = MainBlueColor;
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -258,7 +258,7 @@ UITextViewDelegate
             [HUD hideAnimated:YES];
             [HUD removeFromSuperViewOnHide];
             sender.userInteractionEnabled = YES;
-            sender.backgroundColor = BlueColor;
+            sender.backgroundColor = MainBlueColor;
         });
         
     }];

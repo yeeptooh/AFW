@@ -12,7 +12,7 @@
 #import "CompleteViewController.h"
 #import "AFNetworking.h"
 #import <WebKit/WebKit.h>
-
+#import <AVFoundation/AVFoundation.h>
 @interface PartsRequestViewController ()
 <
 WKNavigationDelegate,
@@ -61,9 +61,36 @@ UINavigationControllerDelegate
 
 @property (nonatomic, strong) UIActivityIndicatorView *indicatorView;
 
+@property (nonatomic, strong) UIAlertController *alertController;
+
 @end
 static NSInteger number;
 @implementation PartsRequestViewController
+
+
+
+
+- (UIAlertController *)alertController {
+    if (!_alertController) {
+        _alertController = [UIAlertController alertControllerWithTitle:@"此应用的相机功能已禁用" message:@"请点击确定打开应用的相机功能" preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *openAction = [UIAlertAction actionWithTitle:@"打开" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+            
+        }];
+        
+        UIAlertAction *closeAction = [UIAlertAction actionWithTitle:@"关闭" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        
+        [_alertController addAction:openAction];
+        [_alertController addAction:closeAction];
+        
+    }
+    return _alertController;
+}
+
 
 - (UIActivityIndicatorView *)indicatorView {
     if (!_indicatorView) {
@@ -261,8 +288,8 @@ static NSInteger number;
     
     submit.layer.cornerRadius = 5;
     submit.layer.masksToBounds = YES;
-    submit.backgroundColor = BlueColor;//color(23, 133, 255, 1);
-    submit.frame = CGRectMake(30, 5 + ((Height - StatusBarAndNavigationBarHeight)*(13)/12), Width - 60, (Height - StatusBarAndNavigationBarHeight)/12 - 10);
+    submit.backgroundColor = MainBlueColor;
+    submit.frame = CGRectMake(20, ((Height - StatusBarAndNavigationBarHeight)*(13)/12), Width - 40, (Height - StatusBarAndNavigationBarHeight)/12);
     [self.scrollView addSubview:submit];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     UserModel *userModel = [UserModel readUserModel];
@@ -323,20 +350,49 @@ static NSInteger number;
     
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction *cameraAction = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSUInteger sourceType = UIImagePickerControllerSourceTypeCamera;
         
-        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc]init];
-        imagePickerController.delegate = self;
-        imagePickerController.allowsEditing = YES;
-        imagePickerController.sourceType = sourceType;
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"AVCan"];
-        [self presentViewController:imagePickerController animated:YES completion:^{
+        
+        if (![[NSUserDefaults standardUserDefaults] boolForKey:@"AVCan"]) {
+            NSUInteger sourceType = UIImagePickerControllerSourceTypeCamera;
             
-        }];
+            UIImagePickerController *imagePickerController = [[UIImagePickerController alloc]init];
+            imagePickerController.navigationBar.barStyle = UIBarStyleBlack;
+            imagePickerController.delegate = self;
+            imagePickerController.allowsEditing = YES;
+            imagePickerController.sourceType = sourceType;
+            
+            [self presentViewController:imagePickerController animated:YES completion:^{
+                
+            }];
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"AVCan"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+        }else {
+            AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+            NSLog(@"%ld",(long)status);
+            if (status == AVAuthorizationStatusAuthorized) {
+                NSUInteger sourceType = UIImagePickerControllerSourceTypeCamera;
+                
+                UIImagePickerController *imagePickerController = [[UIImagePickerController alloc]init];
+                imagePickerController.navigationBar.barStyle = UIBarStyleBlack;
+                imagePickerController.delegate = self;
+                imagePickerController.allowsEditing = YES;
+                imagePickerController.sourceType = sourceType;
+                
+                [self presentViewController:imagePickerController animated:YES completion:^{
+                    
+                }];
+                
+            }else {
+                [self presentViewController:self.alertController animated:YES completion:nil];
+            }
+        }
         
     }];
     
     UIAlertAction *albumAction = [UIAlertAction actionWithTitle:@"从手机相册中选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        
         NSUInteger sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         
         UIImagePickerController *imagePickerController = [[UIImagePickerController alloc]init];
@@ -348,7 +404,7 @@ static NSInteger number;
         [self presentViewController:imagePickerController animated:YES completion:^{
             
         }];
-        
+
     }];
     
     

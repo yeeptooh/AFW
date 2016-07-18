@@ -59,7 +59,7 @@ UITableViewDataSource
         dispatchButton.frame = CGRectMake((self.view.bounds.size.width - 40)/2+0.3, Height - 200 - 50, (self.view.bounds.size.width - 40)/2-0.3, 50);
     }
     
-    dispatchButton.backgroundColor = BlueColor;
+    dispatchButton.backgroundColor = MainBlueColor;
     [dispatchButton addTarget:self action:@selector(dispatchButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:dispatchButton];
     
@@ -67,7 +67,7 @@ UITableViewDataSource
     headerLabel.text = @"选择厂商";
     headerLabel.font = font(16);
     headerLabel.textAlignment = NSTextAlignmentCenter;
-    headerLabel.textColor = BlueColor;
+    headerLabel.textColor = MainBlueColor;
     [self.view addSubview:headerLabel];
     
     if (iPhone5_5s || iPhone4_4s) {
