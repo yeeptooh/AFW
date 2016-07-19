@@ -1139,7 +1139,7 @@ static NSInteger tag = 0;
         
             
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
-            NSLog(@"%@",dic);
+            
             if (dic[@"wechatpay"] == 0) {
                 
             }else {

@@ -11,11 +11,16 @@
 #import "LoginViewController.h"
 #import "HomeViewController.h"
 #import "UserModel.h"
+#import "ChangePWDViewController.h"
 #import <WebKit/WebKit.h>
+
+#import "ChangePWDPresentAnimation.h"
+#import "ChangePWDDismissAnimation.h"
 @interface MyInfoViewController ()
 <
 WKNavigationDelegate,
-WKUIDelegate
+WKUIDelegate,
+UIViewControllerTransitioningDelegate
 >
 @property (nonatomic, strong) UIProgressView *progressView;
 @property (nonatomic, strong) WKWebView *webView;
@@ -129,7 +134,6 @@ WKUIDelegate
     self.webView.scrollView.showsVerticalScrollIndicator = NO;
 #if Environment_Mode == 1
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/page.aspx?type=user&comid=%ld&uid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid]]]];
-    NSLog(@"%@",[NSString stringWithFormat:@"%@/page.aspx?type=user&comid=%ld&uid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid]);
     
 #elif Environment_Mode == 2
     self.url = [NSString stringWithFormat:@"%@/page.aspx?type=user&comid=%ld&uid=%ld&device=i",HomeURL,(long)userModel.comid,(long)userModel.uid];
@@ -223,28 +227,56 @@ WKUIDelegate
 
 
 - (void)setQuitButton {
-#if Environment_Mode == 1
+
     UIButton *quitButton = [UIButton buttonWithType:0];
     
     [quitButton setTitle:@"退出登录" forState:UIControlStateNormal];
     
     [quitButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
     [quitButton addTarget:self action:@selector(quitButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+    quitButton.layer.cornerRadius = 3;
+    quitButton.layer.masksToBounds = YES;
+    
     CGFloat height;
     if (iPhone4_4s || iPhone5_5s) {
-        height = 44;
+        height = 35;
     }else {
-        height = 49;
+        height = 44;
     }
-    quitButton.frame = CGRectMake(0, Height - StatusBarAndNavigationBarHeight - height, Width, height);
+    quitButton.frame = CGRectMake(5, Height - StatusBarAndNavigationBarHeight - height, Width/2 - 10, height);
     quitButton.backgroundColor = MainBlueColor;
     [self.view addSubview:quitButton];
-#elif Environment_Mode == 2
     
-    [self.view addSubview:self.quitButton];
-#endif
+    
+    UIButton *changePwdButton = [UIButton buttonWithType:0];
+    
+    [changePwdButton setTitle:@"修改密码" forState:UIControlStateNormal];
+    
+    [changePwdButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
+    [changePwdButton addTarget:self action:@selector(changePwdButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    changePwdButton.layer.cornerRadius = 3;
+    changePwdButton.layer.masksToBounds = YES;
+    changePwdButton.frame = CGRectMake(Width/2 + 5, Height - StatusBarAndNavigationBarHeight - height, Width/2 - 10, height);
+    changePwdButton.backgroundColor = MainBlueColor;
+    [self.view addSubview:changePwdButton];
+    
+    
+
     
 }
+
+
+- (void)changePwdButtonClicked {
+    ChangePWDViewController *changePWDVC = [[ChangePWDViewController alloc] init];
+    changePWDVC.transitioningDelegate = self;
+    changePWDVC.modalPresentationStyle = UIModalPresentationCustom;
+    [self presentViewController:changePWDVC  animated:YES completion:^{
+        [changePWDVC.textfield1 becomeFirstResponder];
+    }];
+}
+
+
 
 - (void)quitButtonClicked {
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"logOut"];
@@ -262,7 +294,13 @@ WKUIDelegate
     
 }
 
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
+    return [[ChangePWDPresentAnimation alloc]init];
+}
 
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
+    return [[ChangePWDDismissAnimation alloc]init];
+}
 
 
 

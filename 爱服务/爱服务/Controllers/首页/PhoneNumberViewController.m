@@ -128,7 +128,7 @@
     [quitButton setTitle:@"取消" forState:UIControlStateNormal];
     [quitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
-    quitButton.backgroundColor = color(59, 165, 249, 1);
+    quitButton.backgroundColor = MainBlueColor;
     quitButton.frame = CGRectMake(0, height*4.5/5.5, width, height/5.5);
     
     [self.view addSubview:quitButton];

@@ -20,7 +20,7 @@
 #import "RefuseViewController.h"
 #import "AcceptViewController.h"
 #import "DispatchViewController.h"
-
+#import "ChangeOrderViewController.h"
 
 #import "DialogAnimation.h"
 #import "ButtonPresentAnimation.h"
@@ -515,6 +515,52 @@ UIViewControllerTransitioningDelegate
 
 - (void)changeButtonClicked {
     
+    
+    ChangeOrderViewController *changeVC = [[ChangeOrderViewController alloc] init];
+    changeVC.ID = self.ID;
+    changeVC.name = self.name;
+    changeVC.phone = self.phone;
+    changeVC.from = self.from;//详细地址
+    changeVC.inOut = self.inOut;
+    changeVC.model = self.model;//产品型号
+    changeVC.buyDate = self.buyDate;
+    changeVC.productCode = self.productCode;
+    changeVC.orderCode = self.orderCode;
+    changeVC.serviceType = self.serviceType;
+    changeVC.appointment = self.appointment;
+    changeVC.servicePs = self.servicePs;
+    
+    
+    
+    /*detailVC.fromFuck = 1;
+     detailVC.hidesBottomBarWhenPushed = YES;
+     detailVC.ID = self.orderModel.ID;
+     detailVC.state = [self.orderModel.state integerValue];
+     
+     detailVC.name = self.orderModel.name;
+     detailVC.phone = self.orderModel.phone;
+     detailVC.from = [NSString stringWithFormat:@"来源：%@",self.orderModel.fromUserName];
+     detailVC.fromPhone = [NSString stringWithFormat:@"厂商电话：%@",self.orderModel.fromUserPhone];
+     detailVC.price = [NSString stringWithFormat:@"价格：%@",self.orderModel.price];
+     detailVC.location = self.orderModel.location;
+     
+     detailVC.productType = self.orderModel.productType;
+     detailVC.model = self.orderModel.model;
+     detailVC.buyDate = self.orderModel.buyDate;
+     detailVC.productCode = self.orderModel.productCode;
+     detailVC.orderCode = self.orderModel.orderCode;
+     detailVC.inOut = self.orderModel.inOut;
+     
+     detailVC.serviceType = self.orderModel.serviceType;
+     detailVC.appointment = self.orderModel.appointment;
+     detailVC.servicePs = self.orderModel.postScript;
+     detailVC.chargeBackContent = self.orderModel.chargeBackContent;
+     
+     detailVC.fromUserID = self.orderModel.FromUserID;
+     detailVC.fromUserName = self.orderModel.fromUserName;
+     detailVC.toUserID = self.orderModel.ToUserID;
+     detailVC.toUserName = self.orderModel.ToUserName;
+     detailVC.BuyerFullAddress_Incept = self.orderModel.BuyerFullAddress_Incept;*/
     
 }
 
@@ -1037,6 +1083,8 @@ UIViewControllerTransitioningDelegate
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+#if Environment_Mode == 1
+
     if (indexPath.row == 0) {
         return 166;
     }else if (indexPath.row == 1) {
@@ -1068,6 +1116,26 @@ UIViewControllerTransitioningDelegate
         
         return UITableViewAutomaticDimension;
     }
+#elif Environment_Mode == 2
+    
+    if (indexPath.row == 0) {
+        return 166;
+    }else if (indexPath.row == 1) {
+        if ([self.servicePs isEqualToString:@""]) {
+            return 44;
+        }
+        return UITableViewAutomaticDimension;
+    }else if (indexPath.row == 2) {
+        return 60;
+    }else{
+        if ([self.serviceAssess isEqualToString:@""]) {
+            return 0;
+        }
+        
+        return UITableViewAutomaticDimension;
+    }
+    
+#endif
     return 0;
 }
 
@@ -1075,41 +1143,7 @@ UIViewControllerTransitioningDelegate
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 44;
 }
-/*
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Width, SectionHeaderHeight)];
-    UILabel *infoLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, Width/4, SectionHeaderHeight)];
-    UILabel *typeLabel = [[UILabel alloc]initWithFrame:CGRectMake(Width - Width/2 - 10, 0, Width/2, SectionHeaderHeight)];
-    typeLabel.textAlignment = NSTextAlignmentRight;
-    [headerView addSubview:infoLabel];
-    [headerView addSubview:typeLabel];
-    infoLabel.font = font(16);
-    typeLabel.font = font(16);
-    if (section == 0) {
-        infoLabel.text = @"产品信息";
-        typeLabel.text = self.productType;
-    }else if (section == 1) {
-        infoLabel.text = @"业务信息";
-        NSString *str = [self.serviceType substringFromIndex:1];
-        NSInteger length = str.length;
-        typeLabel.text = [str substringToIndex:length-1];
-    }else if (section == 2) {
-        if (self.state == 6) {
-            infoLabel.text = @"退单信息";
-        }else if (self.state == 7) {
-            infoLabel.text = @"拒绝信息";
-        }else {
-            infoLabel.text = @"完工信息";
-        }
-    }else{
-        infoLabel.text = @"服务评价";
-    }
-    headerView.backgroundColor = GrayColor;
-    return headerView;
-}
 
-
-*/
 
 - (void)typeButtonClicked {
     PTypeViewController *ptypeVC = [[PTypeViewController alloc]init];

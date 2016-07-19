@@ -83,6 +83,7 @@
 
 
 - (void)quitButtonClicked {
+    
     [self.textfield resignFirstResponder];
     [self dismissViewControllerAnimated:YES completion:nil];
 }

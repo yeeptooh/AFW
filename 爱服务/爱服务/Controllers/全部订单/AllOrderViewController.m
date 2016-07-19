@@ -472,7 +472,6 @@ UITextFieldDelegate
     
     [self.manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        NSLog(@"responseObject =%@",responseObject);
         [self.activityView stopAnimating];
         for (NSDictionary *dic in responseObject[@"task"]) {
             OrderModel *ordelModel = [OrderModel orderFromDictionary:dic];
@@ -654,8 +653,7 @@ UITextFieldDelegate
     
     detailVC.payMoneyStr = self.orderModel.PayMoney;
     detailVC.priceStr = self.orderModel.priceStr;
-    NSLog(@"self.orderModel.price = %@",[self.orderModel.price substringToIndex:self.orderModel.price.length - 1]);
-    NSLog(@"detailVC.priceStr = %@",detailVC.priceStr);
+    
     [self.navigationController pushViewController:detailVC animated:YES];
     
 }
