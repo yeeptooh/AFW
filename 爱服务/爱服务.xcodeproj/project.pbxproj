@@ -90,6 +90,10 @@
 		4A5228B21CBC8C8100DD2D9C /* PresentAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5228B11CBC8C8100DD2D9C /* PresentAnimation.m */; };
 		4A5228B51CBC8C8D00DD2D9C /* DismissAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5228B41CBC8C8D00DD2D9C /* DismissAnimation.m */; };
 		4A5229E21CBCA75B00DD2D9C /* PhoneNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5229E11CBCA75B00DD2D9C /* PhoneNumberViewController.m */; };
+		4A526D241D3F6CDB008F61ED /* RefuseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A526D221D3F6CDB008F61ED /* RefuseTableViewCell.m */; };
+		4A526D251D3F6CDB008F61ED /* RefuseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A526D221D3F6CDB008F61ED /* RefuseTableViewCell.m */; };
+		4A526D261D3F6CDB008F61ED /* RefuseTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A526D231D3F6CDB008F61ED /* RefuseTableViewCell.xib */; };
+		4A526D271D3F6CDB008F61ED /* RefuseTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A526D231D3F6CDB008F61ED /* RefuseTableViewCell.xib */; };
 		4A5274671D113A7E00B056C6 /* RechargeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5274661D113A7D00B056C6 /* RechargeViewController.m */; };
 		4A52746A1D113ABA00B056C6 /* HeartProtectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5274691D113ABA00B056C6 /* HeartProtectViewController.m */; };
 		4A52746E1D113D0500B056C6 /* MoneyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A52746C1D113D0500B056C6 /* MoneyTableViewCell.m */; };
@@ -580,6 +584,9 @@
 		4A5228B41CBC8C8D00DD2D9C /* DismissAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DismissAnimation.m; sourceTree = "<group>"; };
 		4A5229E01CBCA75B00DD2D9C /* PhoneNumberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneNumberViewController.h; sourceTree = "<group>"; };
 		4A5229E11CBCA75B00DD2D9C /* PhoneNumberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneNumberViewController.m; sourceTree = "<group>"; };
+		4A526D211D3F6CDB008F61ED /* RefuseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefuseTableViewCell.h; sourceTree = "<group>"; };
+		4A526D221D3F6CDB008F61ED /* RefuseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RefuseTableViewCell.m; sourceTree = "<group>"; };
+		4A526D231D3F6CDB008F61ED /* RefuseTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RefuseTableViewCell.xib; sourceTree = "<group>"; };
 		4A5274651D113A7D00B056C6 /* RechargeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RechargeViewController.h; sourceTree = "<group>"; };
 		4A5274661D113A7D00B056C6 /* RechargeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RechargeViewController.m; sourceTree = "<group>"; };
 		4A5274681D113ABA00B056C6 /* HeartProtectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeartProtectViewController.h; sourceTree = "<group>"; };
@@ -1535,6 +1542,9 @@
 				4A7749891CC09464008B9611 /* ServiceTypeTableViewCell.h */,
 				4A77498A1CC09464008B9611 /* ServiceTypeTableViewCell.m */,
 				4A77498B1CC09464008B9611 /* ServiceTypeTableViewCell.xib */,
+				4A526D211D3F6CDB008F61ED /* RefuseTableViewCell.h */,
+				4A526D221D3F6CDB008F61ED /* RefuseTableViewCell.m */,
+				4A526D231D3F6CDB008F61ED /* RefuseTableViewCell.xib */,
 				4A77498E1CC09DC8008B9611 /* ChargebackTableViewCell.h */,
 				4A77498F1CC09DC8008B9611 /* ChargebackTableViewCell.m */,
 				4A7749901CC09DC8008B9611 /* ChargebackTableViewCell.xib */,
@@ -1983,6 +1993,7 @@
 				4A4BD2491CB895A1009DA0B9 /* Assets.xcassets in Resources */,
 				4A561D671CBDE9DE00BB26AC /* MainTableViewCell.xib in Resources */,
 				4A6BABE61CC62FAB000B94A2 /* MJRefresh.bundle in Resources */,
+				4A526D261D3F6CDB008F61ED /* RefuseTableViewCell.xib in Resources */,
 				4A5274771D113F3E00B056C6 /* PayTableViewCell.xib in Resources */,
 				4A77499C1CC0C66C008B9611 /* AssessTableViewCell.xib in Resources */,
 				4A52746F1D113D0500B056C6 /* MoneyTableViewCell.xib in Resources */,
@@ -2020,6 +2031,7 @@
 				4A62D1F41D361B38009A80C3 /* DispatchTableViewCell.xib in Resources */,
 				4A5D25E51D347F6300630029 /* CSMainTableViewCell.xib in Resources */,
 				4A4954641D28B55B00E05868 /* AlipaySDK.bundle in Resources */,
+				4A526D271D3F6CDB008F61ED /* RefuseTableViewCell.xib in Resources */,
 				4A64240C1D19396600F26BA9 /* ServiceTypeTableViewCell.xib in Resources */,
 				4AEFBE2F1D3CC99A001BB252 /* PayMoneyTableViewCell.xib in Resources */,
 				4A64240E1D19396600F26BA9 /* Assets.xcassets in Resources */,
@@ -2154,6 +2166,7 @@
 				4A6799161D23C07200A8E0F5 /* DialogViewController.m in Sources */,
 				4A6BABE41CC62FAB000B94A2 /* MJRefreshNormalHeader.m in Sources */,
 				4A671C7C1CD0C94600F70176 /* RefuseReasonViewController.m in Sources */,
+				4A526D241D3F6CDB008F61ED /* RefuseTableViewCell.m in Sources */,
 				4A52746A1D113ABA00B056C6 /* HeartProtectViewController.m in Sources */,
 				4A4BD2A61CB8D61C009DA0B9 /* TADotView.m in Sources */,
 				4A6C3EA81D333801004E4C9F /* AddMoneyDetailViewController.m in Sources */,
@@ -2433,6 +2446,7 @@
 				4A6423CD1D19396600F26BA9 /* MJRefreshAutoStateFooter.m in Sources */,
 				4A6423CE1D19396600F26BA9 /* MJRefreshAutoNormalFooter.m in Sources */,
 				4A64A15D1D2271A000A3DC7C /* ProductClassifyBigViewController.m in Sources */,
+				4A526D251D3F6CDB008F61ED /* RefuseTableViewCell.m in Sources */,
 				4A6423CF1D19396600F26BA9 /* MASConstraintMaker.m in Sources */,
 				4A6423D01D19396600F26BA9 /* EnsureOrderViewController.m in Sources */,
 				4A6423D11D19396600F26BA9 /* ButtonViewController.m in Sources */,

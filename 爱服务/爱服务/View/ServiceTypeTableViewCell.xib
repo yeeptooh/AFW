@@ -31,7 +31,7 @@
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YYj-ds-xLf">
                         <rect key="frame" x="10" y="31" width="300" height="0.5"/>
-                        <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.035294117649999998" green="0.59607843140000005" blue="0.80392156859999997" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="0.59999999999999998" id="Oy5-UX-g0J"/>
                         </constraints>
@@ -89,7 +89,7 @@
                 <outlet property="psLabel" destination="eL4-ff-x1u" id="vZY-LE-BxZ"/>
                 <outlet property="serviceLabel" destination="I2M-Ke-DaM" id="yPF-Pm-0rq"/>
             </connections>
-            <point key="canvasLocation" x="460" y="311"/>
+            <point key="canvasLocation" x="531" y="309"/>
         </tableViewCell>
     </objects>
 </document>

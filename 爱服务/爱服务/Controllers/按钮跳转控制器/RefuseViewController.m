@@ -152,21 +152,29 @@ UITableViewDataSource
 }
 
 - (void)setSubmitButton {
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, Height - StatusBarAndNavigationBarHeight - TabbarHeight, Width, TabbarHeight)];
+    view.backgroundColor = color(180, 180, 180, 1);
+    [self.view addSubview:view];
+    
+    UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
+    effectView.frame = view.bounds;
+    [view addSubview:effectView];
+    
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, Width, 0.6)];
+    lineView.backgroundColor = [UIColor lightGrayColor];
+    [effectView.contentView addSubview:lineView];
+    
     UIButton *submit = [UIButton buttonWithType:UIButtonTypeCustom];
     [submit setTitle:@"拒绝" forState:UIControlStateNormal];
-    
-    [submit setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
+    submit.titleLabel.font = font(12);
+    submit.backgroundColor = [UIColor clearColor];
+    [submit setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [submit addTarget:self action:@selector(submitClicked:) forControlEvents:UIControlEventTouchUpInside];
-    CGFloat height;
-    if (iPhone4_4s || iPhone5_5s) {
-        height = 35;
-    }else {
-        height = 44;
-    }
-    submit.backgroundColor = MainBlueColor;//color(23, 133, 255, 1);
-    submit.frame = CGRectMake(0, Height - StatusBarAndNavigationBarHeight - height, Width, height);
     
-    [self.view addSubview:submit];
+    submit.frame = CGRectMake(0, 0, Width, TabbarHeight);
+    
+    [effectView.contentView addSubview:submit];
     
 }
 

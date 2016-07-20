@@ -40,9 +40,6 @@
                             <constraint firstAttribute="width" constant="30" id="itt-Xm-7IW"/>
                         </constraints>
                         <state key="normal" title="Button" image="call"/>
-                        <connections>
-                            <action selector="phoneButtonClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="E1q-sI-rTr"/>
-                        </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0sn-ar-811">
                         <rect key="frame" x="206" y="8" width="30" height="30"/>
@@ -51,9 +48,6 @@
                             <constraint firstAttribute="height" constant="30" id="Poe-yQ-VF6"/>
                         </constraints>
                         <state key="normal" title="Button" image="sms"/>
-                        <connections>
-                            <action selector="messageButtonClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="qt5-eP-jq0"/>
-                        </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="庐小姐" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QMD-p8-eKl">
                         <rect key="frame" x="8" y="13" width="120" height="20"/>
@@ -143,8 +137,10 @@
                 <outlet property="fromLabel" destination="twy-jE-V00" id="5I2-Yo-lTQ"/>
                 <outlet property="fromPhoneLabel" destination="AhT-HZ-r1S" id="9Mg-rg-6cB"/>
                 <outlet property="locationButton" destination="dMB-fd-3L5" id="MZS-Yu-qO9"/>
+                <outlet property="mailButton" destination="0sn-ar-811" id="ItR-B4-pxs"/>
                 <outlet property="mapButton" destination="oWr-AM-EX2" id="7e5-qR-JCA"/>
                 <outlet property="nameLabel" destination="QMD-p8-eKl" id="6y7-3M-8t6"/>
+                <outlet property="phoneButton" destination="sfe-TX-p9w" id="LM0-8U-tNl"/>
                 <outlet property="phoneLabel" destination="Z04-fk-5lH" id="rtU-j9-vDk"/>
                 <outlet property="priceLabel" destination="FhO-Nu-CdV" id="7mm-P3-ucU"/>
             </connections>

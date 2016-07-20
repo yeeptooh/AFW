@@ -310,11 +310,19 @@ UITextFieldDelegate
             completeVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][2];
         }
         
+#if Environment_Mode == 1
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][3] isEqualToString:@"0"]) {
             robVC.tabBarItem.badgeValue = nil;
         }else{
             robVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][3];
         }
+#elif Environment_Mode == 2
+        if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][4] isEqualToString:@"0"]) {
+            robVC.tabBarItem.badgeValue = nil;
+        }else{
+            robVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][4];
+        }
+#endif
         
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][0] isEqualToString:@"0"]) {
             allorderVC.tabBarItem.badgeValue = nil;
@@ -444,6 +452,16 @@ UITextFieldDelegate
     self.tableView = nil;
     if (self.dicList) {
         [self.dicList removeAllObjects];
+    }
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    
+    [super viewDidDisappear:animated];
+    [self.manager.operationQueue cancelAllOperations];
+    if (self.dicList.count) {
+        [self.dicList removeAllObjects];
+        self.dicList = nil;
     }
 }
 
@@ -618,13 +636,12 @@ UITextFieldDelegate
     detailVC.productCode = self.orderModel.productCode;
     detailVC.orderCode = self.orderModel.orderCode;
     detailVC.inOut = self.orderModel.inOut;
-    
-    
+
     detailVC.serviceType = self.orderModel.serviceType;
     detailVC.appointment = self.orderModel.appointment;
     detailVC.servicePs = self.orderModel.postScript;
     detailVC.chargeBackContent = self.orderModel.chargeBackContent;
-    
+    detailVC.waiterName = self.orderModel.WaiterName;
     detailVC.fromUserID = self.orderModel.FromUserID;
     detailVC.fromUserName = self.orderModel.fromUserName;
     detailVC.toUserID = self.orderModel.ToUserID;
@@ -632,6 +649,7 @@ UITextFieldDelegate
     detailVC.BuyerFullAddress_Incept = self.orderModel.BuyerFullAddress_Incept;
     detailVC.payMoneyStr = self.orderModel.PayMoney;
     detailVC.priceStr = self.orderModel.price;
+    detailVC.overPs = self.orderModel.FinishRemark;
     [self.navigationController pushViewController:detailVC animated:YES];
     
 }
@@ -795,11 +813,19 @@ UITextFieldDelegate
             completeVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][2];
         }
         
+#if Environment_Mode == 1
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][3] isEqualToString:@"0"]) {
             robVC.tabBarItem.badgeValue = nil;
         }else{
             robVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][3];
         }
+#elif Environment_Mode == 2
+        if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][4] isEqualToString:@"0"]) {
+            robVC.tabBarItem.badgeValue = nil;
+        }else{
+            robVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][4];
+        }
+#endif
         
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][0] isEqualToString:@"0"]) {
             allorderVC.tabBarItem.badgeValue = nil;

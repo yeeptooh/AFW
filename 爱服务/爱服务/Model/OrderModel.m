@@ -17,6 +17,7 @@
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
     if (self) {
+        self.FinishTime = dictionary[@"FinishTime"];
         self.state = dictionary[@"State"];
         self.BuyerFullAddress = dictionary[@"BuyerFullAddress"];
         self.BuyerProvince = dictionary[@"BuyerProvince"];        
@@ -119,9 +120,10 @@
         
         self.ProductClassify2Name = dictionary[@"ProductClassify"];
         self.WaiterName = dictionary[@"WaiterName"];
+        
         //TODO
         //完工信息和服务评价的字段后台未设置
-   
+        self.FinishRemark = dictionary[@"FinishRemark"];
  
     }
     return self;

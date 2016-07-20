@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="70" id="KGk-i7-Jjw" customClass="RefuseTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="69.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0m0-uQ-Zmo">
+                        <rect key="frame" x="10" y="31" width="300" height="0.5"/>
+                        <color key="backgroundColor" red="0.035294117649999998" green="0.59607843140000005" blue="0.80392156859999997" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.59999999999999998" id="bqq-eJ-Rzm"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="My2-PQ-xS1">
+                        <rect key="frame" x="0.0" y="69" width="320" height="0.5"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.59999999999999998" id="tMg-Ky-aOV"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="退单信息" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sg5-8b-AH2">
+                        <rect key="frame" x="8" y="8" width="85" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="85" id="b7j-7C-uc1"/>
+                            <constraint firstAttribute="height" constant="18" id="xma-Yg-7AK"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b43-6H-6af">
+                        <rect key="frame" x="8" y="38" width="304" height="25"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="0m0-uQ-Zmo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Nz8-6g-1lS"/>
+                    <constraint firstItem="sg5-8b-AH2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="OOs-Fh-i7n"/>
+                    <constraint firstItem="My2-PQ-xS1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="PhY-ro-ZqT"/>
+                    <constraint firstAttribute="trailing" secondItem="0m0-uQ-Zmo" secondAttribute="trailing" constant="10" id="VdX-5J-I8C"/>
+                    <constraint firstItem="b43-6H-6af" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="bq0-5R-YbI"/>
+                    <constraint firstItem="0m0-uQ-Zmo" firstAttribute="top" secondItem="sg5-8b-AH2" secondAttribute="bottom" constant="5" id="ePT-OH-wAo"/>
+                    <constraint firstItem="b43-6H-6af" firstAttribute="top" secondItem="0m0-uQ-Zmo" secondAttribute="bottom" constant="6.5" id="eoO-d3-vN6"/>
+                    <constraint firstAttribute="trailing" secondItem="b43-6H-6af" secondAttribute="trailing" constant="8" id="hMW-Nw-cAs"/>
+                    <constraint firstAttribute="bottom" secondItem="My2-PQ-xS1" secondAttribute="bottom" constant="0.59999999999999998" id="ikS-ca-hPc"/>
+                    <constraint firstItem="sg5-8b-AH2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="oTz-CT-PWZ"/>
+                    <constraint firstAttribute="trailing" secondItem="My2-PQ-xS1" secondAttribute="trailing" id="vkh-R7-1yT"/>
+                    <constraint firstItem="My2-PQ-xS1" firstAttribute="top" secondItem="b43-6H-6af" secondAttribute="bottom" constant="6" id="zF4-iP-3lI"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="refuseLabel" destination="b43-6H-6af" id="TIR-JN-kXf"/>
+            </connections>
+            <point key="canvasLocation" x="206" y="216"/>
+        </tableViewCell>
+    </objects>
+</document>
