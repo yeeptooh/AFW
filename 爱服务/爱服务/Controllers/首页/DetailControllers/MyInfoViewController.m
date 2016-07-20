@@ -271,20 +271,18 @@ UIViewControllerTransitioningDelegate
     ChangePWDViewController *changePWDVC = [[ChangePWDViewController alloc] init];
     changePWDVC.transitioningDelegate = self;
     changePWDVC.modalPresentationStyle = UIModalPresentationCustom;
-    [self presentViewController:changePWDVC  animated:YES completion:^{
-        [changePWDVC.textfield1 becomeFirstResponder];
-    }];
+    [self presentViewController:changePWDVC  animated:YES completion:nil];
+    [changePWDVC.textfield1 becomeFirstResponder];
 }
 
 
 
 - (void)quitButtonClicked {
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"logOut"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"hadLaunch"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"everLaunch"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
     [self.navigationController popViewControllerAnimated:YES];
     NSArray *vcList = self.navigationController.viewControllers;
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;

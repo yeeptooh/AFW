@@ -398,8 +398,8 @@ UITextFieldDelegate
     [viewController viewDidDisappear:animated];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     if (_noOrderView) {
         [self.noOrderView removeFromSuperview];
         self.noOrderView = nil;
@@ -456,8 +456,6 @@ UITextFieldDelegate
     [self netWorking];
 }
 - (void)netWorking {
-
-    __weak typeof(self)weakSelf = self;
     
     self.manager = [AFHTTPSessionManager manager];
     UserModel *userModel = [UserModel readUserModel];
@@ -469,40 +467,40 @@ UITextFieldDelegate
         [self.activityView stopAnimating];
         for (NSDictionary *dic in responseObject[@"task"]) {
             OrderModel *ordelModel = [OrderModel orderFromDictionary:dic];
-            [weakSelf.dicList addObject:ordelModel];
+            [self.dicList addObject:ordelModel];
         }
         
-        if (!weakSelf.dicList.count) {
-            [weakSelf.view addSubview:weakSelf.noOrderView];
+        if (!self.dicList.count) {
+            [self.view addSubview:self.noOrderView];
             return ;
         }
-        [weakSelf.view addSubview:weakSelf.tableView];
+        [self.view addSubview:self.tableView];
         [UIView animateWithDuration:0.3 animations:^{
-            weakSelf.tableView.alpha = 1;
+            self.tableView.alpha = 1;
         }];
-        [weakSelf.tableView reloadData];
+        [self.tableView reloadData];
         
         if ([responseObject[@"ResponseInfo"][0][@"PageNow"] integerValue] == [responseObject[@"ResponseInfo"][0][@"PageRowCount"] integerValue]) {
-            [weakSelf.tableView.mj_footer endRefreshing];
-            weakSelf.tableView.mj_footer.hidden = YES;
+            [self.tableView.mj_footer endRefreshing];
+            self.tableView.mj_footer.hidden = YES;
             return ;
         }else {
-            weakSelf.tableView.mj_footer.hidden = NO;
+            self.tableView.mj_footer.hidden = NO;
         }
         
-        [weakSelf.tableView.mj_footer endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
         
         
         return ;
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error.userInfo);
-        [weakSelf.manager.operationQueue cancelAllOperations];
-        [weakSelf.tableView.mj_footer endRefreshing];
+        [self.manager.operationQueue cancelAllOperations];
+        [self.tableView.mj_footer endRefreshing];
         [self.activityView stopAnimating];
         
-        [weakSelf.view addSubview:weakSelf.noNetWorkingView];
-        weakSelf.tableView.mj_footer.hidden = YES;
+        [self.view addSubview:self.noNetWorkingView];
+        self.tableView.mj_footer.hidden = YES;
         return ;
     }];
 
@@ -650,14 +648,14 @@ UITextFieldDelegate
         [self.searchResultTableView removeFromSuperview];
         self.searchResultTableView = nil;
     }
-    __weak typeof(self)weakSelf = self;
+    
     [self.searchActivityView startAnimating];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 
     UserModel *userModel = [UserModel readUserModel];
     NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=getlist&comid=%ld&uid=%ld&state=4&page=%ld&query=%@&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)self.page,textField.text,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
     //297错误，URL中有中文，需转码
-    URL = [URL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    URL = [URL stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     manager.requestSerializer.timeoutInterval = 5;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [manager.operationQueue cancelAllOperations];
@@ -671,36 +669,36 @@ UITextFieldDelegate
         }
         for (NSDictionary *dic in responseObject[@"task"]) {
             OrderModel *ordelModel = [OrderModel orderFromDictionary:dic];
-            [weakSelf.searchResultList addObject:ordelModel];
+            [self.searchResultList addObject:ordelModel];
         }
         
-        if (!weakSelf.searchResultList.count) {
-            [weakSelf.searchResultView addSubview:weakSelf.noSearchResultView];
+        if (!self.searchResultList.count) {
+            [self.searchResultView addSubview:self.noSearchResultView];
             return ;
         }
-        [weakSelf.searchResultView addSubview:weakSelf.searchResultTableView];
-        [weakSelf.searchResultTableView reloadData];
+        [self.searchResultView addSubview:self.searchResultTableView];
+        [self.searchResultTableView reloadData];
         
         if ([responseObject[@"ResponseInfo"][0][@"PageNow"] integerValue] == [responseObject[@"ResponseInfo"][0][@"PageRowCount"] integerValue]) {
-            [weakSelf.searchResultTableView.mj_footer endRefreshing];
-            weakSelf.searchResultTableView.mj_footer.hidden = YES;
+            [self.searchResultTableView.mj_footer endRefreshing];
+            self.searchResultTableView.mj_footer.hidden = YES;
             return ;
         }else {
-            weakSelf.searchResultTableView.mj_footer.hidden = NO;
+            self.searchResultTableView.mj_footer.hidden = NO;
         }
         
-        [weakSelf.searchResultTableView.mj_footer endRefreshing];
+        [self.searchResultTableView.mj_footer endRefreshing];
         
         
         return ;
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
-        [weakSelf.searchResultTableView.mj_footer endRefreshing];
+        [self.searchResultTableView.mj_footer endRefreshing];
         
         [self.searchActivityView stopAnimating];
-        [weakSelf.searchResultView addSubview:weakSelf.noNetWorkingView];
-        weakSelf.searchResultTableView.mj_footer.hidden = YES;
+        [self.searchResultView addSubview:self.noNetWorkingView];
+        self.searchResultTableView.mj_footer.hidden = YES;
         return ;
     }];
  
@@ -710,7 +708,6 @@ UITextFieldDelegate
 - (void)loadMoreSearchData {
     self.searchPage ++;
     
-    __weak typeof(self)weakSelf = self;
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 
     UserModel *userModel = [UserModel readUserModel];
@@ -727,34 +724,34 @@ UITextFieldDelegate
         [self.searchActivityView stopAnimating];
         for (NSDictionary *dic in responseObject[@"task"]) {
             OrderModel *ordelModel = [OrderModel orderFromDictionary:dic];
-            [weakSelf.searchResultList addObject:ordelModel];
+            [self.searchResultList addObject:ordelModel];
         }
         
-        if (!weakSelf.searchResultList.count) {
-            [weakSelf.searchResultView addSubview:weakSelf.noSearchResultView];
+        if (!self.searchResultList.count) {
+            [self.searchResultView addSubview:self.noSearchResultView];
             return ;
         }
-        [weakSelf.searchResultView addSubview:weakSelf.searchResultTableView];
-        [weakSelf.searchResultTableView reloadData];
+        [self.searchResultView addSubview:self.searchResultTableView];
+        [self.searchResultTableView reloadData];
         if ([responseObject[@"ResponseInfo"][0][@"PageNow"] integerValue] == [responseObject[@"ResponseInfo"][0][@"PageRowCount"] integerValue]) {
-            [weakSelf.searchResultTableView.mj_footer endRefreshing];
-            weakSelf.searchResultTableView.mj_footer.hidden = YES;
+            [self.searchResultTableView.mj_footer endRefreshing];
+            self.searchResultTableView.mj_footer.hidden = YES;
             return ;
         }else {
-            weakSelf.searchResultTableView.mj_footer.hidden = NO;
+            self.searchResultTableView.mj_footer.hidden = NO;
         }
-        [weakSelf.searchResultTableView.mj_footer endRefreshing];
+        [self.searchResultTableView.mj_footer endRefreshing];
         
         
         return ;
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
-        [weakSelf.searchResultTableView.mj_footer endRefreshing];
+        [self.searchResultTableView.mj_footer endRefreshing];
 
         [self.searchActivityView stopAnimating];
-        [weakSelf.searchResultView addSubview:weakSelf.noNetWorkingView];
-        weakSelf.searchResultTableView.mj_footer.hidden = YES;
+        [self.searchResultView addSubview:self.noNetWorkingView];
+        self.searchResultTableView.mj_footer.hidden = YES;
         return ;
         
     }];

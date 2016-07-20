@@ -130,8 +130,6 @@ UIViewControllerTransitioningDelegate
                              };
     
     
-    __weak typeof(self)weakSelf = self;
-    
     [manager POST:URL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         [HUD hideAnimated:YES];
@@ -140,16 +138,16 @@ UIViewControllerTransitioningDelegate
         successHUD.mode = MBProgressHUDModeText;
         successHUD.label.font = font(14);
         successHUD.label.text = @"接单成功";
-        [weakSelf.view addSubview:successHUD];
+        [self.view addSubview:successHUD];
         
         [successHUD showAnimated:YES];
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [successHUD hideAnimated:YES];
             [successHUD removeFromSuperViewOnHide];
-            AcceptViewController *parentView = (AcceptViewController *)[(UINavigationController *)[((UITabBarController *)[weakSelf presentingViewController]) selectedViewController] topViewController];
+            AcceptViewController *parentView = (AcceptViewController *)[(UINavigationController *)[((UITabBarController *)[self presentingViewController]) selectedViewController] topViewController];
 
-            [weakSelf dismissViewControllerAnimated:YES completion:^{
+            [self dismissViewControllerAnimated:YES completion:^{
                 [parentView.navigationController popToRootViewControllerAnimated:YES];
             }];
             
@@ -163,7 +161,7 @@ UIViewControllerTransitioningDelegate
         errorHUD.mode = MBProgressHUDModeText;
         errorHUD.label.font = font(14);
         errorHUD.label.text = @"接单失败";
-        [weakSelf.view addSubview:errorHUD];
+        [self.view addSubview:errorHUD];
         
         [errorHUD showAnimated:YES];
         

@@ -35,7 +35,7 @@
 
 #pragma mark - UIViewControllerAnimatedTransitioning
 - (void)animationEnded:(BOOL)transitionCompleted {
-  NSLog(@"%s", __FUNCTION__);
+  
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {

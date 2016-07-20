@@ -879,9 +879,6 @@ static NSInteger number;
                                  
                                  };
         
-        __weak typeof(self)weakSelf = self;
-        
-        
         [manager POST:URL parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
             
             for (NSInteger i = 0; i < count; i ++) {
@@ -906,14 +903,14 @@ static NSInteger number;
                 successHUD.mode = MBProgressHUDModeText;
                 successHUD.label.font = font(14);
                 successHUD.label.text = @"验证码输入错误";
-                [weakSelf.tableView addSubview:successHUD];
+                [self.tableView addSubview:successHUD];
                 
                 [successHUD showAnimated:YES];
                 number = 0;
                 
                 [successHUD hideAnimated:YES afterDelay:0.5];
                 [successHUD removeFromSuperViewOnHide];
-                //                [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+                //                [self.navigationController popToRootViewControllerAnimated:YES];
                 
                 return ;
                 
@@ -931,14 +928,14 @@ static NSInteger number;
             successHUD.mode = MBProgressHUDModeText;
             successHUD.label.font = font(14);
             successHUD.label.text = @"提交成功";
-            [weakSelf.tableView addSubview:successHUD];
+            [self.tableView addSubview:successHUD];
             
             [successHUD showAnimated:YES];
             number = 0;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [successHUD hideAnimated:YES];
                 [successHUD removeFromSuperViewOnHide];
-                [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+                [self.navigationController popToRootViewControllerAnimated:YES];
             });
             
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -950,7 +947,7 @@ static NSInteger number;
             errorHUD.mode = MBProgressHUDModeText;
             errorHUD.label.font = font(14);
             errorHUD.label.text = @"提交失败";
-            [weakSelf.tableView addSubview:errorHUD];
+            [self.tableView addSubview:errorHUD];
             
             [errorHUD showAnimated:YES];
             
@@ -977,7 +974,7 @@ static NSInteger number;
                 number = 0;
             });
             [successHUD removeFromSuperViewOnHide];
-            //                [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+            //                [self.navigationController popToRootViewControllerAnimated:YES];
             
             return ;
         }
@@ -1060,9 +1057,6 @@ static NSInteger number;
                                  
                                  };
         
-        __weak typeof(self)weakSelf = self;
-        
-        
         [manager POST:URL parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
             
             for (NSInteger i = 0; i < count; i ++) {
@@ -1087,14 +1081,14 @@ static NSInteger number;
                 successHUD.mode = MBProgressHUDModeText;
                 successHUD.label.font = font(14);
                 successHUD.label.text = @"验证码输入错误";
-                [weakSelf.tableView addSubview:successHUD];
+                [self.tableView addSubview:successHUD];
                 
                 [successHUD showAnimated:YES];
                 number = 0;
                 
                 [successHUD hideAnimated:YES afterDelay:0.5];
                 [successHUD removeFromSuperViewOnHide];
-                //                [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+                //                [self.navigationController popToRootViewControllerAnimated:YES];
                 
                 return ;
                 
@@ -1110,14 +1104,14 @@ static NSInteger number;
             successHUD.mode = MBProgressHUDModeText;
             successHUD.label.font = font(14);
             successHUD.label.text = @"提交成功";
-            [weakSelf.tableView addSubview:successHUD];
+            [self.tableView addSubview:successHUD];
             
             [successHUD showAnimated:YES];
             number = 0;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [successHUD hideAnimated:YES];
                 [successHUD removeFromSuperViewOnHide];
-                [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+                [self.navigationController popToRootViewControllerAnimated:YES];
             });
             
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -1129,7 +1123,7 @@ static NSInteger number;
             errorHUD.mode = MBProgressHUDModeText;
             errorHUD.label.font = font(14);
             errorHUD.label.text = @"提交失败";
-            [weakSelf.tableView addSubview:errorHUD];
+            [self.tableView addSubview:errorHUD];
             
             [errorHUD showAnimated:YES];
             

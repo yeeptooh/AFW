@@ -333,7 +333,7 @@ UITextFieldDelegate
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@",error.userInfo);
+        
         [weakSelf.HUD hideAnimated:YES];
         [weakSelf.HUD removeFromSuperViewOnHide];
         MBProgressHUD *noConnectHUD = [[MBProgressHUD alloc]initWithView:self.view];
