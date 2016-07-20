@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ChargebackTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *chargeBackReasonLabel;
+
 
 @property (weak, nonatomic) IBOutlet UILabel *chargeBackContentLabel;
 

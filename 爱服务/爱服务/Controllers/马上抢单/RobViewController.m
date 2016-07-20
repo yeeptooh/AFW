@@ -318,11 +318,19 @@ UITextFieldDelegate
             completeVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][2];
         }
         
+#if Environment_Mode == 1
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][3] isEqualToString:@"0"]) {
             robVC.tabBarItem.badgeValue = nil;
         }else{
             robVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][3];
         }
+#elif Environment_Mode == 2
+        if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][4] isEqualToString:@"0"]) {
+            robVC.tabBarItem.badgeValue = nil;
+        }else{
+            robVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][4];
+        }
+#endif
         
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][0] isEqualToString:@"0"]) {
             allorderVC.tabBarItem.badgeValue = nil;
@@ -453,6 +461,17 @@ UITextFieldDelegate
     }
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    
+    [super viewDidDisappear:animated];
+    [self.manager.operationQueue cancelAllOperations];
+    if (self.dicList.count) {
+        
+        [self.dicList removeAllObjects];
+        self.dicList = nil;
+    }
+}
+
 - (void)loadNewDate {
     [self netWorking];
 }
@@ -466,7 +485,12 @@ UITextFieldDelegate
     
     self.manager = [AFHTTPSessionManager manager];
     UserModel *userModel = [UserModel readUserModel];
+#if Environment_Mode == 1
     NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=getlist&comid=%ld&uid=%ld&state=22&page=%ld&query=&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)self.page,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
+#elif Environment_Mode == 2
+    NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=getlist&comid=%ld&uid=%ld&state=10&page=%ld&query=&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)self.page,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
+#endif
+    
     self.manager.requestSerializer.timeoutInterval = 5;
     
     [self.manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -647,10 +671,10 @@ UITextFieldDelegate
     detailVC.toUserID = self.orderModel.ToUserID;
     detailVC.toUserName = self.orderModel.ToUserName;
     detailVC.BuyerFullAddress_Incept = self.orderModel.BuyerFullAddress_Incept;
-    
+    detailVC.waiterName = self.orderModel.WaiterName;
     detailVC.payMoneyStr = self.orderModel.PayMoney;
     detailVC.priceStr = self.orderModel.price;
-    
+    detailVC.overPs = self.orderModel.FinishRemark;
     [self.navigationController pushViewController:detailVC animated:YES];
     
 }
@@ -843,11 +867,19 @@ UITextFieldDelegate
             completeVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][2];
         }
         
+#if Environment_Mode == 1
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][3] isEqualToString:@"0"]) {
             robVC.tabBarItem.badgeValue = nil;
         }else{
             robVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][3];
         }
+#elif Environment_Mode == 2
+        if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][4] isEqualToString:@"0"]) {
+            robVC.tabBarItem.badgeValue = nil;
+        }else{
+            robVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][4];
+        }
+#endif
         
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][0] isEqualToString:@"0"]) {
             allorderVC.tabBarItem.badgeValue = nil;

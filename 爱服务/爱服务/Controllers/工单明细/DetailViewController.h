@@ -15,6 +15,7 @@
 #import "OverTableViewCell.h"
 #import "AssessTableViewCell.h"
 #import "PayMoneyTableViewCell.h"
+#import "RefuseTableViewCell.h"
 
 @interface DetailViewController : DetailPageBaseViewController
 
@@ -55,16 +56,26 @@
 @property (nonatomic, strong) NSString *waiterName;
 
 
+
 @property (nonatomic, strong) NSString *fromUserID;
 @property (nonatomic, strong) NSString *fromUserName;
 @property (nonatomic, strong) NSString *toUserID;
 @property (nonatomic, strong) NSString *toUserName;
 
-
+@property (nonatomic, strong) NSString *FinishTime;
 @property (nonatomic, strong) NSString *BuyerFullAddress_Incept;
 
 @property (nonatomic, strong) NSString *payMoneyStr;
 @property (nonatomic, strong) NSString *priceStr;
 
+
+@property (nonatomic, strong) NSString *productBreed;
+@property (nonatomic, strong) NSString *productClassify;
+@property (nonatomic, strong) NSString *HandlerID;
+@property (nonatomic, strong) NSString *HandlerName;
+@property (nonatomic, strong) NSString *ProductBreedID;
+@property (nonatomic, strong) NSString *ProductClassify1ID;
+@property (nonatomic, strong) NSString *ProductClassify2ID;
+@property (nonatomic, strong) NSString *ProductClassify2Name;
 
 @end

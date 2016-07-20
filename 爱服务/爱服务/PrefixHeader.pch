@@ -33,8 +33,8 @@ fprintf(stderr, "-------\n");                                               \
 //18038664988
 //#define HomeURL @"http://192.168.1.173:90/forapp/"
 #elif Environment_Mode == 2
-#define HomeURL @"http://i.51ifw.com/forapp2/"
-//#define HomeURL @"http://192.168.1.173:90/forapp2/"
+//#define HomeURL @"http://i.51ifw.com/forapp2/"
+#define HomeURL @"http://192.168.1.173:90/forapp2/"
 
 #endif
 //存我要收款图片

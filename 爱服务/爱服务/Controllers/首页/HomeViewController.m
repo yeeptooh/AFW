@@ -157,11 +157,19 @@ static NSInteger tag = 0;
         completeVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][2];
     }
     
+#if Environment_Mode == 1
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][3] isEqualToString:@"0"]) {
         robVC.tabBarItem.badgeValue = nil;
     }else{
         robVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][3];
     }
+#elif Environment_Mode == 2
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][4] isEqualToString:@"0"]) {
+        robVC.tabBarItem.badgeValue = nil;
+    }else{
+        robVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][4];
+    }
+#endif
     
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][0] isEqualToString:@"0"]) {
         allorderVC.tabBarItem.badgeValue = nil;
@@ -1265,11 +1273,19 @@ static NSInteger tag = 0;
             completeVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][2];
         }
         
+#if Environment_Mode == 1
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][3] isEqualToString:@"0"]) {
             robVC.tabBarItem.badgeValue = nil;
         }else{
             robVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][3];
         }
+#elif Environment_Mode == 2
+        if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][4] isEqualToString:@"0"]) {
+            robVC.tabBarItem.badgeValue = nil;
+        }else{
+            robVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][4];
+        }
+#endif
         
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][0] isEqualToString:@"0"]) {
             allorderVC.tabBarItem.badgeValue = nil;

@@ -15,22 +15,26 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4uX-tM-uIE">
-                        <rect key="frame" x="8" y="8" width="183" height="17"/>
+                        <rect key="frame" x="8" y="8" width="150" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="150" id="g75-aI-UPv"/>
+                            <constraint firstAttribute="height" constant="18" id="uzk-do-rME"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="247" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q38-Yf-8c3">
-                        <rect key="frame" x="8" y="30" width="304" height="24.5"/>
+                        <rect key="frame" x="8" y="31" width="304" height="23.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="248" text="2016-09-24 14:55" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lyw-oW-v1f">
-                        <rect key="frame" x="191" y="4" width="121" height="21"/>
+                        <rect key="frame" x="172" y="8" width="140" height="18"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="21" id="N8P-ge-OVg"/>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="121" id="glP-eY-IcP"/>
+                            <constraint firstAttribute="height" constant="18" id="DaV-Bo-1Kc"/>
+                            <constraint firstAttribute="width" constant="140" id="UBM-8E-2WT"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -38,15 +42,14 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="q38-Yf-8c3" secondAttribute="trailing" constant="8" id="Dxn-fg-m9B"/>
-                    <constraint firstItem="lyw-oW-v1f" firstAttribute="bottom" secondItem="4uX-tM-uIE" secondAttribute="bottom" id="IQb-dH-469"/>
-                    <constraint firstItem="q38-Yf-8c3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="JVi-as-WrN"/>
-                    <constraint firstAttribute="trailing" secondItem="lyw-oW-v1f" secondAttribute="trailing" constant="8" id="LR2-Dy-5uP"/>
-                    <constraint firstAttribute="bottom" secondItem="q38-Yf-8c3" secondAttribute="bottom" constant="5" id="RCo-LY-lsN"/>
-                    <constraint firstItem="lyw-oW-v1f" firstAttribute="leading" secondItem="4uX-tM-uIE" secondAttribute="trailing" id="Tih-ir-Xyp"/>
-                    <constraint firstItem="4uX-tM-uIE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="gbz-jL-r8p"/>
-                    <constraint firstItem="4uX-tM-uIE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="mve-pT-FC0"/>
-                    <constraint firstItem="q38-Yf-8c3" firstAttribute="top" secondItem="lyw-oW-v1f" secondAttribute="bottom" constant="5" id="umL-lx-toC"/>
+                    <constraint firstItem="lyw-oW-v1f" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="1O9-cc-HFH"/>
+                    <constraint firstAttribute="trailing" secondItem="q38-Yf-8c3" secondAttribute="trailing" constant="8" id="3Tv-WN-q5e"/>
+                    <constraint firstItem="4uX-tM-uIE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Fcd-bo-4lw"/>
+                    <constraint firstItem="q38-Yf-8c3" firstAttribute="top" secondItem="lyw-oW-v1f" secondAttribute="bottom" constant="5" id="JK7-ab-lSb"/>
+                    <constraint firstAttribute="bottom" secondItem="q38-Yf-8c3" secondAttribute="bottom" constant="5" id="Joe-mq-Jr4"/>
+                    <constraint firstItem="q38-Yf-8c3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="f9T-ij-fkJ"/>
+                    <constraint firstAttribute="trailing" secondItem="lyw-oW-v1f" secondAttribute="trailing" constant="8" id="lqu-dU-hD5"/>
+                    <constraint firstItem="4uX-tM-uIE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="qLE-wg-5RK"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -54,7 +57,7 @@
                 <outlet property="dateLabel" destination="lyw-oW-v1f" id="6jP-hL-jDI"/>
                 <outlet property="dialogLabel" destination="q38-Yf-8c3" id="g9c-NR-zwC"/>
             </connections>
-            <point key="canvasLocation" x="577" y="325"/>
+            <point key="canvasLocation" x="599" y="330"/>
         </tableViewCell>
     </objects>
 </document>

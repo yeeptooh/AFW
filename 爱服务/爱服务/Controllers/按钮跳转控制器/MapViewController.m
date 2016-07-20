@@ -31,13 +31,7 @@ MKMapViewDelegate
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.edgesForExtendedLayout = UIRectEdgeNone;
 
-    CGFloat height;
-    if (iPhone4_4s || iPhone5_5s) {
-        height = 35;
-    }else {
-        height = 44;
-    }
-    self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, Width, Height - height)];
+    self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, Width, Height - TabbarHeight)];
     
     self.mapView.mapType = MKMapTypeStandard;
     
@@ -68,15 +62,27 @@ MKMapViewDelegate
     
     [self.view addSubview:self.mapView];
     
-    UIButton *robButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    robButton.frame = CGRectMake(0, Height - StatusBarAndNavigationBarHeight - height, Width, height);
-    robButton.backgroundColor = MainBlueColor;
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, Height - StatusBarAndNavigationBarHeight - TabbarHeight, Width, TabbarHeight)];
+    view.backgroundColor = color(230, 230, 230, 1);
+    [self.view addSubview:view];
     
+    
+    UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
+    effectView.frame = view.bounds;
+    [view addSubview:effectView];
+    
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, Width, 0.6)];
+    lineView.backgroundColor = [UIColor lightGrayColor];
+    [effectView.contentView addSubview:lineView];
+    
+    UIButton *robButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    robButton.frame = CGRectMake(0, 0, Width, TabbarHeight);
+    robButton.titleLabel.font = font(12);
     [robButton setTitle:@"立即抢单" forState:UIControlStateNormal];
-    [robButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
-
+    [robButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    
     [robButton addTarget:self action:@selector(robButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:robButton];
+    [effectView.contentView addSubview:robButton];
 }
 
 - (void)robButtonClicked {

@@ -36,29 +36,6 @@ UINavigationControllerDelegate
 @property (nonatomic, strong) NSData *imageData2;
 @property (nonatomic, strong) NSData *imageData3;
 
-@property (nonatomic, strong) NSString *ID;
-@property (nonatomic, strong) NSString *brand;
-@property (nonatomic, strong) NSString *type;
-@property (nonatomic, strong) NSString *model;
-
-
-@property (nonatomic, strong) NSString *FromUserID;
-@property (nonatomic, strong) NSString *FromUserName;
-@property (nonatomic, strong) NSString *ToUserID;
-@property (nonatomic, strong) NSString *ToUserName;
-@property (nonatomic, strong) NSString *HandlerID;
-@property (nonatomic, strong) NSString *HandlerName;
-@property (nonatomic, strong) NSString *ProductBreedID;
-@property (nonatomic, strong) NSString *ProductType;
-
-@property (nonatomic, strong) NSString *ProductClassify1ID;
-@property (nonatomic, strong) NSString *ProductClassify2ID;
-
-@property (nonatomic, strong) NSString *ProductClassify2Name;
-@property (nonatomic, strong) NSString *WaiterName;
-
-@property (nonatomic, strong) UIButton *chooseButton;
-
 @property (nonatomic, strong) UIActivityIndicatorView *indicatorView;
 
 @property (nonatomic, strong) UIAlertController *alertController;
@@ -159,6 +136,9 @@ static NSInteger number;
     }else{
         [self.chooseButton setTitle:_ID forState:UIControlStateNormal];
     }
+    if (self.flag) {
+        self.chooseButton.enabled = NO;
+    }
     CGFloat fontsize;
     if (iPhone4_4s || iPhone5_5s) {
         fontsize = 14;
@@ -176,35 +156,66 @@ static NSInteger number;
     [self.scrollView addSubview:self.chooseButton];
     
     for (NSInteger i = 0; i < 3; i ++) {
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(Width*5/16, 5 + ((Height - StatusBarAndNavigationBarHeight)*(i+1)/12), Width*10/16, (Height - StatusBarAndNavigationBarHeight)/12 - 10)];
-        
-        label.backgroundColor = [UIColor whiteColor];
-        label.font = font(fontsize);
-        label.layer.cornerRadius = 5;
-        label.layer.masksToBounds = YES;
-        label.tag = 1000 + i;
-        [self.scrollView addSubview:label];
         if (i == 0) {
-            label.text = _brand;
+            self.label1 = [[UILabel alloc]initWithFrame:CGRectMake(Width*5/16, 5 + ((Height - StatusBarAndNavigationBarHeight)*(i+1)/12), Width*10/16, (Height - StatusBarAndNavigationBarHeight)/12 - 10)];
+            
+            self.label1.backgroundColor = [UIColor whiteColor];
+            self.label1.font = font(fontsize);
+            self.label1.layer.cornerRadius = 5;
+            self.label1.layer.masksToBounds = YES;
+            self.label1.tag = 1000 + i;
+            [self.scrollView addSubview:self.label1];
+            self.label1.text = _brand;
+           
         }else if (i == 1) {
-            label.text = _type;
+            self.label2 = [[UILabel alloc]initWithFrame:CGRectMake(Width*5/16, 5 + ((Height - StatusBarAndNavigationBarHeight)*(i+1)/12), Width*10/16, (Height - StatusBarAndNavigationBarHeight)/12 - 10)];
+            
+            self.label2.backgroundColor = [UIColor whiteColor];
+            self.label2.font = font(fontsize);
+            self.label2.layer.cornerRadius = 5;
+            self.label2.layer.masksToBounds = YES;
+            self.label2.tag = 1000 + i;
+            [self.scrollView addSubview:self.label2];
+            self.label2.text = _type;
         }else {
-            label.text = _model;
+            self.label3 = [[UILabel alloc]initWithFrame:CGRectMake(Width*5/16, 5 + ((Height - StatusBarAndNavigationBarHeight)*(i+1)/12), Width*10/16, (Height - StatusBarAndNavigationBarHeight)/12 - 10)];
+            
+            self.label3.backgroundColor = [UIColor whiteColor];
+            self.label3.font = font(fontsize);
+            self.label3.layer.cornerRadius = 5;
+            self.label3.layer.masksToBounds = YES;
+            self.label3.tag = 1000 + i;
+            [self.scrollView addSubview:self.label3];
+            self.label3.text = _model;
         }
+        
     }
     
     for (NSInteger i = 0; i < 5; i ++) {
-        UITextField *textfield = [[UITextField alloc]initWithFrame:CGRectMake(Width*5/16, 5 + ((Height - StatusBarAndNavigationBarHeight)*(i+4)/12), Width*10/16, (Height - StatusBarAndNavigationBarHeight)/12 - 10)];
-        if (i == 0) {
-            textfield.text = @"1";
+        if (i == 2) {
+            self.textfield = [[UITextField alloc]initWithFrame:CGRectMake(Width*5/16, 5 + ((Height - StatusBarAndNavigationBarHeight)*(i+4)/12), Width*10/16, (Height - StatusBarAndNavigationBarHeight)/12 - 10)];
+            self.textfield.text = self.WaiterName;
+            self.textfield.backgroundColor = [UIColor whiteColor];
+            self.textfield.font = font(fontsize);
+            self.textfield.layer.cornerRadius = 5;
+            self.textfield.layer.masksToBounds = YES;
+            
+            self.textfield.tag = 1003 + i;
+            [self.scrollView addSubview: self.textfield];
+        }else {
+            UITextField *textfield = [[UITextField alloc]initWithFrame:CGRectMake(Width*5/16, 5 + ((Height - StatusBarAndNavigationBarHeight)*(i+4)/12), Width*10/16, (Height - StatusBarAndNavigationBarHeight)/12 - 10)];
+            if (i == 0) {
+                textfield.text = @"1";
+            }
+            textfield.backgroundColor = [UIColor whiteColor];
+            textfield.font = font(fontsize);
+            textfield.layer.cornerRadius = 5;
+            textfield.layer.masksToBounds = YES;
+            
+            textfield.tag = 1003 + i;
+            [self.scrollView addSubview: textfield];
         }
-        textfield.backgroundColor = [UIColor whiteColor];
-        textfield.font = font(fontsize);
-        textfield.layer.cornerRadius = 5;
-        textfield.layer.masksToBounds = YES;
         
-        textfield.tag = 1003 + i;
-        [self.scrollView addSubview: textfield];
     }
     
     UIView *firstView = [[UIView alloc]initWithFrame:CGRectMake(20, 10 + ((Height - StatusBarAndNavigationBarHeight)*(10)/12), (Width - 120)/3, 4*(Width - 120)/9)];

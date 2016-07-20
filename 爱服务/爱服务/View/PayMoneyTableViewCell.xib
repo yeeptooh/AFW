@@ -35,7 +35,7 @@
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fM6-aJ-4IF">
                         <rect key="frame" x="10" y="31" width="300" height="0.5"/>
-                        <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.035294117649999998" green="0.59607843140000005" blue="0.80392156859999997" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="0.59999999999999998" id="QKB-og-jKN"/>
                         </constraints>

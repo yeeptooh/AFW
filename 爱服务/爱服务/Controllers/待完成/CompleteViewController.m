@@ -353,11 +353,19 @@ UITextFieldDelegate
             completeVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][2];
         }
         
+#if Environment_Mode == 1
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][3] isEqualToString:@"0"]) {
             robVC.tabBarItem.badgeValue = nil;
         }else{
             robVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][3];
         }
+#elif Environment_Mode == 2
+        if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][4] isEqualToString:@"0"]) {
+            robVC.tabBarItem.badgeValue = nil;
+        }else{
+            robVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][4];
+        }
+#endif
         
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][0] isEqualToString:@"0"]) {
             allorderVC.tabBarItem.badgeValue = nil;
@@ -490,6 +498,17 @@ UITextFieldDelegate
     }
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    
+    [super viewDidDisappear:animated];
+    [self.manager.operationQueue cancelAllOperations];
+    if (self.dicList.count) {
+        
+        [self.dicList removeAllObjects];
+        self.dicList = nil;
+    }
+}
+
 - (void)loadNewDate {
     [self netWorking];
 }
@@ -510,7 +529,7 @@ UITextFieldDelegate
 
         [self.activityView stopAnimating];
         
-        
+        NSLog(@"%@",responseObject);
         if (self.page == 1) {
             if (self.dicList) {
                 [self.dicList removeAllObjects];
@@ -757,7 +776,7 @@ UITextFieldDelegate
         detailVC.appointment = self.orderModel.appointment;
         detailVC.servicePs = self.orderModel.postScript;
         detailVC.chargeBackContent = self.orderModel.chargeBackContent;
-        
+        detailVC.waiterName = self.orderModel.WaiterName;
         detailVC.fromUserID = self.orderModel.FromUserID;
         detailVC.fromUserName = self.orderModel.fromUserName;
         detailVC.toUserID = self.orderModel.ToUserID;
@@ -765,6 +784,18 @@ UITextFieldDelegate
         detailVC.BuyerFullAddress_Incept = self.orderModel.BuyerFullAddress_Incept;
         detailVC.payMoneyStr = self.orderModel.PayMoney;
         detailVC.priceStr = self.orderModel.price;
+        detailVC.overPs = self.orderModel.FinishRemark;
+        detailVC.productBreed = self.orderModel.productBreed;
+        detailVC.productClassify = self.orderModel.productClassify;
+        
+        detailVC.HandlerID = self.orderModel.HandlerID;
+        detailVC.HandlerName = self.orderModel.HandlerName;
+        
+        detailVC.ProductBreedID = self.orderModel.ProductBreedID;
+        detailVC.ProductClassify1ID = self.orderModel.ProductClassify1ID;
+        detailVC.ProductClassify2ID = self.orderModel.ProductClassify2ID;
+        detailVC.ProductClassify2Name = self.orderModel.ProductClassify2Name;
+        
         [self.navigationController pushViewController:detailVC animated:YES];
     }
 }
@@ -929,11 +960,19 @@ UITextFieldDelegate
             completeVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][2];
         }
         
+#if Environment_Mode == 1
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][3] isEqualToString:@"0"]) {
             robVC.tabBarItem.badgeValue = nil;
         }else{
             robVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][3];
         }
+#elif Environment_Mode == 2
+        if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][4] isEqualToString:@"0"]) {
+            robVC.tabBarItem.badgeValue = nil;
+        }else{
+            robVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][4];
+        }
+#endif
         
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][0] isEqualToString:@"0"]) {
             allorderVC.tabBarItem.badgeValue = nil;

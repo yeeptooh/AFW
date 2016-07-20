@@ -51,7 +51,7 @@
 @property (nonatomic, strong) NSString *refuseContent;
 
 
-
+@property (nonatomic, strong) NSString *FinishTime;
 @property (nonatomic, strong) NSString *productBreed;
 @property (nonatomic, strong) NSString *productClassify;
 
@@ -68,6 +68,7 @@
 
 @property (nonatomic, strong) NSString *ProductClassify2Name;
 @property (nonatomic, strong) NSString *WaiterName;
+@property (nonatomic, strong) NSString *FinishRemark;
 
 @property (nonatomic, strong) NSString *priceStr;
 

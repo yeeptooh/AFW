@@ -10,5 +10,6 @@
 
 @interface AssessTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *assessLabel;
+@property (weak, nonatomic) IBOutlet UILabel *evaluateLabel;
 
 @end
