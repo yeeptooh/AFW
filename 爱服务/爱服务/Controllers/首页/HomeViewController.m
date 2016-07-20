@@ -1070,7 +1070,6 @@ static NSInteger tag = 0;
         UIImage *image = [UIImage imageNamed:@"IMG_4188.jpg"];
         
         CIQRCodeFeature *QRCodeFeature = (CIQRCodeFeature *)[[self detectQRCodeWithImage:image] firstObject];
-        NSLog(@"%lu",(unsigned long)[self detectQRCodeWithImage:image].count);
         
         CIFilter *filter = [CIFilter filterWithName:@"CIQRCodeGenerator"];
         
@@ -1135,11 +1134,9 @@ static NSInteger tag = 0;
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         NSString *url = [NSString stringWithFormat:@"%@uploadFile.ashx?action=loadimages&userId=%@",HomeURL, @(userModel.uid)];
         [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            NSLog(@"%@",responseObject);
-        
-            
+    
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
-            NSLog(@"%@",dic);
+            
             if (dic[@"wechatpay"] == 0) {
                 
             }else {
@@ -1172,14 +1169,9 @@ static NSInteger tag = 0;
             hud.label.text = NSLocalizedString(@"请检查网络", @"HUD completed title");
             [hud hideAnimated:YES afterDelay:1.5f];
             [hud removeFromSuperViewOnHide];
-            NSLog(@"%@",error.userInfo);
             
         }];
-        
-  
-        
-        
-        
+       
     }
     
 #elif Environment_Mode == 2

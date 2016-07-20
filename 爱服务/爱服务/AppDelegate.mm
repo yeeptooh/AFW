@@ -85,7 +85,6 @@ static BOOL isProduction = FALSE;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    
     [UINavigationBar appearance].barTintColor = color(30, 30, 30, 1);
     [UINavigationBar appearance].tintColor = color(245, 245, 245, 1);
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} ];
@@ -258,12 +257,12 @@ static BOOL isProduction = FALSE;
             NSDictionary *dic = (NSDictionary *)jsonObj;
             
             NSString *UUID = [[UIDevice currentDevice].identifierForVendor UUIDString];
-
+            
             if (![dic[@"imei"] isEqualToString:UUID]) {
                 
                 if (![[self activityViewController] isKindOfClass:[LoginViewController class]]) {
                     
-                    NSLog(@"12345");
+                    
                     dispatch_async(dispatch_get_main_queue(), ^{
                         
                         if (self.fuckUBaby) {
@@ -291,6 +290,7 @@ static BOOL isProduction = FALSE;
                 }
                 
             }
+           
         }
        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -649,6 +649,7 @@ static BOOL isProduction = FALSE;
 - (void)applicationWillTerminate:(UIApplication *)application {
     [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"logOut"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
 }
 
 #pragma mark - WeiBoSDKDelegate -

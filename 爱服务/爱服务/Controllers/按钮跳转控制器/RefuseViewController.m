@@ -209,7 +209,6 @@ UITableViewDataSource
                              @"uid":@(userModel.uid),
                              @"reason":((UIButton *)[self.tableView viewWithTag:500]).titleLabel.text,
                              };
-    __weak typeof(self)weakSelf = self;
     
     [manager POST:URL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kBadgeValueChanged object:nil];
@@ -219,14 +218,14 @@ UITableViewDataSource
         successHUD.mode = MBProgressHUDModeText;
         successHUD.label.font = font(14);
         successHUD.label.text = @"拒绝成功";
-        [weakSelf.view addSubview:successHUD];
+        [self.view addSubview:successHUD];
 
         [successHUD showAnimated:YES];
 
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [successHUD hideAnimated:YES];
             [successHUD removeFromSuperViewOnHide];
-            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+            [self.navigationController popToRootViewControllerAnimated:YES];
         });
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -238,7 +237,7 @@ UITableViewDataSource
         errorHUD.mode = MBProgressHUDModeText;
         errorHUD.label.font = font(14);
         errorHUD.label.text = @"拒绝失败";
-        [weakSelf.view addSubview:errorHUD];
+        [self.view addSubview:errorHUD];
 
         [errorHUD showAnimated:YES];
 

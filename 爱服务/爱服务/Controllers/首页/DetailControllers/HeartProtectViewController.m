@@ -101,7 +101,7 @@ UINavigationControllerDelegate
     self.webView.scrollView.bounces = NO;
     self.webView.scrollView.showsVerticalScrollIndicator = NO;
     NSString *url = [NSString stringWithFormat:@"%@API/AiXinBao.aspx?comId=%@",heartProHomeURL,@(userModel.uid)];
-    NSLog(@"%@",url);
+    
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
 //    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://192.168.1.228:89/API/AiXinBao.aspx"]]]];
     

@@ -9,7 +9,7 @@
 #import "BaseViewController.h"
 //#import "MyDefine.h"
 @interface BaseViewController ()
-
+<UIGestureRecognizerDelegate>
 @end
 
 @implementation BaseViewController
@@ -21,6 +21,18 @@
 
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    self.navigationController.interactivePopGestureRecognizer.delegate = self;
 
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    if (self.navigationController && [self.navigationController.viewControllers count] == 1) {
+        return NO;
+    }
+    return YES;
+}
 
 @end

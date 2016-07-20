@@ -624,8 +624,6 @@ static NSInteger number;
                              };
     
     
-    __weak typeof(self)weakSelf = self;
-    
     MBProgressHUD *HUD = [[MBProgressHUD alloc]initWithView:self.view];
     HUD.mode = MBProgressHUDModeIndeterminate;
     [self.view addSubview:HUD];
@@ -651,14 +649,14 @@ static NSInteger number;
         successHUD.mode = MBProgressHUDModeText;
         successHUD.label.font = font(14);
         successHUD.label.text = @"提交成功";
-        [weakSelf.view addSubview:successHUD];
+        [self.view addSubview:successHUD];
         
         [successHUD showAnimated:YES];
         number = 0;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [successHUD hideAnimated:YES];
             [successHUD removeFromSuperViewOnHide];
-            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+            [self.navigationController popToRootViewControllerAnimated:YES];
         });
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -673,7 +671,7 @@ static NSInteger number;
         errorHUD.mode = MBProgressHUDModeText;
         errorHUD.label.font = font(14);
         errorHUD.label.text = @"提交失败";
-        [weakSelf.view addSubview:errorHUD];
+        [self.view addSubview:errorHUD];
         
         [errorHUD showAnimated:YES];
         

@@ -117,6 +117,14 @@
 		4A5D25E51D347F6300630029 /* CSMainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A5D25E31D347F6300630029 /* CSMainTableViewCell.xib */; };
 		4A5D25E81D348E0E00630029 /* CommitHeartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5D25E71D348E0E00630029 /* CommitHeartViewController.m */; };
 		4A5D25E91D34C73500630029 /* CommitHeartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5D25E71D348E0E00630029 /* CommitHeartViewController.m */; };
+		4A61DF4C1D3DBD3F00E1FCB8 /* ChangeOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A61DF4B1D3DBD3F00E1FCB8 /* ChangeOrderViewController.m */; };
+		4A61DF4D1D3DBD3F00E1FCB8 /* ChangeOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A61DF4B1D3DBD3F00E1FCB8 /* ChangeOrderViewController.m */; };
+		4A61DFDA1D3E021700E1FCB8 /* ChangePWDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A61DFD91D3E021700E1FCB8 /* ChangePWDViewController.m */; };
+		4A61DFDB1D3E021700E1FCB8 /* ChangePWDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A61DFD91D3E021700E1FCB8 /* ChangePWDViewController.m */; };
+		4A61DFDE1D3E072B00E1FCB8 /* ChangePWDPresentAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A61DFDD1D3E072B00E1FCB8 /* ChangePWDPresentAnimation.m */; };
+		4A61DFDF1D3E072B00E1FCB8 /* ChangePWDPresentAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A61DFDD1D3E072B00E1FCB8 /* ChangePWDPresentAnimation.m */; };
+		4A61DFE21D3E075200E1FCB8 /* ChangePWDDismissAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A61DFE11D3E075200E1FCB8 /* ChangePWDDismissAnimation.m */; };
+		4A61DFE31D3E075200E1FCB8 /* ChangePWDDismissAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A61DFE11D3E075200E1FCB8 /* ChangePWDDismissAnimation.m */; };
 		4A62D1EA1D35D95A009A80C3 /* CSDetailTaskTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A62D1E81D35D95A009A80C3 /* CSDetailTaskTableViewCell.m */; };
 		4A62D1EB1D35D95A009A80C3 /* CSDetailTaskTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A62D1E91D35D95A009A80C3 /* CSDetailTaskTableViewCell.xib */; };
 		4A62D1EE1D3616EB009A80C3 /* DispatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A62D1ED1D3616EB009A80C3 /* DispatchViewController.m */; };
@@ -612,6 +620,14 @@
 		4A5D25E31D347F6300630029 /* CSMainTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSMainTableViewCell.xib; sourceTree = "<group>"; };
 		4A5D25E61D348E0E00630029 /* CommitHeartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommitHeartViewController.h; sourceTree = "<group>"; };
 		4A5D25E71D348E0E00630029 /* CommitHeartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommitHeartViewController.m; sourceTree = "<group>"; };
+		4A61DF4A1D3DBD3F00E1FCB8 /* ChangeOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeOrderViewController.h; sourceTree = "<group>"; };
+		4A61DF4B1D3DBD3F00E1FCB8 /* ChangeOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeOrderViewController.m; sourceTree = "<group>"; };
+		4A61DFD81D3E021700E1FCB8 /* ChangePWDViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePWDViewController.h; sourceTree = "<group>"; };
+		4A61DFD91D3E021700E1FCB8 /* ChangePWDViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePWDViewController.m; sourceTree = "<group>"; };
+		4A61DFDC1D3E072B00E1FCB8 /* ChangePWDPresentAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePWDPresentAnimation.h; sourceTree = "<group>"; };
+		4A61DFDD1D3E072B00E1FCB8 /* ChangePWDPresentAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePWDPresentAnimation.m; sourceTree = "<group>"; };
+		4A61DFE01D3E075200E1FCB8 /* ChangePWDDismissAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePWDDismissAnimation.h; sourceTree = "<group>"; };
+		4A61DFE11D3E075200E1FCB8 /* ChangePWDDismissAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePWDDismissAnimation.m; sourceTree = "<group>"; };
 		4A62D1E71D35D95A009A80C3 /* CSDetailTaskTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSDetailTaskTableViewCell.h; sourceTree = "<group>"; };
 		4A62D1E81D35D95A009A80C3 /* CSDetailTaskTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSDetailTaskTableViewCell.m; sourceTree = "<group>"; };
 		4A62D1E91D35D95A009A80C3 /* CSDetailTaskTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSDetailTaskTableViewCell.xib; sourceTree = "<group>"; };
@@ -1406,6 +1422,10 @@
 				4A4C6CF71CD20DF80030B861 /* ShareAnimation.m */,
 				4A6799171D23C4E400A8E0F5 /* DialogAnimation.h */,
 				4A6799181D23C4E400A8E0F5 /* DialogAnimation.m */,
+				4A61DFDC1D3E072B00E1FCB8 /* ChangePWDPresentAnimation.h */,
+				4A61DFDD1D3E072B00E1FCB8 /* ChangePWDPresentAnimation.m */,
+				4A61DFE01D3E075200E1FCB8 /* ChangePWDDismissAnimation.h */,
+				4A61DFE11D3E075200E1FCB8 /* ChangePWDDismissAnimation.m */,
 			);
 			path = AnimationTransition;
 			sourceTree = "<group>";
@@ -1494,6 +1514,8 @@
 				4A5CBA231D24FA2000B36E6E /* MasterQueryViewController.m */,
 				4A6C3EA61D333801004E4C9F /* AddMoneyDetailViewController.h */,
 				4A6C3EA71D333801004E4C9F /* AddMoneyDetailViewController.m */,
+				4A61DF4A1D3DBD3F00E1FCB8 /* ChangeOrderViewController.h */,
+				4A61DF4B1D3DBD3F00E1FCB8 /* ChangeOrderViewController.m */,
 			);
 			name = "爱服务厂商版";
 			sourceTree = "<group>";
@@ -1793,6 +1815,8 @@
 				4A65B7D31CF82AE400331CD2 /* MapViewController.m */,
 				4A62D1EC1D3616EB009A80C3 /* DispatchViewController.h */,
 				4A62D1ED1D3616EB009A80C3 /* DispatchViewController.m */,
+				4A61DFD81D3E021700E1FCB8 /* ChangePWDViewController.h */,
+				4A61DFD91D3E021700E1FCB8 /* ChangePWDViewController.m */,
 			);
 			path = "按钮跳转控制器";
 			sourceTree = "<group>";
@@ -2152,6 +2176,7 @@
 				4A4BD3201CB8F812009DA0B9 /* MASConstraint.m in Sources */,
 				4A6973741CBB4D20002A036C /* AppendFeesViewController.m in Sources */,
 				4A57F8871CD2F5390034E089 /* AFURLRequestSerialization.m in Sources */,
+				4A61DF4C1D3DBD3F00E1FCB8 /* ChangeOrderViewController.m in Sources */,
 				4A4BD2CE1CB8D903009DA0B9 /* NSData+ImageContentType.m in Sources */,
 				4A4BD2A91CB8D61C009DA0B9 /* SDCycleScrollView.m in Sources */,
 				4A65B7D41CF82AE400331CD2 /* MapViewController.m in Sources */,
@@ -2203,6 +2228,7 @@
 				4A4EDB721CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.m in Sources */,
 				4A4BD2FC1CB8F5C2009DA0B9 /* LoginViewController.m in Sources */,
 				4A4BD2D21CB8D903009DA0B9 /* SDWebImageDownloader.m in Sources */,
+				4A61DFE21D3E075200E1FCB8 /* ChangePWDDismissAnimation.m in Sources */,
 				4A6BABE91CC62FAB000B94A2 /* UIScrollView+MJRefresh.m in Sources */,
 				4A6973831CBB4D8A002A036C /* QRCodeViewController.m in Sources */,
 				4A6BABD81CC62FAB000B94A2 /* MJRefreshAutoFooter.m in Sources */,
@@ -2218,6 +2244,7 @@
 				4A1D9D9C1D1B833A00052B92 /* BusinessDetailTableView.m in Sources */,
 				4A4BD2CF1CB8D903009DA0B9 /* SDImageCache.m in Sources */,
 				4A5228B21CBC8C8100DD2D9C /* PresentAnimation.m in Sources */,
+				4A61DFDA1D3E021700E1FCB8 /* ChangePWDViewController.m in Sources */,
 				4ADEDF1A1D17E89900FE3412 /* RSADataSigner.m in Sources */,
 				4A4BD2D31CB8D903009DA0B9 /* SDWebImageDownloaderOperation.m in Sources */,
 				4A561D661CBDE9DE00BB26AC /* MainTableViewCell.m in Sources */,
@@ -2237,6 +2264,7 @@
 				4A5A39B71D2F89BC00DF3E87 /* ZDDQRCodeViewController.m in Sources */,
 				4A6973771CBB4D3E002A036C /* GuaranteeViewController.m in Sources */,
 				4A43DEE41CCF69250008BD96 /* BarCodeViewController.m in Sources */,
+				4A61DFDE1D3E072B00E1FCB8 /* ChangePWDPresentAnimation.m in Sources */,
 				4A4BD2D81CB8D903009DA0B9 /* UIImage+MultiFormat.m in Sources */,
 				4A67991F1D23DDEB00A8E0F5 /* DialogTableViewCell.m in Sources */,
 				4A6BABD91CC62FAB000B94A2 /* MJRefreshBackFooter.m in Sources */,
@@ -2308,6 +2336,7 @@
 				4A6423761D19396600F26BA9 /* RefuseViewController.m in Sources */,
 				4A6423771D19396600F26BA9 /* AFNetworkReachabilityManager.m in Sources */,
 				4A6423781D19396600F26BA9 /* MJRefreshNormalHeader.m in Sources */,
+				4A61DFE31D3E075200E1FCB8 /* ChangePWDDismissAnimation.m in Sources */,
 				4A6423791D19396600F26BA9 /* RefuseReasonViewController.m in Sources */,
 				4A64237A1D19396600F26BA9 /* HeartProtectViewController.m in Sources */,
 				4A64237B1D19396600F26BA9 /* TADotView.m in Sources */,
@@ -2344,10 +2373,12 @@
 				4A6423991D19396600F26BA9 /* SDWebImageDecoder.m in Sources */,
 				4A64239A1D19396600F26BA9 /* UIButton+WebCache.m in Sources */,
 				4A64239B1D19396600F26BA9 /* DataSigner.m in Sources */,
+				4A61DFDF1D3E072B00E1FCB8 /* ChangePWDPresentAnimation.m in Sources */,
 				4A78EAE01D1A75380047E1B9 /* ACCReviewViewController.m in Sources */,
 				4A64239C1D19396600F26BA9 /* RSADataVerifier.m in Sources */,
 				4A64239D1D19396600F26BA9 /* ChargeBackViewController.m in Sources */,
 				4A64239E1D19396600F26BA9 /* ChargeBackReasonViewController.m in Sources */,
+				4A61DFDB1D3E021700E1FCB8 /* ChangePWDViewController.m in Sources */,
 				4A64239F1D19396600F26BA9 /* MyInfoViewController.m in Sources */,
 				4A64A1661D2272DB00A3DC7C /* BaoXiuViewController.m in Sources */,
 				4A6423A01D19396600F26BA9 /* SDWebImageManager.m in Sources */,
@@ -2411,6 +2442,7 @@
 				4A6423D51D19396600F26BA9 /* BarCodeViewController.m in Sources */,
 				4A6423D61D19396600F26BA9 /* UIImage+MultiFormat.m in Sources */,
 				4A6799201D23DDEB00A8E0F5 /* DialogTableViewCell.m in Sources */,
+				4A61DF4D1D3DBD3F00E1FCB8 /* ChangeOrderViewController.m in Sources */,
 				4A6423D71D19396600F26BA9 /* MJRefreshBackFooter.m in Sources */,
 				4AEFBE2D1D3CC99A001BB252 /* PayMoneyTableViewCell.m in Sources */,
 				4A6423D81D19396600F26BA9 /* PayTableViewCell.m in Sources */,
