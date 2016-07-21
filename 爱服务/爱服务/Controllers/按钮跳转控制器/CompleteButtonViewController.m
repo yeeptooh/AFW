@@ -152,8 +152,8 @@ static NSInteger number;
     
     UIButton *submit = [UIButton buttonWithType:UIButtonTypeCustom];
     [submit setTitle:@"提交" forState:UIControlStateNormal];
-    submit.titleLabel.font = font(12);
-    [submit setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    submit.backgroundColor = MainBlueColor;
+    [submit setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [submit addTarget:self action:@selector(submitClicked:) forControlEvents:UIControlEventTouchUpInside];
     
 

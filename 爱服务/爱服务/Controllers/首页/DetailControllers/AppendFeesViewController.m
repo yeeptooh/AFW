@@ -11,12 +11,13 @@
 #import "MBProgressHUD.h"
 #import "AFNetworking.h"
 #import "CompleteViewController.h"
+#import "AppendReasonViewController.h"
 #import <WebKit/WebKit.h>
 @interface AppendFeesViewController ()
 <
 WKNavigationDelegate
 >
-@property (nonatomic, strong) NSString *ID;
+
 @property (nonatomic, strong) UIActivityIndicatorView *indicatorView;
 
 @property (nonatomic, strong) MBProgressHUD *HUD;
@@ -27,14 +28,17 @@ WKNavigationDelegate
 
 @property (nonatomic, strong) UIButton *chooseButton;
 
-@property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *address;
-@property (nonatomic, strong) NSString *product;
-@property (nonatomic, strong) NSString *price;
-
+@property (nonatomic, strong) NSMutableArray *reasonList;
 @end
 
 @implementation AppendFeesViewController
+
+- (NSMutableArray *)reasonList {
+    if (!_reasonList) {
+        _reasonList = [NSMutableArray array];
+    }
+    return _reasonList;
+}
 
 - (UIActivityIndicatorView *)indicatorView {
     if (!_indicatorView) {
@@ -89,6 +93,9 @@ WKNavigationDelegate
     }else{
         [self.chooseButton setTitle:_ID forState:UIControlStateNormal];
     }
+    if (self.flag) {
+        self.chooseButton.enabled = NO;
+    }
     CGFloat fontsize;
     if (iPhone4_4s || iPhone5_5s) {
         fontsize = 14;
@@ -112,6 +119,7 @@ WKNavigationDelegate
         label.layer.cornerRadius = 5;
         label.layer.masksToBounds = YES;
         label.tag = 700 + i;
+        label.textColor = [UIColor grayColor];
         if (i == 0) {
             label.text = _name;
         }else if (i == 1) {
@@ -126,20 +134,44 @@ WKNavigationDelegate
     
     
     for (NSInteger i = 0; i < 2; i ++) {
-        UITextField *textfield = [[UITextField alloc]initWithFrame:CGRectMake(Width*5/16, 5 + ((Height - StatusBarAndNavigationBarHeight)*(i+5)/12), Width*10/16, (Height - StatusBarAndNavigationBarHeight)/12 - 10)];
-        textfield.backgroundColor = [UIColor whiteColor];
-        textfield.font = font(fontsize);
-        textfield.layer.cornerRadius = 5;
-        textfield.layer.masksToBounds = YES;
+        if (i == 0) {
+            UITextField *textfield = [[UITextField alloc]initWithFrame:CGRectMake(Width*5/16, 5 + ((Height - StatusBarAndNavigationBarHeight)*(i+5)/12), Width*10/16, (Height - StatusBarAndNavigationBarHeight)/12 - 10)];
+            textfield.backgroundColor = [UIColor whiteColor];
+            textfield.font = font(fontsize);
+            textfield.layer.cornerRadius = 5;
+            textfield.layer.masksToBounds = YES;
+            
+            textfield.tag = 1000 + i;
+            [self.view addSubview: textfield];
+        }else {
+            UITextField *textfield = [[UITextField alloc]initWithFrame:CGRectMake(Width*5/16, 5 + ((Height - StatusBarAndNavigationBarHeight)*(i+5)/12), Width*7/16, (Height - StatusBarAndNavigationBarHeight)/12 - 10)];
+            
+            textfield.backgroundColor = [UIColor whiteColor];
+            textfield.font = font(fontsize);
+            textfield.layer.cornerRadius = 5;
+            textfield.layer.masksToBounds = YES;
+            textfield.tag = 1000 + i;
+            [self.view addSubview:textfield];
+            
+            UIButton *barButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            [barButton setTitle:@"理由" forState:UIControlStateNormal];
+            
+            [barButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [barButton addTarget:self action:@selector(barButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+            barButton.layer.cornerRadius = 5;
+            barButton.layer.masksToBounds = YES;
+            barButton.titleLabel.font = font(fontsize);
+            barButton.backgroundColor = MainBlueColor;
+            barButton.frame = CGRectMake(Width * 13 / 16, 5 + ((Height - StatusBarAndNavigationBarHeight)*(i+5)/12), Width *2 / 16, (Height - StatusBarAndNavigationBarHeight)/12 - 10);
+            [self.view addSubview:barButton];
+        }
         
-        textfield.tag = 1000 + i;
-        [self.view addSubview: textfield];
     }
     
     UIButton *submit = [UIButton buttonWithType:UIButtonTypeCustom];
     [submit setTitle:@"提交" forState:UIControlStateNormal];
     
-    [submit setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
+    [submit setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [submit addTarget:self action:@selector(submitClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     submit.layer.cornerRadius = 5;
@@ -148,6 +180,34 @@ WKNavigationDelegate
     submit.frame = CGRectMake(20, ((Height - StatusBarAndNavigationBarHeight)*7/12), Width - 40, (Height - StatusBarAndNavigationBarHeight)/12);
     
     [self.view addSubview:submit];
+    
+    
+}
+
+- (void)barButtonClicked:(UIButton *)sender {
+#warning 追加理由URL未做好
+    AppendReasonViewController *appendReason = [[AppendReasonViewController alloc] init];
+    __weak typeof(self) weakSelf = self;
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *url = [NSString stringWithFormat:@"%@",HomeURL];
+    url = [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [self.reasonList addObjectsFromArray:responseObject];
+        appendReason.reasonList = self.reasonList;
+        appendReason.returnReason = ^(NSString *reason){
+            UITextField *textfield = [weakSelf.view viewWithTag:1001];
+            textfield.text = reason;
+        };
+        [self presentViewController:appendReason animated:YES completion:nil];
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = @"请检查网络";
+        hud.label.font = font(14);
+        [hud hideAnimated:YES afterDelay:1.f];
+        
+    }];
     
     
 }
@@ -227,7 +287,7 @@ WKNavigationDelegate
             [self.navigationController popToRootViewControllerAnimated:YES];
         });
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        NSLog(@"error = %@",error.userInfo);
+
         [HUD hideAnimated:YES];
         [HUD removeFromSuperViewOnHide];
         MBProgressHUD *errorHUD = [[MBProgressHUD alloc]initWithView:self.view];

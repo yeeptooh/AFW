@@ -78,4 +78,9 @@
 @property (nonatomic, strong) NSString *ProductClassify2ID;
 @property (nonatomic, strong) NSString *ProductClassify2Name;
 
+@property (nonatomic, strong) NSString *product;
+@property (nonatomic, strong) NSString *productPrice;
+@property (nonatomic, strong) NSString *payMoney;
+@property (nonatomic, strong) NSString *addMoney;
+
 @end

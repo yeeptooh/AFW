@@ -70,10 +70,8 @@
     self.tapBusinessInfo.numberOfTapsRequired = 1;
     [self.thirdTitleView addGestureRecognizer:self.tapBusinessInfo];
     
-    
-    
-    
 }
+
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter]removeObserver:self];
@@ -207,7 +205,7 @@
 }
 
 
-- (void)userBtnClicked:(NSNotification *)sender {
+- (void)userBtnClicked:(UIButton *)sender {
     [self.view endEditing:YES];
     
     self.userBtn.selected = !self.userBtn.selected;
@@ -261,7 +259,7 @@
     }
 }
 
-- (void)productBtnClicked:(NSNotification *)sender {
+- (void)productBtnClicked:(UIButton *)sender {
     [self.view endEditing:YES];
     
     self.productBtn.selected = !self.productBtn.selected;
@@ -310,7 +308,7 @@
     }
 }
 
-- (void)businessBtnClicked:(NSNotification *)sender {
+- (void)businessBtnClicked:(UIButton *)sender {
     [self.view endEditing:YES];
     
     self.businessBtn.selected = !self.businessBtn.selected;

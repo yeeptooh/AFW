@@ -672,11 +672,10 @@ UITextFieldDelegate
     detailVC.BuyerFullAddress_Incept = self.orderModel.BuyerFullAddress_Incept;
     detailVC.waiterName = self.orderModel.WaiterName;
     detailVC.payMoneyStr = self.orderModel.PayMoney;
-    detailVC.priceStr = self.orderModel.priceStr;
     detailVC.overPs = self.orderModel.FinishRemark;
-    
     detailVC.refuseContent = self.orderModel.refuseContent;
-    
+    detailVC.payMoneyStr = self.orderModel.PayMoney;
+    detailVC.priceStr = self.orderModel.price;
     [self.navigationController pushViewController:detailVC animated:YES];
     
 }

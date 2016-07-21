@@ -113,10 +113,10 @@ UITextFieldDelegate
     self.passwordTextField.clearsOnBeginEditing = YES;
     
     UIButton *loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    loginButton.backgroundColor = color(102, 201, 228, 1);
+    loginButton.backgroundColor = MainBlueColor;
     [loginButton setTitle:@"登录" forState:UIControlStateNormal];
-    [loginButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
-    [loginButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateHighlighted];
+    [loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
     [loginButton addTarget:self action:@selector(loginButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
     loginButton.layer.cornerRadius = 5;
@@ -124,7 +124,7 @@ UITextFieldDelegate
     UIButton *registerButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [registerButton setTitle:@"注册新用户" forState:UIControlStateNormal];
     [registerButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
-    [registerButton setTitleColor:color(50, 50, 50, 1) forState:UIControlStateHighlighted];
+    
     [registerButton addTarget:self action:@selector(registerButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     if (iPhone6_plus || iPhone6) {
         registerButton.frame = CGRectMake(35 + (Width - 70)/2, 155 + (Width - 70), (Width - 70)/2, 40);
