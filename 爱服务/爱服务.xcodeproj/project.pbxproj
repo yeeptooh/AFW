@@ -106,6 +106,16 @@
 		4A57C6CE1D221B210023A1B7 /* ACCReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A78EADF1D1A75380047E1B9 /* ACCReviewViewController.m */; };
 		4A57D5371D4069EB00E3129E /* AppendReasonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57D5361D4069EB00E3129E /* AppendReasonViewController.m */; };
 		4A57D5381D406F3700E3129E /* AppendReasonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57D5361D4069EB00E3129E /* AppendReasonViewController.m */; };
+		4A57D5481D40C37200E3129E /* UIBarButtonItem+WZLBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57D53C1D40C37200E3129E /* UIBarButtonItem+WZLBadge.m */; };
+		4A57D5491D40C37200E3129E /* UIBarButtonItem+WZLBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57D53C1D40C37200E3129E /* UIBarButtonItem+WZLBadge.m */; };
+		4A57D54A1D40C37200E3129E /* UITabBarItem+WZLBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57D53E1D40C37200E3129E /* UITabBarItem+WZLBadge.m */; };
+		4A57D54B1D40C37200E3129E /* UITabBarItem+WZLBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57D53E1D40C37200E3129E /* UITabBarItem+WZLBadge.m */; };
+		4A57D54C1D40C37200E3129E /* CAAnimation+WAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57D5411D40C37200E3129E /* CAAnimation+WAnimation.m */; };
+		4A57D54D1D40C37200E3129E /* CAAnimation+WAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57D5411D40C37200E3129E /* CAAnimation+WAnimation.m */; };
+		4A57D54E1D40C37200E3129E /* UIView+WZLBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57D5461D40C37200E3129E /* UIView+WZLBadge.m */; };
+		4A57D54F1D40C37200E3129E /* UIView+WZLBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57D5461D40C37200E3129E /* UIView+WZLBadge.m */; };
+		4A57D5511D40DAEC00E3129E /* shake_sound_male.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4A57D5501D40DAEC00E3129E /* shake_sound_male.wav */; };
+		4A57D5521D40DAEC00E3129E /* shake_sound_male.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4A57D5501D40DAEC00E3129E /* shake_sound_male.wav */; };
 		4A57F8841CD2F5390034E089 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57F8781CD2F5390034E089 /* AFHTTPSessionManager.m */; };
 		4A57F8851CD2F5390034E089 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57F87B1CD2F5390034E089 /* AFNetworkReachabilityManager.m */; };
 		4A57F8861CD2F5390034E089 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57F87D1CD2F5390034E089 /* AFSecurityPolicy.m */; };
@@ -606,6 +616,17 @@
 		4A561D6F1CBE490E00BB26AC /* OrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderModel.m; sourceTree = "<group>"; };
 		4A57D5351D4069EB00E3129E /* AppendReasonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppendReasonViewController.h; sourceTree = "<group>"; };
 		4A57D5361D4069EB00E3129E /* AppendReasonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppendReasonViewController.m; sourceTree = "<group>"; };
+		4A57D53B1D40C37200E3129E /* UIBarButtonItem+WZLBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+WZLBadge.h"; sourceTree = "<group>"; };
+		4A57D53C1D40C37200E3129E /* UIBarButtonItem+WZLBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+WZLBadge.m"; sourceTree = "<group>"; };
+		4A57D53D1D40C37200E3129E /* UITabBarItem+WZLBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarItem+WZLBadge.h"; sourceTree = "<group>"; };
+		4A57D53E1D40C37200E3129E /* UITabBarItem+WZLBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarItem+WZLBadge.m"; sourceTree = "<group>"; };
+		4A57D5401D40C37200E3129E /* CAAnimation+WAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAAnimation+WAnimation.h"; sourceTree = "<group>"; };
+		4A57D5411D40C37200E3129E /* CAAnimation+WAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CAAnimation+WAnimation.m"; sourceTree = "<group>"; };
+		4A57D5431D40C37200E3129E /* WZLBadgeProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZLBadgeProtocol.h; sourceTree = "<group>"; };
+		4A57D5451D40C37200E3129E /* UIView+WZLBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WZLBadge.h"; sourceTree = "<group>"; };
+		4A57D5461D40C37200E3129E /* UIView+WZLBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WZLBadge.m"; sourceTree = "<group>"; };
+		4A57D5471D40C37200E3129E /* WZLBadgeImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZLBadgeImport.h; sourceTree = "<group>"; };
+		4A57D5501D40DAEC00E3129E /* shake_sound_male.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shake_sound_male.wav; sourceTree = "<group>"; };
 		4A57F8771CD2F5390034E089 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		4A57F8781CD2F5390034E089 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
 		4A57F8791CD2F5390034E089 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
@@ -1088,6 +1109,7 @@
 		4A4BD23C1CB895A1009DA0B9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4A57D5501D40DAEC00E3129E /* shake_sound_male.wav */,
 				4A4F99F31D2D016200374F9B /* HYQiHei-55S.otf */,
 				4A5A39BC1D2F8F6E00DF3E87 /* FZSongKeBenXiuKaiS-R-GB.TTF */,
 				4A6973631CBB36DF002A036C /* Foundation+Log.m */,
@@ -1182,6 +1204,7 @@
 		4A4BD2931CB8D5C2009DA0B9 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				4A57D5391D40C37200E3129E /* WZLBadge */,
 				4A4954611D28B55B00E05868 /* AlipaySDK.bundle */,
 				4A4954621D28B55B00E05868 /* AlipaySDK.framework */,
 				4ADEDEB61D17E89900FE3412 /* Util */,
@@ -1439,6 +1462,55 @@
 				4A61DFE11D3E075200E1FCB8 /* ChangePWDDismissAnimation.m */,
 			);
 			path = AnimationTransition;
+			sourceTree = "<group>";
+		};
+		4A57D5391D40C37200E3129E /* WZLBadge */ = {
+			isa = PBXGroup;
+			children = (
+				4A57D53A1D40C37200E3129E /* BarItem */,
+				4A57D53F1D40C37200E3129E /* CategorySupport */,
+				4A57D5421D40C37200E3129E /* Protocol */,
+				4A57D5441D40C37200E3129E /* View */,
+				4A57D5471D40C37200E3129E /* WZLBadgeImport.h */,
+			);
+			path = WZLBadge;
+			sourceTree = "<group>";
+		};
+		4A57D53A1D40C37200E3129E /* BarItem */ = {
+			isa = PBXGroup;
+			children = (
+				4A57D53B1D40C37200E3129E /* UIBarButtonItem+WZLBadge.h */,
+				4A57D53C1D40C37200E3129E /* UIBarButtonItem+WZLBadge.m */,
+				4A57D53D1D40C37200E3129E /* UITabBarItem+WZLBadge.h */,
+				4A57D53E1D40C37200E3129E /* UITabBarItem+WZLBadge.m */,
+			);
+			path = BarItem;
+			sourceTree = "<group>";
+		};
+		4A57D53F1D40C37200E3129E /* CategorySupport */ = {
+			isa = PBXGroup;
+			children = (
+				4A57D5401D40C37200E3129E /* CAAnimation+WAnimation.h */,
+				4A57D5411D40C37200E3129E /* CAAnimation+WAnimation.m */,
+			);
+			path = CategorySupport;
+			sourceTree = "<group>";
+		};
+		4A57D5421D40C37200E3129E /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				4A57D5431D40C37200E3129E /* WZLBadgeProtocol.h */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		4A57D5441D40C37200E3129E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4A57D5451D40C37200E3129E /* UIView+WZLBadge.h */,
+				4A57D5461D40C37200E3129E /* UIView+WZLBadge.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		4A57F8761CD2F5390034E089 /* AFNetworking */ = {
@@ -2002,6 +2074,7 @@
 				4A526D261D3F6CDB008F61ED /* RefuseTableViewCell.xib in Resources */,
 				4A5274771D113F3E00B056C6 /* PayTableViewCell.xib in Resources */,
 				4A77499C1CC0C66C008B9611 /* AssessTableViewCell.xib in Resources */,
+				4A57D5511D40DAEC00E3129E /* shake_sound_male.wav in Resources */,
 				4A52746F1D113D0500B056C6 /* MoneyTableViewCell.xib in Resources */,
 				4A7CA6921CDAF2E9000232CB /* WeiboSDK.bundle in Resources */,
 				4A6799211D23DDEB00A8E0F5 /* DialogTableViewCell.xib in Resources */,
@@ -2037,6 +2110,7 @@
 				4A62D1F41D361B38009A80C3 /* DispatchTableViewCell.xib in Resources */,
 				4A5D25E51D347F6300630029 /* CSMainTableViewCell.xib in Resources */,
 				4A4954641D28B55B00E05868 /* AlipaySDK.bundle in Resources */,
+				4A57D5521D40DAEC00E3129E /* shake_sound_male.wav in Resources */,
 				4A526D271D3F6CDB008F61ED /* RefuseTableViewCell.xib in Resources */,
 				4A64240C1D19396600F26BA9 /* ServiceTypeTableViewCell.xib in Resources */,
 				4AEFBE2F1D3CC99A001BB252 /* PayMoneyTableViewCell.xib in Resources */,
@@ -2153,6 +2227,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A57D54E1D40C37200E3129E /* UIView+WZLBadge.m in Sources */,
 				4A67990F1D235FB000A8E0F5 /* ProductTypeViewController.m in Sources */,
 				4A6799101D235FB000A8E0F5 /* ProductClassifyBigViewController.m in Sources */,
 				4A6799111D235FB000A8E0F5 /* ProductClassifySmallViewController.m in Sources */,
@@ -2195,6 +2270,7 @@
 				4A4BD3201CB8F812009DA0B9 /* MASConstraint.m in Sources */,
 				4A6973741CBB4D20002A036C /* AppendFeesViewController.m in Sources */,
 				4A57F8871CD2F5390034E089 /* AFURLRequestSerialization.m in Sources */,
+				4A57D54A1D40C37200E3129E /* UITabBarItem+WZLBadge.m in Sources */,
 				4A61DF4C1D3DBD3F00E1FCB8 /* ChangeOrderViewController.m in Sources */,
 				4A4BD2CE1CB8D903009DA0B9 /* NSData+ImageContentType.m in Sources */,
 				4A4BD2A91CB8D61C009DA0B9 /* SDCycleScrollView.m in Sources */,
@@ -2247,6 +2323,7 @@
 				4A4EDB721CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.m in Sources */,
 				4A4BD2FC1CB8F5C2009DA0B9 /* LoginViewController.m in Sources */,
 				4A4BD2D21CB8D903009DA0B9 /* SDWebImageDownloader.m in Sources */,
+				4A57D5481D40C37200E3129E /* UIBarButtonItem+WZLBadge.m in Sources */,
 				4A61DFE21D3E075200E1FCB8 /* ChangePWDDismissAnimation.m in Sources */,
 				4A6BABE91CC62FAB000B94A2 /* UIScrollView+MJRefresh.m in Sources */,
 				4A6973831CBB4D8A002A036C /* QRCodeViewController.m in Sources */,
@@ -2275,6 +2352,7 @@
 				4A4BD2F31CB8F515009DA0B9 /* CompleteViewController.m in Sources */,
 				4A6BABDF1CC62FAB000B94A2 /* MJRefreshAutoStateFooter.m in Sources */,
 				4A6BABDE1CC62FAB000B94A2 /* MJRefreshAutoNormalFooter.m in Sources */,
+				4A57D54C1D40C37200E3129E /* CAAnimation+WAnimation.m in Sources */,
 				4A4BD3211CB8F812009DA0B9 /* MASConstraintMaker.m in Sources */,
 				4A4C6C781CD1A60A0030B861 /* EnsureOrderViewController.m in Sources */,
 				4AF52EAD1CC4B2E900E25FC4 /* ButtonViewController.m in Sources */,
@@ -2341,7 +2419,9 @@
 				4A67991B1D23C4FA00A8E0F5 /* DialogAnimation.m in Sources */,
 				4A64A10F1D222AE600A3DC7C /* ProvinceViewController.m in Sources */,
 				4A5A39B81D2F89BC00DF3E87 /* ZDDQRCodeViewController.m in Sources */,
+				4A57D54F1D40C37200E3129E /* UIView+WZLBadge.m in Sources */,
 				4A64A1101D222AE600A3DC7C /* CityViewController.m in Sources */,
+				4A57D5491D40C37200E3129E /* UIBarButtonItem+WZLBadge.m in Sources */,
 				4A64A1111D222AE600A3DC7C /* RegionViewController.m in Sources */,
 				4A64A1121D222AE600A3DC7C /* StreetViewController.m in Sources */,
 				4A1D9D9F1D1BBA8900052B92 /* BusinessDetailTableView.m in Sources */,
@@ -2452,6 +2532,7 @@
 				4A6423CB1D19396600F26BA9 /* MKAnnotationView+WebCache.m in Sources */,
 				4A6423CC1D19396600F26BA9 /* CompleteViewController.m in Sources */,
 				4A6423CD1D19396600F26BA9 /* MJRefreshAutoStateFooter.m in Sources */,
+				4A57D54D1D40C37200E3129E /* CAAnimation+WAnimation.m in Sources */,
 				4A6423CE1D19396600F26BA9 /* MJRefreshAutoNormalFooter.m in Sources */,
 				4A64A15D1D2271A000A3DC7C /* ProductClassifyBigViewController.m in Sources */,
 				4A526D251D3F6CDB008F61ED /* RefuseTableViewCell.m in Sources */,
@@ -2469,6 +2550,7 @@
 				4AEFBE2D1D3CC99A001BB252 /* PayMoneyTableViewCell.m in Sources */,
 				4A6423D81D19396600F26BA9 /* PayTableViewCell.m in Sources */,
 				4A6423D91D19396600F26BA9 /* Order.m in Sources */,
+				4A57D54B1D40C37200E3129E /* UITabBarItem+WZLBadge.m in Sources */,
 				4A6423DA1D19396600F26BA9 /* ViewController+MASAdditions.m in Sources */,
 				4A6423DB1D19396600F26BA9 /* StandardFeeViewController.m in Sources */,
 				4A6423DC1D19396600F26BA9 /* MJRefreshGifHeader.m in Sources */,

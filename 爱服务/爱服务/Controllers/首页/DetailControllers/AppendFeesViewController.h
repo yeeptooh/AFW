@@ -15,4 +15,6 @@
 @property (nonatomic, strong) NSString *address;
 @property (nonatomic, strong) NSString *product;
 @property (nonatomic, strong) NSString *price;
+
+@property (nonatomic, strong) NSString *comid;
 @end

@@ -37,8 +37,9 @@
 #import "MasterQueryViewController.h"
 #import "AddMoneyDetailViewController.h"
 
-
+#import "UIView+WZLBadge.h"
 #import <AVFoundation/AVFoundation.h>
+#import <AudioToolbox/AudioToolbox.h>
 //#import "AddOrderViewController.h"
 
 @interface HomeViewController ()
@@ -49,9 +50,7 @@ UINavigationControllerDelegate
 >
 @property (nonatomic, strong) UIButton *detailButton;
 @property (nonatomic, strong) UIView *balanceView;
-//@property (nonatomic, strong) MBProgressHUD *HUD;
-
-
+@property (nonatomic, strong) UIButton *badgeView;
 @property (nonatomic, strong) UIAlertController *alertController;
 @property (nonatomic, strong) UIView *containerView;
 
@@ -122,16 +121,37 @@ static NSInteger tag = 0;
     [self updateUI];
     [self setDetailButton];
     [self setBreakLine];
-    
+    [self.badgeView showBadgeWithStyle:WBadgeStyleNumber value:[[NSUserDefaults standardUserDefaults] integerForKey:@"DBadgeValue"] animationType:WBadgeAnimTypeNone];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"AVCan"];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(badgeValueChanged:) name:kBadgeValueChanged object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMoney:) name:kUpdateMoney object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBadge:) name:kupdateBadgeNum object:nil];
     
     self.timer = [NSTimer scheduledTimerWithTimeInterval:5 * 60 target:self selector:@selector(updateUI) userInfo:nil repeats:YES];
     
 }
 
+- (void)updateBadge:(NSNotification *)sender {
+    [self updateBadge];
+}
 
+- (void)updateBadge {
+    
+    [self.badgeView showBadgeWithStyle:WBadgeStyleNumber value:[[NSUserDefaults standardUserDefaults] integerForKey:@"DBadgeValue"] animationType:WBadgeAnimTypeNone];
+    [self playSound];
+   
+}
+
+static SystemSoundID shake_sound_male_id = 10000;
+- (void)playSound {
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"shake_sound_male" ofType:@"wav"];
+    if (path) {
+        
+        AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path],&shake_sound_male_id);
+        AudioServicesPlaySystemSound(shake_sound_male_id);
+        
+    }
+}
 
 - (void)updateMoney:(NSNotification *)sender {
     [self updateUI];
@@ -394,6 +414,51 @@ static NSInteger tag = 0;
     
 }
 
+- (UIButton *)badgeView {
+    if (!_badgeView) {
+        NSInteger imageHeight;
+        if (iPhone4_4s || iPhone5_5s) {
+            imageHeight = 139;
+        }else if (iPhone6) {
+            imageHeight = 163;
+        }else if (iPhone6_plus) {
+            imageHeight = 180;
+        }else{
+            imageHeight = 180;
+        }
+        CGFloat height;
+        if (iPhone4_4s || iPhone5_5s) {
+            height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/8;
+        }else if (iPhone6) {
+            height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/8;
+
+        }else if (iPhone6_plus) {
+            height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/9;
+
+        }else{
+            height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/9;
+
+        }
+        _badgeView = [UIButton buttonWithType:UIButtonTypeCustom];
+        _badgeView.frame = CGRectMake(Width/32, Width/32, Width*3/16, height*7/3);
+        [_badgeView addTarget:self action:@selector(badgeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIButton *button = [self.view viewWithTag:1003];
+        _badgeView.backgroundColor = [UIColor clearColor];
+        [button addSubview:_badgeView];
+    }
+    return _badgeView;
+}
+
+- (void)badgeButtonClicked:(UIButton *) sender{
+    NotiViewController *notiVC = [[NotiViewController alloc]init];
+    notiVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:notiVC animated:YES];
+    [sender clearBadge];
+    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"DBadgeValue"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 - (void)setDetailButton {
     
     NSInteger imageHeight;
@@ -428,10 +493,6 @@ static NSInteger tag = 0;
                 tag ++;
                 
                 [self.detailButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"a%ld",(long)tag]] forState:UIControlStateNormal];
-                
-                //            if (i == 2 && (j == 2 || j == 3)) {
-                //                [self.detailButton setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-                //            }
                 
                 [self.detailButton addTarget:self action:@selector(detailButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
  
@@ -1054,6 +1115,8 @@ static NSInteger tag = 0;
         notiVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:notiVC animated:YES];
         
+        [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"DBadgeValue"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }else if (sender.tag == 1004) {
         
         StandardFeeViewController *standardVC = [[StandardFeeViewController alloc]init];

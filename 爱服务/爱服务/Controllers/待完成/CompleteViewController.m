@@ -526,9 +526,6 @@ UITextFieldDelegate
     self.manager.requestSerializer.timeoutInterval = 5;
     
     [self.manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        NSLog(@"%@",responseObject);
-        
         [self.activityView stopAnimating];
       
         if (self.page == 1) {
@@ -615,7 +612,7 @@ UITextFieldDelegate
     cell.acceptDateLabel.text = self.orderModel.acceptDate;
     cell.dateLabel.text = self.orderModel.date;
     
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@",self.orderModel.serviceType, self.orderModel.productType]];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@",self.orderModel.serviceType, self.orderModel.productType]];
     
     [attributedString addAttributes:@{NSForegroundColorAttributeName:color(248, 89, 34, 1)} range:[self.orderModel.serviceType rangeOfString:self.orderModel.serviceType]];
     cell.productTypeLabel.attributedText = attributedString;
@@ -643,7 +640,7 @@ UITextFieldDelegate
     
     cell.dateLabel.text = self.orderModel.date;
     
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@",self.orderModel.serviceType, self.orderModel.productType]];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@",self.orderModel.serviceType, self.orderModel.productType]];
     
     [attributedString addAttributes:@{NSForegroundColorAttributeName:color(248, 89, 34, 1)} range:[self.orderModel.serviceType rangeOfString:self.orderModel.serviceType]];
     cell.productTypeLabel.attributedText = attributedString;
@@ -695,7 +692,7 @@ UITextFieldDelegate
             }
             
             if ([self.orderModel.PayMoney integerValue] <= 0) {
-                MBProgressHUD *HUD = [[MBProgressHUD alloc]initWithView:self.tableView];
+                MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
                 
                 HUD.mode = MBProgressHUDModeText;
                 HUD.label.text = @"无法追加";
@@ -706,18 +703,14 @@ UITextFieldDelegate
                     fontsize = 16;
                 }
                 HUD.label.font = font(fontsize);
-                [self.tableView addSubview:HUD];
-                [HUD showAnimated:YES];
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [HUD hideAnimated:YES];
-                    [HUD removeFromSuperViewOnHide];
-                });
+                
+                [HUD hideAnimated:YES afterDelay:1.f];
                 return;
 
             }
             
             if ([self.orderModel.AddMoney integerValue] > 0) {
-                MBProgressHUD *HUD = [[MBProgressHUD alloc]initWithView:self.tableView];
+                MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
                 
                 HUD.mode = MBProgressHUDModeText;
                 HUD.label.text = @"已经追加,无法再次追加";
@@ -728,18 +721,14 @@ UITextFieldDelegate
                     fontsize = 16;
                 }
                 HUD.label.font = font(fontsize);
-                [self.tableView addSubview:HUD];
-                [HUD showAnimated:YES];
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [HUD hideAnimated:YES];
-                    [HUD removeFromSuperViewOnHide];
-                });
+                
+                [HUD hideAnimated:YES afterDelay:1.f];
                 return;
                 
             }
             
             NSInteger count = self.orderModel.price.length;
-            self.returnAppend([NSString stringWithFormat:@"%ld",(long)self.orderModel.ID], self.orderModel.name, self.orderModel.location, [NSString stringWithFormat:@"%@ %@ %@",self.orderModel.productBreed, self.orderModel.productClassify, self.orderModel.model], [self.orderModel.price substringToIndex:count - 1]);
+            self.returnAppend([NSString stringWithFormat:@"%ld",(long)self.orderModel.ID], self.orderModel.name, self.orderModel.location, [NSString stringWithFormat:@"%@ %@ %@",self.orderModel.productBreed, self.orderModel.productClassify, self.orderModel.model], [self.orderModel.price substringToIndex:count - 1], self.orderModel.FromUserID);
             
             [self.navigationController popViewControllerAnimated:YES];
             

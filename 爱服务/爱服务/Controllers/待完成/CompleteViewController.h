@@ -9,7 +9,7 @@
 #import "BaseViewController.h"
 
 typedef void(^ReturnParts)(NSString *orderID, NSString *brand, NSString *type, NSString *model, NSString *FromUserID, NSString *FromUserName, NSString *ToUserID, NSString *ToUserName, NSString *HandlerID, NSString *HandlerName, NSString *ProductBreedID,NSString *ProductClassify1ID, NSString *ProductClassify2ID, NSString *ProductClassify2Name, NSString *WaiterName);
-typedef void(^ReturnAppend)(NSString *taskID, NSString *name, NSString *address, NSString *product, NSString *price);
+typedef void(^ReturnAppend)(NSString *taskID, NSString *name, NSString *address, NSString *product, NSString *price, NSString *comid);
 
 @interface CompleteViewController : BaseViewController
 @property (nonatomic, copy) ReturnParts returnParts;

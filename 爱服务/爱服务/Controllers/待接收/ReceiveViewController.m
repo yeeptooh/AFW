@@ -559,7 +559,7 @@ UITextFieldDelegate
     cell.acceptDateLabel.text = self.orderModel.acceptDate;
     cell.dateLabel.text = self.orderModel.date;
     
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@",self.orderModel.serviceType, self.orderModel.productType]];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@",self.orderModel.serviceType, self.orderModel.productType]];
     
     [attributedString addAttributes:@{NSForegroundColorAttributeName:color(248, 89, 34, 1)}range:[self.orderModel.serviceType rangeOfString:self.orderModel.serviceType]];
     cell.productTypeLabel.attributedText = attributedString;
@@ -587,7 +587,7 @@ UITextFieldDelegate
     
     cell.dateLabel.text = self.orderModel.date;
     
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@",self.orderModel.serviceType, self.orderModel.productType]];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@",self.orderModel.serviceType, self.orderModel.productType]];
     
     [attributedString addAttributes:@{NSForegroundColorAttributeName:color(248, 89, 34, 1)} range:[self.orderModel.serviceType rangeOfString:self.orderModel.serviceType]];
     cell.productTypeLabel.attributedText = attributedString;
