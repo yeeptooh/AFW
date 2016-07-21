@@ -109,18 +109,19 @@ UIViewControllerTransitioningDelegate
 - (UITableView *)tableView {
     if (!_tableView) {
         CGRect frame;
-        CGFloat height;
-        if (iPhone4_4s || iPhone5_5s) {
-            height = 49;
-        }else {
-            height = 49;
-        }
+#if Environment_Mode == 1
         if (self.state == 4 || self.state == 5) {
-            frame = CGRectMake(0, BaseInfoViewHeight, Width, Height - BaseInfoViewHeight - StatusBarAndNavigationBarHeight - height);
+            frame = CGRectMake(0, BaseInfoViewHeight, Width, Height - BaseInfoViewHeight - StatusBarAndNavigationBarHeight - TabbarHeight);
         }else{
             frame = CGRectMake(0, BaseInfoViewHeight, Width, Height - BaseInfoViewHeight - StatusBarAndNavigationBarHeight);
         }
-        
+#elif Environment_Mode == 2
+        if (self.state == 1 || self.state == 2 || self.state == 3 || self.state == 4 || self.state == 6) {
+            frame = CGRectMake(0, BaseInfoViewHeight, Width, Height - BaseInfoViewHeight - StatusBarAndNavigationBarHeight - TabbarHeight + 0.6);
+        }else{
+            frame = CGRectMake(0, BaseInfoViewHeight, Width, Height - BaseInfoViewHeight - StatusBarAndNavigationBarHeight);
+        }
+#endif
         
         _tableView = [[UITableView alloc] initWithFrame:frame style:UITableViewStylePlain];
         _tableView.delegate = self;
@@ -404,8 +405,6 @@ UIViewControllerTransitioningDelegate
             view.backgroundColor = color(230, 230, 230, 1);
             [self.view addSubview:view];
             
-            
-            
             UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
             effectView.frame = view.bounds;
             [view addSubview:effectView];
@@ -416,10 +415,10 @@ UIViewControllerTransitioningDelegate
             
             UIButton *robButton = [UIButton buttonWithType:UIButtonTypeCustom];
             robButton.frame = CGRectMake(0, 0, Width, TabbarHeight);
-            robButton.titleLabel.font = font(12);
+//            robButton.titleLabel.font = font(12);
             [robButton setTitle:@"立即抢单" forState:UIControlStateNormal];
-            [robButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-            
+            [robButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            robButton.backgroundColor = MainBlueColor;
             [robButton addTarget:self action:@selector(robButtonClicked) forControlEvents:UIControlEventTouchUpInside];
             [effectView.contentView addSubview:robButton];
             
@@ -429,8 +428,6 @@ UIViewControllerTransitioningDelegate
             view.backgroundColor = color(230, 230, 230, 1);
             [self.view addSubview:view];
             
-            
-            
             UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
             effectView.frame = view.bounds;
             [view addSubview:effectView];
@@ -439,33 +436,27 @@ UIViewControllerTransitioningDelegate
             lineView.backgroundColor = [UIColor lightGrayColor];
             [effectView.contentView addSubview:lineView];
             
-            UIView *colView = [[UIView alloc] initWithFrame:CGRectMake(Width/2-0.5, 15, 1, TabbarHeight - 30)];
-            colView.backgroundColor = [UIColor grayColor];
-            [effectView.contentView addSubview:colView];
-            
-            
             UIButton *receiveButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            receiveButton.frame = CGRectMake(5, 0, Width/2 - 10, TabbarHeight);
-            receiveButton.backgroundColor = [UIColor clearColor];
-            receiveButton.layer.cornerRadius = 3;
-            receiveButton.layer.masksToBounds = YES;
+            receiveButton.frame = CGRectMake(0, 0, Width/2, TabbarHeight);
             [receiveButton setTitle:@"接收" forState:UIControlStateNormal];
-            receiveButton.titleLabel.font = font(12);
-            [receiveButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+
+            [receiveButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            receiveButton.backgroundColor = MainBlueColor;
             
             [receiveButton addTarget:self action:@selector(receiveButtonClicked) forControlEvents:UIControlEventTouchUpInside];
             [effectView.contentView addSubview:receiveButton];
             
             UIButton *refuseButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            refuseButton.frame = CGRectMake(Width -5 - Width/2 + 10, 0, Width/2 - 10, TabbarHeight);
-            refuseButton.titleLabel.font = font(12);
-            refuseButton.layer.cornerRadius = 3;
-            refuseButton.layer.masksToBounds = YES;
+            refuseButton.frame = CGRectMake(Width/2, 0, Width/2, TabbarHeight);
             [refuseButton setTitle:@"拒绝" forState:UIControlStateNormal];
             [refuseButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-            
+            refuseButton.backgroundColor = MainBlueColor;
             [refuseButton addTarget:self action:@selector(refuseButtonClicked) forControlEvents:UIControlEventTouchUpInside];
             [effectView.contentView addSubview:refuseButton];
+            
+            UIView *colView = [[UIView alloc] initWithFrame:CGRectMake(Width/2-0.7, 15, 1.4, TabbarHeight - 30)];
+            colView.backgroundColor = [UIColor whiteColor];
+            [effectView.contentView addSubview:colView];
             
         }
         
@@ -483,167 +474,201 @@ UIViewControllerTransitioningDelegate
         lineView.backgroundColor = [UIColor lightGrayColor];
         [effectView.contentView addSubview:lineView];
         
-        UIView *colView1 = [[UIView alloc] initWithFrame:CGRectMake(Width/4-0.5, 15, 1, TabbarHeight - 30)];
-        colView1.backgroundColor = [UIColor grayColor];
-        [effectView.contentView addSubview:colView1];
-        
-        UIView *colView2 = [[UIView alloc] initWithFrame:CGRectMake(Width/2-0.5, 15, 1, TabbarHeight - 30)];
-        colView2.backgroundColor = [UIColor grayColor];
-        [effectView.contentView addSubview:colView2];
-        
-        UIView *colView3 = [[UIView alloc] initWithFrame:CGRectMake(Width*3/4-0.5, 15, 1, TabbarHeight - 30)];
-        colView3.backgroundColor = [UIColor grayColor];
-        [effectView.contentView addSubview:colView3];
         
         UIButton *completeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         completeButton.frame = CGRectMake(0, 0, Width/4, TabbarHeight);
-        completeButton.titleLabel.font = font(12);
-        completeButton.layer.cornerRadius = 3;
-        completeButton.layer.masksToBounds = YES;
+        completeButton.backgroundColor = MainBlueColor;
         [completeButton setTitle:@"完成" forState:UIControlStateNormal];
-        [completeButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        
+        [completeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        completeButton.titleLabel.font = font(13);
         [completeButton addTarget:self action:@selector(completeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
         [effectView.contentView addSubview:completeButton];
         
         UIButton *recedeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         recedeButton.frame = CGRectMake(Width/4, 0, Width/4, TabbarHeight);
-        recedeButton.titleLabel.font = font(12);
-        recedeButton.layer.cornerRadius = 3;
-        recedeButton.layer.masksToBounds = YES;
+        recedeButton.backgroundColor = MainBlueColor;
         [recedeButton setTitle:@"退单" forState:UIControlStateNormal];
-        [recedeButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        
+        [recedeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        recedeButton.titleLabel.font = font(13);
         [recedeButton addTarget:self action:@selector(recedeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
         [effectView.contentView addSubview:recedeButton];
         
         
         UIButton *requestButton = [UIButton buttonWithType:UIButtonTypeCustom];
         requestButton.frame = CGRectMake(Width/2, 0, Width/4, TabbarHeight);
-        requestButton.titleLabel.font = font(12);
-        requestButton.layer.cornerRadius = 3;
-        requestButton.layer.masksToBounds = YES;
         [requestButton setTitle:@"申请配件" forState:UIControlStateNormal];
-        [requestButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        
+        [requestButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        requestButton.titleLabel.font = font(13);
+        requestButton.backgroundColor = MainBlueColor;
         [requestButton addTarget:self action:@selector(requestButtonClicked) forControlEvents:UIControlEventTouchUpInside];
         [effectView.contentView addSubview:requestButton];
         
         
         UIButton *appendButton = [UIButton buttonWithType:UIButtonTypeCustom];
         appendButton.frame = CGRectMake(Width*3/4, 0, Width/4, TabbarHeight);
-        appendButton.titleLabel.font = font(12);
-        appendButton.layer.cornerRadius = 3;
-        appendButton.layer.masksToBounds = YES;
-        [appendButton setTitle:@"追加费用" forState:UIControlStateNormal];
-        [appendButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         
+        [appendButton setTitle:@"追加费用" forState:UIControlStateNormal];
+        [appendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        appendButton.titleLabel.font = font(13);
+        appendButton.backgroundColor = MainBlueColor;
         [appendButton addTarget:self action:@selector(appendButtonClicked) forControlEvents:UIControlEventTouchUpInside];
         [effectView.contentView addSubview:appendButton];
         
+        UIView *colView1 = [[UIView alloc] initWithFrame:CGRectMake(Width/4-0.5, 15, 1, TabbarHeight - 30)];
+        colView1.backgroundColor = [UIColor whiteColor];
+        [effectView.contentView addSubview:colView1];
+        
+        UIView *colView2 = [[UIView alloc] initWithFrame:CGRectMake(Width/2-0.5, 15, 1, TabbarHeight - 30)];
+        colView2.backgroundColor = [UIColor whiteColor];
+        [effectView.contentView addSubview:colView2];
+        
+        UIView *colView3 = [[UIView alloc] initWithFrame:CGRectMake(Width*3/4-0.5, 15, 1, TabbarHeight - 30)];
+        colView3.backgroundColor = [UIColor whiteColor];
+        [effectView.contentView addSubview:colView3];
+        
     }
 #elif Environment_Mode == 2
-    CGFloat height;
-    if (iPhone4_4s || iPhone5_5s) {
-        height = 35;
-    }else {
-        height = 44;
-    }
     
-    if (self.state == 1) {
+    if (self.state == 1 || self.state == 3) {
+        //待分配
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, Height - StatusBarAndNavigationBarHeight - TabbarHeight, Width, TabbarHeight)];
+        view.backgroundColor = color(230, 230, 230, 1);
+        [self.view addSubview:view];
+        
+        UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
+        effectView.frame = view.bounds;
+        [view addSubview:effectView];
+        
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, Width, 0.6)];
+        lineView.backgroundColor = [UIColor lightGrayColor];
+        [effectView.contentView addSubview:lineView];
+        
         UIButton *dispatchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        dispatchButton.frame = CGRectMake(5, Height - StatusBarAndNavigationBarHeight - height, Width/2 - 10, height);
-        dispatchButton.backgroundColor = MainBlueColor;
-        dispatchButton.layer.cornerRadius = 3;
-        dispatchButton.layer.masksToBounds = YES;
+        dispatchButton.frame = CGRectMake(0, 0, Width/2, TabbarHeight);
         [dispatchButton setTitle:@"派工" forState:UIControlStateNormal];
-        [dispatchButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
-        [dispatchButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateHighlighted];
+        [dispatchButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        dispatchButton.backgroundColor = MainBlueColor;
         [dispatchButton addTarget:self action:@selector(dispatchButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:dispatchButton];
+        [effectView.contentView addSubview:dispatchButton];
         
         
         UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        cancelButton.frame = CGRectMake(Width - 5 - Width/2 + 10, Height - StatusBarAndNavigationBarHeight - height, Width/2 - 10, height);
-        cancelButton.backgroundColor = MainBlueColor;
-        cancelButton.layer.cornerRadius = 3;
-        cancelButton.layer.masksToBounds = YES;
+        cancelButton.frame = CGRectMake(Width/2, 0, Width/2, TabbarHeight);
         [cancelButton setTitle:@"撤销" forState:UIControlStateNormal];
-        [cancelButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
-        [cancelButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateHighlighted];
+        [cancelButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        cancelButton.backgroundColor = MainBlueColor;
         [cancelButton addTarget:self action:@selector(cancelButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:cancelButton];
+        [effectView.contentView addSubview:cancelButton];
+        
+        UIView *colView = [[UIView alloc] initWithFrame:CGRectMake(Width/2-0.7, 15, 1.4, TabbarHeight - 30)];
+        colView.backgroundColor = [UIColor whiteColor];
+        [effectView.contentView addSubview:colView];
         
     }else if (self.state == 2) {
+        //代付款
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, Height - StatusBarAndNavigationBarHeight - TabbarHeight, Width, TabbarHeight)];
+        view.backgroundColor = color(230, 230, 230, 1);
+        [self.view addSubview:view];
+        
+        UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
+        effectView.frame = view.bounds;
+        [view addSubview:effectView];
+        
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, Width, 0.6)];
+        lineView.backgroundColor = [UIColor lightGrayColor];
+        [effectView.contentView addSubview:lineView];
         
         UIButton *dispatchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        dispatchButton.frame = CGRectMake(5, Height - StatusBarAndNavigationBarHeight - height, Width/2 - 10, height);
-        dispatchButton.backgroundColor = MainBlueColor;
-        dispatchButton.layer.cornerRadius = 3;
-        dispatchButton.layer.masksToBounds = YES;
+        dispatchButton.frame = CGRectMake(0, 0, Width/2, TabbarHeight);
+        
         [dispatchButton setTitle:@"付款" forState:UIControlStateNormal];
-        [dispatchButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
-        [dispatchButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateHighlighted];
+        [dispatchButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        dispatchButton.backgroundColor = MainBlueColor;
         [dispatchButton addTarget:self action:@selector(payButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:dispatchButton];
+        [effectView.contentView addSubview:dispatchButton];
         
         
         UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        cancelButton.frame = CGRectMake(Width - 5 - Width/2 + 10, Height - StatusBarAndNavigationBarHeight - height, Width/2 - 10, height);
-        cancelButton.backgroundColor = MainBlueColor;
-        cancelButton.layer.cornerRadius = 3;
-        cancelButton.layer.masksToBounds = YES;
+        cancelButton.frame = CGRectMake(Width/2, 0, Width/2, TabbarHeight);
         [cancelButton setTitle:@"修改" forState:UIControlStateNormal];
-        [cancelButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
-        [cancelButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateHighlighted];
+        [cancelButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        cancelButton.backgroundColor = MainBlueColor;
         [cancelButton addTarget:self action:@selector(changeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:cancelButton];
+        [effectView.contentView addSubview:cancelButton];
+        
+        UIView *colView = [[UIView alloc] initWithFrame:CGRectMake(Width/2-0.7, 15, 1.4, TabbarHeight - 30)];
+        colView.backgroundColor = [UIColor whiteColor];
+        [effectView.contentView addSubview:colView];
         
     }else if (self.state == 4) {
+        //待接收
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, Height - StatusBarAndNavigationBarHeight - TabbarHeight, Width, TabbarHeight)];
+        view.backgroundColor = color(230, 230, 230, 1);
+        [self.view addSubview:view];
         
-        if (self.flag == 1) {
-   
-        }else {
-            
-            UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            cancelButton.frame = CGRectMake(0, Height - StatusBarAndNavigationBarHeight - height, Width, height);
-            cancelButton.backgroundColor = MainBlueColor;
-            
-            [cancelButton setTitle:@"撤销" forState:UIControlStateNormal];
-            [cancelButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
-            [cancelButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateHighlighted];
-            [cancelButton addTarget:self action:@selector(cancelButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-            [self.view addSubview:cancelButton];
-            
-        }
+        UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
+        effectView.frame = view.bounds;
+        [view addSubview:effectView];
+        
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, Width, 0.6)];
+        lineView.backgroundColor = [UIColor lightGrayColor];
+        [effectView.contentView addSubview:lineView];
+        
+        UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        cancelButton.frame = CGRectMake(0, 0, Width, TabbarHeight);
+        
+        [cancelButton setTitle:@"撤销" forState:UIControlStateNormal];
+        [cancelButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        cancelButton.backgroundColor = MainBlueColor;
+        [cancelButton addTarget:self action:@selector(cancelButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        [effectView.contentView addSubview:cancelButton];
         
     }else if (self.state == 5){
-    
+    //待完成
     }else if (self.state == 6){
+        //退单中
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, Height - StatusBarAndNavigationBarHeight - TabbarHeight, Width, TabbarHeight)];
+        view.backgroundColor = color(230, 230, 230, 1);
+        [self.view addSubview:view];
+        
+        
+        
+        UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
+        effectView.frame = view.bounds;
+        [view addSubview:effectView];
+        
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, Width, 0.6)];
+        lineView.backgroundColor = [UIColor lightGrayColor];
+        [effectView.contentView addSubview:lineView];
         
         UIButton *agreeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        agreeButton.frame = CGRectMake(5, Height - StatusBarAndNavigationBarHeight - height, Width/2 - 10, height);
-        agreeButton.backgroundColor = MainBlueColor;
-        agreeButton.layer.cornerRadius = 3;
-        agreeButton.layer.masksToBounds = YES;
+        agreeButton.frame = CGRectMake(0, 0, Width/2, TabbarHeight);
         [agreeButton setTitle:@"同意" forState:UIControlStateNormal];
-        [agreeButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
-        [agreeButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateHighlighted];
+        [agreeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        agreeButton.backgroundColor = MainBlueColor;
         [agreeButton addTarget:self action:@selector(agreeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:agreeButton];
+        [effectView.contentView addSubview:agreeButton];
         
         
         UIButton *disagreeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        disagreeButton.frame = CGRectMake(Width - 5 - Width/2 + 10, Height - StatusBarAndNavigationBarHeight - height, Width/2 - 10, height);
-        disagreeButton.backgroundColor = MainBlueColor;
-        disagreeButton.layer.cornerRadius = 3;
-        disagreeButton.layer.masksToBounds = YES;
+        disagreeButton.frame = CGRectMake(Width/2, 0, Width/2, TabbarHeight);
         [disagreeButton setTitle:@"不同意" forState:UIControlStateNormal];
-        [disagreeButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
-        [disagreeButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateHighlighted];
+        [disagreeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        disagreeButton.backgroundColor = MainBlueColor;
         [disagreeButton addTarget:self action:@selector(disagreeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:disagreeButton];
+        [effectView.contentView addSubview:disagreeButton];
         
+        UIView *colView = [[UIView alloc] initWithFrame:CGRectMake(Width/2-0.7, 15, 1.4, TabbarHeight - 30)];
+        colView.backgroundColor = [UIColor grayColor];
+        [effectView.contentView addSubview:colView];
+        
+    }else if (self.state == 7){
+            //已拒绝
+    }else if (self.state == 10){
+        //带确认
+    }else if (self.state == 15){
+        //已评价
+        //17 已录入
     }
 #endif
     
@@ -658,9 +683,7 @@ UIViewControllerTransitioningDelegate
     partVC.brand = self.productBreed;
     partVC.type = self.productClassify;
     partVC.model = self.model;
-    
     partVC.WaiterName = self.waiterName;
-    
     partVC.ToUserID = self.toUserID;
     partVC.ToUserName = self.toUserName;
     partVC.FromUserID = self.fromUserID;
@@ -681,6 +704,51 @@ UIViewControllerTransitioningDelegate
 
 - (void)appendButtonClicked {
     
+    if ([self.payMoney integerValue] <= 0) {
+        MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        
+        HUD.mode = MBProgressHUDModeText;
+        HUD.label.text = @"无法追加";
+        CGFloat fontsize;
+        if (iPhone4_4s || iPhone5_5s) {
+            fontsize = 14;
+        }else{
+            fontsize = 16;
+        }
+        HUD.label.font = font(fontsize);
+        
+        [HUD hideAnimated:YES afterDelay:1.0];
+        return;
+        
+    }
+    
+    if ([self.addMoney integerValue] > 0) {
+        MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        HUD.mode = MBProgressHUDModeText;
+        HUD.label.text = @"已经追加,无法再次追加";
+        CGFloat fontsize;
+        if (iPhone4_4s || iPhone5_5s) {
+            fontsize = 14;
+        }else{
+            fontsize = 16;
+        }
+        HUD.label.font = font(fontsize);
+        
+        [HUD hideAnimated:YES afterDelay:1.f];
+        return;
+        
+    }
+    
+    
+    AppendFeesViewController *appendVC = [[AppendFeesViewController alloc] init];
+    appendVC.flag = 1;
+    appendVC.ID = [NSString stringWithFormat:@"%@",@(self.ID)];
+    appendVC.name = self.name;
+    appendVC.address = self.location;
+    appendVC.product = self.product;
+    appendVC.price = self.productPrice;
+    
+    [self.navigationController pushViewController:appendVC animated:YES];
 }
 
 - (void)changeButtonClicked {
@@ -915,7 +983,6 @@ UIViewControllerTransitioningDelegate
     
     [manager POST:URL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        NSLog(@"%@",responseObject);
         MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
         UIImage *image = [[UIImage imageNamed:@"Checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
@@ -954,8 +1021,7 @@ UIViewControllerTransitioningDelegate
 
     UserModel *userModel = [UserModel readUserModel];
     NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=grabsign&id=%ld&comid=%ld&uid=%ld&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)self.ID,(long)userModel.comid,(long)userModel.uid,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
-    NSLog(@"%@",URL);
-
+    
     [manager POST:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kBadgeValueChanged object:nil];
@@ -1077,8 +1143,7 @@ UIViewControllerTransitioningDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #if Environment_Mode == 1
-//    return 2;
-    //接口没做好，先只显示两个section
+
     if (self.state == 6 || self.state == 7 ||(self.state >= 10 && self.state <15)) {
         return 3;
     }else if (self.state >= 15) {
@@ -1094,9 +1159,8 @@ UIViewControllerTransitioningDelegate
     }else {
         i = 0;
     }
-    
-    //接口没做好，先只显示两个section
-    if (self.state == 6 || self.state == 7 ||(self.state >= 10 && self.state <15)) {
+ 
+    if (self.state >= 10 && self.state <15) {
         return 3 + i;
     }else if (self.state >= 15) {
         return 4 + i;
@@ -1229,6 +1293,87 @@ UIViewControllerTransitioningDelegate
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else if (indexPath.row == 2) {
+        
+        if (self.state == 6) {
+            RefuseTableViewCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"RefuseTableViewCell" owner:self options:nil] lastObject];
+            if ([self.chargeBackContent isEqualToString:@""] || !self.chargeBackContent) {
+                cell.refuseLabel.text = @"退单理由";
+            }else {
+                cell.refuseLabel.text = [NSString stringWithFormat:@"退单理由: %@",self.chargeBackContent];
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+            
+            
+        }else if (self.state == 7) {
+            ChargebackTableViewCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"ChargebackTableViewCell" owner:self options:nil] lastObject];
+            if ([self.refuseContent isEqualToString:@""] || !self.refuseContent) {
+                cell.chargeBackContentLabel.text = @"拒绝理由: ";
+            }else {
+                cell.chargeBackContentLabel.text = [NSString stringWithFormat:@"拒绝理由: %@",self.refuseContent];
+            }
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+            
+        }else if (self.state >= 10) {
+            OverTableViewCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"OverTableViewCell" owner:self options:nil] lastObject];
+            cell.overDateLabel.text = [NSString stringWithFormat:@"完工时间: %@",self.FinishTime];
+            if ([self.overPs isEqualToString:@""] || !self.overPs) {
+                cell.psLabel.text = @"备注: ";
+            }else if ([self.overPs containsString:@"备注"]) {
+                cell.psLabel.text = [NSString stringWithFormat:@"%@",self.overPs];
+            }else {
+                cell.psLabel.text = [NSString stringWithFormat:@"备注: %@",self.overPs];
+            }
+            cell.nameLabel.text = self.waiterName;
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+            
+        }else {
+            PayMoneyTableViewCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"PayMoneyTableViewCell" owner:self options:nil] lastObject];
+            
+            if (![self.payMoneyStr floatValue]) {
+                cell.hadPayMoneyLabel.text = @"未付款";
+            }else {
+                cell.hadPayMoneyLabel.text = @"已付款";
+            }
+            
+            cell.payMoneyInfoLabel.text = [NSString stringWithFormat:@"金额: %@",self.payMoneyStr];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+        }
+    
+    }else if (indexPath.row == 3){
+        
+        if (self.state >= 15) {
+            AssessTableViewCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"AssessTableViewCell" owner:self options:nil] lastObject];
+            if ([self.serviceAssess isEqualToString:@""] || !self.serviceAssess) {
+                self.serviceAssess = @"备注: ";
+                cell.assessLabel.text = self.serviceAssess;
+            }else if ([self.serviceAssess containsString:@"备注"]) {
+                cell.assessLabel.text = self.serviceAssess;
+            }else {
+                cell.assessLabel.text = [NSString stringWithFormat:@"备注: %@",self.serviceAssess];
+            }
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+        }else {
+            PayMoneyTableViewCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"PayMoneyTableViewCell" owner:self options:nil] lastObject];
+            
+            if (![self.payMoneyStr floatValue]) {
+                cell.hadPayMoneyLabel.text = @"未付款";
+            }else {
+                cell.hadPayMoneyLabel.text = @"已付款";
+            }
+            
+            cell.payMoneyInfoLabel.text = [NSString stringWithFormat:@"金额: %@",self.payMoneyStr];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+        }
+    }else {
         PayMoneyTableViewCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"PayMoneyTableViewCell" owner:self options:nil] lastObject];
         
         if (![self.payMoneyStr floatValue]) {
@@ -1240,7 +1385,6 @@ UIViewControllerTransitioningDelegate
         cell.payMoneyInfoLabel.text = [NSString stringWithFormat:@"金额: %@",self.payMoneyStr];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
-        
     }
     
 #endif
@@ -1291,13 +1435,33 @@ UIViewControllerTransitioningDelegate
         }
         return UITableViewAutomaticDimension;
     }else if (indexPath.row == 2) {
-        return 60;
-    }else{
+        if (self.state == 6) {
+            if ([self.chargeBackContent isEqualToString:@""]) {
+                return 70;
+            }
+            return UITableViewAutomaticDimension;
+        }else if (self.state ==  7) {
+            if ([self.chargeBackContent isEqualToString:@""]) {
+                return 70;
+            }
+            return UITableViewAutomaticDimension;
+        }else if (self.state >= 10){
+            if ([self.overPs isEqualToString:@""]) {
+                return 100;
+            }
+            return UITableViewAutomaticDimension;
+        }else {
+            return 60;
+        }
+        
+    }else if (indexPath.row == 3){
         if ([self.serviceAssess isEqualToString:@""]) {
-            return 0;
+            return 65;
         }
         
         return UITableViewAutomaticDimension;
+    }else {
+        return 60;
     }
     
 #endif

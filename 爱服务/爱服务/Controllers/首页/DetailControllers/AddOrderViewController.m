@@ -71,10 +71,8 @@
     self.tapBusinessInfo.numberOfTapsRequired = 1;
     [self.thirdTitleView addGestureRecognizer:self.tapBusinessInfo];
     
-    
-    
-    
 }
+
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter]removeObserver:self];
@@ -98,36 +96,55 @@
 
 - (void)configSaveButton {
     
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, Height - StatusBarAndNavigationBarHeight - TabbarHeight, Width, TabbarHeight)];
+    view.backgroundColor = color(160, 160, 160, 1);
+    [self.view addSubview:view];
+    
+    UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
+    effectView.frame = view.bounds;
+    [view addSubview:effectView];
+    
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, Width, 0.6)];
+    lineView.backgroundColor = [UIColor lightGrayColor];
+    [effectView.contentView addSubview:lineView];
+    
     UIButton *saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    saveBtn.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*10/11, Width, (Height - StatusBarAndNavigationBarHeight)/11);
-    saveBtn.backgroundColor = color(59, 165, 249, 1);
     [saveBtn setTitle:@"下单" forState:UIControlStateNormal];
+    
+    saveBtn.backgroundColor = MainBlueColor;
     [saveBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [saveBtn addTarget:self action:@selector(saveButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:saveBtn];
+    
+    
+    saveBtn.frame = CGRectMake(0, 0, Width, TabbarHeight);
+    
+    [effectView.contentView addSubview:saveBtn];
+    
+    
 }
 
 - (void)configBaseView {
     
-    self.firstTitleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Width, (Height - StatusBarAndNavigationBarHeight)/11)];
+    self.firstTitleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10)];
     self.firstTitleView.backgroundColor = color(74, 129, 212, 1);
     [self.view addSubview:self.firstTitleView];
     
     
-    self.secondTitleView = [[UIView alloc]initWithFrame:CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*8/11, Width, (Height - StatusBarAndNavigationBarHeight)/11)];
+    self.secondTitleView = [[UIView alloc]initWithFrame:CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*8/10, Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10)];
     
     self.secondTitleView.backgroundColor = color(74, 154, 185, 1);
     [self.view addSubview:self.secondTitleView];
     
     
-    self.thirdTitleView = [[UIView alloc]initWithFrame:CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*9/11 , Width, (Height - StatusBarAndNavigationBarHeight)/11)];
+    self.thirdTitleView = [[UIView alloc]initWithFrame:CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*9/10 , Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10)];
     self.thirdTitleView.backgroundColor = color(130, 142, 203, 1);
     [self.view addSubview:self.thirdTitleView];
     
     
-    UILabel *userInfoLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, Width/2, (Height - StatusBarAndNavigationBarHeight)/11)];
-    UILabel *productInfoLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, Width/2, (Height - StatusBarAndNavigationBarHeight)/11)];
-    UILabel *businessInfoLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, Width/2, (Height - StatusBarAndNavigationBarHeight)/11)];
+    UILabel *userInfoLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, Width/2, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10)];
+    UILabel *productInfoLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, Width/2, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10)];
+    UILabel *businessInfoLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, Width/2, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10)];
     
     [self.firstTitleView addSubview:userInfoLabel];
     [self.secondTitleView addSubview:productInfoLabel];
@@ -147,7 +164,7 @@
     self.userBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.userBtn setTitle:@"单击隐藏" forState:UIControlStateNormal];
     [self.userBtn setTitle:@"单击展开" forState:UIControlStateSelected];
-    self.userBtn.frame = CGRectMake(Width*3/4, 0, Width/4, (Height - StatusBarAndNavigationBarHeight)/11);
+    self.userBtn.frame = CGRectMake(Width*3/4, 0, Width/4, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10);
     self.userBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     [self.userBtn setTitleColor:color(245, 245, 245, 1) forState:UIControlStateNormal];
     [self.userBtn addTarget:self action:@selector(userBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -158,7 +175,7 @@
     self.productBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.productBtn setTitle:@"单击展开" forState:UIControlStateNormal];
     [self.productBtn setTitle:@"单击隐藏" forState:UIControlStateSelected];
-    self.productBtn.frame = CGRectMake(Width*3/4, 0, Width/4, (Height - StatusBarAndNavigationBarHeight)/11);
+    self.productBtn.frame = CGRectMake(Width*3/4, 0, Width/4, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10);
     self.productBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     [self.productBtn setTitleColor:color(245, 245, 245, 1) forState:UIControlStateNormal];
     [self.productBtn addTarget:self action:@selector(productBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -168,7 +185,7 @@
     self.businessBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.businessBtn setTitle:@"单击展开" forState:UIControlStateNormal];
     [self.businessBtn setTitle:@"单击隐藏" forState:UIControlStateSelected];
-    self.businessBtn.frame = CGRectMake(Width*3/4, 0, Width/4, (Height - StatusBarAndNavigationBarHeight)/11);
+    self.businessBtn.frame = CGRectMake(Width*3/4, 0, Width/4, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10);
     self.businessBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     [self.businessBtn setTitleColor:color(245, 245, 245, 1) forState:UIControlStateNormal];
     [self.businessBtn addTarget:self action:@selector(businessBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -179,7 +196,7 @@
 
 - (void)configDetailView {
     
-    self.userInfoDetailView = [[UIView alloc]initWithFrame:CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)/11, Width, (Height - StatusBarAndNavigationBarHeight)*7/11)];
+    self.userInfoDetailView = [[UIView alloc]initWithFrame:CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10, Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*7/10)];
     self.userInfoDetailView.backgroundColor =  color(241, 241, 241, 1);
     self.userInfoDetailView.layer.masksToBounds = YES;
     
@@ -188,21 +205,21 @@
     [self.userInfoDetailView addSubview:self.userTableView];
     
     //原始
-    self.productInfoDetailView = [[UIView alloc]initWithFrame:CGRectMake(0,  (Height - StatusBarAndNavigationBarHeight)*8/11, Width, 0)];
+    self.productInfoDetailView = [[UIView alloc]initWithFrame:CGRectMake(0,  (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*8/10, Width, 0)];
     self.productInfoDetailView.backgroundColor =  color(241, 241, 241, 1);
     [self.view addSubview:self.productInfoDetailView];
     self.productInfoDetailView.layer.masksToBounds = YES;
     
-    self.productTableView = [[ProductDetailTableView alloc]initWithFrame:CGRectMake(0, 0, Width, (Height - StatusBarAndNavigationBarHeight)*6/11) style:UITableViewStylePlain];
+    self.productTableView = [[ProductDetailTableView alloc]initWithFrame:CGRectMake(0, 0, Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*6/10) style:UITableViewStylePlain];
     [self.productInfoDetailView addSubview:self.productTableView];
     
     
     //原始
-    self.businessInfoDetailView = [[UIView alloc]initWithFrame:CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*9/11, Width, 0)];
+    self.businessInfoDetailView = [[UIView alloc]initWithFrame:CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*9/10, Width, 0)];
     self.businessInfoDetailView.backgroundColor =  color(241, 241, 241, 1);
     [self.view addSubview:self.businessInfoDetailView];
     self.businessInfoDetailView.layer.masksToBounds = YES;
-    self.businessTableView = [[BusinessDetailTableView alloc]initWithFrame:CGRectMake(0, 0, Width, (Height - StatusBarAndNavigationBarHeight)*3/11) style:UITableViewStylePlain];
+    self.businessTableView = [[BusinessDetailTableView alloc]initWithFrame:CGRectMake(0, 0, Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*3/10) style:UITableViewStylePlain];
     [self.businessInfoDetailView addSubview:self.businessTableView];
     
 }
@@ -215,47 +232,47 @@
     if (self.userInfoDetailView.bounds.size.height != 0) {
         
         [UIView animateWithDuration:0.4 animations:^{
-            self.userInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)/11 , Width, 0);
-            self.secondTitleView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)/11, Width, (Height - StatusBarAndNavigationBarHeight)/11);
-            self.productInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*2/11, Width, 0);
-            self.thirdTitleView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*2/11 , Width, (Height - StatusBarAndNavigationBarHeight)/11);
-            self.businessInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*3/11, Width, 0);
+            self.userInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10 , Width, 0);
+            self.secondTitleView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10, Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10);
+            self.productInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*2/10, Width, 0);
+            self.thirdTitleView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*2/10 , Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10);
+            self.businessInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*3/10, Width, 0);
             
         }];
     }else{
         if (self.productInfoDetailView.bounds.size.height != 0) {
             self.productBtn.selected = !self.productBtn.selected;
             [UIView animateWithDuration:0.4 animations:^{
-                self.userInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)/11 , Width, (Height - StatusBarAndNavigationBarHeight)*7/11);
+                self.userInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10 , Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*7/10);
                 
-                self.secondTitleView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*8/11, Width, (Height - StatusBarAndNavigationBarHeight)/11);
+                self.secondTitleView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*8/10, Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10);
                 
-                self.productInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*9/11, Width, 0);
+                self.productInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*9/10, Width, 0);
                 
             }];
         }else if (self.businessInfoDetailView.bounds.size.height != 0) {
             self.businessBtn.selected = !self.businessBtn.selected;
             [UIView animateWithDuration:0.4 animations:^{
-                self.userInfoDetailView.frame = CGRectMake(0,(Height - StatusBarAndNavigationBarHeight)/11 , Width, (Height - StatusBarAndNavigationBarHeight)*7/11);
+                self.userInfoDetailView.frame = CGRectMake(0,(Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10 , Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*7/10);
                 
-                self.secondTitleView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*8/11, Width, (Height - StatusBarAndNavigationBarHeight)/11);
+                self.secondTitleView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*8/10, Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10);
                 
-                self.productInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*9/11, Width, 0);
+                self.productInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*9/10, Width, 0);
                 
-                self.thirdTitleView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*9/11, Width, (Height - StatusBarAndNavigationBarHeight)/11);
+                self.thirdTitleView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*9/10, Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10);
                 
-                self.businessInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*10/11, Width, 0);
+                self.businessInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight), Width, 0);
                 
             }];
         }else{
             [UIView animateWithDuration:0.4 animations:^{
-                self.userInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)/11 , Width, (Height - StatusBarAndNavigationBarHeight)*7/11);
+                self.userInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10 , Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*7/10);
                 
-                self.secondTitleView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*8/11, Width, (Height - StatusBarAndNavigationBarHeight)/11);
-                self.productInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*9/11, Width, 0);
+                self.secondTitleView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*8/10, Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10);
+                self.productInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*9/10, Width, 0);
                 
-                self.thirdTitleView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*9/11, Width, (Height - StatusBarAndNavigationBarHeight)/12);
-                self.businessInfoDetailView.frame = CGRectMake(0, StatusBarAndNavigationBarHeight + (Height - StatusBarAndNavigationBarHeight)*10/11, Width, 0);
+                self.thirdTitleView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*9/10, Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10);
+                self.businessInfoDetailView.frame = CGRectMake(0, StatusBarAndNavigationBarHeight + (Height - StatusBarAndNavigationBarHeight - TabbarHeight), Width, 0);
                 
             }];
         }
@@ -269,21 +286,21 @@
     if (self.productInfoDetailView.bounds.size.height != 0) {
         [UIView animateWithDuration:0.4 animations:^{
             
-            self.productInfoDetailView.frame = CGRectMake(0,(Height - StatusBarAndNavigationBarHeight)*2/11 , Width, 0);
+            self.productInfoDetailView.frame = CGRectMake(0,(Height - StatusBarAndNavigationBarHeight - TabbarHeight)*2/10 , Width, 0);
             
-            self.thirdTitleView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*2/11, Width, (Height - StatusBarAndNavigationBarHeight)/11);
-            self.businessInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*3/11, Width, 0);
+            self.thirdTitleView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*2/10, Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10);
+            self.businessInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*3/10, Width, 0);
         }];
     }else{
         if (self.userInfoDetailView.bounds.size.height != 0) {
             self.userBtn.selected = !self.userBtn.selected;
             
             [UIView animateWithDuration:0.4 animations:^{
-                self.userInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)/11 , Width, 0);
+                self.userInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10 , Width, 0);
                 
-                self.secondTitleView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)/11 , Width, (Height - StatusBarAndNavigationBarHeight)/11);
+                self.secondTitleView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10, Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10);
                 
-                self.productInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*2/11 , Width, (Height - StatusBarAndNavigationBarHeight)*6/11);
+                self.productInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*2/10 , Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*6/10);
                 
             }];
             
@@ -291,20 +308,20 @@
             self.businessBtn.selected = !self.businessBtn.selected;
             [UIView animateWithDuration:0.4 animations:^{
                 
-                self.productInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*2/11 , Width, (Height - StatusBarAndNavigationBarHeight)*6/11);
+                self.productInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*2/10 , Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*6/10);
                 
-                self.thirdTitleView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*9/11, Width, (Height - StatusBarAndNavigationBarHeight)/11);
+                self.thirdTitleView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*9/10, Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10);
                 
-                self.businessInfoDetailView.frame = CGRectMake(0,(Height - StatusBarAndNavigationBarHeight)*10/11, Width, 0);
+                self.businessInfoDetailView.frame = CGRectMake(0,(Height - StatusBarAndNavigationBarHeight - TabbarHeight), Width, 0);
             }];
             
         }else{
             [UIView animateWithDuration:0.4 animations:^{
                 
-                self.productInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*2/11 , Width, (Height - StatusBarAndNavigationBarHeight)*6/11);
+                self.productInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*2/10 , Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*6/10);
                 
-                self.thirdTitleView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*9/11, Width, (Height - StatusBarAndNavigationBarHeight)/11);
-                self.businessInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*10/11, Width, 0);
+                self.thirdTitleView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*9/10, Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10);
+                self.businessInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight), Width, 0);
                 
             }];
         }
@@ -317,7 +334,7 @@
     self.businessBtn.selected = !self.businessBtn.selected;
     if (self.businessInfoDetailView.bounds.size.height != 0) {
         [UIView animateWithDuration:0.4 animations:^{
-            self.businessInfoDetailView.frame = CGRectMake(0,(Height - StatusBarAndNavigationBarHeight)*3/11 , Width, 0);
+            self.businessInfoDetailView.frame = CGRectMake(0,(Height - StatusBarAndNavigationBarHeight - TabbarHeight)*3/10 , Width, 0);
         }];
     }else{
         
@@ -325,29 +342,29 @@
             self.productBtn.selected = !self.productBtn.selected;
             [UIView animateWithDuration:0.4 animations:^{
                 
-                self.productInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*2/11 , Width,0);
+                self.productInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*2/10, Width,0);
                 
-                self.thirdTitleView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*2/11, Width, (Height - StatusBarAndNavigationBarHeight)/11);
+                self.thirdTitleView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*2/10, Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10);
                 
-                self.businessInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*3/11 , Width, (Height - StatusBarAndNavigationBarHeight)*3/11);
+                self.businessInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*3/10, Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*3/10);
                 
             }];
         }else if (self.userInfoDetailView.bounds.size.height != 0) {
             self.userBtn.selected = !self.userBtn.selected;
             [UIView animateWithDuration:0.4 animations:^{
                 
-                self.userInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)/11 , Width, 0);
-                self.secondTitleView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)/11 , Width, (Height - StatusBarAndNavigationBarHeight)/11);
-                self.productInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*2/11, Width, 0);
-                self.thirdTitleView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*2/11 , Width, (Height - StatusBarAndNavigationBarHeight)/11);
+                self.userInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10, Width, 0);
+                self.secondTitleView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10, Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10);
+                self.productInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*2/10, Width, 0);
+                self.thirdTitleView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*2/10, Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)/10);
                 
-                self.businessInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*3/11 , Width, (Height - StatusBarAndNavigationBarHeight)*3/11);
+                self.businessInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*3/10, Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*3/10);
                 
             }];
         }else{
             
             [UIView animateWithDuration:0.4 animations:^{
-                self.businessInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*3/11 , Width, (Height - StatusBarAndNavigationBarHeight)*3/11);
+                self.businessInfoDetailView.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*3/10, Width, (Height - StatusBarAndNavigationBarHeight - TabbarHeight)*3/10);
             }];
         }
     }

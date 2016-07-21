@@ -228,12 +228,9 @@ UIViewControllerTransitioningDelegate
 
 - (void)setQuitButton {
     
-    
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, Height - StatusBarAndNavigationBarHeight - TabbarHeight, Width, TabbarHeight)];
     view.backgroundColor = color(230, 230, 230, 1);
     [self.view addSubview:view];
-    
-    
     
     UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
     effectView.frame = view.bounds;
@@ -243,20 +240,18 @@ UIViewControllerTransitioningDelegate
     lineView.backgroundColor = [UIColor lightGrayColor];
     [effectView.contentView addSubview:lineView];
     
-    UIView *colView = [[UIView alloc] initWithFrame:CGRectMake(Width/2-0.5, 15, 1, TabbarHeight - 30)];
-    colView.backgroundColor = [UIColor grayColor];
-    [effectView.contentView addSubview:colView];
+    
     
 
     UIButton *quitButton = [UIButton buttonWithType:0];
     
     [quitButton setTitle:@"退出登录" forState:UIControlStateNormal];
     
-    [quitButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [quitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [quitButton addTarget:self action:@selector(quitButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    quitButton.titleLabel.font = font(12);
-    quitButton.frame = CGRectMake(5, 0, Width/2 - 10, TabbarHeight);
-    
+//    quitButton.titleLabel.font = font(12);
+    quitButton.frame = CGRectMake(0, 0, Width/2, TabbarHeight);
+    quitButton.backgroundColor =  MainBlueColor;
     [effectView.contentView addSubview:quitButton];
     
     
@@ -264,14 +259,16 @@ UIViewControllerTransitioningDelegate
     
     [changePwdButton setTitle:@"修改密码" forState:UIControlStateNormal];
     
-    [changePwdButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [changePwdButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [changePwdButton addTarget:self action:@selector(changePwdButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    
-    changePwdButton.frame = CGRectMake(Width/2 + 5, 0, Width/2 - 10, TabbarHeight);
-    changePwdButton.titleLabel.font = font(12);
+    changePwdButton.backgroundColor = MainBlueColor;
+    changePwdButton.frame = CGRectMake(Width/2, 0, Width/2, TabbarHeight);
+//    changePwdButton.titleLabel.font = font(12);
     [effectView.contentView addSubview:changePwdButton];
     
-    
+    UIView *colView = [[UIView alloc] initWithFrame:CGRectMake(Width/2-0.7, 15, 1.4, TabbarHeight - 30)];
+    colView.backgroundColor = [UIColor whiteColor];
+    [effectView.contentView addSubview:colView];
 
     
 }

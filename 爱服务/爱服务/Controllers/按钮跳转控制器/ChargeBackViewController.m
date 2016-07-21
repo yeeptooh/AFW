@@ -171,9 +171,9 @@ UITableViewDataSource
     UIButton *submit = [UIButton buttonWithType:UIButtonTypeCustom];
     [submit setTitle:@"退单" forState:UIControlStateNormal];
     
-    [submit setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [submit setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [submit addTarget:self action:@selector(submitClicked:) forControlEvents:UIControlEventTouchUpInside];
-    submit.titleLabel.font = font(12);
+    submit.backgroundColor = MainBlueColor;
     submit.frame = CGRectMake(0, 0, Width, TabbarHeight);
     
     [effectView.contentView addSubview:submit];

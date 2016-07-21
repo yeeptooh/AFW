@@ -17,7 +17,20 @@
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
     if (self) {
-        self.FinishTime = dictionary[@"FinishTime"];
+        if ([dictionary[@"FinishTimeAct"] rangeOfString:@"("].location != NSNotFound) {
+            NSString *date = dictionary[@"FinishTimeAct"];
+            
+            NSInteger location = [date rangeOfString:@"("].location;
+            NSInteger length = [date rangeOfString:@")"].location - location;
+            NSString *subDate = [date substringWithRange:NSMakeRange(location + 1, length - 1)];
+            NSTimeInterval timeInterval = [subDate floatValue]/1000;
+            NSDate *finishDate = [NSDate dateWithTimeIntervalSince1970:timeInterval];
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+            NSString *finishStr = [dateFormatter stringFromDate:finishDate];
+            self.FinishTime = finishStr;
+        }
+        
         self.state = dictionary[@"State"];
         self.BuyerFullAddress = dictionary[@"BuyerFullAddress"];
         self.BuyerProvince = dictionary[@"BuyerProvince"];        

@@ -9,5 +9,10 @@
 #import "DetailPageBaseViewController.h"
 
 @interface AppendFeesViewController : DetailPageBaseViewController
-
+@property (nonatomic, assign) NSInteger flag;
+@property (nonatomic, strong) NSString *ID;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *address;
+@property (nonatomic, strong) NSString *product;
+@property (nonatomic, strong) NSString *price;
 @end

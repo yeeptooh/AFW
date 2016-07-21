@@ -526,10 +526,11 @@ UITextFieldDelegate
     self.manager.requestSerializer.timeoutInterval = 5;
     
     [self.manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-
-        [self.activityView stopAnimating];
         
         NSLog(@"%@",responseObject);
+        
+        [self.activityView stopAnimating];
+      
         if (self.page == 1) {
             if (self.dicList) {
                 [self.dicList removeAllObjects];
@@ -565,13 +566,12 @@ UITextFieldDelegate
         return ;
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        NSLog(@"error = %@",error.userInfo);
+
         [self.manager.operationQueue cancelAllOperations];
         [self.tableView.mj_footer endRefreshing];
         
         [self.activityView stopAnimating];
 
-        
         [self.view addSubview:self.noNetWorkingView];
         self.tableView.mj_footer.hidden = YES;
         return ;
@@ -795,8 +795,16 @@ UITextFieldDelegate
         detailVC.ProductClassify1ID = self.orderModel.ProductClassify1ID;
         detailVC.ProductClassify2ID = self.orderModel.ProductClassify2ID;
         detailVC.ProductClassify2Name = self.orderModel.ProductClassify2Name;
-        
+        detailVC.location = self.orderModel.location;
+        detailVC.product = [NSString stringWithFormat:@"%@ %@ %@",self.orderModel.productBreed, self.orderModel.productClassify, self.orderModel.model];
+        NSInteger count = self.orderModel.price.length;
+        detailVC.productPrice = [self.orderModel.price substringToIndex:count - 1];
+        detailVC.payMoney = self.orderModel.PayMoney;
+        detailVC.addMoney = self.orderModel.AddMoney;
+        detailVC.payMoneyStr = self.orderModel.PayMoney;
+        detailVC.priceStr = self.orderModel.price;
         [self.navigationController pushViewController:detailVC animated:YES];
+        
     }
 }
 

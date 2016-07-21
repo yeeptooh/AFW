@@ -104,6 +104,8 @@
 		4A561D671CBDE9DE00BB26AC /* MainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A561D651CBDE9DE00BB26AC /* MainTableViewCell.xib */; };
 		4A561D701CBE490E00BB26AC /* OrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A561D6F1CBE490E00BB26AC /* OrderModel.m */; };
 		4A57C6CE1D221B210023A1B7 /* ACCReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A78EADF1D1A75380047E1B9 /* ACCReviewViewController.m */; };
+		4A57D5371D4069EB00E3129E /* AppendReasonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57D5361D4069EB00E3129E /* AppendReasonViewController.m */; };
+		4A57D5381D406F3700E3129E /* AppendReasonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57D5361D4069EB00E3129E /* AppendReasonViewController.m */; };
 		4A57F8841CD2F5390034E089 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57F8781CD2F5390034E089 /* AFHTTPSessionManager.m */; };
 		4A57F8851CD2F5390034E089 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57F87B1CD2F5390034E089 /* AFNetworkReachabilityManager.m */; };
 		4A57F8861CD2F5390034E089 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57F87D1CD2F5390034E089 /* AFSecurityPolicy.m */; };
@@ -602,6 +604,8 @@
 		4A561D651CBDE9DE00BB26AC /* MainTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainTableViewCell.xib; sourceTree = "<group>"; };
 		4A561D6E1CBE490E00BB26AC /* OrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderModel.h; sourceTree = "<group>"; };
 		4A561D6F1CBE490E00BB26AC /* OrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderModel.m; sourceTree = "<group>"; };
+		4A57D5351D4069EB00E3129E /* AppendReasonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppendReasonViewController.h; sourceTree = "<group>"; };
+		4A57D5361D4069EB00E3129E /* AppendReasonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppendReasonViewController.m; sourceTree = "<group>"; };
 		4A57F8771CD2F5390034E089 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		4A57F8781CD2F5390034E089 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
 		4A57F8791CD2F5390034E089 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
@@ -1827,6 +1831,8 @@
 				4A62D1ED1D3616EB009A80C3 /* DispatchViewController.m */,
 				4A61DFD81D3E021700E1FCB8 /* ChangePWDViewController.h */,
 				4A61DFD91D3E021700E1FCB8 /* ChangePWDViewController.m */,
+				4A57D5351D4069EB00E3129E /* AppendReasonViewController.h */,
+				4A57D5361D4069EB00E3129E /* AppendReasonViewController.m */,
 			);
 			path = "按钮跳转控制器";
 			sourceTree = "<group>";
@@ -2297,6 +2303,7 @@
 				4A4BD2A51CB8D61C009DA0B9 /* TAAnimatedDotView.m in Sources */,
 				4A64245D1D194D8C00F26BA9 /* AddOrderViewController.m in Sources */,
 				4A5D038F1CCDF8C000773139 /* ZDDModalTransition.m in Sources */,
+				4A57D5371D4069EB00E3129E /* AppendReasonViewController.m in Sources */,
 				4A69736D1CBB42C8002A036C /* MBProgressHUD.m in Sources */,
 				4A4C6CF81CD20DF80030B861 /* ShareAnimation.m in Sources */,
 				4A77498C1CC09464008B9611 /* ServiceTypeTableViewCell.m in Sources */,
@@ -2325,6 +2332,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A57D5381D406F3700E3129E /* AppendReasonViewController.m in Sources */,
 				4A62D1EF1D361900009A80C3 /* DispatchViewController.m in Sources */,
 				4A5D25E91D34C73500630029 /* CommitHeartViewController.m in Sources */,
 				4A5D25E41D347F6300630029 /* CSMainTableViewCell.m in Sources */,

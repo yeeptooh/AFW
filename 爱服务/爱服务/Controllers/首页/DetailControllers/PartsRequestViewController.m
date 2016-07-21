@@ -158,7 +158,7 @@ static NSInteger number;
     for (NSInteger i = 0; i < 3; i ++) {
         if (i == 0) {
             self.label1 = [[UILabel alloc]initWithFrame:CGRectMake(Width*5/16, 5 + ((Height - StatusBarAndNavigationBarHeight)*(i+1)/12), Width*10/16, (Height - StatusBarAndNavigationBarHeight)/12 - 10)];
-            
+            self.label1.textColor = [UIColor grayColor];
             self.label1.backgroundColor = [UIColor whiteColor];
             self.label1.font = font(fontsize);
             self.label1.layer.cornerRadius = 5;
@@ -169,7 +169,7 @@ static NSInteger number;
            
         }else if (i == 1) {
             self.label2 = [[UILabel alloc]initWithFrame:CGRectMake(Width*5/16, 5 + ((Height - StatusBarAndNavigationBarHeight)*(i+1)/12), Width*10/16, (Height - StatusBarAndNavigationBarHeight)/12 - 10)];
-            
+            self.label2.textColor = [UIColor grayColor];
             self.label2.backgroundColor = [UIColor whiteColor];
             self.label2.font = font(fontsize);
             self.label2.layer.cornerRadius = 5;
@@ -179,7 +179,7 @@ static NSInteger number;
             self.label2.text = _type;
         }else {
             self.label3 = [[UILabel alloc]initWithFrame:CGRectMake(Width*5/16, 5 + ((Height - StatusBarAndNavigationBarHeight)*(i+1)/12), Width*10/16, (Height - StatusBarAndNavigationBarHeight)/12 - 10)];
-            
+            self.label3.textColor = [UIColor grayColor];
             self.label3.backgroundColor = [UIColor whiteColor];
             self.label3.font = font(fontsize);
             self.label3.layer.cornerRadius = 5;
@@ -294,7 +294,7 @@ static NSInteger number;
     UIButton *submit = [UIButton buttonWithType:UIButtonTypeCustom];
     [submit setTitle:@"提交" forState:UIControlStateNormal];
     
-    [submit setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
+    [submit setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [submit addTarget:self action:@selector(submitClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     submit.layer.cornerRadius = 5;
@@ -338,15 +338,11 @@ static NSInteger number;
         _FromUserName = FromUserName;
         _ToUserID = ToUserID;
         _ToUserName = ToUserName;
-        
-        
         _ProductBreedID = ProductBreedID;
         _ProductClassify1ID = ProductClassify1ID;
         _ProductClassify2ID = ProductClassify2ID;
-        
         _ProductClassify2Name = ProductClassify2Name;
         _WaiterName = WaiterName;
-        
         
         UITextField *textfield = [self.scrollView viewWithTag:1005];
         textfield.text = WaiterName;
@@ -652,7 +648,6 @@ static NSInteger number;
         }
         
     } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-
         
         [HUD hideAnimated:YES];
         [HUD removeFromSuperViewOnHide];
@@ -672,10 +667,7 @@ static NSInteger number;
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         number = 0;
-//        NSStringEncoding gbkEncoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-//        NSString *response = [[NSString alloc]initWithData:responseObject encoding:gbkEncoding];
-        
-//        NSLog(@"error = %@",error.userInfo);
+
         [HUD hideAnimated:YES];
         [HUD removeFromSuperViewOnHide];
         MBProgressHUD *errorHUD = [[MBProgressHUD alloc]initWithView:self.view];

@@ -644,6 +644,50 @@ UITextFieldDelegate
     }else{
         self.orderModel = self.searchResultList[indexPath.row];
     }
+    
+    
+    
+    /*detailVC.ID = self.orderModel.ID;
+     detailVC.state = [self.orderModel.state integerValue];
+     detailVC.FinishTime = self.orderModel.FinishTime;
+     detailVC.name = self.orderModel.name;
+     detailVC.phone = self.orderModel.phone;
+     detailVC.from = [NSString stringWithFormat:@"来源：%@",self.orderModel.fromUserName];
+     detailVC.fromPhone = [NSString stringWithFormat:@"厂商电话：%@",self.orderModel.fromUserPhone];
+     detailVC.price = [NSString stringWithFormat:@"价格：%@",self.orderModel.price];
+     detailVC.location = self.orderModel.location;
+     
+     detailVC.productType = self.orderModel.productType;
+     detailVC.model = self.orderModel.model;
+     detailVC.buyDate = self.orderModel.buyDate;
+     detailVC.productCode = self.orderModel.productCode;
+     detailVC.orderCode = self.orderModel.orderCode;
+     detailVC.inOut = self.orderModel.inOut;
+     
+     detailVC.serviceType = self.orderModel.serviceType;
+     detailVC.appointment = self.orderModel.appointment;
+     detailVC.servicePs = self.orderModel.postScript;
+     detailVC.chargeBackContent = self.orderModel.chargeBackContent;
+     
+     detailVC.fromUserID = self.orderModel.FromUserID;
+     detailVC.fromUserName = self.orderModel.fromUserName;
+     detailVC.toUserID = self.orderModel.ToUserID;
+     detailVC.toUserName = self.orderModel.ToUserName;
+     detailVC.BuyerFullAddress_Incept = self.orderModel.BuyerFullAddress_Incept;
+     detailVC.waiterName = self.orderModel.WaiterName;
+     detailVC.payMoneyStr = self.orderModel.PayMoney;
+     detailVC.priceStr = self.orderModel.priceStr;
+     detailVC.overPs = self.orderModel.FinishRemark;
+     
+     detailVC.refuseContent = self.orderModel.refuseContent;*/
+    
+    detailVC.overPs = self.orderModel.FinishRemark;
+    detailVC.refuseContent = self.orderModel.refuseContent;
+    detailVC.serviceType = self.orderModel.serviceType;
+    detailVC.appointment = self.orderModel.appointment;
+    detailVC.servicePs = self.orderModel.postScript;
+    detailVC.chargeBackContent = self.orderModel.chargeBackContent;
+    detailVC.FinishTime = self.orderModel.FinishTime;
     detailVC.ID = self.orderModel.ID;
     detailVC.state = [self.orderModel.state integerValue];
     detailVC.flag = 1;
@@ -675,6 +719,7 @@ UITextFieldDelegate
     detailVC.payMoneyStr = self.orderModel.PayMoney;
     detailVC.priceStr = self.orderModel.price;
     detailVC.overPs = self.orderModel.FinishRemark;
+    
     [self.navigationController pushViewController:detailVC animated:YES];
     
 }

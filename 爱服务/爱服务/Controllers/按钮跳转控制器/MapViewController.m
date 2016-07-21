@@ -77,9 +77,9 @@ MKMapViewDelegate
     
     UIButton *robButton = [UIButton buttonWithType:UIButtonTypeCustom];
     robButton.frame = CGRectMake(0, 0, Width, TabbarHeight);
-    robButton.titleLabel.font = font(12);
+    robButton.backgroundColor = MainBlueColor;
     [robButton setTitle:@"立即抢单" forState:UIControlStateNormal];
-    [robButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [robButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     [robButton addTarget:self action:@selector(robButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     [effectView.contentView addSubview:robButton];
