@@ -10,4 +10,5 @@
 
 @interface HomeViewController : BaseViewController
 @property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, assign) NSInteger badgeNum;
 @end

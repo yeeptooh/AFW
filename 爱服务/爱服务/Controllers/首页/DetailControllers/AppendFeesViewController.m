@@ -185,14 +185,38 @@ WKNavigationDelegate
 }
 
 - (void)barButtonClicked:(UIButton *)sender {
-#warning 追加理由URL未做好
+    if ([self.chooseButton.titleLabel.text isEqualToString:@"请先选择工单"]) {
+        MBProgressHUD *HUD = [[MBProgressHUD alloc]initWithView:self.view];
+        HUD.mode = MBProgressHUDModeText;
+        HUD.label.text = @"请先选择工单";
+        HUD.label.font = font(14);
+        [self.view addSubview:HUD];
+        [HUD showAnimated:YES];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [HUD hideAnimated:YES];
+            [HUD removeFromSuperViewOnHide];
+        });
+        
+        return;
+    }
+    
+
     AppendReasonViewController *appendReason = [[AppendReasonViewController alloc] init];
     __weak typeof(self) weakSelf = self;
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    NSString *url = [NSString stringWithFormat:@"%@",HomeURL];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSString *url = [NSString stringWithFormat:@"%@Common.ashx?action=get_add_money_reason&&comid=%@",HomeURL,self.comid];
+    NSLog(@"%@",url);
     url = [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        [self.reasonList addObjectsFromArray:responseObject];
+        NSLog(@"%@",responseObject);
+        id obj = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSArray *array = (NSArray *)obj;
+        if (self.reasonList.count) {
+            [self.reasonList removeAllObjects];
+        }
+        [self.reasonList addObjectsFromArray:array];
         appendReason.reasonList = self.reasonList;
         appendReason.returnReason = ^(NSString *reason){
             UITextField *textfield = [weakSelf.view viewWithTag:1001];
@@ -201,6 +225,7 @@ WKNavigationDelegate
         [self presentViewController:appendReason animated:YES completion:nil];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@",error);
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
         hud.mode = MBProgressHUDModeText;
         hud.label.text = @"请检查网络";
@@ -312,7 +337,7 @@ WKNavigationDelegate
 
 - (void)chooseButtonClicked:(UIButton *)sender {
     CompleteViewController *cpVC = [[CompleteViewController alloc]init];
-    cpVC.returnAppend = ^(NSString *taskID, NSString *name, NSString *address, NSString *product, NSString *price) {
+    cpVC.returnAppend = ^(NSString *taskID, NSString *name, NSString *address, NSString *product, NSString *price, NSString *comid) {
         
         _ID = taskID;
         UIButton *button = [self.view viewWithTag:500];
@@ -331,7 +356,7 @@ WKNavigationDelegate
         _address = address;
         _product = product;
         _price = price;
-        
+        _comid = comid;
         
         
     };

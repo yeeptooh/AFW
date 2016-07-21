@@ -449,7 +449,7 @@ UIViewControllerTransitioningDelegate
             UIButton *refuseButton = [UIButton buttonWithType:UIButtonTypeCustom];
             refuseButton.frame = CGRectMake(Width/2, 0, Width/2, TabbarHeight);
             [refuseButton setTitle:@"拒绝" forState:UIControlStateNormal];
-            [refuseButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            [refuseButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             refuseButton.backgroundColor = MainBlueColor;
             [refuseButton addTarget:self action:@selector(refuseButtonClicked) forControlEvents:UIControlEventTouchUpInside];
             [effectView.contentView addSubview:refuseButton];
@@ -747,7 +747,7 @@ UIViewControllerTransitioningDelegate
     appendVC.address = self.location;
     appendVC.product = self.product;
     appendVC.price = self.productPrice;
-    
+    appendVC.comid = self.fromUserID;
     [self.navigationController pushViewController:appendVC animated:YES];
 }
 

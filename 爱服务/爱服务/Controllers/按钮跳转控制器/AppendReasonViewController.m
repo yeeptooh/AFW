@@ -62,7 +62,7 @@ UIViewControllerTransitioningDelegate
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
     }
     
-    cell.textLabel.text = self.reasonList[indexPath.row];
+    cell.textLabel.text = self.reasonList[indexPath.row][@"Name"];
     
     
     return cell;
@@ -72,16 +72,16 @@ UIViewControllerTransitioningDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
-    self.returnReason(self.reasonList[indexPath.row]);
+    self.returnReason(self.reasonList[indexPath.row][@"Name"]);
     
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
-    return [HYBModalTransition transitionWithType:kHYBModalTransitionPresent duration:0.25 presentHeight:(Height - StatusBarAndNavigationBarHeight)*4/12 scale:CGPointMake(0.9, 0.9)];
+    return [HYBModalTransition transitionWithType:kHYBModalTransitionPresent duration:0.25 presentHeight:(Height - StatusBarAndNavigationBarHeight)*8/12 scale:CGPointMake(0.9, 0.9)];
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
-    return [HYBModalTransition transitionWithType:kHYBModalTransitionDismiss duration:0.25 presentHeight:(Height - StatusBarAndNavigationBarHeight)*4/12 scale:CGPointMake(0.9, 0.9)];
+    return [HYBModalTransition transitionWithType:kHYBModalTransitionDismiss duration:0.25 presentHeight:(Height - StatusBarAndNavigationBarHeight)*8/12 scale:CGPointMake(0.9, 0.9)];
 }
 
 
