@@ -98,7 +98,7 @@
     UIButton *saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     saveBtn.frame = CGRectMake(0, (Height - StatusBarAndNavigationBarHeight)*10/11, Width, (Height - StatusBarAndNavigationBarHeight)/11);
     saveBtn.backgroundColor = color(59, 165, 249, 1);
-    [saveBtn setTitle:@"下单" forState:UIControlStateNormal];
+    [saveBtn setTitle:@"修改" forState:UIControlStateNormal];
     [saveBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [saveBtn addTarget:self action:@selector(saveButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:saveBtn];
@@ -182,6 +182,13 @@
     
     [self.view addSubview:self.userInfoDetailView];
     self.userTableView = [[UserDetailTableView alloc]initWithFrame:self.userInfoDetailView.bounds style:UITableViewStylePlain];
+    ((UITextField *)[self.userTableView viewWithTag:100]).text = self.buyer_name;
+    ((UITextField *)[self.userTableView viewWithTag:101]).text = self.buyerPhone;
+    [((UIButton *)[self.userTableView viewWithTag:202]) setTitle:self.buyer_province forState:UIControlStateNormal];
+    [((UIButton *)[self.userTableView viewWithTag:203]) setTitle:self.buyer_city forState:UIControlStateNormal];
+    [((UIButton *)[self.userTableView viewWithTag:204]) setTitle:self.buyer_district forState:UIControlStateNormal];
+    [((UIButton *)[self.userTableView viewWithTag:205]) setTitle:self.buyer_town forState:UIControlStateNormal];
+    ((UITextField *)[self.userTableView viewWithTag:106]).text = self.buyer_address;
     [self.userInfoDetailView addSubview:self.userTableView];
     
     //原始
@@ -191,6 +198,12 @@
     self.productInfoDetailView.layer.masksToBounds = YES;
     
     self.productTableView = [[ProductDetailTableView alloc]initWithFrame:CGRectMake(0, 0, Width, (Height - StatusBarAndNavigationBarHeight)*6/11) style:UITableViewStylePlain];
+    [((UIButton *)[self.productTableView viewWithTag:200]) setTitle:self.product_type forState:UIControlStateNormal];
+    [((UIButton *)[self.productTableView viewWithTag:201]) setTitle:self.product_big_classify forState:UIControlStateNormal];
+    [((UIButton *)[self.productTableView viewWithTag:202]) setTitle:self.product_small_classify forState:UIControlStateNormal];
+    ((UITextField *)[self.productTableView viewWithTag:103]).text = self.order_number;
+    [((UIButton *)[self.productTableView viewWithTag:204]) setTitle:self.inOut forState:UIControlStateNormal];
+    [((UIButton *)[self.productTableView viewWithTag:205]) setTitle:self.buy_time forState:UIControlStateNormal];
     [self.productInfoDetailView addSubview:self.productTableView];
     
     
@@ -200,6 +213,9 @@
     [self.view addSubview:self.businessInfoDetailView];
     self.businessInfoDetailView.layer.masksToBounds = YES;
     self.businessTableView = [[BusinessDetailTableView alloc]initWithFrame:CGRectMake(0, 0, Width, (Height - StatusBarAndNavigationBarHeight)*3/11) style:UITableViewStylePlain];
+    [((UIButton *)[self.businessTableView viewWithTag:200]) setTitle:self.service_type forState:UIControlStateNormal];
+    [((UIButton *)[self.businessTableView viewWithTag:201]) setTitle:self.expectant_time forState:UIControlStateNormal];
+    ((UITextField *)[self.businessTableView viewWithTag:102]).text = self.postscript;
     [self.businessInfoDetailView addSubview:self.businessTableView];
     
 }

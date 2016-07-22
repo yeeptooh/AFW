@@ -123,7 +123,7 @@ UITableViewDataSource
         [manager POST:URL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
-            NSLog(@"dic = %@",dic);
+            
             if ([dic[@"ret"] integerValue] == 0) {
                 MBProgressHUD *hud = [MBProgressHUD HUDForView:self.view];
                 

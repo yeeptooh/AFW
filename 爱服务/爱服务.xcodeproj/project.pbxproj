@@ -106,10 +106,6 @@
 		4A57C6CE1D221B210023A1B7 /* ACCReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A78EADF1D1A75380047E1B9 /* ACCReviewViewController.m */; };
 		4A57D5371D4069EB00E3129E /* AppendReasonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57D5361D4069EB00E3129E /* AppendReasonViewController.m */; };
 		4A57D5381D406F3700E3129E /* AppendReasonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57D5361D4069EB00E3129E /* AppendReasonViewController.m */; };
-		4A57D5481D40C37200E3129E /* UIBarButtonItem+WZLBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57D53C1D40C37200E3129E /* UIBarButtonItem+WZLBadge.m */; };
-		4A57D5491D40C37200E3129E /* UIBarButtonItem+WZLBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57D53C1D40C37200E3129E /* UIBarButtonItem+WZLBadge.m */; };
-		4A57D54A1D40C37200E3129E /* UITabBarItem+WZLBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57D53E1D40C37200E3129E /* UITabBarItem+WZLBadge.m */; };
-		4A57D54B1D40C37200E3129E /* UITabBarItem+WZLBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57D53E1D40C37200E3129E /* UITabBarItem+WZLBadge.m */; };
 		4A57D54C1D40C37200E3129E /* CAAnimation+WAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57D5411D40C37200E3129E /* CAAnimation+WAnimation.m */; };
 		4A57D54D1D40C37200E3129E /* CAAnimation+WAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57D5411D40C37200E3129E /* CAAnimation+WAnimation.m */; };
 		4A57D54E1D40C37200E3129E /* UIView+WZLBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A57D5461D40C37200E3129E /* UIView+WZLBadge.m */; };
@@ -616,10 +612,6 @@
 		4A561D6F1CBE490E00BB26AC /* OrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderModel.m; sourceTree = "<group>"; };
 		4A57D5351D4069EB00E3129E /* AppendReasonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppendReasonViewController.h; sourceTree = "<group>"; };
 		4A57D5361D4069EB00E3129E /* AppendReasonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppendReasonViewController.m; sourceTree = "<group>"; };
-		4A57D53B1D40C37200E3129E /* UIBarButtonItem+WZLBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+WZLBadge.h"; sourceTree = "<group>"; };
-		4A57D53C1D40C37200E3129E /* UIBarButtonItem+WZLBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+WZLBadge.m"; sourceTree = "<group>"; };
-		4A57D53D1D40C37200E3129E /* UITabBarItem+WZLBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarItem+WZLBadge.h"; sourceTree = "<group>"; };
-		4A57D53E1D40C37200E3129E /* UITabBarItem+WZLBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarItem+WZLBadge.m"; sourceTree = "<group>"; };
 		4A57D5401D40C37200E3129E /* CAAnimation+WAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAAnimation+WAnimation.h"; sourceTree = "<group>"; };
 		4A57D5411D40C37200E3129E /* CAAnimation+WAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CAAnimation+WAnimation.m"; sourceTree = "<group>"; };
 		4A57D5431D40C37200E3129E /* WZLBadgeProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZLBadgeProtocol.h; sourceTree = "<group>"; };
@@ -1467,24 +1459,12 @@
 		4A57D5391D40C37200E3129E /* WZLBadge */ = {
 			isa = PBXGroup;
 			children = (
-				4A57D53A1D40C37200E3129E /* BarItem */,
 				4A57D53F1D40C37200E3129E /* CategorySupport */,
 				4A57D5421D40C37200E3129E /* Protocol */,
 				4A57D5441D40C37200E3129E /* View */,
 				4A57D5471D40C37200E3129E /* WZLBadgeImport.h */,
 			);
 			path = WZLBadge;
-			sourceTree = "<group>";
-		};
-		4A57D53A1D40C37200E3129E /* BarItem */ = {
-			isa = PBXGroup;
-			children = (
-				4A57D53B1D40C37200E3129E /* UIBarButtonItem+WZLBadge.h */,
-				4A57D53C1D40C37200E3129E /* UIBarButtonItem+WZLBadge.m */,
-				4A57D53D1D40C37200E3129E /* UITabBarItem+WZLBadge.h */,
-				4A57D53E1D40C37200E3129E /* UITabBarItem+WZLBadge.m */,
-			);
-			path = BarItem;
 			sourceTree = "<group>";
 		};
 		4A57D53F1D40C37200E3129E /* CategorySupport */ = {
@@ -2270,7 +2250,6 @@
 				4A4BD3201CB8F812009DA0B9 /* MASConstraint.m in Sources */,
 				4A6973741CBB4D20002A036C /* AppendFeesViewController.m in Sources */,
 				4A57F8871CD2F5390034E089 /* AFURLRequestSerialization.m in Sources */,
-				4A57D54A1D40C37200E3129E /* UITabBarItem+WZLBadge.m in Sources */,
 				4A61DF4C1D3DBD3F00E1FCB8 /* ChangeOrderViewController.m in Sources */,
 				4A4BD2CE1CB8D903009DA0B9 /* NSData+ImageContentType.m in Sources */,
 				4A4BD2A91CB8D61C009DA0B9 /* SDCycleScrollView.m in Sources */,
@@ -2323,7 +2302,6 @@
 				4A4EDB721CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.m in Sources */,
 				4A4BD2FC1CB8F5C2009DA0B9 /* LoginViewController.m in Sources */,
 				4A4BD2D21CB8D903009DA0B9 /* SDWebImageDownloader.m in Sources */,
-				4A57D5481D40C37200E3129E /* UIBarButtonItem+WZLBadge.m in Sources */,
 				4A61DFE21D3E075200E1FCB8 /* ChangePWDDismissAnimation.m in Sources */,
 				4A6BABE91CC62FAB000B94A2 /* UIScrollView+MJRefresh.m in Sources */,
 				4A6973831CBB4D8A002A036C /* QRCodeViewController.m in Sources */,
@@ -2421,7 +2399,6 @@
 				4A5A39B81D2F89BC00DF3E87 /* ZDDQRCodeViewController.m in Sources */,
 				4A57D54F1D40C37200E3129E /* UIView+WZLBadge.m in Sources */,
 				4A64A1101D222AE600A3DC7C /* CityViewController.m in Sources */,
-				4A57D5491D40C37200E3129E /* UIBarButtonItem+WZLBadge.m in Sources */,
 				4A64A1111D222AE600A3DC7C /* RegionViewController.m in Sources */,
 				4A64A1121D222AE600A3DC7C /* StreetViewController.m in Sources */,
 				4A1D9D9F1D1BBA8900052B92 /* BusinessDetailTableView.m in Sources */,
@@ -2550,7 +2527,6 @@
 				4AEFBE2D1D3CC99A001BB252 /* PayMoneyTableViewCell.m in Sources */,
 				4A6423D81D19396600F26BA9 /* PayTableViewCell.m in Sources */,
 				4A6423D91D19396600F26BA9 /* Order.m in Sources */,
-				4A57D54B1D40C37200E3129E /* UITabBarItem+WZLBadge.m in Sources */,
 				4A6423DA1D19396600F26BA9 /* ViewController+MASAdditions.m in Sources */,
 				4A6423DB1D19396600F26BA9 /* StandardFeeViewController.m in Sources */,
 				4A6423DC1D19396600F26BA9 /* MJRefreshGifHeader.m in Sources */,

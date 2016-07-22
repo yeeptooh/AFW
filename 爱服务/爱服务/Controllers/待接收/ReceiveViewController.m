@@ -296,7 +296,9 @@ UITextFieldDelegate
         
         [[NSUserDefaults standardUserDefaults] setObject:countList forKey:@"countList"];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        
+        if (((NSArray *)[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"]).lastObject) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kupdateBadgeNum object:nil];
+        }
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][1] isEqualToString:@"0"]) {
             
             receiveVC.tabBarItem.badgeValue = nil;

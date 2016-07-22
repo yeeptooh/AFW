@@ -251,23 +251,10 @@ static BOOL isProduction = FALSE;
     AFHTTPSessionManager *afManager = [AFHTTPSessionManager manager];
     afManager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [afManager POST:URL parameters:dic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"11");
+        
         id jsonObj = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
         if ([jsonObj isKindOfClass:[NSDictionary class]]) {
             NSDictionary *dic = (NSDictionary *)jsonObj;
-            
-            if (![[NSUserDefaults standardUserDefaults] integerForKey:@"badgeNumber"]) {
-                [[NSUserDefaults standardUserDefaults] setInteger:[dic[@"bagdeNum"] integerValue] forKey:@"badgeNumber"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-            }else {
-                NSInteger badgeNum = [[NSUserDefaults standardUserDefaults] integerForKey:@"badgeNumber"];
-                if ([dic[@"bagdeNum"] integerValue] != badgeNum) {
-                    [[NSUserDefaults standardUserDefaults] setInteger:[dic[@"bagdeNum"] integerValue] - badgeNum forKey:@"DBadgeValue"];
-                    [[NSUserDefaults standardUserDefaults] synchronize];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kupdateBadgeNum object:nil];
-                    
-                }
-            }
             
             NSString *UUID = [[UIDevice currentDevice].identifierForVendor UUIDString];
             
@@ -643,7 +630,9 @@ static BOOL isProduction = FALSE;
                 
                 [[NSUserDefaults standardUserDefaults] setObject:countList forKey:@"countList"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
-                
+                if (((NSArray *)[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"]).lastObject) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kupdateBadgeNum object:nil];
+                }
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 
             }];

@@ -10,7 +10,7 @@
 #import <objc/runtime.h>
 #import "CAAnimation+WAnimation.h"
 
-#define kWZLBadgeDefaultFont				([UIFont boldSystemFontOfSize:9])
+#define kWZLBadgeDefaultFont				([UIFont systemFontOfSize:12])
 
 #define kWZLBadgeDefaultMaximumBadgeNumber                     99
 
@@ -118,8 +118,8 @@
                        [NSString stringWithFormat:@"%@", @(value)]);
     [self adjustLabelWidth:self.badge];
     CGRect frame = self.badge.frame;
-    frame.size.width += 4;
-    frame.size.height += 4;
+    frame.size.width += 5;
+    frame.size.height += 5;
     if(CGRectGetWidth(frame) < CGRectGetHeight(frame)) {
         frame.size.width = CGRectGetHeight(frame);
     }

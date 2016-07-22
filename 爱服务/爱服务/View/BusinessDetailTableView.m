@@ -211,7 +211,7 @@ UITextFieldDelegate
             [self.serviceIDList addObject:dic[@"c"]];
         }
         self.serviceID = [self.serviceIDList[0] integerValue];
-        NSLog(@"self.servceList = %@",self.servceList);
+        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];

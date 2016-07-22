@@ -125,7 +125,11 @@ static NSInteger tag = 0;
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"AVCan"];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(badgeValueChanged:) name:kBadgeValueChanged object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMoney:) name:kUpdateMoney object:nil];
+#if Environment_Mode == 1
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBadge:) name:kupdateBadgeNum object:nil];
+#elif Environment_Mode == 2
+#endif
+    
     
     self.timer = [NSTimer scheduledTimerWithTimeInterval:5 * 60 target:self selector:@selector(updateUI) userInfo:nil repeats:YES];
     
@@ -137,20 +141,22 @@ static NSInteger tag = 0;
 
 - (void)updateBadge {
     
-    [self.badgeView showBadgeWithStyle:WBadgeStyleNumber value:[[NSUserDefaults standardUserDefaults] integerForKey:@"DBadgeValue"] animationType:WBadgeAnimTypeNone];
+    [self.badgeView showBadgeWithStyle:WBadgeStyleNumber value:[((NSArray *)[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"]).lastObject integerValue] animationType:WBadgeAnimTypeNone];
+    
     [self playSound];
    
 }
 
-static SystemSoundID shake_sound_male_id = 10000;
+//static SystemSoundID shake_sound_male_id = 10000;
 - (void)playSound {
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"shake_sound_male" ofType:@"wav"];
-    if (path) {
-        
-        AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path],&shake_sound_male_id);
-        AudioServicesPlaySystemSound(shake_sound_male_id);
-        
-    }
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+//    NSString *path = [[NSBundle mainBundle] pathForResource:@"shake_sound_male" ofType:@"wav"];
+//    if (path) {
+//        
+//        AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path],&shake_sound_male_id);
+//        AudioServicesPlaySystemSound(shake_sound_male_id);
+//        
+//    }
 }
 
 - (void)updateMoney:(NSNotification *)sender {
@@ -248,7 +254,9 @@ static SystemSoundID shake_sound_male_id = 10000;
                 [[NSUserDefaults standardUserDefaults] setObject:countList forKey:@"countList"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 
-                
+                if (((NSArray *)[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"]).lastObject) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kupdateBadgeNum object:nil];
+                }
                 
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 
@@ -373,7 +381,7 @@ static SystemSoundID shake_sound_male_id = 10000;
     
 #if Environment_Mode == 1
     UILabel *moneyLabel = [[UILabel alloc]initWithFrame:CGRectMake(Width*2/5, 0, Width*2/5, balanceLabel.bounds.size.height)];
-    NSString *money = [((NSArray *)[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"]) lastObject];
+    NSString *money = [((NSArray *)[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"]) objectAtIndex:5];
     CGFloat moneyNumber = [money floatValue];
     NSString *moneyStr = [NSString stringWithFormat:@"保证金:%.2f元",moneyNumber];
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:moneyStr];

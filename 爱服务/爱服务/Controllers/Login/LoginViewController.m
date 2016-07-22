@@ -290,6 +290,9 @@ UITextFieldDelegate
                 [[NSUserDefaults standardUserDefaults] setObject:countList forKey:@"countList"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateMoney object:nil];
+                if (((NSArray *)[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"]).lastObject) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kupdateBadgeNum object:nil];
+                }
                 [weakSelf.successHUD hideAnimated:YES];
                 [weakSelf.successHUD removeFromSuperViewOnHide];
                 if ([[NSUserDefaults standardUserDefaults] integerForKey:@"logOut"]) {

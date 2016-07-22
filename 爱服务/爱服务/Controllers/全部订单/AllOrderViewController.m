@@ -301,7 +301,9 @@ UITextFieldDelegate
         
         [[NSUserDefaults standardUserDefaults] setObject:countList forKey:@"countList"];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        
+        if (((NSArray *)[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"]).lastObject) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kupdateBadgeNum object:nil];
+        }
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][1] isEqualToString:@"0"]) {
             
             receiveVC.tabBarItem.badgeValue = nil;
@@ -489,7 +491,7 @@ UITextFieldDelegate
     self.manager.requestSerializer.timeoutInterval = 5;
     
     [self.manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
+        NSLog(@"%@",responseObject);
         for (NSDictionary *dic in responseObject[@"task"]) {
             OrderModel *ordelModel = [OrderModel orderFromDictionary:dic];
             [self.dicList addObject:ordelModel];

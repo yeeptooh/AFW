@@ -168,7 +168,7 @@ UITableViewDataSource
     UIButton *submit = [UIButton buttonWithType:UIButtonTypeCustom];
     [submit setTitle:@"拒绝" forState:UIControlStateNormal];
     submit.backgroundColor = MainBlueColor;
-    submit.backgroundColor = [UIColor clearColor];
+    
     [submit setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [submit addTarget:self action:@selector(submitClicked:) forControlEvents:UIControlEventTouchUpInside];
     

@@ -578,23 +578,23 @@ UIViewControllerTransitioningDelegate
         lineView.backgroundColor = [UIColor lightGrayColor];
         [effectView.contentView addSubview:lineView];
         
-        UIButton *dispatchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        dispatchButton.frame = CGRectMake(0, 0, Width/2, TabbarHeight);
+        UIButton *payButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        payButton.frame = CGRectMake(0, 0, Width/2, TabbarHeight);
         
-        [dispatchButton setTitle:@"付款" forState:UIControlStateNormal];
-        [dispatchButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        dispatchButton.backgroundColor = MainBlueColor;
-        [dispatchButton addTarget:self action:@selector(payButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-        [effectView.contentView addSubview:dispatchButton];
+        [payButton setTitle:@"付款" forState:UIControlStateNormal];
+        [payButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        payButton.backgroundColor = MainBlueColor;
+        [payButton addTarget:self action:@selector(payButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        [effectView.contentView addSubview:payButton];
         
         
-        UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        cancelButton.frame = CGRectMake(Width/2, 0, Width/2, TabbarHeight);
-        [cancelButton setTitle:@"修改" forState:UIControlStateNormal];
-        [cancelButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        cancelButton.backgroundColor = MainBlueColor;
-        [cancelButton addTarget:self action:@selector(changeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-        [effectView.contentView addSubview:cancelButton];
+        UIButton *changeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        changeButton.frame = CGRectMake(Width/2, 0, Width/2, TabbarHeight);
+        [changeButton setTitle:@"修改" forState:UIControlStateNormal];
+        [changeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        changeButton.backgroundColor = MainBlueColor;
+        [changeButton addTarget:self action:@selector(changeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        [effectView.contentView addSubview:changeButton];
         
         UIView *colView = [[UIView alloc] initWithFrame:CGRectMake(Width/2-0.7, 15, 1.4, TabbarHeight - 30)];
         colView.backgroundColor = [UIColor whiteColor];
@@ -659,7 +659,7 @@ UIViewControllerTransitioningDelegate
         [effectView.contentView addSubview:disagreeButton];
         
         UIView *colView = [[UIView alloc] initWithFrame:CGRectMake(Width/2-0.7, 15, 1.4, TabbarHeight - 30)];
-        colView.backgroundColor = [UIColor grayColor];
+        colView.backgroundColor = [UIColor whiteColor];
         [effectView.contentView addSubview:colView];
         
     }else if (self.state == 7){
@@ -756,20 +756,40 @@ UIViewControllerTransitioningDelegate
     
     ChangeOrderViewController *changeVC = [[ChangeOrderViewController alloc] init];
     changeVC.ID = self.ID;
-    changeVC.name = self.name;
-    changeVC.phone = self.phone;
-    changeVC.from = self.from;//详细地址
+    
+    changeVC.fromUserName = self.fromUserName;
+    changeVC.baoxiuIndex = self.baoxiuIndex;
+    changeVC.service_classify_id = self.service_classify_id;
+    changeVC.product_big_classify_id = self.product_big_classify_id;
+    changeVC.product_small_classify_id = self.product_small_classify_id;
+    changeVC.product_breed_id = self.product_breed_id;
+
+    changeVC.product_type = self.product_type;
+    changeVC.buy_time = self.buy_time;
+    changeVC.buyer_name = self.buyer_name;
+    changeVC.buyerPhone = self.buyerPhone;
+    changeVC.buyer_province_id = self.buyer_province_id;
+    changeVC.buyer_province = self.buyer_province;
+    
+    changeVC.buyer_city_id = self.buyer_city_id;
+    changeVC.buyer_city = self.buyer_city;
+    changeVC.buyer_district_id = self.buyer_district_id;
+    changeVC.buyer_district = self.buyer_district;
+    changeVC.buyer_town_id = self.buyer_district;
+    changeVC.buyer_town = self.product_breed_id;
+    changeVC.buyer_address = self.buyer_address;
+    changeVC.expectant_time = self.expectant_time;
+    changeVC.postscript = self.postscript;
+    changeVC.handler_name = self.handler_name;
+    changeVC.order_number = self.order_number;
+    changeVC.from_user_id = self.from_user_id;
+    changeVC.from_user_type = self.from_user_type;
+    changeVC.handler_id = self.handler_id;
     changeVC.inOut = self.inOut;
-    changeVC.model = self.model;//产品型号
-    changeVC.buyDate = self.buyDate;
-    changeVC.productCode = self.productCode;
-    changeVC.orderCode = self.orderCode;
-    changeVC.serviceType = self.serviceType;
-    changeVC.appointment = self.appointment;
-    changeVC.servicePs = self.servicePs;
-    
-    
-    
+    changeVC.product_big_classify = self.product_big_classify;
+    changeVC.product_small_classify = self.model;
+    changeVC.service_type = self.service_type;
+    [self.navigationController pushViewController:changeVC animated:YES];
 }
 
 - (void)agreeButtonClicked {
