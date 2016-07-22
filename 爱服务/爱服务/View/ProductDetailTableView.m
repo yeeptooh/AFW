@@ -250,11 +250,11 @@ UITextFieldDelegate
                 
                 
                 NSString *bigUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getproductclassify2&comid=%@&uid=%@&parent=%@",HomeURL,@(userModel.comid),@(userModel.uid),self.bigIDList[0]];
-                NSLog(@"%@",self.bigID.class);
+                
                 AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
                 if (![self.bigID isEqualToString:@"bitch"]) {
                     [manager GET:bigUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                        NSLog(@"%@",responseObject);
+                        
                         UIButton *button = [self viewWithTag:202];
                         NSString *name;
                         if ([(NSDictionary *)responseObject count] != 0) {
@@ -307,7 +307,6 @@ UITextFieldDelegate
             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
             
             [manager GET:bigUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                NSLog(@"%@",responseObject);
                 UIButton *button = [self viewWithTag:202];
                 NSString *name;
                 if ([(NSDictionary *)responseObject count] != 0) {
@@ -433,7 +432,7 @@ UITextFieldDelegate
             
             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
             [manager GET:bigUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                NSLog(@"%@",responseObject);
+                
                 [[NSUserDefaults standardUserDefaults] setObject:responseObject forKey:@"small"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 

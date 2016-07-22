@@ -177,7 +177,7 @@ WKNavigationDelegate
     submit.layer.cornerRadius = 5;
     submit.layer.masksToBounds = YES;
     submit.backgroundColor = MainBlueColor;
-    submit.frame = CGRectMake(20, ((Height - StatusBarAndNavigationBarHeight)*7/12), Width - 40, (Height - StatusBarAndNavigationBarHeight)/12);
+    submit.frame = CGRectMake(20, 5 + ((Height - StatusBarAndNavigationBarHeight)*7/12), Width - 40, (Height - StatusBarAndNavigationBarHeight)/12);
     
     [self.view addSubview:submit];
     
@@ -369,7 +369,7 @@ WKNavigationDelegate
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
     UserModel *userModel = [UserModel readUserModel];
-    self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(20, 10 + (Height - StatusBarAndNavigationBarHeight)*8/12, Width - 40, Height - StatusBarAndNavigationBarHeight - (Height - StatusBarAndNavigationBarHeight)*8/12 - 10)];
+    self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(20, 10 + (Height - StatusBarAndNavigationBarHeight)*8/12, Width - 40, Height - StatusBarAndNavigationBarHeight - (Height - StatusBarAndNavigationBarHeight)*8/12 - 15)];
     [self.indicatorView startAnimating];
     self.webView.navigationDelegate = self;
     

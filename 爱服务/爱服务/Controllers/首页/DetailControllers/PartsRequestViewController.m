@@ -304,7 +304,7 @@ static NSInteger number;
     [self.scrollView addSubview:submit];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     UserModel *userModel = [UserModel readUserModel];
-    self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(20, 5 + ((Height - StatusBarAndNavigationBarHeight)*(14)/12), Width - 40, (Height - StatusBarAndNavigationBarHeight)*5/12)];
+    self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(20, 5 + ((Height - StatusBarAndNavigationBarHeight)*(14)/12), Width - 40, (Height - StatusBarAndNavigationBarHeight)*5/12 - 10)];
     [self.indicatorView startAnimating];
     self.webView.navigationDelegate = self;
     self.webView.scrollView.bounces = NO;
