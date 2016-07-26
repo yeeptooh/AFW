@@ -58,6 +58,7 @@ fprintf(stderr, "-------\n");                                               \
 #define kReloadCell @"kReloadCell"
 #define kOtherDeviceLogin @"kOtherDeviceLogin"
 #define kupdateBadgeNum @"kupdateBadgeNum"
+#define kBackFromNoti @"kBackFromNoti"
 
 #define WBAppKey @"551164628"
 #define WBRedirectURL @"https://api.weibo.com/oauth2/default.html"

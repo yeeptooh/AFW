@@ -120,7 +120,11 @@ WKNavigationDelegate
     }
 }
 
-
+- (void)backLastView:(UIBarButtonItem *)sender {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [[NSNotificationCenter defaultCenter] postNotificationName:kBackFromNoti object:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (void)dealloc {
     

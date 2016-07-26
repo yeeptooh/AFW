@@ -20,7 +20,7 @@
 @interface ChangeOrderViewController ()
 
 
-
+@property (nonatomic, strong) NSString *fromUserName;
 //三条title cell
 @property (nonatomic, strong) UIView *firstTitleView;
 @property (nonatomic, strong) UIView *secondTitleView;
@@ -46,6 +46,27 @@
 @end
 
 @implementation ChangeOrderViewController
+
+- (UserDetailTableView *)userTableView {
+    if (!_userTableView) {
+        _userTableView = [[UserDetailTableView alloc]initWithFrame:CGRectMake(0, 0, Width, (Height - StatusBarAndNavigationBarHeight)*7/11) style:UITableViewStylePlain];
+    }
+    return _userTableView;
+}
+
+- (ProductDetailTableView *)productTableView {
+    if (!_productTableView) {
+        _productTableView = [[ProductDetailTableView alloc]initWithFrame:CGRectMake(0, 0, Width, (Height - StatusBarAndNavigationBarHeight)*6/11) style:UITableViewStylePlain];
+    }
+    return _productTableView;
+}
+
+- (BusinessDetailTableView *)businessTableView {
+    if (!_businessTableView) {
+        _businessTableView = [[BusinessDetailTableView alloc]initWithFrame:CGRectMake(0, 0, Width, (Height - StatusBarAndNavigationBarHeight)*3/11) style:UITableViewStylePlain];
+    }
+    return _businessTableView;
+}
 
 
 - (void)viewDidLoad {
@@ -181,14 +202,7 @@
     self.userInfoDetailView.layer.masksToBounds = YES;
     
     [self.view addSubview:self.userInfoDetailView];
-    self.userTableView = [[UserDetailTableView alloc]initWithFrame:self.userInfoDetailView.bounds style:UITableViewStylePlain];
-    ((UITextField *)[self.userTableView viewWithTag:100]).text = self.buyer_name;
-    ((UITextField *)[self.userTableView viewWithTag:101]).text = self.buyerPhone;
-    [((UIButton *)[self.userTableView viewWithTag:202]) setTitle:self.buyer_province forState:UIControlStateNormal];
-    [((UIButton *)[self.userTableView viewWithTag:203]) setTitle:self.buyer_city forState:UIControlStateNormal];
-    [((UIButton *)[self.userTableView viewWithTag:204]) setTitle:self.buyer_district forState:UIControlStateNormal];
-    [((UIButton *)[self.userTableView viewWithTag:205]) setTitle:self.buyer_town forState:UIControlStateNormal];
-    ((UITextField *)[self.userTableView viewWithTag:106]).text = self.buyer_address;
+    
     [self.userInfoDetailView addSubview:self.userTableView];
     
     //原始
@@ -197,13 +211,13 @@
     [self.view addSubview:self.productInfoDetailView];
     self.productInfoDetailView.layer.masksToBounds = YES;
     
-    self.productTableView = [[ProductDetailTableView alloc]initWithFrame:CGRectMake(0, 0, Width, (Height - StatusBarAndNavigationBarHeight)*6/11) style:UITableViewStylePlain];
-    [((UIButton *)[self.productTableView viewWithTag:200]) setTitle:self.product_type forState:UIControlStateNormal];
-    [((UIButton *)[self.productTableView viewWithTag:201]) setTitle:self.product_big_classify forState:UIControlStateNormal];
-    [((UIButton *)[self.productTableView viewWithTag:202]) setTitle:self.product_small_classify forState:UIControlStateNormal];
-    ((UITextField *)[self.productTableView viewWithTag:103]).text = self.order_number;
+    
+    [((UIButton *)[self.productTableView viewWithTag:200]) setTitle:self.productBreed forState:UIControlStateNormal];
+    [((UIButton *)[self.productTableView viewWithTag:201]) setTitle:@"" forState:UIControlStateNormal];
+    [((UIButton *)[self.productTableView viewWithTag:202]) setTitle:self.productClassify forState:UIControlStateNormal];
+    ((UITextField *)[self.productTableView viewWithTag:103]).text = self.orderNumber;
     [((UIButton *)[self.productTableView viewWithTag:204]) setTitle:self.inOut forState:UIControlStateNormal];
-    [((UIButton *)[self.productTableView viewWithTag:205]) setTitle:self.buy_time forState:UIControlStateNormal];
+    [((UIButton *)[self.productTableView viewWithTag:205]) setTitle:self.buyDate forState:UIControlStateNormal];
     [self.productInfoDetailView addSubview:self.productTableView];
     
     
@@ -212,10 +226,10 @@
     self.businessInfoDetailView.backgroundColor =  color(241, 241, 241, 1);
     [self.view addSubview:self.businessInfoDetailView];
     self.businessInfoDetailView.layer.masksToBounds = YES;
-    self.businessTableView = [[BusinessDetailTableView alloc]initWithFrame:CGRectMake(0, 0, Width, (Height - StatusBarAndNavigationBarHeight)*3/11) style:UITableViewStylePlain];
-    [((UIButton *)[self.businessTableView viewWithTag:200]) setTitle:self.service_type forState:UIControlStateNormal];
-    [((UIButton *)[self.businessTableView viewWithTag:201]) setTitle:self.expectant_time forState:UIControlStateNormal];
-    ((UITextField *)[self.businessTableView viewWithTag:102]).text = self.postscript;
+    
+    [((UIButton *)[self.businessTableView viewWithTag:200]) setTitle:self.serviceClassify forState:UIControlStateNormal];
+    [((UIButton *)[self.businessTableView viewWithTag:201]) setTitle:self.appointment forState:UIControlStateNormal];
+    ((UITextField *)[self.businessTableView viewWithTag:102]).text = self.postScript;
     [self.businessInfoDetailView addSubview:self.businessTableView];
     
 }
@@ -466,7 +480,7 @@
         self.fromUserName = userModel.name;
     }
     
-    NSString *url = [NSString stringWithFormat:@"%@Task.ashx?action=addtask",HomeURL];
+    NSString *url = [NSString stringWithFormat:@"%@Task.ashx?action=updatetask",HomeURL];
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
@@ -494,9 +508,7 @@
                              @"postscript":((UITextField *)[self.businessTableView viewWithTag:102]).text,
                              @"handler_name":userModel.name,
                              @"order_number":((UITextField *)[self.productTableView viewWithTag:103]).text,
-                             @"from_user_id":@(userModel.uid),
-                             @"from_user_type":userModel.userType,
-                             @"handler_id":@(userModel.uid)
+                             @"task_id":@(self.ID)
                              };
     
     [manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -508,25 +520,13 @@
             UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
             hud.customView = imageView;
             hud.mode = MBProgressHUDModeCustomView;
-            hud.label.text = NSLocalizedString(@"下单成功", @"HUD completed title");
+            hud.label.text = NSLocalizedString(@"修改成功", @"HUD completed title");
             [hud hideAnimated:YES afterDelay:0.75f];
             [hud removeFromSuperViewOnHide];
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.75 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 
-                AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-                NSString *url = [NSString stringWithFormat:@"%@/Task.ashx?action=gettaskbyid&id=%@",HomeURL,responseObject[@"msg"]];
-                [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                    self.orderModel = [OrderModel orderFromDictionary:responseObject];
-                    NSLog(@"%@",responseObject);
-                    DetailViewController *detailVC = [[DetailViewController alloc] init];
-                    
-                    
-                    [self.navigationController pushViewController:detailVC animated:YES];
-                    
-                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                    
-                }];
+                [self.navigationController popToRootViewControllerAnimated:YES];
                 
             });
             
@@ -535,9 +535,9 @@
             
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.view];
+        MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
         hud.mode = MBProgressHUDModeText;
-        hud.label.text = @"下单失败，请检查网络";
+        hud.label.text = @"修改失败，请检查网络";
         CGFloat size;
         if (iPhone4_4s || iPhone5_5s) {
             size = 14;
@@ -545,14 +545,9 @@
             size = 16;
         }
         hud.label.font = font(size);
-        [self.view addSubview:hud];
-        [hud showAnimated:YES];
         
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.75 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [hud hideAnimated:YES];
-            [hud removeFromSuperViewOnHide];
-            
-        });
+        
+        [hud hideAnimated:YES afterDelay:1.f];
     }];
     
 }
@@ -560,7 +555,7 @@
 
 -(void)setNavigationBar {
     
-    self.navigationItem.title = @"我要下单";
+    self.navigationItem.title = @"修改定单";
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{

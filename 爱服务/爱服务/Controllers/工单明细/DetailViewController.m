@@ -756,39 +756,40 @@ UIViewControllerTransitioningDelegate
     
     ChangeOrderViewController *changeVC = [[ChangeOrderViewController alloc] init];
     changeVC.ID = self.ID;
+    changeVC.userTableView.name = self.name;
+    changeVC.userTableView.phone = self.phone;
+    changeVC.userTableView.province = self.buyerProvince;
+    changeVC.userTableView.city = self.buyerCity;
+    changeVC.userTableView.district = self.buyerDistrict;
+    changeVC.userTableView.town = self.buyerTown;
+    changeVC.userTableView.address = self.buyerAddress;
     
-    changeVC.fromUserName = self.fromUserName;
-    changeVC.baoxiuIndex = self.baoxiuIndex;
-    changeVC.service_classify_id = self.service_classify_id;
-    changeVC.product_big_classify_id = self.product_big_classify_id;
-    changeVC.product_small_classify_id = self.product_small_classify_id;
-    changeVC.product_breed_id = self.product_breed_id;
-
-    changeVC.product_type = self.product_type;
-    changeVC.buy_time = self.buy_time;
-    changeVC.buyer_name = self.buyer_name;
-    changeVC.buyerPhone = self.buyerPhone;
-    changeVC.buyer_province_id = self.buyer_province_id;
-    changeVC.buyer_province = self.buyer_province;
     
-    changeVC.buyer_city_id = self.buyer_city_id;
-    changeVC.buyer_city = self.buyer_city;
-    changeVC.buyer_district_id = self.buyer_district_id;
-    changeVC.buyer_district = self.buyer_district;
-    changeVC.buyer_town_id = self.buyer_district;
-    changeVC.buyer_town = self.product_breed_id;
-    changeVC.buyer_address = self.buyer_address;
-    changeVC.expectant_time = self.expectant_time;
-    changeVC.postscript = self.postscript;
-    changeVC.handler_name = self.handler_name;
-    changeVC.order_number = self.order_number;
-    changeVC.from_user_id = self.from_user_id;
-    changeVC.from_user_type = self.from_user_type;
-    changeVC.handler_id = self.handler_id;
-    changeVC.inOut = self.inOut;
-    changeVC.product_big_classify = self.product_big_classify;
-    changeVC.product_small_classify = self.model;
-    changeVC.service_type = self.service_type;
+    changeVC.userTableView.FprovinceID = self.buyerProvinceID;
+    changeVC.userTableView.FcityID = self.buyerCityID;
+    changeVC.userTableView.FregionID = self.buyerDistrictID;
+    changeVC.userTableView.FstreetID = self.buyerTownID;
+    
+    changeVC.productTableView.productBreed = self.productBreed;
+    changeVC.productTableView.ProductBreedID = self.ProductBreedID;
+    changeVC.productTableView.productClassify = self.productClassify;
+    changeVC.productTableView.ProductClassify1ID = self.ProductClassify1ID;
+    changeVC.productTableView.ProductClassify2ID = self.ProductClassify2ID;
+    changeVC.productTableView.orderNumber = self.orderNumber;
+    
+    changeVC.productTableView.FtypeID = self.ProductBreedID;
+    changeVC.productTableView.FbigID = self.ProductClassify1ID;
+    changeVC.productTableView.FsmallID = self.ProductClassify2ID;
+    
+    
+    changeVC.productTableView.inOut = self.inOut;
+    changeVC.productTableView.buyDate = self.buyDate;
+    
+    changeVC.businessTableView.serviceClassify = self.serviceClassify;
+    changeVC.businessTableView.appointment = self.appointment;
+    changeVC.businessTableView.postScript = self.postScript;
+    changeVC.isFree = self.isFree;
+    changeVC.businessTableView.serviceID = [self.serviceClassifyID integerValue];
     [self.navigationController pushViewController:changeVC animated:YES];
 }
 
@@ -922,15 +923,23 @@ UIViewControllerTransitioningDelegate
         }
         
         if ([responseObject[@"ret"] integerValue] == 0) {
-            MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+            [hud hideAnimated:YES];
+            MBProgressHUD *hud1 = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
             
-            hud.mode = MBProgressHUDModeText;
-            hud.detailsLabel.text = [NSString stringWithFormat:@"%@",responseObject[@"msg"]];
-            hud.detailsLabel.font = font(14);
-            [hud hideAnimated:YES afterDelay:1.25f];
+            hud1.mode = MBProgressHUDModeText;
+            hud1.detailsLabel.text = [NSString stringWithFormat:@"%@",responseObject[@"msg"]];
+            hud1.detailsLabel.font = font(14);
+            [hud1 hideAnimated:YES afterDelay:1.25f];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error.userInfo);
+        MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+        UIImage *image = [[UIImage imageNamed:@"Checkerror"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+        hud.customView = imageView;
+        hud.mode = MBProgressHUDModeCustomView;
+        hud.label.text = @"付款失败";
+        [hud hideAnimated:YES afterDelay:1.25f];
     }];
     
 }
@@ -1286,13 +1295,13 @@ UIViewControllerTransitioningDelegate
         
         self.cell = [[[NSBundle mainBundle] loadNibNamed:@"ProductTableViewCell" owner:self options:nil] lastObject];
         
-        [self.cell.typeButton setTitle:self.model forState:UIControlStateNormal];
+        [self.cell.typeButton setTitle:self.orderCode forState:UIControlStateNormal];
         [self.cell.dateButton setTitle:self.buyDate forState:UIControlStateNormal];
         [self.cell.typeButton addTarget:self action:@selector(typeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
         [self.cell.dateButton addTarget:self action:@selector(dateButtonClicked) forControlEvents:UIControlEventTouchUpInside];
         self.cell.proTypeLabel.text = self.productType;
         self.cell.productCodeLabel.text = self.productCode;
-        self.cell.orderCodeLabel.text = self.orderCode;
+        self.cell.orderCodeLabel.text = @"";//self.model;
         self.cell.inOutLabel.text = self.inOut;
         self.cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return self.cell;

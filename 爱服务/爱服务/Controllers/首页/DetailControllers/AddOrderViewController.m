@@ -477,21 +477,21 @@
     NSDictionary *params = @{
                              @"from_user_name":self.fromUserName,
                              @"is_free":@(self.productTableView.baoxiuIndex),
-                             @"service_classify_id":@(self.businessTableView.serviceID),
-                             @"product_big_classify_id":self.productTableView.FbigID,
-                             @"product_small_classify_id":self.productTableView.FsmallID,
-                             @"product_breed_id":self.productTableView.FtypeID,
+                             @"service_classify_id":@(self.businessTableView.YserviceID),
+                             @"product_big_classify_id":self.productTableView.YbigID,
+                             @"product_small_classify_id":self.productTableView.YsmallID,
+                             @"product_breed_id":self.productTableView.YtypeID,
                              @"product_type":((UIButton *)[self.productTableView viewWithTag:200]).titleLabel.text,
                              @"buy_time":((UIButton *)[self.productTableView viewWithTag:205]).titleLabel.text,
                              @"buyer_name":((UITextField *)[self.userTableView viewWithTag:100]).text,
                              @"buyerPhone":((UITextField *)[self.userTableView viewWithTag:101]).text,
-                             @"buyer_province_id":self.userTableView.FprovinceID,
+                             @"buyer_province_id":self.userTableView.YprovinceID,
                              @"buyer_province":((UIButton *)[self.userTableView viewWithTag:202]).titleLabel.text,
-                             @"buyer_city_id":self.userTableView.FcityID,
+                             @"buyer_city_id":self.userTableView.YcityID,
                              @"buyer_city":((UIButton *)[self.userTableView viewWithTag:203]).titleLabel.text,
-                             @"buyer_district_id":self.userTableView.FregionID,
+                             @"buyer_district_id":self.userTableView.YregionID,
                              @"buyer_district":((UIButton *)[self.userTableView viewWithTag:204]).titleLabel.text,
-                             @"buyer_town_id":self.userTableView.FstreetID,
+                             @"buyer_town_id":self.userTableView.YstreetID,
                              @"buyer_town":((UIButton *)[self.userTableView viewWithTag:205]).titleLabel.text,
                              @"buyer_address":((UITextField *)[self.userTableView viewWithTag:106]).text,
                              @"expectant_time":((UIButton *)[self.businessTableView viewWithTag:201]).titleLabel.text,
@@ -553,66 +553,7 @@
                     detailVC.toUserID = self.orderModel.ToUserID;
                     detailVC.toUserName = self.orderModel.ToUserName;
                     detailVC.BuyerFullAddress_Incept = self.orderModel.BuyerFullAddress_Incept;
-                    
-                    
-                    NSString *fromUserName = self.orderModel.fromUserName;
-                    NSString *baoxiuIndex = [NSString stringWithFormat:@"%@",@(self.productTableView.baoxiuIndex)];
-                    NSString *service_classify_id = [NSString stringWithFormat:@"%@",@(self.businessTableView.serviceID)];
-                    NSString *product_big_classify_id = self.productTableView.FbigID;
-                    NSString *product_small_classify_id = self.productTableView.FsmallID;
-                    NSString *product_breed_id = self.productTableView.FtypeID;
-                    NSString *product_type = ((UIButton *)[self.productTableView viewWithTag:200]).titleLabel.text;
-                    NSString *buy_time = ((UIButton *)[self.productTableView viewWithTag:205]).titleLabel.text;
-                    NSString *buyer_name = ((UITextField *)[self.userTableView viewWithTag:100]).text;
-                    NSString *buyerPhone = ((UITextField *)[self.userTableView viewWithTag:101]).text;
-                    NSString *buyer_province_id = self.userTableView.FprovinceID;
-                    NSString *buyer_province = ((UIButton *)[self.userTableView viewWithTag:202]).titleLabel.text;
-                    
-                    NSString *buyer_city_id = self.userTableView.FcityID;
-                    NSString *buyer_city = ((UIButton *)[self.userTableView viewWithTag:203]).titleLabel.text;
-                    NSString *buyer_district_id = self.userTableView.FregionID;
-                    NSString *buyer_district = ((UIButton *)[self.userTableView viewWithTag:204]).titleLabel.text;
-                    NSString *buyer_town_id = self.userTableView.FstreetID;
-                    NSString *buyer_town = ((UIButton *)[self.userTableView viewWithTag:205]).titleLabel.text;
-                    NSString *buyer_address = ((UITextField *)[self.userTableView viewWithTag:106]).text;
-                    NSString *expectant_time = ((UIButton *)[self.businessTableView viewWithTag:201]).titleLabel.text;
-                    NSString *postscript = ((UITextField *)[self.businessTableView viewWithTag:102]).text;
-                    NSString *handler_name = userModel.name;
-                    NSString *order_number = ((UITextField *)[self.productTableView viewWithTag:103]).text;
-                    NSString *from_user_id = [NSString stringWithFormat:@"%@",@(userModel.uid)];
-                    NSString *from_user_type = userModel.userType;
-                    NSString *handler_id = [NSString stringWithFormat:@"%@",@(userModel.uid)];
-                    NSString *product_big_classify = ((UIButton *)[self.productTableView viewWithTag:201]).titleLabel.text;
-                    NSString *service_type = ((UIButton *)[self.businessTableView viewWithTag:200]).titleLabel.text;
-                    
-                    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-                    NSString *filePath = [path stringByAppendingPathComponent:@"alter.sqlite"];
-                    FMDatabase *datebase = [FMDatabase databaseWithPath:filePath];
-                    if ([datebase open]) {
-                        BOOL result = [datebase executeUpdate:@"CREATE TABLE IF NOT EXISTS t_order (orderID integer, property text NOT NULL);"];
-                        if (result) {
-                            NSLog(@"表创建成功~");
-                        }
-                        
-                    }
-                    
-                    NSString *property = [NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",fromUserName, baoxiuIndex, service_classify_id, product_big_classify_id, product_small_classify_id, product_breed_id, product_type, buy_time, buyer_name, buyerPhone, buyer_province_id, buyer_province, buyer_city_id, buyer_city, buyer_district_id, buyer_district, buyer_town_id, buyer_town, buyer_address, expectant_time, postscript, handler_name, order_number, from_user_id, from_user_type, handler_id, product_big_classify, service_type];
-                    NSString *update = @"insert into t_order(orderID,property) values(?,?)";
-                    
-                    BOOL updateRes = [datebase executeUpdate:update,(self.orderModel.ID),property];
-                    if (updateRes) {
-                        NSLog(@"插入成功!");
-                    }
-//                    FMResultSet *rs = [datebase executeQuery:@"SELECT * FROM t_order"];
-//                    
-//                    // 遍历结果集
-//                    while ([rs next]) {
-//                        NSInteger orderID = [rs intForColumn:@"orderID"];
-//                        NSString *property = [rs stringForColumn:@"property"];
-//                        NSLog(@"%@,%@",@(orderID),property);
-//                    }
-                    
-                    
+                                    
                     [self.navigationController pushViewController:detailVC animated:YES];
                     
                 } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

@@ -72,6 +72,15 @@
 
 @property (nonatomic, strong) NSString *priceStr;
 
+
+@property (nonatomic, strong) NSString *buyerProvinceID;
+@property (nonatomic, strong) NSString *buyerCityID;
+@property (nonatomic, strong) NSString *buyerTownID;
+@property (nonatomic, strong) NSString *buyerDistrictID;
+@property (nonatomic, strong) NSString *serviceClassify;
+@property (nonatomic, strong) NSString *serviceClassifyID;
+@property (nonatomic, strong) NSString *IsFree;
+
 + (instancetype)orderFromDictionary:(NSDictionary *)dictionary;
 
 @end

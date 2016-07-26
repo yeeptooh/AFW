@@ -11,6 +11,7 @@
 #import "DatePickerViewController.h"
 #import "ServiceTypeViewController.h"
 #import "AFNetworking.h"
+#import "ChangeOrderViewController.h"
 @interface BusinessDetailTableView ()
 <
 UITableViewDelegate,
@@ -107,7 +108,7 @@ UITextFieldDelegate
         textfield.backgroundColor = [UIColor whiteColor];
         textfield.delegate = self;
         textfield.returnKeyType = UIReturnKeyDone;
-        
+        textfield.text = self.postScript;
         //tag = 102
         textfield.tag = 100 + indexPath.row;
         [cell addSubview:textfield];
@@ -128,27 +129,39 @@ UITextFieldDelegate
         button.titleLabel.font = [UIFont systemFontOfSize:14];
         button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         
-        
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"FirstLaunch"]) {
+        if ([[self viewController] isKindOfClass:[ChangeOrderViewController class]]) {
+            
             if (indexPath.row == 0) {
-                [button setTitle:@"" forState:UIControlStateNormal];
+                [button setTitle:self.serviceClassify forState:UIControlStateNormal];
+            }
+            
+            
+            if (indexPath.row == 1) {
+                
+                [button setTitle:self.appointment forState:UIControlStateNormal];
             }
         }else {
-            if (indexPath.row == 0) {
-                NSString *name = [[NSUserDefaults standardUserDefaults] objectForKey:@"service"][0][@"n"];
-                
-                [button setTitle:name forState:UIControlStateNormal];
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"FirstLaunch"]) {
+                if (indexPath.row == 0) {
+                    [button setTitle:@"" forState:UIControlStateNormal];
+                }
+            }else {
+                if (indexPath.row == 0) {
+                    NSString *name = [[NSUserDefaults standardUserDefaults] objectForKey:@"service"][0][@"n"];
+                    
+                    [button setTitle:name forState:UIControlStateNormal];
+                }
             }
-        }
-        
-        if (indexPath.row == 1) {
             
-            NSDate *date = [NSDate date];
-            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-            [formatter setDateFormat:@"yyyy-MM-dd"];
-            NSString *dateString = [formatter stringFromDate:date];
-            
-            [button setTitle:dateString forState:UIControlStateNormal];
+            if (indexPath.row == 1) {
+                
+                NSDate *date = [NSDate date];
+                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                [formatter setDateFormat:@"yyyy-MM-dd"];
+                NSString *dateString = [formatter stringFromDate:date];
+                
+                [button setTitle:dateString forState:UIControlStateNormal];
+            }
         }
         
     }
@@ -176,7 +189,7 @@ UITextFieldDelegate
             NSString *month = [dateStr substringWithRange:NSMakeRange(5, 2)];
             NSString *day = [dateStr substringFromIndex:8];
             
-            NSString *date = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
+            NSString *date = [NSString stringWithFormat:@"%@年%@月%@日",year,month,day];
             
             [sender setTitle:date forState:UIControlStateNormal];
         };
@@ -210,7 +223,7 @@ UITextFieldDelegate
             [self.servceList addObject:dic[@"n"]];
             [self.serviceIDList addObject:dic[@"c"]];
         }
-        self.serviceID = [self.serviceIDList[0] integerValue];
+        self.YserviceID = [self.serviceIDList[0] integerValue];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
