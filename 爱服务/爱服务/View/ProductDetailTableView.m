@@ -15,7 +15,7 @@
 #import "BaoXiuViewController.h"
 #import "UserModel.h"
 #import "AFNetworking.h"
-
+#import "ChangeOrderViewController.h"
 
 @interface ProductDetailTableView ()
 <
@@ -154,7 +154,7 @@ UITextFieldDelegate
         textfield.backgroundColor = [UIColor whiteColor];
         textfield.delegate = self;
         textfield.returnKeyType = UIReturnKeyDone;
-        
+        textfield.text = self.orderNumber;
         //tag = 103
         textfield.tag = 100 + indexPath.row;
         [cell addSubview:textfield];
@@ -175,86 +175,168 @@ UITextFieldDelegate
         button.titleLabel.font = [UIFont systemFontOfSize:14];
         button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"FirstLaunch"]) {
+        if ([[self viewController] isKindOfClass:[ChangeOrderViewController class]]) {
+            
             if (indexPath.row == 0) {
-                [button setTitle:@"" forState:UIControlStateNormal];
+                [button setTitle:self.productBreed forState:UIControlStateNormal];
             }else if (indexPath.row == 1) {
                 [button setTitle:@"" forState:UIControlStateNormal];
             }else if (indexPath.row == 2) {
-                [button setTitle:@"" forState:UIControlStateNormal];
+                [button setTitle:self.productClassify forState:UIControlStateNormal];
+            }
+            if (indexPath.row == 4) {
+                [button setTitle:self.inOut forState:UIControlStateNormal];
+            }
+            
+            if (indexPath.row == 5) {
+                [button setTitle:self.buyDate forState:UIControlStateNormal];
             }
         }else {
-            if (indexPath.row == 0) {
-                [button setTitle:[[NSUserDefaults standardUserDefaults] objectForKey:@"type"][0][@"n"] forState:UIControlStateNormal];
-            }else if (indexPath.row == 1) {
-                [button setTitle:[[NSUserDefaults standardUserDefaults] objectForKey:@"big"][0][@"n"] forState:UIControlStateNormal];
-            }else if (indexPath.row == 2) {
-                [button setTitle:[[NSUserDefaults standardUserDefaults] objectForKey:@"small"][0][@"n"] forState:UIControlStateNormal];
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"FirstLaunch"]) {
+                if (indexPath.row == 0) {
+                    [button setTitle:@"" forState:UIControlStateNormal];
+                }else if (indexPath.row == 1) {
+                    [button setTitle:@"" forState:UIControlStateNormal];
+                }else if (indexPath.row == 2) {
+                    [button setTitle:@"" forState:UIControlStateNormal];
+                }
+            }else {
+                if (indexPath.row == 0) {
+                    [button setTitle:[[NSUserDefaults standardUserDefaults] objectForKey:@"type"][0][@"n"] forState:UIControlStateNormal];
+                }else if (indexPath.row == 1) {
+                    [button setTitle:[[NSUserDefaults standardUserDefaults] objectForKey:@"big"][0][@"n"] forState:UIControlStateNormal];
+                }else if (indexPath.row == 2) {
+                    [button setTitle:[[NSUserDefaults standardUserDefaults] objectForKey:@"small"][0][@"n"] forState:UIControlStateNormal];
+                }
+            }
+            
+            if (indexPath.row == 4) {
+                [button setTitle:@"保内" forState:UIControlStateNormal];
+            }
+            
+            
+            if (indexPath.row == 5) {
+                NSDate *date = [NSDate date];
+                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                [formatter setDateFormat:@"yyyy-MM-dd"];
+                NSString *dateString = [formatter stringFromDate:date];
+                
+                [button setTitle:dateString forState:UIControlStateNormal];
             }
         }
-        
-        if (indexPath.row == 4) {
-            [button setTitle:@"保内" forState:UIControlStateNormal];
-        }
-        
-        
-        if (indexPath.row == 5) {
-            NSDate *date = [NSDate date];
-            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-            [formatter setDateFormat:@"yyyy-MM-dd"];
-            NSString *dateString = [formatter stringFromDate:date];
-            
-            [button setTitle:dateString forState:UIControlStateNormal];
-        }
-        
-        
-        
-    }    return cell;
+    }
+    return cell;
 }
 
 - (void)buttonClicked:(UIButton *)sender {
     [self endEditing:YES];
     UserModel *userModel = [UserModel readUserModel];
-    if (sender.tag == 200) {
-        ProductTypeViewController *typeVC = [[ProductTypeViewController alloc] init];
-        typeVC.List = self.typeList;
-        typeVC.returnInfo = ^(NSString *name, NSInteger row){
-            [sender setTitle:name forState:UIControlStateNormal];
-            self.FtypeID = self.typeIDList[row];
-            NSString *bigUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getproductclassify&comid=%@&uid=%@&breedid=%@",HomeURL,@(userModel.comid),@(userModel.uid),self.typeIDList[row]];
+    if ([[self viewController] isKindOfClass:[ChangeOrderViewController class]]) {
+        
+        if (sender.tag == 200) {
+            ProductTypeViewController *typeVC = [[ProductTypeViewController alloc] init];
+            typeVC.List = self.typeList;
+            typeVC.returnInfo = ^(NSString *name, NSInteger row){
+                [sender setTitle:name forState:UIControlStateNormal];
+                self.FtypeID = self.typeIDList[row];
+                NSString *bigUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getproductclassify&comid=%@&uid=%@&breedid=%@",HomeURL,@(userModel.comid),@(userModel.uid),self.typeIDList[row]];
+                AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+                [manager GET:bigUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                    
+                    UIButton *button = [self viewWithTag:201];
+                    NSString *name;
+                    if ([(NSDictionary *)responseObject count] != 0) {
+                        name = responseObject[0][@"n"];
+                        self.bigID = [NSString stringWithFormat:@"%@",responseObject[0][@"c"]];
+                    }else {
+                        name = @"";
+                        self.bigID = @"bitch";
+                    }
+                    
+                    self.FbigID = self.bigID;
+                    [button setTitle:name forState:UIControlStateNormal];
+                    if (self.bigList.count != 0) {
+                        [self.bigList removeAllObjects];
+                    }
+                    if (self.bigIDList.count != 0) {
+                        [self.bigIDList removeAllObjects];
+                    }
+                    for (NSDictionary *dic in responseObject) {
+                        [self.bigList addObject:dic[@"n"]];
+                        [self.bigIDList addObject:dic[@"c"]];
+                    }
+                    
+                    
+                    NSString *bigUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getproductclassify2&comid=%@&uid=%@&parent=%@",HomeURL,@(userModel.comid),@(userModel.uid),self.bigIDList[0]];
+                    
+                    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+                    if (![self.bigID isEqualToString:@"bitch"]) {
+                        [manager GET:bigUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                            
+                            UIButton *button = [self viewWithTag:202];
+                            NSString *name;
+                            if ([(NSDictionary *)responseObject count] != 0) {
+                                name = responseObject[0][@"n"];
+                                self.smallID = [NSString stringWithFormat:@"%@",responseObject[0][@"c"]];
+                            }else {
+                                name = @"";
+                                self.smallID = @"bitch";
+                            }
+                            self.FsmallID = self.smallID;
+                            [button setTitle:name forState:UIControlStateNormal];
+                            if (self.smallList.count != 0) {
+                                [self.smallList removeAllObjects];
+                            }
+                            if (self.smallIDList.count != 0) {
+                                [self.smallIDList removeAllObjects];
+                            }
+                            
+                            for (NSDictionary *dic in responseObject) {
+                                [self.smallList addObject:dic[@"n"]];
+                                [self.smallIDList addObject:dic[@"c"]];
+                            }
+                        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                            
+                        }];
+                    }else {
+                        UIButton *button = [self viewWithTag:202];
+                        [button setTitle:@"" forState:UIControlStateNormal];
+                    }
+                    
+                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                    
+                }];
+                
+            };
+            
+            [[self viewController] presentViewController:typeVC animated:YES completion:nil];
+            
+            
+        }else if (sender.tag == 201) {
+            NSString *bigUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getproductclassify&comid=%@&uid=%@&breedid=%@",HomeURL,@(userModel.comid),@(userModel.uid),self.FtypeID];
             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
             [manager GET:bigUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                ProductClassifyBigViewController *bigVC = [[ProductClassifyBigViewController alloc] init];
                 
-                UIButton *button = [self viewWithTag:201];
-                NSString *name;
-                if ([(NSDictionary *)responseObject count] != 0) {
-                    name = responseObject[0][@"n"];
-                    self.bigID = [NSString stringWithFormat:@"%@",responseObject[0][@"c"]];
-                }else {
-                    name = @"";
-                    self.bigID = @"bitch";
-                }
-                
-                self.FbigID = self.bigID;
-                [button setTitle:name forState:UIControlStateNormal];
-                if (self.bigList.count != 0) {
+                if (self.bigList.count) {
                     [self.bigList removeAllObjects];
-                }
-                if (self.bigIDList.count != 0) {
                     [self.bigIDList removeAllObjects];
                 }
                 for (NSDictionary *dic in responseObject) {
                     [self.bigList addObject:dic[@"n"]];
                     [self.bigIDList addObject:dic[@"c"]];
                 }
-                
-                
-                NSString *bigUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getproductclassify2&comid=%@&uid=%@&parent=%@",HomeURL,@(userModel.comid),@(userModel.uid),self.bigIDList[0]];
-                
-                AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-                if (![self.bigID isEqualToString:@"bitch"]) {
+   
+                bigVC.List = self.bigList;
+                bigVC.returnInfo = ^(NSString *name, NSInteger row){
+                    
+                    [sender setTitle:name forState:UIControlStateNormal];
+                    self.FbigID = self.bigIDList[row];
+                    NSString *bigUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getproductclassify2&comid=%@&uid=%@&parent=%@",HomeURL,@(userModel.comid),@(userModel.uid),self.bigIDList[row]];
+                    
+                    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+                    
                     [manager GET:bigUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                        
                         UIButton *button = [self viewWithTag:202];
                         NSString *name;
                         if ([(NSDictionary *)responseObject count] != 0) {
@@ -280,103 +362,223 @@ UITextFieldDelegate
                     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                         
                     }];
-                }else {
-                     UIButton *button = [self viewWithTag:202];
-                    [button setTitle:@"" forState:UIControlStateNormal];
-                }
+                    
+                    
+                };
                 
-            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                
-            }];
-            
-        };
-        
-        [[self viewController] presentViewController:typeVC animated:YES completion:nil];
-        
-        
-    }else if (sender.tag == 201) {
-        
-        ProductClassifyBigViewController *bigVC = [[ProductClassifyBigViewController alloc] init];
-        bigVC.List = self.bigList;
-        bigVC.returnInfo = ^(NSString *name, NSInteger row){
-            
-            [sender setTitle:name forState:UIControlStateNormal];
-            self.FbigID = self.bigIDList[row];
-            NSString *bigUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getproductclassify2&comid=%@&uid=%@&parent=%@",HomeURL,@(userModel.comid),@(userModel.uid),self.bigIDList[row]];
-            
-            AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-            
-            [manager GET:bigUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                UIButton *button = [self viewWithTag:202];
-                NSString *name;
-                if ([(NSDictionary *)responseObject count] != 0) {
-                    name = responseObject[0][@"n"];
-                    self.smallID = [NSString stringWithFormat:@"%@",responseObject[0][@"c"]];
-                }else {
-                    name = @"";
-                    self.smallID = @"bitch";
-                }
-                self.FsmallID = self.smallID;
-                [button setTitle:name forState:UIControlStateNormal];
-                if (self.smallList.count != 0) {
-                    [self.smallList removeAllObjects];
-                }
-                if (self.smallIDList.count != 0) {
-                    [self.smallIDList removeAllObjects];
-                }
-                
-                for (NSDictionary *dic in responseObject) {
-                    [self.smallList addObject:dic[@"n"]];
-                    [self.smallIDList addObject:dic[@"c"]];
-                }
+                [[self viewController] presentViewController:bigVC animated:YES completion:nil];
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 
             }];
             
             
-        };
+            
+        }else if (sender.tag == 202) {
+            ProductClassifySmallViewController *smallVC = [[ProductClassifySmallViewController alloc] init];
+            smallVC.List = self.smallList;
+            smallVC.returnInfo = ^(NSString *name, NSInteger row){
+                [sender setTitle:name forState:UIControlStateNormal];
+                self.FsmallID = self.smallIDList[row];
+            };
+            
+            [[self viewController] presentViewController:smallVC animated:YES completion:nil];
+            
+        }else if (sender.tag == 204) {
+            BaoXiuViewController *bxVC = [[BaoXiuViewController alloc] init];
+            bxVC.List = [NSMutableArray arrayWithArray:@[@"保内",@"保外"]];
+            bxVC.returnInfo = ^(NSString *name, NSInteger row) {
+                [sender setTitle:name forState:UIControlStateNormal];
+                if (row == 0) {
+                    self.baoxiuIndex = 1;
+                }else {
+                    self.baoxiuIndex = 0;
+                }
+            };
+            
+            [[self viewController] presentViewController:bxVC animated:YES completion:nil];
+            
+        }else {
+            DatePickerViewController *datePickerVC = [[DatePickerViewController alloc]init];
+            
+            datePickerVC.returnDate = ^(NSString *dateStr){
+                NSString *year = [dateStr substringToIndex:4];
+                NSString *month = [dateStr substringWithRange:NSMakeRange(5, 2)];
+                NSString *day = [dateStr substringFromIndex:8];
+                
+                NSString *date = [NSString stringWithFormat:@"%@年%@月%@日",year,month,day];
+                
+                [sender setTitle:date forState:UIControlStateNormal];
+            };
+            
+            [[self viewController] presentViewController:datePickerVC animated:YES completion:nil];
+            
+        }
         
-        [[self viewController] presentViewController:bigVC animated:YES completion:nil];
-        
-    }else if (sender.tag == 202) {
-        ProductClassifySmallViewController *smallVC = [[ProductClassifySmallViewController alloc] init];
-        smallVC.List = self.smallList;
-        smallVC.returnInfo = ^(NSString *name, NSInteger row){
-            [sender setTitle:name forState:UIControlStateNormal];
-            self.FsmallID = self.smallIDList[row];
-        };
-        
-        [[self viewController] presentViewController:smallVC animated:YES completion:nil];
-        
-    }else if (sender.tag == 204) {
-        BaoXiuViewController *bxVC = [[BaoXiuViewController alloc] init];
-        bxVC.List = [NSMutableArray arrayWithArray:@[@"保内",@"保外"]];
-        bxVC.returnInfo = ^(NSString *name, NSInteger row) {
-            [sender setTitle:name forState:UIControlStateNormal];
-            if (row == 0) {
-                self.baoxiuIndex = 1;
-            }else {
-                self.baoxiuIndex = 0;
-            }
-        };
-        
-        [[self viewController] presentViewController:bxVC animated:YES completion:nil];
         
     }else {
-        DatePickerViewController *datePickerVC = [[DatePickerViewController alloc]init];
-        
-        datePickerVC.returnDate = ^(NSString *dateStr){
-            NSString *year = [dateStr substringToIndex:4];
-            NSString *month = [dateStr substringWithRange:NSMakeRange(5, 2)];
-            NSString *day = [dateStr substringFromIndex:8];
+        if (sender.tag == 200) {
+            ProductTypeViewController *typeVC = [[ProductTypeViewController alloc] init];
+            typeVC.List = self.typeList;
+            typeVC.returnInfo = ^(NSString *name, NSInteger row){
+                [sender setTitle:name forState:UIControlStateNormal];
+                self.FtypeID = self.typeIDList[row];
+                NSString *bigUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getproductclassify&comid=%@&uid=%@&breedid=%@",HomeURL,@(userModel.comid),@(userModel.uid),self.typeIDList[row]];
+                AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+                [manager GET:bigUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                    
+                    UIButton *button = [self viewWithTag:201];
+                    NSString *name;
+                    if ([(NSDictionary *)responseObject count] != 0) {
+                        name = responseObject[0][@"n"];
+                        self.bigID = [NSString stringWithFormat:@"%@",responseObject[0][@"c"]];
+                    }else {
+                        name = @"";
+                        self.bigID = @"bitch";
+                    }
+                    
+                    self.FbigID = self.bigID;
+                    [button setTitle:name forState:UIControlStateNormal];
+                    if (self.bigList.count != 0) {
+                        [self.bigList removeAllObjects];
+                    }
+                    if (self.bigIDList.count != 0) {
+                        [self.bigIDList removeAllObjects];
+                    }
+                    for (NSDictionary *dic in responseObject) {
+                        [self.bigList addObject:dic[@"n"]];
+                        [self.bigIDList addObject:dic[@"c"]];
+                    }
+                    
+                    
+                    NSString *bigUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getproductclassify2&comid=%@&uid=%@&parent=%@",HomeURL,@(userModel.comid),@(userModel.uid),self.bigIDList[0]];
+                    
+                    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+                    if (![self.bigID isEqualToString:@"bitch"]) {
+                        [manager GET:bigUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                            
+                            UIButton *button = [self viewWithTag:202];
+                            NSString *name;
+                            if ([(NSDictionary *)responseObject count] != 0) {
+                                name = responseObject[0][@"n"];
+                                self.smallID = [NSString stringWithFormat:@"%@",responseObject[0][@"c"]];
+                            }else {
+                                name = @"";
+                                self.smallID = @"bitch";
+                            }
+                            self.FsmallID = self.smallID;
+                            [button setTitle:name forState:UIControlStateNormal];
+                            if (self.smallList.count != 0) {
+                                [self.smallList removeAllObjects];
+                            }
+                            if (self.smallIDList.count != 0) {
+                                [self.smallIDList removeAllObjects];
+                            }
+                            
+                            for (NSDictionary *dic in responseObject) {
+                                [self.smallList addObject:dic[@"n"]];
+                                [self.smallIDList addObject:dic[@"c"]];
+                            }
+                        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                            
+                        }];
+                    }else {
+                        UIButton *button = [self viewWithTag:202];
+                        [button setTitle:@"" forState:UIControlStateNormal];
+                    }
+                    
+                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                    
+                }];
+                
+            };
             
-            NSString *date = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
+            [[self viewController] presentViewController:typeVC animated:YES completion:nil];
             
-            [sender setTitle:date forState:UIControlStateNormal];
-        };
-        
-        [[self viewController] presentViewController:datePickerVC animated:YES completion:nil];
-
+            
+        }else if (sender.tag == 201) {
+            
+            ProductClassifyBigViewController *bigVC = [[ProductClassifyBigViewController alloc] init];
+            bigVC.List = self.bigList;
+            bigVC.returnInfo = ^(NSString *name, NSInteger row){
+                
+                [sender setTitle:name forState:UIControlStateNormal];
+                self.FbigID = self.bigIDList[row];
+                NSString *bigUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getproductclassify2&comid=%@&uid=%@&parent=%@",HomeURL,@(userModel.comid),@(userModel.uid),self.bigIDList[row]];
+                
+                AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+                
+                [manager GET:bigUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                    UIButton *button = [self viewWithTag:202];
+                    NSString *name;
+                    if ([(NSDictionary *)responseObject count] != 0) {
+                        name = responseObject[0][@"n"];
+                        self.smallID = [NSString stringWithFormat:@"%@",responseObject[0][@"c"]];
+                    }else {
+                        name = @"";
+                        self.smallID = @"bitch";
+                    }
+                    self.FsmallID = self.smallID;
+                    [button setTitle:name forState:UIControlStateNormal];
+                    if (self.smallList.count != 0) {
+                        [self.smallList removeAllObjects];
+                    }
+                    if (self.smallIDList.count != 0) {
+                        [self.smallIDList removeAllObjects];
+                    }
+                    
+                    for (NSDictionary *dic in responseObject) {
+                        [self.smallList addObject:dic[@"n"]];
+                        [self.smallIDList addObject:dic[@"c"]];
+                    }
+                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                    
+                }];
+                
+                
+            };
+            
+            [[self viewController] presentViewController:bigVC animated:YES completion:nil];
+            
+        }else if (sender.tag == 202) {
+            ProductClassifySmallViewController *smallVC = [[ProductClassifySmallViewController alloc] init];
+            smallVC.List = self.smallList;
+            smallVC.returnInfo = ^(NSString *name, NSInteger row){
+                [sender setTitle:name forState:UIControlStateNormal];
+                self.FsmallID = self.smallIDList[row];
+            };
+            
+            [[self viewController] presentViewController:smallVC animated:YES completion:nil];
+            
+        }else if (sender.tag == 204) {
+            BaoXiuViewController *bxVC = [[BaoXiuViewController alloc] init];
+            bxVC.List = [NSMutableArray arrayWithArray:@[@"保内",@"保外"]];
+            bxVC.returnInfo = ^(NSString *name, NSInteger row) {
+                [sender setTitle:name forState:UIControlStateNormal];
+                if (row == 0) {
+                    self.baoxiuIndex = 1;
+                }else {
+                    self.baoxiuIndex = 0;
+                }
+            };
+            
+            [[self viewController] presentViewController:bxVC animated:YES completion:nil];
+            
+        }else {
+            DatePickerViewController *datePickerVC = [[DatePickerViewController alloc]init];
+            
+            datePickerVC.returnDate = ^(NSString *dateStr){
+                NSString *year = [dateStr substringToIndex:4];
+                NSString *month = [dateStr substringWithRange:NSMakeRange(5, 2)];
+                NSString *day = [dateStr substringFromIndex:8];
+                
+                NSString *date = [NSString stringWithFormat:@"%@年%@月%@日",year,month,day];
+                
+                [sender setTitle:date forState:UIControlStateNormal];
+            };
+            
+            [[self viewController] presentViewController:datePickerVC animated:YES completion:nil];
+            
+        }
     }
 }
 
@@ -411,7 +613,7 @@ UITextFieldDelegate
             [self.typeList addObject:dic[@"n"]];
             [self.typeIDList addObject:dic[@"c"]];
         }
-        self.FtypeID = self.typeIDList[0];
+        self.YtypeID = self.typeIDList[0];
         
         NSString *bigUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getproductclassify&comid=%@&uid=%@&breedid=%@",HomeURL,@(userModel.comid),@(userModel.uid),self.typeIDList[0]];
         
@@ -426,7 +628,7 @@ UITextFieldDelegate
                 [self.bigList addObject:dic[@"n"]];
                 [self.bigIDList addObject:dic[@"c"]];
             }
-            self.FbigID = self.bigIDList[0];
+            self.YbigID = self.bigIDList[0];
             
             NSString *bigUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getproductclassify2&comid=%@&uid=%@&parent=%@",HomeURL,@(userModel.comid),@(userModel.uid),self.bigIDList[0]];
             
@@ -441,7 +643,7 @@ UITextFieldDelegate
                     [self.smallIDList addObject:dic[@"c"]];
                 }
                 
-                self.FsmallID = self.smallIDList[0];
+                self.YsmallID = self.smallIDList[0];
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 
             }];

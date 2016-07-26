@@ -295,7 +295,7 @@ UITextFieldDelegate
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     [manager GET:countString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
+//        NSLog(@"%@",responseObject);
         NSString *allString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSArray *countList = [allString componentsSeparatedByString:@","];
         
@@ -491,7 +491,7 @@ UITextFieldDelegate
     self.manager.requestSerializer.timeoutInterval = 5;
     
     [self.manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@",responseObject);
+//        NSLog(@"%@",responseObject);
         for (NSDictionary *dic in responseObject[@"task"]) {
             OrderModel *ordelModel = [OrderModel orderFromDictionary:dic];
             [self.dicList addObject:ordelModel];
@@ -676,6 +676,35 @@ UITextFieldDelegate
     detailVC.refuseContent = self.orderModel.refuseContent;
     detailVC.payMoneyStr = self.orderModel.PayMoney;
     detailVC.priceStr = self.orderModel.price;
+    
+    
+    detailVC.buyerProvince = self.orderModel.BuyerProvince;
+    detailVC.buyerCity = self.orderModel.BuyerCity;
+    detailVC.buyerDistrict = self.orderModel.area;
+    detailVC.buyerTown = self.orderModel.BuyerTown;
+    detailVC.buyerAddress  = self.orderModel.BuyerAddress;
+    
+    detailVC.buyerProvinceID = self.orderModel.buyerProvinceID;
+    detailVC.buyerCityID = self.orderModel.buyerCityID;
+    detailVC.buyerDistrictID = self.orderModel.buyerDistrictID;
+    detailVC.buyerTownID = self.orderModel.buyerTownID;
+    
+    detailVC.productBreed = self.orderModel.productBreed;
+    detailVC.ProductBreedID = self.orderModel.ProductBreedID;
+    detailVC.productClassify = self.orderModel.productClassify;
+    detailVC.ProductClassify1ID = self.orderModel.ProductClassify1ID;
+    detailVC.ProductClassify2ID = self.orderModel.ProductClassify2ID;
+#if Environment_Mode == 1
+#elif Environment_Mode == 2
+    detailVC.orderNumber = self.orderModel.orderCode;
+    detailVC.serviceClassify = self.orderModel.serviceClassify;
+    detailVC.postScript =self.orderModel.postScript;
+    detailVC.isFree = self.orderModel.IsFree;
+    detailVC.serviceClassifyID = self.orderModel.serviceClassifyID;
+#endif
+    
+    
+    
     [self.navigationController pushViewController:detailVC animated:YES];
     
 }

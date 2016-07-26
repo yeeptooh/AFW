@@ -11,8 +11,9 @@
 #import "CityViewController.h"
 #import "RegionViewController.h"
 #import "StreetViewController.h"
-
+#import "ChangeOrderViewController.h"
 #import "AFNetworking.h"
+
 @interface UserDetailTableView ()
 <
 UITableViewDelegate,
@@ -21,14 +22,6 @@ UITextFieldDelegate
 >
 
 @property (nonatomic, assign) CGRect baseFrame;
-
-@property (nonatomic, strong) NSString *province;//省
-@property (nonatomic, strong) NSString *cityName;//城市
-@property (nonatomic, strong) NSString *region;//区
-@property (nonatomic, strong) NSString *street;//街道
-
-
-
 
 @property (nonatomic, strong) NSMutableArray *provinceList;
 @property (nonatomic, strong) NSMutableArray *cityList;
@@ -114,6 +107,7 @@ UITextFieldDelegate
     
     self = [super initWithFrame:frame style:style];
     if (self) {
+        
         self.baseFrame = frame;
         self.delegate = self;
         self.dataSource = self;
@@ -122,7 +116,9 @@ UITextFieldDelegate
         self.tableFooterView = [[UIView alloc]init];
         self.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self addKeyboardNotification];
-        [self netWorkingRequest];
+
+        [self networking];
+        
     }
     
     return self;
@@ -185,6 +181,13 @@ UITextFieldDelegate
         }else{
             textfield.returnKeyType = UIReturnKeyDone;
         }
+        if (indexPath.row == 0) {
+            textfield.text = self.name;
+        }else if (indexPath.row == 1) {
+            textfield.text = self.phone;
+        }else {
+            textfield.text = self.address;
+        }
         //tag = 100 || 101 || 106
         textfield.tag = 100 + indexPath.row;
         [cell addSubview:textfield];
@@ -207,42 +210,53 @@ UITextFieldDelegate
         
         
         if (indexPath.row == 2) {
-            
-            if ([[NSUserDefaults standardUserDefaults]boolForKey:@"FirstLaunch"]) {
-                [button setTitle:@"" forState:UIControlStateNormal];
+            if ([[self viewController] isKindOfClass:[ChangeOrderViewController class]]) {
+                [button setTitle:self.province forState:UIControlStateNormal];
             }else {
-                [button setTitle:[[NSUserDefaults standardUserDefaults] objectForKey:@"province"][0][@"n"] forState:UIControlStateNormal];
+                if ([[NSUserDefaults standardUserDefaults]boolForKey:@"FirstLaunch"]) {
+                    [button setTitle:@"" forState:UIControlStateNormal];
+                }else {
+                    [button setTitle:[[NSUserDefaults standardUserDefaults] objectForKey:@"province"][0][@"n"] forState:UIControlStateNormal];
+                }
             }
             
         }
         
         if (indexPath.row == 3) {
-            if ([[NSUserDefaults standardUserDefaults]boolForKey:@"FirstLaunch"]) {
-                [button setTitle:@"" forState:UIControlStateNormal];
+            if ([[self viewController] isKindOfClass:[ChangeOrderViewController class]]) {
+                [button setTitle:self.city forState:UIControlStateNormal];
             }else {
-                [button setTitle:[[NSUserDefaults standardUserDefaults] objectForKey:@"city"][0][@"n"] forState:UIControlStateNormal];
+                if ([[NSUserDefaults standardUserDefaults]boolForKey:@"FirstLaunch"]) {
+                    [button setTitle:@"" forState:UIControlStateNormal];
+                }else {
+                    [button setTitle:[[NSUserDefaults standardUserDefaults] objectForKey:@"city"][0][@"n"] forState:UIControlStateNormal];
+                }
             }
             
         }
         
         if (indexPath.row == 4) {
-            
-            if ([[NSUserDefaults standardUserDefaults]boolForKey:@"FirstLaunch"]) {
-                [button setTitle:@"" forState:UIControlStateNormal];
+            if ([[self viewController] isKindOfClass:[ChangeOrderViewController class]]) {
+                [button setTitle:self.district forState:UIControlStateNormal];
             }else {
-                [button setTitle:[[NSUserDefaults standardUserDefaults] objectForKey:@"region"][0][@"n"] forState:UIControlStateNormal];
+                if ([[NSUserDefaults standardUserDefaults]boolForKey:@"FirstLaunch"]) {
+                    [button setTitle:@"" forState:UIControlStateNormal];
+                }else {
+                    [button setTitle:[[NSUserDefaults standardUserDefaults] objectForKey:@"region"][0][@"n"] forState:UIControlStateNormal];
+                }
             }
-            
         }
         
         if (indexPath.row == 5) {
-            
-            if ([[NSUserDefaults standardUserDefaults]boolForKey:@"FirstLaunch"]) {
-                [button setTitle:@"" forState:UIControlStateNormal];
+            if ([[self viewController] isKindOfClass:[ChangeOrderViewController class]]) {
+                [button setTitle:self.town forState:UIControlStateNormal];
             }else {
-                [button setTitle:[[NSUserDefaults standardUserDefaults] objectForKey:@"street"][0][@"n"] forState:UIControlStateNormal];
+                if ([[NSUserDefaults standardUserDefaults]boolForKey:@"FirstLaunch"]) {
+                    [button setTitle:@"" forState:UIControlStateNormal];
+                }else {
+                    [button setTitle:[[NSUserDefaults standardUserDefaults] objectForKey:@"street"][0][@"n"] forState:UIControlStateNormal];
+                }
             }
-            
         }
         
     }    return cell;
@@ -252,51 +266,157 @@ UITextFieldDelegate
 
 - (void)buttonClicked:(UIButton *)sender {
     [self endEditing:YES];
-    if (sender.tag == 202) {
-        ProvinceViewController *provinceVC = [[ProvinceViewController alloc] init];
-        provinceVC.List = self.provinceList;
-        provinceVC.returnInfo = ^(NSString *name, NSInteger row){
-            [sender setTitle:name forState:UIControlStateNormal];
-            self.FprovinceID = self.provinceIDList[row];
-            NSString *cityUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getcity&parent=%@",HomeURL,self.provinceIDList[row]];
+    if ([[self viewController] isKindOfClass:[ChangeOrderViewController class]]) {
+        if (sender.tag == 202) {
+            ProvinceViewController *provinceVC = [[ProvinceViewController alloc] init];
+            provinceVC.List = self.provinceList;
+            provinceVC.returnInfo = ^(NSString *name, NSInteger row){
+                [sender setTitle:name forState:UIControlStateNormal];
+                self.FprovinceID = self.provinceIDList[row];
+                NSString *cityUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getcity&parent=%@",HomeURL,self.provinceIDList[row]];
+                
+                AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+                [manager GET:cityUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                    
+                    UIButton *button = [self viewWithTag:203];
+                    NSString *name;
+                    if ([(NSDictionary *)responseObject count] != 0) {
+                        name = responseObject[0][@"n"];
+                        self.cityID = responseObject[0][@"c"];
+                    }else {
+                        name = @"";
+                        self.cityID = @"bitch";
+                    }
+                    self.FcityID = self.cityID;
+                    [button setTitle:name forState:UIControlStateNormal];
+                    if (self.cityList.count != 0) {
+                        [self.cityList removeAllObjects];
+                    }
+                    if (self.cityIDList.count != 0) {
+                        [self.cityIDList removeAllObjects];
+                    }
+                    for (NSDictionary *dic in responseObject) {
+                        
+                        [self.cityList addObject:dic[@"n"]];
+                        [self.cityIDList addObject:dic[@"c"]];
+                    }
+                    
+                    if (![self.cityID isEqualToString:@"bitch"]) {
+                        
+                        NSString *regionUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getdistricts&parent=%@",HomeURL,responseObject[0][@"c"]];
+                        
+                        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+                        
+                        [manager GET:regionUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                            
+                            UIButton *button = [self viewWithTag:204];
+                            NSString *name;
+                            
+                            if ([(NSDictionary *)responseObject count] != 0) {
+                                name = responseObject[0][@"n"];
+                                self.regionID = responseObject[0][@"c"];
+                            }else {
+                                name = @"";
+                                self.regionID = @"bitch";
+                            }
+                            self.FregionID = self.regionID;
+                            if (self.regionList.count != 0) {
+                                [self.regionList removeAllObjects];
+                            }
+                            if (self.regionIDList.count != 0) {
+                                [self.regionIDList removeAllObjects];
+                            }
+                            for (NSDictionary *dic in responseObject) {
+                                [self.regionList addObject:dic[@"n"]];
+                                [self.regionIDList addObject:dic[@"c"]];
+                            }
+                            [button setTitle:name forState:UIControlStateNormal];
+                            
+                            if (![self.regionID isEqualToString:@"bitch"]) {
+                                
+                                NSString *streetUrl = [NSString stringWithFormat:@"%@Common.ashx?action=gettown&parent=%@",HomeURL,responseObject[0][@"c"]];
+                                
+                                AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+                                
+                                [manager GET:streetUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                                    
+                                    UIButton *button = [self viewWithTag:205];
+                                    NSString *name;
+                                    //                                NSLog(@"%@",responseObject);
+                                    
+                                    if ([(NSDictionary *)responseObject count] != 0) {
+                                        name = responseObject[0][@"n"];
+                                        self.streetID = responseObject[0][@"c"];
+                                    }else {
+                                        name = @"";
+                                        self.streetID = @"bitch";
+                                    }
+                                    self.FstreetID = self.streetID;
+                                    if (self.streetList.count != 0) {
+                                        [self.streetList removeAllObjects];
+                                    }
+                                    if (self.streetIDList.count != 0) {
+                                        [self.streetIDList removeAllObjects];
+                                    }
+                                    for (NSDictionary *dic in responseObject) {
+                                        [self.streetList addObject:dic[@"n"]];
+                                        [self.streetIDList addObject:dic[@"c"]];
+                                    }
+                                    [button setTitle:name forState:UIControlStateNormal];
+                                    
+                                    
+                                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                    
+                                }];
+                            }else {
+                                UIButton *button = [self viewWithTag:205];
+                                [button setTitle:@"" forState:UIControlStateNormal];
+                            }
+                            
+                        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                            
+                        }];
+                    }
+                    
+                    
+                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                    
+                }];
+                
+            };
             
+            [[self viewController] presentViewController:provinceVC animated:YES completion:nil];
+            
+        }else if (sender.tag == 203) {
+            
+            CityViewController *cityVC = [[CityViewController alloc] init];
+            NSString *cityUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getcity&parent=%@",HomeURL,self.FprovinceID];
             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
             [manager GET:cityUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 
-                UIButton *button = [self viewWithTag:203];
-                NSString *name;
-                if ([(NSDictionary *)responseObject count] != 0) {
-                    name = responseObject[0][@"n"];
-                    self.cityID = responseObject[0][@"c"];
-                }else {
-                    name = @"";
-                    self.cityID = @"bitch";
-                }
-                self.FcityID = self.cityID;
-                [button setTitle:name forState:UIControlStateNormal];
-                if (self.cityList.count != 0) {
+                if (self.cityList.count) {
                     [self.cityList removeAllObjects];
                 }
-                if (self.cityIDList.count != 0) {
+                if (self.cityIDList.count) {
                     [self.cityIDList removeAllObjects];
                 }
+                
                 for (NSDictionary *dic in responseObject) {
-                    
                     [self.cityList addObject:dic[@"n"]];
                     [self.cityIDList addObject:dic[@"c"]];
                 }
                 
-                if (![self.cityID isEqualToString:@"bitch"]) {
-                    
-                    NSString *regionUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getdistricts&parent=%@",HomeURL,responseObject[0][@"c"]];
-                    
+                cityVC.List = self.cityList;
+                cityVC.returnInfo = ^(NSString *name, NSInteger row){
+                    [sender setTitle:name forState:UIControlStateNormal];
+
+                    self.FcityID = self.cityIDList[row];
                     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-                    
+                    NSString *regionUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getdistricts&parent=%@",HomeURL,self.FcityID];
                     [manager GET:regionUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                         
                         UIButton *button = [self viewWithTag:204];
                         NSString *name;
-                        
                         if ([(NSDictionary *)responseObject count] != 0) {
                             name = responseObject[0][@"n"];
                             self.regionID = responseObject[0][@"c"];
@@ -311,15 +431,16 @@ UITextFieldDelegate
                         if (self.regionIDList.count != 0) {
                             [self.regionIDList removeAllObjects];
                         }
+                        
                         for (NSDictionary *dic in responseObject) {
                             [self.regionList addObject:dic[@"n"]];
                             [self.regionIDList addObject:dic[@"c"]];
                         }
                         [button setTitle:name forState:UIControlStateNormal];
                         
+                        
                         if (![self.regionID isEqualToString:@"bitch"]) {
-                            
-                            NSString *streetUrl = [NSString stringWithFormat:@"%@Common.ashx?action=gettown&parent=%@",HomeURL,responseObject[0][@"c"]];
+                            NSString *streetUrl = [NSString stringWithFormat:@"%@Common.ashx?action=gettown&parent=%@",HomeURL,self.regionIDList[0]];
                             
                             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
                             
@@ -327,7 +448,6 @@ UITextFieldDelegate
                                 
                                 UIButton *button = [self viewWithTag:205];
                                 NSString *name;
-//                                NSLog(@"%@",responseObject);
                                 
                                 if ([(NSDictionary *)responseObject count] != 0) {
                                     name = responseObject[0][@"n"];
@@ -357,47 +477,35 @@ UITextFieldDelegate
                             UIButton *button = [self viewWithTag:205];
                             [button setTitle:@"" forState:UIControlStateNormal];
                         }
-
+                        
+                        
                     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                         
                     }];
-                }
-
+                    
+                };
+                
+                [[self viewController] presentViewController:cityVC animated:YES completion:nil];
+                
                 
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 
             }];
-
-        };
-        
-        [[self viewController] presentViewController:provinceVC animated:YES completion:nil];
- 
-    }else if (sender.tag == 203) {
-        CityViewController *cityVC = [[CityViewController alloc] init];
-        cityVC.List = self.cityList;
-        cityVC.returnInfo = ^(NSString *name, NSInteger row){
-            [sender setTitle:name forState:UIControlStateNormal];
             
-            NSString *regionUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getdistricts&parent=%@",HomeURL,self.cityIDList[row]];
-            self.FcityID = self.cityIDList[row];
+            
+            
+            
+        }else if (sender.tag == 204) {
+            RegionViewController *regionVC = [[RegionViewController alloc] init];
+            NSString *regionUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getdistricts&parent=%@",HomeURL,self.FcityID];
             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-            
             [manager GET:regionUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                
-                UIButton *button = [self viewWithTag:204];
-                NSString *name;
-                if ([(NSDictionary *)responseObject count] != 0) {
-                    name = responseObject[0][@"n"];
-                    self.regionID = responseObject[0][@"c"];
-                }else {
-                    name = @"";
-                    self.regionID = @"bitch";
-                }
-                self.FregionID = self.regionID;
-                if (self.regionList.count != 0) {
+                NSLog(@"%@",responseObject);
+                if (self.regionList.count) {
                     [self.regionList removeAllObjects];
                 }
-                if (self.regionIDList.count != 0) {
+                
+                if (self.regionIDList.count) {
                     [self.regionIDList removeAllObjects];
                 }
                 
@@ -405,19 +513,297 @@ UITextFieldDelegate
                     [self.regionList addObject:dic[@"n"]];
                     [self.regionIDList addObject:dic[@"c"]];
                 }
-                [button setTitle:name forState:UIControlStateNormal];
                 
+                regionVC.List = self.regionList;
+                regionVC.returnInfo = ^(NSString *name, NSInteger row){
+                    [sender setTitle:name forState:UIControlStateNormal];
+                    
+                    if (![self.regionID isEqualToString:@"bitch"]) {
+                        NSString *streetUrl = [NSString stringWithFormat:@"%@Common.ashx?action=gettown&parent=%@",HomeURL,self.regionIDList[row]];
+                        self.FregionID = self.regionIDList[row];
+                        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+                        
+                        [manager GET:streetUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                            NSLog(@"%@",responseObject);
+                            UIButton *button = [self viewWithTag:205];
+                            NSString *name;
+                            
+                            
+                            if ([(NSDictionary *)responseObject count] != 0) {
+                                name = responseObject[0][@"n"];
+                                self.streetID = responseObject[0][@"c"];
+                            }else {
+                                name = @"";
+                                self.streetID = @"bitch";
+                            }
+                            self.FstreetID = self.streetID;
+                            if (self.streetList.count != 0) {
+                                [self.streetList removeAllObjects];
+                            }
+                            if (self.streetIDList.count != 0) {
+                                [self.streetIDList removeAllObjects];
+                            }
+                            for (NSDictionary *dic in responseObject) {
+                                [self.streetList addObject:dic[@"n"]];
+                                [self.streetIDList addObject:dic[@"c"]];
+                            }
+                            [button setTitle:name forState:UIControlStateNormal];
+                            
+                            
+                        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                            
+                        }];
+                    }else{
+                        UIButton *button = [self viewWithTag:205];
+                        [button setTitle:@"" forState:UIControlStateNormal];
+                    }
+                    
+                };
+                
+                [[self viewController] presentViewController:regionVC animated:YES completion:nil];
+
+                
+                
+                
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                
+            }];
+            
+            
+        }else {
+            StreetViewController *streetVC = [[StreetViewController alloc] init];
+            streetVC.List = self.streetList;
+            streetVC.returnInfo = ^(NSString *name, NSInteger row){
+                self.FstreetID = self.streetIDList[row];
+                [sender setTitle:name forState:UIControlStateNormal];
+                
+            };
+            
+            [[self viewController] presentViewController:streetVC animated:YES completion:nil];
+            
+        }
+    }else {
+        if (sender.tag == 202) {
+            ProvinceViewController *provinceVC = [[ProvinceViewController alloc] init];
+            provinceVC.List = self.provinceList;
+            provinceVC.returnInfo = ^(NSString *name, NSInteger row){
+                [sender setTitle:name forState:UIControlStateNormal];
+                self.FprovinceID = self.provinceIDList[row];
+                NSString *cityUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getcity&parent=%@",HomeURL,self.provinceIDList[row]];
+                
+                AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+                [manager GET:cityUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                    
+                    UIButton *button = [self viewWithTag:203];
+                    NSString *name;
+                    if ([(NSDictionary *)responseObject count] != 0) {
+                        name = responseObject[0][@"n"];
+                        self.cityID = responseObject[0][@"c"];
+                    }else {
+                        name = @"";
+                        self.cityID = @"bitch";
+                    }
+                    self.FcityID = self.cityID;
+                    [button setTitle:name forState:UIControlStateNormal];
+                    if (self.cityList.count != 0) {
+                        [self.cityList removeAllObjects];
+                    }
+                    if (self.cityIDList.count != 0) {
+                        [self.cityIDList removeAllObjects];
+                    }
+                    for (NSDictionary *dic in responseObject) {
+                        
+                        [self.cityList addObject:dic[@"n"]];
+                        [self.cityIDList addObject:dic[@"c"]];
+                    }
+                    
+                    if (![self.cityID isEqualToString:@"bitch"]) {
+                        
+                        NSString *regionUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getdistricts&parent=%@",HomeURL,responseObject[0][@"c"]];
+                        
+                        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+                        
+                        [manager GET:regionUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                            
+                            UIButton *button = [self viewWithTag:204];
+                            NSString *name;
+                            
+                            if ([(NSDictionary *)responseObject count] != 0) {
+                                name = responseObject[0][@"n"];
+                                self.regionID = responseObject[0][@"c"];
+                            }else {
+                                name = @"";
+                                self.regionID = @"bitch";
+                            }
+                            self.FregionID = self.regionID;
+                            if (self.regionList.count != 0) {
+                                [self.regionList removeAllObjects];
+                            }
+                            if (self.regionIDList.count != 0) {
+                                [self.regionIDList removeAllObjects];
+                            }
+                            for (NSDictionary *dic in responseObject) {
+                                [self.regionList addObject:dic[@"n"]];
+                                [self.regionIDList addObject:dic[@"c"]];
+                            }
+                            [button setTitle:name forState:UIControlStateNormal];
+                            
+                            if (![self.regionID isEqualToString:@"bitch"]) {
+                                
+                                NSString *streetUrl = [NSString stringWithFormat:@"%@Common.ashx?action=gettown&parent=%@",HomeURL,responseObject[0][@"c"]];
+                                
+                                AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+                                
+                                [manager GET:streetUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                                    
+                                    UIButton *button = [self viewWithTag:205];
+                                    NSString *name;
+                                    //                                NSLog(@"%@",responseObject);
+                                    
+                                    if ([(NSDictionary *)responseObject count] != 0) {
+                                        name = responseObject[0][@"n"];
+                                        self.streetID = responseObject[0][@"c"];
+                                    }else {
+                                        name = @"";
+                                        self.streetID = @"bitch";
+                                    }
+                                    self.FstreetID = self.streetID;
+                                    if (self.streetList.count != 0) {
+                                        [self.streetList removeAllObjects];
+                                    }
+                                    if (self.streetIDList.count != 0) {
+                                        [self.streetIDList removeAllObjects];
+                                    }
+                                    for (NSDictionary *dic in responseObject) {
+                                        [self.streetList addObject:dic[@"n"]];
+                                        [self.streetIDList addObject:dic[@"c"]];
+                                    }
+                                    [button setTitle:name forState:UIControlStateNormal];
+                                    
+                                    
+                                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                    
+                                }];
+                            }else {
+                                UIButton *button = [self viewWithTag:205];
+                                [button setTitle:@"" forState:UIControlStateNormal];
+                            }
+                            
+                        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                            
+                        }];
+                    }
+                    
+                    
+                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                    
+                }];
+                
+            };
+            
+            [[self viewController] presentViewController:provinceVC animated:YES completion:nil];
+            
+        }else if (sender.tag == 203) {
+            CityViewController *cityVC = [[CityViewController alloc] init];
+            cityVC.List = self.cityList;
+            cityVC.returnInfo = ^(NSString *name, NSInteger row){
+                [sender setTitle:name forState:UIControlStateNormal];
+                
+                NSString *regionUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getdistricts&parent=%@",HomeURL,self.cityIDList[row]];
+                self.FcityID = self.cityIDList[row];
+                AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+                
+                [manager GET:regionUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                    
+                    UIButton *button = [self viewWithTag:204];
+                    NSString *name;
+                    if ([(NSDictionary *)responseObject count] != 0) {
+                        name = responseObject[0][@"n"];
+                        self.regionID = responseObject[0][@"c"];
+                    }else {
+                        name = @"";
+                        self.regionID = @"bitch";
+                    }
+                    self.FregionID = self.regionID;
+                    if (self.regionList.count != 0) {
+                        [self.regionList removeAllObjects];
+                    }
+                    if (self.regionIDList.count != 0) {
+                        [self.regionIDList removeAllObjects];
+                    }
+                    
+                    for (NSDictionary *dic in responseObject) {
+                        [self.regionList addObject:dic[@"n"]];
+                        [self.regionIDList addObject:dic[@"c"]];
+                    }
+                    [button setTitle:name forState:UIControlStateNormal];
+                    
+                    
+                    if (![self.regionID isEqualToString:@"bitch"]) {
+                        NSString *streetUrl = [NSString stringWithFormat:@"%@Common.ashx?action=gettown&parent=%@",HomeURL,responseObject[0][@"c"]];
+                        
+                        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+                        
+                        [manager GET:streetUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                            
+                            UIButton *button = [self viewWithTag:205];
+                            NSString *name;
+                            //                        NSLog(@"%@",responseObject);
+                            
+                            if ([(NSDictionary *)responseObject count] != 0) {
+                                name = responseObject[0][@"n"];
+                                self.streetID = responseObject[0][@"c"];
+                            }else {
+                                name = @"";
+                                self.streetID = @"bitch";
+                            }
+                            self.FstreetID = self.streetID;
+                            if (self.streetList.count != 0) {
+                                [self.streetList removeAllObjects];
+                            }
+                            if (self.streetIDList.count != 0) {
+                                [self.streetIDList removeAllObjects];
+                            }
+                            for (NSDictionary *dic in responseObject) {
+                                [self.streetList addObject:dic[@"n"]];
+                                [self.streetIDList addObject:dic[@"c"]];
+                            }
+                            [button setTitle:name forState:UIControlStateNormal];
+                            
+                            
+                        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                            
+                        }];
+                    }else {
+                        UIButton *button = [self viewWithTag:205];
+                        [button setTitle:@"" forState:UIControlStateNormal];
+                    }
+                    
+                    
+                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                    
+                }];
+                
+            };
+            
+            [[self viewController] presentViewController:cityVC animated:YES completion:nil];
+            
+        }else if (sender.tag == 204) {
+            RegionViewController *regionVC = [[RegionViewController alloc] init];
+            regionVC.List = self.regionList;
+            regionVC.returnInfo = ^(NSString *name, NSInteger row){
+                [sender setTitle:name forState:UIControlStateNormal];
                 
                 if (![self.regionID isEqualToString:@"bitch"]) {
-                    NSString *streetUrl = [NSString stringWithFormat:@"%@Common.ashx?action=gettown&parent=%@",HomeURL,responseObject[0][@"c"]];
-                    
+                    NSString *streetUrl = [NSString stringWithFormat:@"%@Common.ashx?action=gettown&parent=%@",HomeURL,self.regionIDList[row]];
+                    self.FregionID = self.regionIDList[row];
                     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
                     
                     [manager GET:streetUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                        
+                        NSLog(@"%@",responseObject);
                         UIButton *button = [self viewWithTag:205];
                         NSString *name;
-//                        NSLog(@"%@",responseObject);
+                        
                         
                         if ([(NSDictionary *)responseObject count] != 0) {
                             name = responseObject[0][@"n"];
@@ -443,80 +829,27 @@ UITextFieldDelegate
                     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                         
                     }];
-                }else {
+                }else{
                     UIButton *button = [self viewWithTag:205];
                     [button setTitle:@"" forState:UIControlStateNormal];
                 }
                 
-                
-            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                
-            }];
+            };
             
-        };
-        
-        [[self viewController] presentViewController:cityVC animated:YES completion:nil];
-        
-    }else if (sender.tag == 204) {
-        RegionViewController *regionVC = [[RegionViewController alloc] init];
-        regionVC.List = self.regionList;
-        regionVC.returnInfo = ^(NSString *name, NSInteger row){
-            [sender setTitle:name forState:UIControlStateNormal];
+            [[self viewController] presentViewController:regionVC animated:YES completion:nil];
             
-            if (![self.regionID isEqualToString:@"bitch"]) {
-                NSString *streetUrl = [NSString stringWithFormat:@"%@Common.ashx?action=gettown&parent=%@",HomeURL,self.regionIDList[row]];
-                self.FregionID = self.regionIDList[row];
-                AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        }else {
+            StreetViewController *streetVC = [[StreetViewController alloc] init];
+            streetVC.List = self.streetList;
+            streetVC.returnInfo = ^(NSString *name, NSInteger row){
+                self.FstreetID = self.streetIDList[row];
+                [sender setTitle:name forState:UIControlStateNormal];
                 
-                [manager GET:streetUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                    NSLog(@"%@",responseObject);
-                    UIButton *button = [self viewWithTag:205];
-                    NSString *name;
-                    
-                    
-                    if ([(NSDictionary *)responseObject count] != 0) {
-                        name = responseObject[0][@"n"];
-                        self.streetID = responseObject[0][@"c"];
-                    }else {
-                        name = @"";
-                        self.streetID = @"bitch";
-                    }
-                    self.FstreetID = self.streetID;
-                    if (self.streetList.count != 0) {
-                        [self.streetList removeAllObjects];
-                    }
-                    if (self.streetIDList.count != 0) {
-                        [self.streetIDList removeAllObjects];
-                    }
-                    for (NSDictionary *dic in responseObject) {
-                        [self.streetList addObject:dic[@"n"]];
-                        [self.streetIDList addObject:dic[@"c"]];
-                    }
-                    [button setTitle:name forState:UIControlStateNormal];
-                    
-                    
-                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                    
-                }];
-            }else{
-                UIButton *button = [self viewWithTag:205];
-                [button setTitle:@"" forState:UIControlStateNormal];
-            }
- 
-        };
-        
-        [[self viewController] presentViewController:regionVC animated:YES completion:nil];
-        
-    }else {
-        StreetViewController *streetVC = [[StreetViewController alloc] init];
-        streetVC.List = self.streetList;
-        streetVC.returnInfo = ^(NSString *name, NSInteger row){
-            self.FstreetID = self.streetIDList[row];
-            [sender setTitle:name forState:UIControlStateNormal];
+            };
             
-        };
-        
-        [[self viewController] presentViewController:streetVC animated:YES completion:nil];
+            [[self viewController] presentViewController:streetVC animated:YES completion:nil];
+            
+        }
     }
 }
 
@@ -577,7 +910,7 @@ UITextFieldDelegate
     
 }
 
-- (void)netWorkingRequest {
+- (void)networking {
     
     NSString *provinceUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getprovince",HomeURL];
     
@@ -594,7 +927,7 @@ UITextFieldDelegate
         }
         
         self.provinceID = self.provinceIDList[0];
-        self.FprovinceID = self.provinceIDList[0];
+        self.YprovinceID = self.provinceIDList[0];
         NSString *cityUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getcity&parent=%@",HomeURL,self.provinceIDList[0]];
         
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -608,14 +941,13 @@ UITextFieldDelegate
                 [self.cityIDList addObject:dic[@"c"]];
             }
             self.cityID = self.cityIDList[0];
-            self.FcityID = self.cityIDList[0];
+            self.YcityID = self.cityIDList[0];
             NSString *regionUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getdistricts&parent=%@",HomeURL,self.cityIDList[0]];
             
             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
             
             [manager GET:regionUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 
-//                NSLog(@"%@",responseObject);
                 [[NSUserDefaults standardUserDefaults] setObject:responseObject forKey:@"region"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 
@@ -625,7 +957,7 @@ UITextFieldDelegate
                 }
                 
                 self.regionID = self.regionIDList[0];
-                self.FregionID = self.regionIDList[0];
+                self.YregionID = self.regionIDList[0];
                 NSString *streetUrl = [NSString stringWithFormat:@"%@Common.ashx?action=gettown&parent=%@",HomeURL,self.regionIDList[0]];
                 
                 AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -640,16 +972,16 @@ UITextFieldDelegate
                         [self.streetIDList addObject:dic[@"c"]];
                     }
                     self.streetID = self.streetIDList[0];
-                    self.FstreetID = self.streetIDList[0];
+                    self.YstreetID = self.streetIDList[0];
                 } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                     
                 }];
-
+                
                 
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 
             }];
-
+            
             
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
@@ -658,9 +990,7 @@ UITextFieldDelegate
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
-    
 
-    
 }
 
 - (UIViewController*)viewController {

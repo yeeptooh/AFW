@@ -76,6 +76,10 @@
         
         self.date = dictionary[@"ExpectantTimeStr"];
         self.serviceType = [NSString stringWithFormat:@"[%@]",dictionary[@"ServiceClassify"]];
+        self.serviceClassify = dictionary[@"ServiceClassify"];
+        self.serviceClassifyID = dictionary[@"ServiceClassifyID"];
+        
+        
         self.productBreed = dictionary[@"ProductBreed"];
         self.productClassify = dictionary[@"ProductClassify"];
         self.productType = [NSString stringWithFormat:@"%@%@",dictionary[@"ProductBreed"],dictionary[@"ProductClassify"]];
@@ -112,7 +116,9 @@
         NSString *inOutStr = dictionary[@"PriceStr"];
         self.inOut = [inOutStr substringToIndex:2];
         
+        self.IsFree = dictionary[@"IsFree"];
         
+        self.buyerDistrictID = dictionary[@"BuyerDistrictID"];
         
         self.appointment = dictionary[@"ExpectantTimeStr"];
         
@@ -134,10 +140,13 @@
         self.ProductClassify2Name = dictionary[@"ProductClassify"];
         self.WaiterName = dictionary[@"WaiterName"];
         
-        //TODO
-        //完工信息和服务评价的字段后台未设置
+        
         self.FinishRemark = dictionary[@"FinishRemark"];
- 
+        
+        self.buyerProvinceID = dictionary[@"BuyerProvinceID"];
+        self.buyerCityID = dictionary[@"BuyerCityID"];
+        self.buyerTownID = dictionary[@"BuyerTownID"];
+        self.BuyerTown = dictionary[@"BuyerTown"];
     }
     return self;
 }

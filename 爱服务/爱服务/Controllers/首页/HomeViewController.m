@@ -127,6 +127,7 @@ static NSInteger tag = 0;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMoney:) name:kUpdateMoney object:nil];
 #if Environment_Mode == 1
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBadge:) name:kupdateBadgeNum object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setBadgeValue:) name:kBackFromNoti object:nil];
 #elif Environment_Mode == 2
 #endif
     
@@ -142,25 +143,17 @@ static NSInteger tag = 0;
 - (void)updateBadge {
     
     [self.badgeView showBadgeWithStyle:WBadgeStyleNumber value:[((NSArray *)[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"]).lastObject integerValue] animationType:WBadgeAnimTypeNone];
-    
-    [self playSound];
-   
+
 }
 
-//static SystemSoundID shake_sound_male_id = 10000;
-- (void)playSound {
-    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-//    NSString *path = [[NSBundle mainBundle] pathForResource:@"shake_sound_male" ofType:@"wav"];
-//    if (path) {
-//        
-//        AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path],&shake_sound_male_id);
-//        AudioServicesPlaySystemSound(shake_sound_male_id);
-//        
-//    }
-}
+
 
 - (void)updateMoney:(NSNotification *)sender {
     [self updateUI];
+}
+
+- (void)setBadgeValue:(NSNotification *)sender {
+    [self upDateNetWorking];
 }
 
 
@@ -267,7 +260,6 @@ static NSInteger tag = 0;
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
         
     }];
 
@@ -421,7 +413,7 @@ static NSInteger tag = 0;
     [self.balanceView addSubview:lineView];
     
 }
-
+#if Environment_Mode == 1
 - (UIButton *)badgeView {
     if (!_badgeView) {
         NSInteger imageHeight;
@@ -439,13 +431,13 @@ static NSInteger tag = 0;
             height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/8;
         }else if (iPhone6) {
             height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/8;
-
+            
         }else if (iPhone6_plus) {
             height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/9;
-
+            
         }else{
             height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/9;
-
+            
         }
         _badgeView = [UIButton buttonWithType:UIButtonTypeCustom];
         _badgeView.frame = CGRectMake(Width/32, Width/32, Width*3/16, height*7/3);
@@ -457,14 +449,15 @@ static NSInteger tag = 0;
     }
     return _badgeView;
 }
+#elif Environment_Mode == 2
+#endif
+
 
 - (void)badgeButtonClicked:(UIButton *) sender{
     NotiViewController *notiVC = [[NotiViewController alloc]init];
     notiVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:notiVC animated:YES];
-    [sender clearBadge];
-    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"DBadgeValue"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    
 }
 
 - (void)setDetailButton {
@@ -590,10 +583,7 @@ static NSInteger tag = 0;
                 
                 [self.detailButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"a%ld",(long)tag]] forState:UIControlStateNormal];
                 
-                //            if (i == 2 && (j == 2 || j == 3)) {
-                //                [self.detailButton setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-                //            }
-                
+            
                 [self.detailButton addTarget:self action:@selector(detailButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 
                 self.detailButton.frame = CGRectMake(Width*j/4, height*2*i, Width/4, height*2);
@@ -676,10 +666,6 @@ static NSInteger tag = 0;
                 tag ++;
                 
                 [self.detailButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"a%ld",(long)tag]] forState:UIControlStateNormal];
-                
-                //            if (i == 2 && (j == 2 || j == 3)) {
-                //                [self.detailButton setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-                //            }
                 
                 [self.detailButton addTarget:self action:@selector(detailButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -764,10 +750,6 @@ static NSInteger tag = 0;
                 tag ++;
                 
                 [self.detailButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"a%ld",(long)tag]] forState:UIControlStateNormal];
-                
-                //            if (i == 2 && (j == 2 || j == 3)) {
-                //                [self.detailButton setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-                //            }
                 
                 [self.detailButton addTarget:self action:@selector(detailButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
                 
@@ -1123,8 +1105,7 @@ static NSInteger tag = 0;
         notiVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:notiVC animated:YES];
         
-        [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"DBadgeValue"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        
     }else if (sender.tag == 1004) {
         
         StandardFeeViewController *standardVC = [[StandardFeeViewController alloc]init];
@@ -1275,6 +1256,7 @@ static NSInteger tag = 0;
         
         
     }else if (sender.tag == 1003) {
+       
         MasterQueryViewController *ACCVC = [[MasterQueryViewController alloc] init];
         ACCVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:ACCVC animated:YES];

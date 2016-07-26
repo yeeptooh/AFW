@@ -10,4 +10,10 @@
 
 @interface BusinessDetailTableView : UITableView
 @property (nonatomic, assign) NSInteger serviceID;
+@property (nonatomic, assign) NSInteger YserviceID;
+@property (nonatomic, strong) NSString *serviceClassify;
+@property (nonatomic, strong) NSString *appointment;
+@property (nonatomic, strong) NSString *postScript;
+
+@property (nonatomic, strong) NSString *isFree;
 @end
