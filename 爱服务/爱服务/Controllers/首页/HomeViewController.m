@@ -1172,7 +1172,6 @@ static NSInteger tag = 0;
         
     }else if (sender.tag == 1011) {
         
-        
         HeartProtectViewController *heartVC = [[HeartProtectViewController alloc] init];
         heartVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:heartVC animated:YES];
@@ -1181,37 +1180,27 @@ static NSInteger tag = 0;
         
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
         hud.mode = MBProgressHUDModeIndeterminate;
-        
-        
-        
         UserModel *userModel = [UserModel readUserModel];
-        
         GatheringViewController *gatherVC = [[GatheringViewController alloc] init];
         gatherVC.hidesBottomBarWhenPushed = YES;
-        
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         NSString *url = [NSString stringWithFormat:@"%@uploadFile.ashx?action=loadimages&userId=%@",HomeURL, @(userModel.uid)];
         [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
     
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
-            
+
             if (dic[@"wechatpay"] == 0) {
                 
             }else {
- 
                 NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",subHomeURL, dic[@"wechatpay"]]]];
                 gatherVC.imageView1.image = [UIImage imageWithData:data];
-                
             }
             if (dic[@"alipay"] == 0) {
                 
             }else {
-
                 NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",subHomeURL, dic[@"alipay"]]]];
                 gatherVC.imageView2.image = [UIImage imageWithData:data];
-                
             }
             
             MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];

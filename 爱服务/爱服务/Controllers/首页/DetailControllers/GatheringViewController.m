@@ -101,9 +101,6 @@ UIScrollViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDeleg
         containerView2.backgroundColor = [UIColor clearColor];
         containerView2.center = self.firstView.center;
         
-        
-        
-        
         ZDDBezierPathView *bezierPathView1 = [[ZDDBezierPathView alloc] initWithFrame:CGRectMake(Width /10, 0, Width*3/5, Width*3/5)];
         bezierPathView1.backgroundColor = [UIColor clearColor];
         [containerView1 addSubview:bezierPathView1];
@@ -120,9 +117,7 @@ UIScrollViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDeleg
         [bezierPathView1 addSubview:labelxx];
         [bezierPathView1 addSubview:labelzz];
         
-        
-        
-//        self.imageView1 = [[UIImageView alloc] initWithFrame:bezierPathView1.bounds];
+     
         [bezierPathView1 addSubview:self.imageView1];
         self.imageView1.userInteractionEnabled = YES;
         UIButton *button1 = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -149,7 +144,7 @@ UIScrollViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDeleg
         [bezierPathView2 addSubview:labelxxx];
         [bezierPathView2 addSubview:labelzzz];
         
-//        self.imageView2 = [[UIImageView alloc] initWithFrame:bezierPathView2.bounds];
+
         [bezierPathView2 addSubview:self.imageView2];
         self.imageView2.userInteractionEnabled = YES;
         UIButton *button2 = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -222,7 +217,7 @@ UIScrollViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDeleg
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     hud.minSize = CGSizeMake(100, 100);
     hud.label.text = @"识别中...";
-    
+    hud.label.font = font(14);
     
     if ([self detectQRCodeWithImage:image].count != 0) {
         
@@ -240,7 +235,7 @@ UIScrollViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDeleg
         MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
         hud.mode = MBProgressHUDModeIndeterminate;
         hud.label.text = NSLocalizedString(@"高清上传", @"HUD completed title");
-        
+        hud.label.font = font(14);
         
         
         if ([picker isEqual:self.pickerController1]) {
@@ -273,6 +268,7 @@ UIScrollViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDeleg
                     hud.customView = imageView;
                     hud.mode = MBProgressHUDModeCustomView;
                     hud.label.text = NSLocalizedString(@"上传成功", @"HUD completed title");
+                    hud.label.font = font(14);
                     [hud hideAnimated:YES afterDelay:1.5f];
                     [hud removeFromSuperViewOnHide];
                 }else {
@@ -282,6 +278,7 @@ UIScrollViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDeleg
                     hud.customView = imageView;
                     hud.mode = MBProgressHUDModeCustomView;
                     hud.label.text = NSLocalizedString(@"上传失败", @"HUD completed title");
+                    hud.label.font = font(14);
                     [hud hideAnimated:YES afterDelay:1.5f];
                     [hud removeFromSuperViewOnHide];
                     
@@ -295,6 +292,7 @@ UIScrollViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDeleg
                 hud.customView = imageView;
                 hud.mode = MBProgressHUDModeCustomView;
                 hud.label.text = NSLocalizedString(@"上传失败", @"HUD completed title");
+                hud.label.font = font(14);
                 [hud hideAnimated:YES afterDelay:1.5f];
                 [hud removeFromSuperViewOnHide];
                 NSLog(@"error.userInfo = %@",error.userInfo);
@@ -328,6 +326,7 @@ UIScrollViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDeleg
                     hud.customView = imageView;
                     hud.mode = MBProgressHUDModeCustomView;
                     hud.label.text = NSLocalizedString(@"上传成功", @"HUD completed title");
+                    hud.label.font = font(14);
                     [hud hideAnimated:YES afterDelay:1.5f];
                     [hud removeFromSuperViewOnHide];
                 }else {
@@ -337,6 +336,7 @@ UIScrollViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDeleg
                     hud.customView = imageView;
                     hud.mode = MBProgressHUDModeCustomView;
                     hud.label.text = NSLocalizedString(@"上传失败", @"HUD completed title");
+                    hud.label.font = font(14);
                     [hud hideAnimated:YES afterDelay:1.5f];
                     [hud removeFromSuperViewOnHide];
                     
@@ -350,6 +350,7 @@ UIScrollViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDeleg
                 hud.customView = imageView;
                 hud.mode = MBProgressHUDModeCustomView;
                 hud.label.text = NSLocalizedString(@"上传失败", @"HUD completed title");
+                hud.label.font = font(14);
                 [hud hideAnimated:YES afterDelay:1.5f];
                 [hud removeFromSuperViewOnHide];
                 NSLog(@"error.userInfo = %@",error.userInfo);
@@ -360,7 +361,7 @@ UIScrollViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDeleg
         MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
         hud.mode = MBProgressHUDModeIndeterminate;
         hud.label.text = NSLocalizedString(@"原图上传", @"HUD completed title");
-        
+        hud.label.font = font(14);
 
         if ([picker isEqual:self.pickerController1]) {
             self.imageView1.image = image;
@@ -390,6 +391,7 @@ UIScrollViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDeleg
                     hud.customView = imageView;
                     hud.mode = MBProgressHUDModeCustomView;
                     hud.label.text = NSLocalizedString(@"上传成功", @"HUD completed title");
+                    hud.label.font = font(14);
                     [hud hideAnimated:YES afterDelay:1.5f];
                     [hud removeFromSuperViewOnHide];
                 }else {
@@ -399,6 +401,7 @@ UIScrollViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDeleg
                     hud.customView = imageView;
                     hud.mode = MBProgressHUDModeCustomView;
                     hud.label.text = NSLocalizedString(@"上传失败", @"HUD completed title");
+                    hud.label.font = font(14);
                     [hud hideAnimated:YES afterDelay:1.5f];
                     [hud removeFromSuperViewOnHide];
                     
@@ -412,6 +415,7 @@ UIScrollViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDeleg
                 hud.customView = imageView;
                 hud.mode = MBProgressHUDModeCustomView;
                 hud.label.text = NSLocalizedString(@"上传失败", @"HUD completed title");
+                hud.label.font = font(14);
                 [hud hideAnimated:YES afterDelay:1.5f];
                 [hud removeFromSuperViewOnHide];
                 NSLog(@"error.userInfo = %@",error.userInfo);
@@ -444,6 +448,7 @@ UIScrollViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDeleg
                     hud.customView = imageView;
                     hud.mode = MBProgressHUDModeCustomView;
                     hud.label.text = NSLocalizedString(@"上传成功", @"HUD completed title");
+                    hud.label.font = font(14);
                     [hud hideAnimated:YES afterDelay:1.5f];
                     [hud removeFromSuperViewOnHide];
                 }else {
@@ -453,6 +458,7 @@ UIScrollViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDeleg
                     hud.customView = imageView;
                     hud.mode = MBProgressHUDModeCustomView;
                     hud.label.text = NSLocalizedString(@"上传失败", @"HUD completed title");
+                    hud.label.font = font(14);
                     [hud hideAnimated:YES afterDelay:1.5f];
                     [hud removeFromSuperViewOnHide];
                     
@@ -466,6 +472,7 @@ UIScrollViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDeleg
                 hud.customView = imageView;
                 hud.mode = MBProgressHUDModeCustomView;
                 hud.label.text = NSLocalizedString(@"上传失败", @"HUD completed title");
+                hud.label.font = font(14);
                 [hud hideAnimated:YES afterDelay:1.5f];
                 [hud removeFromSuperViewOnHide];
                 NSLog(@"error.userInfo = %@",error.userInfo);

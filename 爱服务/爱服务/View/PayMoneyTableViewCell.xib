@@ -78,7 +78,7 @@
                 <outlet property="hadPayMoneyLabel" destination="dV6-GH-2Pq" id="NDd-7Z-oGT"/>
                 <outlet property="payMoneyInfoLabel" destination="Xip-kq-X9s" id="icc-Jw-sgI"/>
             </connections>
-            <point key="canvasLocation" x="306" y="290"/>
+            <point key="canvasLocation" x="499" y="276"/>
         </tableViewCell>
     </objects>
 </document>

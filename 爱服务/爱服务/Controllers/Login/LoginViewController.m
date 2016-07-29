@@ -238,9 +238,10 @@ UITextFieldDelegate
                              };
 #endif
     NSString *URL = [NSString stringWithFormat:@"%@Passport.ashx?action=login",HomeURL];
+    
 
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.requestSerializer.timeoutInterval = 5;
+//    manager.requestSerializer.timeoutInterval = 15;
     __weak typeof(self)weakSelf = self;
     
     [manager POST:URL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -276,14 +277,15 @@ UITextFieldDelegate
             [UserModel writeUserModel:userModel];
             
             [weakSelf.successHUD showAnimated:YES];
-            
+            dispatch_group_t group = dispatch_group_create();
+            dispatch_group_enter(group);
 
             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
             NSString *countString = [NSString stringWithFormat:@"%@Task.ashx?action=gettaskcount&comid=%ld&uid=%ld&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
             
             manager.responseSerializer = [AFHTTPResponseSerializer serializer];
             [manager GET:countString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                
+                dispatch_group_leave(group);
                 NSString *allString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
                 NSArray *countList = [allString componentsSeparatedByString:@","];
                 
@@ -303,11 +305,12 @@ UITextFieldDelegate
                 }
                 
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                
+                dispatch_group_leave(group);
             }];
-        
+           
             
         }else{
+            
             if ([weakSelf.accountTextField.text isEqualToString:@""] || [weakSelf.passwordTextField.text isEqualToString:@""]) {
                 _nilHUD = [[MBProgressHUD alloc]initWithView:self.view];
                 _nilHUD.mode = MBProgressHUDModeText;
@@ -351,6 +354,7 @@ UITextFieldDelegate
         });
         
     }];
+    
   
 }
 

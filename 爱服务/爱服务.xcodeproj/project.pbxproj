@@ -22,6 +22,9 @@
 		4A4954641D28B55B00E05868 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4A4954611D28B55B00E05868 /* AlipaySDK.bundle */; };
 		4A4954651D28B55B00E05868 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4954621D28B55B00E05868 /* AlipaySDK.framework */; };
 		4A4954661D28B55B00E05868 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4954621D28B55B00E05868 /* AlipaySDK.framework */; };
+		4A49B1AB1D4B4FAC002D0EC0 /* ZDDPhotoBrowerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A49B1AA1D4B4FAC002D0EC0 /* ZDDPhotoBrowerViewController.m */; };
+		4A4AF23E1D4896FB00821DC4 /* SettleAccountsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4AF23C1D4896FB00821DC4 /* SettleAccountsTableViewCell.m */; };
+		4A4AF23F1D4896FB00821DC4 /* SettleAccountsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A4AF23D1D4896FB00821DC4 /* SettleAccountsTableViewCell.xib */; };
 		4A4BD23E1CB895A1009DA0B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BD23D1CB895A1009DA0B9 /* main.m */; };
 		4A4BD2411CB895A1009DA0B9 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BD2401CB895A1009DA0B9 /* AppDelegate.mm */; };
 		4A4BD2491CB895A1009DA0B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A4BD2481CB895A1009DA0B9 /* Assets.xcassets */; };
@@ -137,6 +140,7 @@
 		4A61DFDF1D3E072B00E1FCB8 /* ChangePWDPresentAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A61DFDD1D3E072B00E1FCB8 /* ChangePWDPresentAnimation.m */; };
 		4A61DFE21D3E075200E1FCB8 /* ChangePWDDismissAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A61DFE11D3E075200E1FCB8 /* ChangePWDDismissAnimation.m */; };
 		4A61DFE31D3E075200E1FCB8 /* ChangePWDDismissAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A61DFE11D3E075200E1FCB8 /* ChangePWDDismissAnimation.m */; };
+		4A61F5B51D49DB43009A3818 /* ChangeImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A61F5B41D49DB43009A3818 /* ChangeImageViewController.m */; };
 		4A62D1EA1D35D95A009A80C3 /* CSDetailTaskTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A62D1E81D35D95A009A80C3 /* CSDetailTaskTableViewCell.m */; };
 		4A62D1EB1D35D95A009A80C3 /* CSDetailTaskTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A62D1E91D35D95A009A80C3 /* CSDetailTaskTableViewCell.xib */; };
 		4A62D1EE1D3616EB009A80C3 /* DispatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A62D1ED1D3616EB009A80C3 /* DispatchViewController.m */; };
@@ -402,7 +406,6 @@
 		4A7CA6A21CDAF3BB000232CB /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7CA6A11CDAF3BB000232CB /* libsqlite3.tbd */; };
 		4A7CA6A71CDB104E000232CB /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7CA6A31CDB104E000232CB /* libWeChatSDK.a */; };
 		4A7CA6AC1CDB16FC000232CB /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4A7CA6AA1CDB16FC000232CB /* TencentOpenApi_IOS_Bundle.bundle */; };
-		4A7CA6AD1CDB16FC000232CB /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7CA6AB1CDB16FC000232CB /* TencentOpenAPI.framework */; };
 		4A7CA6AF1CDB1744000232CB /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7CA6AE1CDB1744000232CB /* libiconv.tbd */; };
 		4ADEDD7B1D17E04E00FE3412 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ADEDD7A1D17E04E00FE3412 /* Order.m */; };
 		4ADEDD821D17E05600FE3412 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ADEDD7E1D17E05600FE3412 /* libcrypto.a */; };
@@ -459,6 +462,11 @@
 		4A49545C1D28B4D300E05868 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		4A4954611D28B55B00E05868 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		4A4954621D28B55B00E05868 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
+		4A49B1A91D4B4FAC002D0EC0 /* ZDDPhotoBrowerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZDDPhotoBrowerViewController.h; sourceTree = "<group>"; };
+		4A49B1AA1D4B4FAC002D0EC0 /* ZDDPhotoBrowerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZDDPhotoBrowerViewController.m; sourceTree = "<group>"; };
+		4A4AF23B1D4896FB00821DC4 /* SettleAccountsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettleAccountsTableViewCell.h; sourceTree = "<group>"; };
+		4A4AF23C1D4896FB00821DC4 /* SettleAccountsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettleAccountsTableViewCell.m; sourceTree = "<group>"; };
+		4A4AF23D1D4896FB00821DC4 /* SettleAccountsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettleAccountsTableViewCell.xib; sourceTree = "<group>"; };
 		4A4BD2391CB895A1009DA0B9 /* 爱服务.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "爱服务.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A4BD23D1CB895A1009DA0B9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4A4BD23F1CB895A1009DA0B9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -652,6 +660,8 @@
 		4A61DFDD1D3E072B00E1FCB8 /* ChangePWDPresentAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePWDPresentAnimation.m; sourceTree = "<group>"; };
 		4A61DFE01D3E075200E1FCB8 /* ChangePWDDismissAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePWDDismissAnimation.h; sourceTree = "<group>"; };
 		4A61DFE11D3E075200E1FCB8 /* ChangePWDDismissAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePWDDismissAnimation.m; sourceTree = "<group>"; };
+		4A61F5B31D49DB43009A3818 /* ChangeImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeImageViewController.h; sourceTree = "<group>"; };
+		4A61F5B41D49DB43009A3818 /* ChangeImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeImageViewController.m; sourceTree = "<group>"; };
 		4A62D1E71D35D95A009A80C3 /* CSDetailTaskTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSDetailTaskTableViewCell.h; sourceTree = "<group>"; };
 		4A62D1E81D35D95A009A80C3 /* CSDetailTaskTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSDetailTaskTableViewCell.m; sourceTree = "<group>"; };
 		4A62D1E91D35D95A009A80C3 /* CSDetailTaskTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSDetailTaskTableViewCell.xib; sourceTree = "<group>"; };
@@ -967,7 +977,6 @@
 				4A7CA69C1CDAF397000232CB /* UIKit.framework in Frameworks */,
 				4A7CA69A1CDAF38B000232CB /* CoreText.framework in Frameworks */,
 				4A7CA6981CDAF37D000232CB /* Security.framework in Frameworks */,
-				4A7CA6AD1CDB16FC000232CB /* TencentOpenAPI.framework in Frameworks */,
 				4A7CA6961CDAF36F000232CB /* ImageIO.framework in Frameworks */,
 				4A7CA6941CDAF365000232CB /* QuartzCore.framework in Frameworks */,
 				4A4C6CEB1CD201790030B861 /* SystemConfiguration.framework in Frameworks */,
@@ -1621,6 +1630,9 @@
 				4AEFBE291D3CC99A001BB252 /* PayMoneyTableViewCell.h */,
 				4AEFBE2A1D3CC99A001BB252 /* PayMoneyTableViewCell.m */,
 				4AEFBE2B1D3CC99A001BB252 /* PayMoneyTableViewCell.xib */,
+				4A4AF23B1D4896FB00821DC4 /* SettleAccountsTableViewCell.h */,
+				4A4AF23C1D4896FB00821DC4 /* SettleAccountsTableViewCell.m */,
+				4A4AF23D1D4896FB00821DC4 /* SettleAccountsTableViewCell.xib */,
 			);
 			name = "爱服务";
 			sourceTree = "<group>";
@@ -1885,6 +1897,10 @@
 				4A61DFD91D3E021700E1FCB8 /* ChangePWDViewController.m */,
 				4A57D5351D4069EB00E3129E /* AppendReasonViewController.h */,
 				4A57D5361D4069EB00E3129E /* AppendReasonViewController.m */,
+				4A61F5B31D49DB43009A3818 /* ChangeImageViewController.h */,
+				4A61F5B41D49DB43009A3818 /* ChangeImageViewController.m */,
+				4A49B1A91D4B4FAC002D0EC0 /* ZDDPhotoBrowerViewController.h */,
+				4A49B1AA1D4B4FAC002D0EC0 /* ZDDPhotoBrowerViewController.m */,
 			);
 			path = "按钮跳转控制器";
 			sourceTree = "<group>";
@@ -2050,6 +2066,7 @@
 				4A77498D1CC09464008B9611 /* ServiceTypeTableViewCell.xib in Resources */,
 				4A4BD2491CB895A1009DA0B9 /* Assets.xcassets in Resources */,
 				4A561D671CBDE9DE00BB26AC /* MainTableViewCell.xib in Resources */,
+				4A4AF23F1D4896FB00821DC4 /* SettleAccountsTableViewCell.xib in Resources */,
 				4A6BABE61CC62FAB000B94A2 /* MJRefresh.bundle in Resources */,
 				4A526D261D3F6CDB008F61ED /* RefuseTableViewCell.xib in Resources */,
 				4A5274771D113F3E00B056C6 /* PayTableViewCell.xib in Resources */,
@@ -2226,6 +2243,7 @@
 				4A57F8851CD2F5390034E089 /* AFNetworkReachabilityManager.m in Sources */,
 				4A6799161D23C07200A8E0F5 /* DialogViewController.m in Sources */,
 				4A6BABE41CC62FAB000B94A2 /* MJRefreshNormalHeader.m in Sources */,
+				4A49B1AB1D4B4FAC002D0EC0 /* ZDDPhotoBrowerViewController.m in Sources */,
 				4A671C7C1CD0C94600F70176 /* RefuseReasonViewController.m in Sources */,
 				4A526D241D3F6CDB008F61ED /* RefuseTableViewCell.m in Sources */,
 				4A52746A1D113ABA00B056C6 /* HeartProtectViewController.m in Sources */,
@@ -2294,12 +2312,14 @@
 				4A4BD23E1CB895A1009DA0B9 /* main.m in Sources */,
 				4A69738F1CBB769E002A036C /* MyTabBarController.m in Sources */,
 				4A6973861CBB4D97002A036C /* ShareViewController.m in Sources */,
+				4A4AF23E1D4896FB00821DC4 /* SettleAccountsTableViewCell.m in Sources */,
 				4A4BD2921CB8A893009DA0B9 /* DetailPageBaseViewController.m in Sources */,
 				4A4BD2A81CB8D61C009DA0B9 /* SDCollectionViewCell.m in Sources */,
 				4A4BD2DA1CB8D903009DA0B9 /* UIImageView+HighlightedWebCache.m in Sources */,
 				4A4BD3271CB8F812009DA0B9 /* View+MASAdditions.m in Sources */,
 				4A5D25E81D348E0E00630029 /* CommitHeartViewController.m in Sources */,
 				4A4EDB721CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.m in Sources */,
+				4A61F5B51D49DB43009A3818 /* ChangeImageViewController.m in Sources */,
 				4A4BD2FC1CB8F5C2009DA0B9 /* LoginViewController.m in Sources */,
 				4A4BD2D21CB8D903009DA0B9 /* SDWebImageDownloader.m in Sources */,
 				4A61DFE21D3E075200E1FCB8 /* ChangePWDDismissAnimation.m in Sources */,

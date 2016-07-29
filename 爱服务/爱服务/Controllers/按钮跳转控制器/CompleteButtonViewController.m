@@ -832,9 +832,9 @@ static NSInteger number;
         
         NSArray *picArray = [[NSArray alloc]init];
         NSArray *picNameArray = @[
-                                  @"profile_picture1",
-                                  @"profile_picture2",
-                                  @"profile_picture3"
+                                  @"profile_picture1.jpeg",
+                                  @"profile_picture2.jpeg",
+                                  @"profile_picture3.jpeg"
                                   ];
         if (self.firstImageView.image) {
             if (self.secondImageView.image) {
@@ -891,7 +891,7 @@ static NSInteger number;
                 NSDate *date = [NSDate date];
                 NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
                 formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-                NSString *fileName = [NSString stringWithFormat:@"%@%ld.jpeg",[formatter stringFromDate:date],(long)i];
+                NSString *fileName = [NSString stringWithFormat:@"%@%ld",[formatter stringFromDate:date],(long)i];
                     
                 //name必须跟后台给的一致，fileName随便
                 [formData appendPartWithFileData:picArray[i] name:fileName fileName:picNameArray[i] mimeType:@"image/jpeg"];
@@ -980,8 +980,6 @@ static NSInteger number;
                 number = 0;
             });
             [successHUD removeFromSuperViewOnHide];
-            //                [self.navigationController popToRootViewControllerAnimated:YES];
-            
             return ;
         }
         
@@ -996,24 +994,24 @@ static NSInteger number;
         NSInteger count = 0;
         if (self.firstImageView.image) {
             count ++;
-            self.imageData1 = UIImageJPEGRepresentation(self.firstImageView.image, 0.1);//UIImagePNGRepresentation(self.firstImageView.image);//
+            self.imageData1 = UIImageJPEGRepresentation(self.firstImageView.image, 0.1);
         }
         
         if (self.secondImageView.image) {
             count ++;
-            self.imageData2 = UIImageJPEGRepresentation(self.secondImageView.image, 0.1);//UIImagePNGRepresentation(self.secondImageView.image);//
+            self.imageData2 = UIImageJPEGRepresentation(self.secondImageView.image, 0.1);
         }
         
         if (self.thirdImageView.image) {
             count ++;
-            self.imageData3 = UIImageJPEGRepresentation(self.thirdImageView.image, 0.1);//UIImagePNGRepresentation(self.thirdImageView.image);//
+            self.imageData3 = UIImageJPEGRepresentation(self.thirdImageView.image, 0.1);
         }
         
         NSArray *picArray = [[NSArray alloc]init];
         NSArray *picNameArray = @[
-                                  @"profile_picture1",
-                                  @"profile_picture2",
-                                  @"profile_picture3"
+                                  @"profile_picture1.jpeg",
+                                  @"profile_picture2.jpeg",
+                                  @"profile_picture3.jpeg"
                                   ];
         if (self.firstImageView.image) {
             if (self.secondImageView.image) {
@@ -1062,14 +1060,14 @@ static NSInteger number;
                                  @"randNum":((UITextField *)[self.tableView viewWithTag:1005]).text
                                  
                                  };
-        
+
         [manager POST:URL parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
             
             for (NSInteger i = 0; i < count; i ++) {
                 NSDate *date = [NSDate date];
                 NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
                 formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-                NSString *fileName = [NSString stringWithFormat:@"%@%ld.jpeg",[formatter stringFromDate:date],(long)i];
+                NSString *fileName = [NSString stringWithFormat:@"%@%ld",[formatter stringFromDate:date],(long)i];
                 
                 //name必须跟后台给的一致，fileName随便
                 [formData appendPartWithFileData:picArray[i] name:fileName fileName:picNameArray[i] mimeType:@"image/jpeg"];
@@ -1078,7 +1076,7 @@ static NSInteger number;
             
         } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSString *str = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
-            
+            NSLog(@"str = %@",str);
             
             if ([str isEqualToString:@"0"]) {
                 [HUD hideAnimated:YES];
@@ -1094,7 +1092,6 @@ static NSInteger number;
                 
                 [successHUD hideAnimated:YES afterDelay:0.5];
                 [successHUD removeFromSuperViewOnHide];
-                //                [self.navigationController popToRootViewControllerAnimated:YES];
                 
                 return ;
                 
@@ -1140,8 +1137,6 @@ static NSInteger number;
             });
         }];
     }
-    
-    
 }
 
 #pragma mark - AVCaptureMetaDataOutputObjectsDelegate -

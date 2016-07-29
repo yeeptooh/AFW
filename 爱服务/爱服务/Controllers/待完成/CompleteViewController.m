@@ -51,7 +51,7 @@ UITextFieldDelegate
 @property (nonatomic, strong) UIActivityIndicatorView *activityView;
 @property (nonatomic, strong) UIActivityIndicatorView *searchActivityView;
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
-
+@property (nonatomic, assign, getter = isSelected) BOOL selected;
 #pragma mark 
 @property (nonatomic, strong) NSString *orderID;
 @property (nonatomic, strong) NSString *brand;
@@ -90,7 +90,7 @@ UITextFieldDelegate
         self.tabBarItem.title = @"待完成";
         self.tabBarItem.image = [UIImage imageNamed:@"drawable_no_select_dwc"];
         self.tabBarItem.selectedImage = [UIImage imageNamed:@"drawable_select_dwc"];
-        
+        self.selected = NO;
     }
     return self;
 }
@@ -529,7 +529,7 @@ UITextFieldDelegate
     
     [self.manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [self.activityView stopAnimating];
-      
+        
         if (self.page == 1) {
             if (self.dicList) {
                 [self.dicList removeAllObjects];
@@ -665,137 +665,156 @@ UITextFieldDelegate
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    NSArray *vcList = self.navigationController.viewControllers;
-    NSInteger count = vcList.count;
-    if (count == 3) {
-        UIViewController *vc = vcList[count - 2];
-        if ([vc isKindOfClass:[PartsRequestViewController class]]) {
-            
-            if (tableView.tag == 300) {
-                self.orderModel = self.dicList[indexPath.row];
-                
-            }else{
-                self.orderModel = self.searchResultList[indexPath.row];
-            }
-            self.returnParts([NSString stringWithFormat:@"%ld",(long)self.orderModel.ID], self.orderModel.productBreed, self.orderModel.productClassify, self.orderModel.model, self.orderModel.FromUserID, self.orderModel.fromUserName, self.orderModel.ToUserID, self.orderModel.ToUserName, self.orderModel.HandlerID, self.orderModel.HandlerName, self.orderModel.ProductBreedID, self.orderModel.ProductClassify1ID, self.orderModel.ProductClassify2ID, self.orderModel.ProductClassify2Name, self.orderModel.WaiterName);
-            
-            [self.navigationController popViewControllerAnimated:YES];
-            
-        }else if ([vc isKindOfClass:[AppendFeesViewController class]]) {
-            
-            
-            
-            if (tableView.tag == 300) {
-                self.orderModel = self.dicList[indexPath.row];
-            }else{
-                self.orderModel = self.searchResultList[indexPath.row];
-            }
-            
-            if ([self.orderModel.PayMoney integerValue] <= 0) {
-                MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-                
-                HUD.mode = MBProgressHUDModeText;
-                HUD.label.text = @"无法追加";
-                CGFloat fontsize;
-                if (iPhone4_4s || iPhone5_5s) {
-                    fontsize = 14;
-                }else{
-                    fontsize = 16;
-                }
-                HUD.label.font = font(fontsize);
-                
-                [HUD hideAnimated:YES afterDelay:1.f];
-                return;
-
-            }
-            
-            if ([self.orderModel.AddMoney integerValue] > 0) {
-                MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-                
-                HUD.mode = MBProgressHUDModeText;
-                HUD.label.text = @"已经追加,无法再次追加";
-                CGFloat fontsize;
-                if (iPhone4_4s || iPhone5_5s) {
-                    fontsize = 14;
-                }else{
-                    fontsize = 16;
-                }
-                HUD.label.font = font(fontsize);
-                
-                [HUD hideAnimated:YES afterDelay:1.f];
-                return;
-                
-            }
-            
-            NSInteger count = self.orderModel.price.length;
-            self.returnAppend([NSString stringWithFormat:@"%ld",(long)self.orderModel.ID], self.orderModel.name, self.orderModel.location, [NSString stringWithFormat:@"%@ %@ %@",self.orderModel.productBreed, self.orderModel.productClassify, self.orderModel.model], [self.orderModel.price substringToIndex:count - 1], self.orderModel.FromUserID);
-            
-            [self.navigationController popViewControllerAnimated:YES];
-            
-            
-        }
+    if (self.isSelected) {
+        return;
     }else {
-        DetailViewController *detailVC = [[DetailViewController alloc] init];
-        detailVC.hidesBottomBarWhenPushed = YES;
         
-        if (tableView.tag == 300) {
-            self.orderModel = self.dicList[indexPath.row];
-        }else{
-            self.orderModel = self.searchResultList[indexPath.row];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        
+        NSArray *vcList = self.navigationController.viewControllers;
+        NSInteger count = vcList.count;
+        if (count == 3) {
+            UIViewController *vc = vcList[count - 2];
+            if ([vc isKindOfClass:[PartsRequestViewController class]]) {
+                
+                if (tableView.tag == 300) {
+                    self.orderModel = self.dicList[indexPath.row];
+                    
+                }else{
+                    self.orderModel = self.searchResultList[indexPath.row];
+                }
+                self.returnParts([NSString stringWithFormat:@"%ld",(long)self.orderModel.ID], self.orderModel.productBreed, self.orderModel.productClassify, self.orderModel.model, self.orderModel.FromUserID, self.orderModel.fromUserName, self.orderModel.ToUserID, self.orderModel.ToUserName, self.orderModel.HandlerID, self.orderModel.HandlerName, self.orderModel.ProductBreedID, self.orderModel.ProductClassify1ID, self.orderModel.ProductClassify2ID, self.orderModel.ProductClassify2Name, self.orderModel.WaiterName);
+                
+                [self.navigationController popViewControllerAnimated:YES];
+                
+            }else if ([vc isKindOfClass:[AppendFeesViewController class]]) {
+                
+                if (tableView.tag == 300) {
+                    self.orderModel = self.dicList[indexPath.row];
+                }else{
+                    self.orderModel = self.searchResultList[indexPath.row];
+                }
+                
+                if ([self.orderModel.PayMoney integerValue] <= 0) {
+                    MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+                    
+                    HUD.mode = MBProgressHUDModeText;
+                    HUD.label.text = @"无法追加";
+                    CGFloat fontsize;
+                    if (iPhone4_4s || iPhone5_5s) {
+                        fontsize = 14;
+                    }else{
+                        fontsize = 16;
+                    }
+                    HUD.label.font = font(fontsize);
+                    
+                    [HUD hideAnimated:YES afterDelay:1.f];
+                    return;
+                    
+                }
+                
+                if ([self.orderModel.AddMoney integerValue] > 0) {
+                    MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+                    
+                    HUD.mode = MBProgressHUDModeText;
+                    HUD.label.text = @"已经追加,无法再次追加";
+                    CGFloat fontsize;
+                    if (iPhone4_4s || iPhone5_5s) {
+                        fontsize = 14;
+                    }else{
+                        fontsize = 16;
+                    }
+                    HUD.label.font = font(fontsize);
+                    
+                    [HUD hideAnimated:YES afterDelay:1.f];
+                    return;
+                    
+                }
+                
+                NSInteger count = self.orderModel.price.length;
+                self.returnAppend([NSString stringWithFormat:@"%ld",(long)self.orderModel.ID], self.orderModel.name, self.orderModel.location, [NSString stringWithFormat:@"%@ %@ %@",self.orderModel.productBreed, self.orderModel.productClassify, self.orderModel.model], [self.orderModel.price substringToIndex:count - 1], self.orderModel.FromUserID);
+                
+                [self.navigationController popViewControllerAnimated:YES];
+                
+                
+            }
+        }else {
+            
+            DetailViewController *detailVC = [[DetailViewController alloc] init];
+            detailVC.hidesBottomBarWhenPushed = YES;
+            
+            if (tableView.tag == 300) {
+                self.orderModel = self.dicList[indexPath.row];
+            }else{
+                self.orderModel = self.searchResultList[indexPath.row];
+            }
+            
+            detailVC.ID = self.orderModel.ID;
+            detailVC.state = [self.orderModel.state integerValue];
+            
+            detailVC.name = self.orderModel.name;
+            detailVC.phone = self.orderModel.phone;
+            detailVC.from = [NSString stringWithFormat:@"来源：%@",self.orderModel.fromUserName];
+            detailVC.fromPhone = [NSString stringWithFormat:@"厂商电话：%@",self.orderModel.fromUserPhone];
+            detailVC.price = [NSString stringWithFormat:@"价格：%@",self.orderModel.price];
+            detailVC.location = self.orderModel.location;
+            
+            detailVC.productType = self.orderModel.productType;
+            detailVC.model = self.orderModel.model;
+            detailVC.buyDate = self.orderModel.buyDate;
+            detailVC.productCode = self.orderModel.productCode;
+            detailVC.orderCode = self.orderModel.orderCode;
+            detailVC.inOut = self.orderModel.inOut;
+            
+            detailVC.serviceType = self.orderModel.serviceType;
+            detailVC.appointment = self.orderModel.appointment;
+            detailVC.servicePs = self.orderModel.postScript;
+            detailVC.chargeBackContent = self.orderModel.chargeBackContent;
+            detailVC.waiterName = self.orderModel.WaiterName;
+            detailVC.fromUserID = self.orderModel.FromUserID;
+            detailVC.fromUserName = self.orderModel.fromUserName;
+            detailVC.toUserID = self.orderModel.ToUserID;
+            detailVC.toUserName = self.orderModel.ToUserName;
+            detailVC.BuyerFullAddress_Incept = self.orderModel.BuyerFullAddress_Incept;
+            detailVC.payMoneyStr = self.orderModel.PayMoney;
+            detailVC.priceStr = self.orderModel.price;
+            detailVC.overPs = self.orderModel.FinishRemark;
+            detailVC.productBreed = self.orderModel.productBreed;
+            detailVC.productClassify = self.orderModel.productClassify;
+            
+            detailVC.HandlerID = self.orderModel.HandlerID;
+            detailVC.HandlerName = self.orderModel.HandlerName;
+            
+            detailVC.ProductBreedID = self.orderModel.ProductBreedID;
+            detailVC.ProductClassify1ID = self.orderModel.ProductClassify1ID;
+            detailVC.ProductClassify2ID = self.orderModel.ProductClassify2ID;
+            detailVC.ProductClassify2Name = self.orderModel.ProductClassify2Name;
+            detailVC.location = self.orderModel.location;
+            detailVC.product = [NSString stringWithFormat:@"%@ %@ %@",self.orderModel.productBreed, self.orderModel.productClassify, self.orderModel.model];
+            NSInteger count = self.orderModel.price.length;
+            detailVC.productPrice = [self.orderModel.price substringToIndex:count - 1];
+            detailVC.payMoney = self.orderModel.PayMoney;
+            detailVC.addMoney = self.orderModel.AddMoney;
+            detailVC.payMoneyStr = self.orderModel.PayMoney;
+            detailVC.priceStr = self.orderModel.price;
+#if Environment_Mode == 1
+            self.selected = YES;
+            NSString *url = [NSString stringWithFormat:@"%@/Common.ashx?action=get_finish_require&&comid=%@",HomeURL,detailVC.fromUserID];
+            AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+            manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+            [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                NSString *str = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+                detailVC.settleAccount = str;
+                self.selected = NO;
+                [self.navigationController pushViewController:detailVC animated:YES];
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                self.selected = NO;
+            }];
+#elif Environment_Mode == 2
+            [self.navigationController pushViewController:detailVC animated:YES];
+#endif
+            
         }
-        
-        detailVC.ID = self.orderModel.ID;
-        detailVC.state = [self.orderModel.state integerValue];
-        
-        detailVC.name = self.orderModel.name;
-        detailVC.phone = self.orderModel.phone;
-        detailVC.from = [NSString stringWithFormat:@"来源：%@",self.orderModel.fromUserName];
-        detailVC.fromPhone = [NSString stringWithFormat:@"厂商电话：%@",self.orderModel.fromUserPhone];
-        detailVC.price = [NSString stringWithFormat:@"价格：%@",self.orderModel.price];
-        detailVC.location = self.orderModel.location;
-        
-        detailVC.productType = self.orderModel.productType;
-        detailVC.model = self.orderModel.model;
-        detailVC.buyDate = self.orderModel.buyDate;
-        detailVC.productCode = self.orderModel.productCode;
-        detailVC.orderCode = self.orderModel.orderCode;
-        detailVC.inOut = self.orderModel.inOut;
-        
-        detailVC.serviceType = self.orderModel.serviceType;
-        detailVC.appointment = self.orderModel.appointment;
-        detailVC.servicePs = self.orderModel.postScript;
-        detailVC.chargeBackContent = self.orderModel.chargeBackContent;
-        detailVC.waiterName = self.orderModel.WaiterName;
-        detailVC.fromUserID = self.orderModel.FromUserID;
-        detailVC.fromUserName = self.orderModel.fromUserName;
-        detailVC.toUserID = self.orderModel.ToUserID;
-        detailVC.toUserName = self.orderModel.ToUserName;
-        detailVC.BuyerFullAddress_Incept = self.orderModel.BuyerFullAddress_Incept;
-        detailVC.payMoneyStr = self.orderModel.PayMoney;
-        detailVC.priceStr = self.orderModel.price;
-        detailVC.overPs = self.orderModel.FinishRemark;
-        detailVC.productBreed = self.orderModel.productBreed;
-        detailVC.productClassify = self.orderModel.productClassify;
-        
-        detailVC.HandlerID = self.orderModel.HandlerID;
-        detailVC.HandlerName = self.orderModel.HandlerName;
-        
-        detailVC.ProductBreedID = self.orderModel.ProductBreedID;
-        detailVC.ProductClassify1ID = self.orderModel.ProductClassify1ID;
-        detailVC.ProductClassify2ID = self.orderModel.ProductClassify2ID;
-        detailVC.ProductClassify2Name = self.orderModel.ProductClassify2Name;
-        detailVC.location = self.orderModel.location;
-        detailVC.product = [NSString stringWithFormat:@"%@ %@ %@",self.orderModel.productBreed, self.orderModel.productClassify, self.orderModel.model];
-        NSInteger count = self.orderModel.price.length;
-        detailVC.productPrice = [self.orderModel.price substringToIndex:count - 1];
-        detailVC.payMoney = self.orderModel.PayMoney;
-        detailVC.addMoney = self.orderModel.AddMoney;
-        detailVC.payMoneyStr = self.orderModel.PayMoney;
-        detailVC.priceStr = self.orderModel.price;
-        [self.navigationController pushViewController:detailVC animated:YES];
-        
     }
 }
 

@@ -23,6 +23,7 @@
 #import "ChangeOrderViewController.h"
 #import "PartsRequestViewController.h"
 #import "AppendFeesViewController.h"
+#import "ChangeImageViewController.h"
 
 #import "DialogAnimation.h"
 #import "ButtonPresentAnimation.h"
@@ -110,7 +111,7 @@ UIViewControllerTransitioningDelegate
     if (!_tableView) {
         CGRect frame;
 #if Environment_Mode == 1
-        if (self.state == 4 || self.state == 5) {
+        if (self.state == 4 || self.state == 5 || self.state >= 10) {
             frame = CGRectMake(0, BaseInfoViewHeight, Width, Height - BaseInfoViewHeight - StatusBarAndNavigationBarHeight - TabbarHeight);
         }else{
             frame = CGRectMake(0, BaseInfoViewHeight, Width, Height - BaseInfoViewHeight - StatusBarAndNavigationBarHeight);
@@ -526,6 +527,27 @@ UIViewControllerTransitioningDelegate
         colView3.backgroundColor = [UIColor whiteColor];
         [effectView.contentView addSubview:colView3];
         
+    }else if (self.state >= 10) {
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, Height - StatusBarAndNavigationBarHeight - TabbarHeight, Width, TabbarHeight)];
+        view.backgroundColor = color(230, 230, 230, 1);
+        [self.view addSubview:view];
+        
+        UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
+        effectView.frame = view.bounds;
+        [view addSubview:effectView];
+        
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, Width, 0.6)];
+        lineView.backgroundColor = [UIColor lightGrayColor];
+        [effectView.contentView addSubview:lineView];
+        
+        UIButton *exchangeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        exchangeButton.frame = CGRectMake(0, 0, Width, TabbarHeight);
+        //            robButton.titleLabel.font = font(12);
+        [exchangeButton setTitle:@"修改图片" forState:UIControlStateNormal];
+        [exchangeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        exchangeButton.backgroundColor = MainBlueColor;
+        [exchangeButton addTarget:self action:@selector(exchangeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        [effectView.contentView addSubview:exchangeButton];
     }
 #elif Environment_Mode == 2
     
@@ -673,6 +695,62 @@ UIViewControllerTransitioningDelegate
 #endif
     
 }
+
+
+- (void)exchangeButtonClicked {
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    
+    ChangeImageViewController *changeImageVC = [[ChangeImageViewController alloc] init];
+    UserModel *userModel = [UserModel readUserModel];
+    NSString *URL= [NSString stringWithFormat:@"%@task.ashx?action=gettaskfile&taskid=%@&comid=%@",HomeURL, @(self.ID),@(userModel.comid)];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+
+        NSMutableArray *photoList = [NSMutableArray array];
+        for (NSDictionary *dic in responseObject) {
+            [photoList addObject:dic[@"fileUrl"]];
+        }
+        for (NSInteger i = 0; i < photoList.count; i++) {
+            if ([photoList[i] isEqualToString:@""]) {
+                [photoList removeObjectAtIndex:i];
+            }
+        }
+        
+        changeImageVC.taskID = [NSString stringWithFormat:@"%@",@(self.ID)];
+        changeImageVC.array = photoList;
+        if (photoList.count >= 9) {
+            changeImageVC.uploadCount = 0;
+            changeImageVC.count = 0;
+            changeImageVC.display = YES;
+        }else {
+            changeImageVC.uploadCount = photoList.count;
+            changeImageVC.count = photoList.count;
+            changeImageVC.display = NO;
+        }
+        
+        MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+        
+        [hud hideAnimated:YES];
+        [hud removeFromSuperViewOnHide];
+        [self.navigationController pushViewController:changeImageVC animated:YES];
+
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
+        UIImage *image = [[UIImage imageNamed:@"Checkerror"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+        hud.customView = imageView;
+        hud.mode = MBProgressHUDModeCustomView;
+        hud.label.text = NSLocalizedString(@"请检查网络", @"HUD completed title");
+        [hud hideAnimated:YES afterDelay:1.5f];
+        [hud removeFromSuperViewOnHide];
+    }];
+    
+    
+    
+}
+
 
 - (void)requestButtonClicked {
     
@@ -1174,11 +1252,11 @@ UIViewControllerTransitioningDelegate
 #if Environment_Mode == 1
 
     if (self.state == 6 || self.state == 7 ||(self.state >= 10 && self.state <15)) {
-        return 3;
-    }else if (self.state >= 15) {
         return 4;
+    }else if (self.state >= 15) {
+        return 5;
     }else {
-        return 2;
+        return 3;
     }
 #elif Environment_Mode == 2
     NSInteger i = 0;
@@ -1234,6 +1312,16 @@ UIViewControllerTransitioningDelegate
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else if (indexPath.row == 2) {
+        SettleAccountsTableViewCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"SettleAccountsTableViewCell" owner:self options:nil] lastObject];
+        if (!self.settleAccount) {
+            self.settleAccount = @"";
+        }
+        cell.settleAccountLabel.text = [NSString stringWithFormat:@"要求: %@",self.settleAccount];
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+        
+    }else if (indexPath.row == 3) {
         if (self.state == 6) {
             RefuseTableViewCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"RefuseTableViewCell" owner:self options:nil] lastObject];
             if ([self.chargeBackContent isEqualToString:@""] || !self.chargeBackContent) {
@@ -1431,6 +1519,11 @@ UIViewControllerTransitioningDelegate
         }
         return UITableViewAutomaticDimension;
     }else if (indexPath.row == 2) {
+        if ([self.settleAccount isEqualToString:@""]) {
+            return 69;
+        }
+        return UITableViewAutomaticDimension;
+    }else if (indexPath.row == 3) {
         if (self.state == 6) {
             if ([self.chargeBackContent isEqualToString:@""]) {
                 return 70;
