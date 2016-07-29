@@ -49,9 +49,8 @@ UITextFieldDelegate
 @property (nonatomic, strong) UIView *whiteView;
 @property (nonatomic, strong) NSMutableArray *searchResultList;
 
-
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
-
+@property (nonatomic, assign, getter = isSelected) BOOL selected;
 @end
 
 @implementation AllOrderViewController
@@ -79,7 +78,7 @@ UITextFieldDelegate
         self.tabBarItem.title = @"全部订单";
         self.tabBarItem.image = [UIImage imageNamed:@"drawable_no_select_all"];
         self.tabBarItem.selectedImage = [UIImage imageNamed:@"drawable_select_all"];
-        
+        self.selected = NO;
     }
     return self;
 }
@@ -491,7 +490,7 @@ UITextFieldDelegate
     self.manager.requestSerializer.timeoutInterval = 5;
     
     [self.manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        NSLog(@"%@",responseObject);
+        
         for (NSDictionary *dic in responseObject[@"task"]) {
             OrderModel *ordelModel = [OrderModel orderFromDictionary:dic];
             [self.dicList addObject:ordelModel];
@@ -501,6 +500,7 @@ UITextFieldDelegate
             [self.view addSubview:self.noOrderView];
             return ;
         }
+        
         [self.view addSubview:self.tableView];
         [self.activityView stopAnimating];
         [UIView animateWithDuration:0.3 animations:^{
@@ -632,81 +632,101 @@ UITextFieldDelegate
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    DetailViewController *detailVC = [[DetailViewController alloc] init];
-    detailVC.hidesBottomBarWhenPushed = YES;
-
-    if (tableView.tag == 300) {
-        self.orderModel = self.dicList[indexPath.row];
-    }else{
-        self.orderModel = self.searchResultList[indexPath.row];
-    }
-    
-    
-    detailVC.ID = self.orderModel.ID;
-    detailVC.state = [self.orderModel.state integerValue];
-    detailVC.FinishTime = self.orderModel.FinishTime;
-    detailVC.name = self.orderModel.name;
-    detailVC.phone = self.orderModel.phone;
-    detailVC.from = [NSString stringWithFormat:@"来源：%@",self.orderModel.fromUserName];
-    detailVC.fromPhone = [NSString stringWithFormat:@"厂商电话：%@",self.orderModel.fromUserPhone];
-    detailVC.price = [NSString stringWithFormat:@"价格：%@",self.orderModel.price];
-    detailVC.location = self.orderModel.location;
-    
-    detailVC.productType = self.orderModel.productType;
-    detailVC.model = self.orderModel.model;
-    detailVC.buyDate = self.orderModel.buyDate;
-    detailVC.productCode = self.orderModel.productCode;
-    detailVC.orderCode = self.orderModel.orderCode;
-    detailVC.inOut = self.orderModel.inOut;
-    
-    detailVC.serviceType = self.orderModel.serviceType;
-    detailVC.appointment = self.orderModel.appointment;
-    detailVC.servicePs = self.orderModel.postScript;
-    detailVC.chargeBackContent = self.orderModel.chargeBackContent;
-    
-    detailVC.fromUserID = self.orderModel.FromUserID;
-    detailVC.fromUserName = self.orderModel.fromUserName;
-    detailVC.toUserID = self.orderModel.ToUserID;
-    detailVC.toUserName = self.orderModel.ToUserName;
-    detailVC.BuyerFullAddress_Incept = self.orderModel.BuyerFullAddress_Incept;
-    detailVC.waiterName = self.orderModel.WaiterName;
-    detailVC.payMoneyStr = self.orderModel.PayMoney;
-    detailVC.overPs = self.orderModel.FinishRemark;
-    detailVC.refuseContent = self.orderModel.refuseContent;
-    detailVC.payMoneyStr = self.orderModel.PayMoney;
-    detailVC.priceStr = self.orderModel.price;
-    
-    
-    detailVC.buyerProvince = self.orderModel.BuyerProvince;
-    detailVC.buyerCity = self.orderModel.BuyerCity;
-    detailVC.buyerDistrict = self.orderModel.area;
-    detailVC.buyerTown = self.orderModel.BuyerTown;
-    detailVC.buyerAddress  = self.orderModel.BuyerAddress;
-    
-    detailVC.buyerProvinceID = self.orderModel.buyerProvinceID;
-    detailVC.buyerCityID = self.orderModel.buyerCityID;
-    detailVC.buyerDistrictID = self.orderModel.buyerDistrictID;
-    detailVC.buyerTownID = self.orderModel.buyerTownID;
-    
-    detailVC.productBreed = self.orderModel.productBreed;
-    detailVC.ProductBreedID = self.orderModel.ProductBreedID;
-    detailVC.productClassify = self.orderModel.productClassify;
-    detailVC.ProductClassify1ID = self.orderModel.ProductClassify1ID;
-    detailVC.ProductClassify2ID = self.orderModel.ProductClassify2ID;
+    if (self.isSelected) {
+        return;
+    }else {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        DetailViewController *detailVC = [[DetailViewController alloc] init];
+        detailVC.hidesBottomBarWhenPushed = YES;
+        
+        if (tableView.tag == 300) {
+            self.orderModel = self.dicList[indexPath.row];
+        }else{
+            self.orderModel = self.searchResultList[indexPath.row];
+        }
+        
+        
+        detailVC.ID = self.orderModel.ID;
+        detailVC.state = [self.orderModel.state integerValue];
+        detailVC.FinishTime = self.orderModel.FinishTime;
+        detailVC.name = self.orderModel.name;
+        detailVC.phone = self.orderModel.phone;
+        detailVC.from = [NSString stringWithFormat:@"来源：%@",self.orderModel.fromUserName];
+        detailVC.fromPhone = [NSString stringWithFormat:@"厂商电话：%@",self.orderModel.fromUserPhone];
+        detailVC.price = [NSString stringWithFormat:@"价格：%@",self.orderModel.price];
+        detailVC.location = self.orderModel.location;
+        
+        detailVC.productType = self.orderModel.productType;
+        detailVC.model = self.orderModel.model;
+        detailVC.buyDate = self.orderModel.buyDate;
+        detailVC.productCode = self.orderModel.productCode;
+        detailVC.orderCode = self.orderModel.orderCode;
+        detailVC.inOut = self.orderModel.inOut;
+        
+        detailVC.serviceType = self.orderModel.serviceType;
+        detailVC.appointment = self.orderModel.appointment;
+        detailVC.servicePs = self.orderModel.postScript;
+        detailVC.chargeBackContent = self.orderModel.chargeBackContent;
+        
+        detailVC.fromUserID = self.orderModel.FromUserID;
+        detailVC.fromUserName = self.orderModel.fromUserName;
+        detailVC.toUserID = self.orderModel.ToUserID;
+        detailVC.toUserName = self.orderModel.ToUserName;
+        detailVC.BuyerFullAddress_Incept = self.orderModel.BuyerFullAddress_Incept;
+        detailVC.waiterName = self.orderModel.WaiterName;
+        detailVC.payMoneyStr = self.orderModel.PayMoney;
+        detailVC.overPs = self.orderModel.FinishRemark;
+        detailVC.refuseContent = self.orderModel.refuseContent;
+        detailVC.payMoneyStr = self.orderModel.PayMoney;
+        detailVC.priceStr = self.orderModel.price;
+        detailVC.location = self.orderModel.location;
+        detailVC.product = [NSString stringWithFormat:@"%@ %@ %@",self.orderModel.productBreed, self.orderModel.productClassify, self.orderModel.model];
+        NSInteger count = self.orderModel.price.length;
+        detailVC.productPrice = [self.orderModel.price substringToIndex:count - 1];
+        detailVC.payMoney = self.orderModel.PayMoney;
+        detailVC.addMoney = self.orderModel.AddMoney;
+        detailVC.payMoneyStr = self.orderModel.PayMoney;
+        detailVC.priceStr = self.orderModel.price;
+        
+        detailVC.buyerProvince = self.orderModel.BuyerProvince;
+        detailVC.buyerCity = self.orderModel.BuyerCity;
+        detailVC.buyerDistrict = self.orderModel.area;
+        detailVC.buyerTown = self.orderModel.BuyerTown;
+        detailVC.buyerAddress  = self.orderModel.BuyerAddress;
+        
+        detailVC.buyerProvinceID = self.orderModel.buyerProvinceID;
+        detailVC.buyerCityID = self.orderModel.buyerCityID;
+        detailVC.buyerDistrictID = self.orderModel.buyerDistrictID;
+        detailVC.buyerTownID = self.orderModel.buyerTownID;
+        
+        detailVC.productBreed = self.orderModel.productBreed;
+        detailVC.ProductBreedID = self.orderModel.ProductBreedID;
+        detailVC.productClassify = self.orderModel.productClassify;
+        detailVC.ProductClassify1ID = self.orderModel.ProductClassify1ID;
+        detailVC.ProductClassify2ID = self.orderModel.ProductClassify2ID;
 #if Environment_Mode == 1
+        self.selected = YES;
+        NSString *url = [NSString stringWithFormat:@"%@/Common.ashx?action=get_finish_require&&comid=%@",HomeURL,detailVC.fromUserID];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            NSString *str = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+            detailVC.settleAccount = str;
+            self.selected = NO;
+            [self.navigationController pushViewController:detailVC animated:YES];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            self.selected = NO;
+        }];
 #elif Environment_Mode == 2
-    detailVC.orderNumber = self.orderModel.orderCode;
-    detailVC.serviceClassify = self.orderModel.serviceClassify;
-    detailVC.postScript =self.orderModel.postScript;
-    detailVC.isFree = self.orderModel.IsFree;
-    detailVC.serviceClassifyID = self.orderModel.serviceClassifyID;
+        detailVC.orderNumber = self.orderModel.orderCode;
+        detailVC.serviceClassify = self.orderModel.serviceClassify;
+        detailVC.postScript =self.orderModel.postScript;
+        detailVC.isFree = self.orderModel.IsFree;
+        detailVC.serviceClassifyID = self.orderModel.serviceClassifyID;
+        [self.navigationController pushViewController:detailVC animated:YES];
 #endif
-    
-    
-    
-    [self.navigationController pushViewController:detailVC animated:YES];
-    
+
+    }
 }
 
 - (void)robButtonClicked {

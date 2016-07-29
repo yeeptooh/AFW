@@ -67,7 +67,7 @@ static BOOL isProduction = FALSE;
         
         _locationManager = [[CLLocationManager alloc] init];
         if (iOSVerson >= 9.0) {
-            _locationManager.allowsBackgroundLocationUpdates = YES;
+//            _locationManager.allowsBackgroundLocationUpdates = YES;
         }
         if (iOSVerson >= 8.0) {
             [_locationManager requestAlwaysAuthorization];
@@ -261,7 +261,6 @@ static BOOL isProduction = FALSE;
             if (![dic[@"imei"] isEqualToString:UUID]) {
                 
                 if (![[self activityViewController] isKindOfClass:[LoginViewController class]]) {
-                    
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
                         
@@ -525,37 +524,37 @@ static BOOL isProduction = FALSE;
     self.fuckUBaby = 1;
 #if Environment_Mode == 1
     
-        UIApplication *app = [UIApplication sharedApplication];
-        
-        __block UIBackgroundTaskIdentifier identifier;
-        
-        identifier = [app beginBackgroundTaskWithExpirationHandler:^{
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                if (identifier != UIBackgroundTaskInvalid) {
-                    
-                    identifier = UIBackgroundTaskInvalid;
-                    
-                }
-                
-            });
-            
-        }];
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                if (identifier != UIBackgroundTaskInvalid) {
-                    
-                    identifier = UIBackgroundTaskInvalid;
-                    
-                }
-                
-            });
-            
-        });
+//        UIApplication *app = [UIApplication sharedApplication];
+//        
+//        __block UIBackgroundTaskIdentifier identifier;
+//        
+//        identifier = [app beginBackgroundTaskWithExpirationHandler:^{
+//            
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                
+//                if (identifier != UIBackgroundTaskInvalid) {
+//                    
+//                    identifier = UIBackgroundTaskInvalid;
+//                    
+//                }
+//                
+//            });
+//            
+//        }];
+//        
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//            
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                
+//                if (identifier != UIBackgroundTaskInvalid) {
+//                    
+//                    identifier = UIBackgroundTaskInvalid;
+//                    
+//                }
+//                
+//            });
+//            
+//        });
     
     
 #elif Environment_Mode == 2

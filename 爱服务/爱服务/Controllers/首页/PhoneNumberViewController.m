@@ -89,15 +89,6 @@
     lineView1.backgroundColor = color(150, 150, 150, 1);
     [self.view addSubview:lineView1];
     
-//    UIButton *firstButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [firstButton setTitle:@"0757-26631015" forState:UIControlStateNormal];
-//    [firstButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
-//    [firstButton setTitleColor:color(230, 230, 230, 1) forState:UIControlStateHighlighted];
-//    firstButton.frame = CGRectMake(0, height*1.5/5.5, width, height/5.5);
-//    [firstButton addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
-
-//    [self.view addSubview:firstButton];
-    
     UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(width/10, height*2.5/5.5 - 0.5, width*4/5, 0.5)];
     lineView2.backgroundColor = color(150, 150, 150, 1);
     [self.view addSubview:lineView2];

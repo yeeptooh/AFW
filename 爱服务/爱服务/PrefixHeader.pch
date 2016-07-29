@@ -30,19 +30,18 @@ fprintf(stderr, "-------\n");                                               \
 #if Environment_Mode == 1
 
 #define HomeURL @"http://i.51ifw.com/forapp/"
+//#define HomeURL @"http://192.168.1.102:66/forapp/"
 //18038664988
-//#define HomeURL @"http://192.168.1.173:90/forapp/"
 #elif Environment_Mode == 2
-//#define HomeURL @"http://i.51ifw.com/forapp2/"
-#define HomeURL @"http://192.168.1.173:90/forapp2/"
+#define HomeURL @"http://i.51ifw.com/forapp2/"
+//#define HomeURL @"http://192.168.1.173:90/forapp2/"
 
 #endif
 //存我要收款图片
 #define subHomeURL @"http://i.51ifw.com/"
-//#define subHomeURL @"http://192.168.1.228:90/"
+//#define subHomeURL @"http://192.168.1.102:66/"
 //爱心保
 #define heartProHomeURL @"http://www.vk90.com/"
-//#define heartProHomeURL @"http://192.168.1.228:89/"
 
 //13715458921
 //123456

@@ -49,6 +49,7 @@ UITextFieldDelegate
 @property (nonatomic, strong) UIActivityIndicatorView *searchActivityView;
 
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
+@property (nonatomic, assign, getter = isSelected) BOOL selected;
 @end
 
 @implementation RobViewController
@@ -81,7 +82,7 @@ UITextFieldDelegate
         
         self.tabBarItem.image = [UIImage imageNamed:@"drawable_no_select_qiangdan"];
         self.tabBarItem.selectedImage = [UIImage imageNamed:@"drawable_select_qiangdan"];
-        
+        self.selected = NO;
     }
     return self;
 }
@@ -637,57 +638,76 @@ UITextFieldDelegate
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    DetailViewController *detailVC = [[DetailViewController alloc] init];
-    detailVC.hidesBottomBarWhenPushed = YES;
-    
-    if (tableView.tag == 300) {
-        self.orderModel = self.dicList[indexPath.row];
-    }else{
-        self.orderModel = self.searchResultList[indexPath.row];
+    if (self.isSelected) {
+        return;
+    }else {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        DetailViewController *detailVC = [[DetailViewController alloc] init];
+        detailVC.hidesBottomBarWhenPushed = YES;
+        
+        if (tableView.tag == 300) {
+            self.orderModel = self.dicList[indexPath.row];
+        }else{
+            self.orderModel = self.searchResultList[indexPath.row];
+        }
+        
+        detailVC.overPs = self.orderModel.FinishRemark;
+        detailVC.refuseContent = self.orderModel.refuseContent;
+        detailVC.serviceType = self.orderModel.serviceType;
+        detailVC.appointment = self.orderModel.appointment;
+        detailVC.servicePs = self.orderModel.postScript;
+        detailVC.chargeBackContent = self.orderModel.chargeBackContent;
+        detailVC.FinishTime = self.orderModel.FinishTime;
+        detailVC.ID = self.orderModel.ID;
+        detailVC.state = [self.orderModel.state integerValue];
+        detailVC.flag = 1;
+        detailVC.name = self.orderModel.name;
+        detailVC.phone = @"接单后可见";
+        detailVC.from = [NSString stringWithFormat:@"来源：%@",self.orderModel.fromUserName];
+        detailVC.fromPhone = [NSString stringWithFormat:@"厂商电话：%@",self.orderModel.fromUserPhone];
+        detailVC.price = [NSString stringWithFormat:@"价格：%@",self.orderModel.price];
+        detailVC.location = self.orderModel.location;
+        
+        detailVC.productType = self.orderModel.productType;
+        detailVC.model = self.orderModel.model;
+        detailVC.buyDate = self.orderModel.buyDate;
+        detailVC.productCode = self.orderModel.productCode;
+        detailVC.orderCode = self.orderModel.orderCode;
+        detailVC.inOut = self.orderModel.inOut;
+        
+        detailVC.serviceType = self.orderModel.serviceType;
+        detailVC.appointment = self.orderModel.appointment;
+        detailVC.servicePs = self.orderModel.postScript;
+        detailVC.chargeBackContent = self.orderModel.chargeBackContent;
+        
+        detailVC.fromUserID = self.orderModel.FromUserID;
+        detailVC.fromUserName = self.orderModel.fromUserName;
+        detailVC.toUserID = self.orderModel.ToUserID;
+        detailVC.toUserName = self.orderModel.ToUserName;
+        detailVC.BuyerFullAddress_Incept = self.orderModel.BuyerFullAddress_Incept;
+        detailVC.waiterName = self.orderModel.WaiterName;
+        detailVC.payMoneyStr = self.orderModel.PayMoney;
+        detailVC.priceStr = self.orderModel.price;
+        detailVC.overPs = self.orderModel.FinishRemark;
+        
+#if Environment_Mode == 1
+        self.selected = YES;
+        NSString *url = [NSString stringWithFormat:@"%@/Common.ashx?action=get_finish_require&&comid=%@",HomeURL,detailVC.fromUserID];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            NSString *str = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+            detailVC.settleAccount = str;
+            self.selected = NO;
+            [self.navigationController pushViewController:detailVC animated:YES];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            self.selected = NO;
+        }];
+#elif Environment_Mode == 2
+        [self.navigationController pushViewController:detailVC animated:YES];
+#endif
+   
     }
-    
-    detailVC.overPs = self.orderModel.FinishRemark;
-    detailVC.refuseContent = self.orderModel.refuseContent;
-    detailVC.serviceType = self.orderModel.serviceType;
-    detailVC.appointment = self.orderModel.appointment;
-    detailVC.servicePs = self.orderModel.postScript;
-    detailVC.chargeBackContent = self.orderModel.chargeBackContent;
-    detailVC.FinishTime = self.orderModel.FinishTime;
-    detailVC.ID = self.orderModel.ID;
-    detailVC.state = [self.orderModel.state integerValue];
-    detailVC.flag = 1;
-    detailVC.name = self.orderModel.name;
-    detailVC.phone = @"接单后可见";
-    detailVC.from = [NSString stringWithFormat:@"来源：%@",self.orderModel.fromUserName];
-    detailVC.fromPhone = [NSString stringWithFormat:@"厂商电话：%@",self.orderModel.fromUserPhone];
-    detailVC.price = [NSString stringWithFormat:@"价格：%@",self.orderModel.price];
-    detailVC.location = self.orderModel.location;
-    
-    detailVC.productType = self.orderModel.productType;
-    detailVC.model = self.orderModel.model;
-    detailVC.buyDate = self.orderModel.buyDate;
-    detailVC.productCode = self.orderModel.productCode;
-    detailVC.orderCode = self.orderModel.orderCode;
-    detailVC.inOut = self.orderModel.inOut;
-    
-    detailVC.serviceType = self.orderModel.serviceType;
-    detailVC.appointment = self.orderModel.appointment;
-    detailVC.servicePs = self.orderModel.postScript;
-    detailVC.chargeBackContent = self.orderModel.chargeBackContent;
-    
-    detailVC.fromUserID = self.orderModel.FromUserID;
-    detailVC.fromUserName = self.orderModel.fromUserName;
-    detailVC.toUserID = self.orderModel.ToUserID;
-    detailVC.toUserName = self.orderModel.ToUserName;
-    detailVC.BuyerFullAddress_Incept = self.orderModel.BuyerFullAddress_Incept;
-    detailVC.waiterName = self.orderModel.WaiterName;
-    detailVC.payMoneyStr = self.orderModel.PayMoney;
-    detailVC.priceStr = self.orderModel.price;
-    detailVC.overPs = self.orderModel.FinishRemark;
-    
-    [self.navigationController pushViewController:detailVC animated:YES];
-    
 }
 
 - (void)robButtonClicked:(UIButton *)sender {

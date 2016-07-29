@@ -16,6 +16,7 @@
 #import "AssessTableViewCell.h"
 #import "PayMoneyTableViewCell.h"
 #import "RefuseTableViewCell.h"
+#import "SettleAccountsTableViewCell.h"
 
 @interface DetailViewController : DetailPageBaseViewController
 
@@ -105,4 +106,8 @@
 @property (nonatomic, strong) NSString *postScript;
 @property (nonatomic, strong) NSString *isFree;
 @property (nonatomic, strong) NSString *serviceClassifyID;
+
+
+@property (nonatomic, strong) NSString *settleAccount;
+
 @end
