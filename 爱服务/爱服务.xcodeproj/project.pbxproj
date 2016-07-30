@@ -23,6 +23,8 @@
 		4A4954651D28B55B00E05868 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4954621D28B55B00E05868 /* AlipaySDK.framework */; };
 		4A4954661D28B55B00E05868 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4954621D28B55B00E05868 /* AlipaySDK.framework */; };
 		4A49B1AB1D4B4FAC002D0EC0 /* ZDDPhotoBrowerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A49B1AA1D4B4FAC002D0EC0 /* ZDDPhotoBrowerViewController.m */; };
+		4A49B1AC1D4B59D3002D0EC0 /* ChangeImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A61F5B41D49DB43009A3818 /* ChangeImageViewController.m */; };
+		4A49B1AD1D4B59E8002D0EC0 /* ZDDPhotoBrowerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A49B1AA1D4B4FAC002D0EC0 /* ZDDPhotoBrowerViewController.m */; };
 		4A4AF23E1D4896FB00821DC4 /* SettleAccountsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4AF23C1D4896FB00821DC4 /* SettleAccountsTableViewCell.m */; };
 		4A4AF23F1D4896FB00821DC4 /* SettleAccountsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A4AF23D1D4896FB00821DC4 /* SettleAccountsTableViewCell.xib */; };
 		4A4BD23E1CB895A1009DA0B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BD23D1CB895A1009DA0B9 /* main.m */; };
@@ -2408,6 +2410,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A49B1AD1D4B59E8002D0EC0 /* ZDDPhotoBrowerViewController.m in Sources */,
+				4A49B1AC1D4B59D3002D0EC0 /* ChangeImageViewController.m in Sources */,
 				4A57D5381D406F3700E3129E /* AppendReasonViewController.m in Sources */,
 				4A62D1EF1D361900009A80C3 /* DispatchViewController.m in Sources */,
 				4A5D25E91D34C73500630029 /* CommitHeartViewController.m in Sources */,
