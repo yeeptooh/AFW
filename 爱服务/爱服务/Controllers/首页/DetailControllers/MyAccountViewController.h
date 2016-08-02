@@ -6,8 +6,8 @@
 //  Copyright © 2016年 张冬冬. All rights reserved.
 //
 
-#import "DetailPageBaseViewController.h"
+#import "ZDDWebViewController.h"
 
-@interface MyAccountViewController : DetailPageBaseViewController
+@interface MyAccountViewController : ZDDWebViewController
 
 @end

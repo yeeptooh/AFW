@@ -8,6 +8,7 @@
 
 #import "AppendReasonViewController.h"
 #import "HYBModalTransition.h"
+#import "ReasonTableViewCell.h"
 @interface AppendReasonViewController ()
 <
 UITableViewDelegate,
@@ -45,27 +46,30 @@ UIViewControllerTransitioningDelegate
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
     return self.reasonList.count;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *identifier = @"Mycell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    static NSString *identifier = @"Cell";
+    ReasonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
+        cell = [[NSBundle mainBundle] loadNibNamed:@"ReasonTableViewCell" owner:self options:nil].lastObject;
     }
-    
-    cell.textLabel.text = self.reasonList[indexPath.row][@"Name"];
-    
-    
+    cell.reasonLabel.text = self.reasonList[indexPath.row][@"Name"];
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewAutomaticDimension;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 24;
 }
 
 

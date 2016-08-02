@@ -361,7 +361,6 @@ static NSInteger number;
             textfield.font = font(fontsize);
             textfield.layer.cornerRadius = 5;
             textfield.layer.masksToBounds = YES;
-            
             textfield.tag = 1000 + indexPath.row;
             [cell addSubview:textfield];
             
@@ -629,9 +628,7 @@ static NSInteger number;
         NSString *year = [dateStr substringToIndex:4];
         NSString *month = [dateStr substringWithRange:NSMakeRange(5, 2)];
         NSString *day = [dateStr substringFromIndex:8];
-        
         NSString *date = [NSString stringWithFormat:@"%@-%@-%@",year,month,day];
-        
         [sender setTitle:date forState:UIControlStateNormal];
     };
     
@@ -656,9 +653,7 @@ static NSInteger number;
         imagePickerController.sourceType = sourceType;
         
         [self presentViewController:imagePickerController animated:YES completion:^{
-            
         }];
-        
     }];
     
     UIAlertAction *albumAction = [UIAlertAction actionWithTitle:@"从手机相册中选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -670,11 +665,8 @@ static NSInteger number;
         imagePickerController.sourceType = sourceType;
         imagePickerController.navigationBar.barStyle = UIBarStyleBlack;
         [self presentViewController:imagePickerController animated:YES completion:^{
-            
         }];
-        
     }];
-    
     
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         
@@ -806,8 +798,6 @@ static NSInteger number;
             return ;
         }
         
-        
-        
         MBProgressHUD *HUD = [[MBProgressHUD alloc]initWithView:self.tableView];
         HUD.mode = MBProgressHUDModeIndeterminate;
         [self.tableView addSubview:HUD];
@@ -901,7 +891,6 @@ static NSInteger number;
         } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSString *str = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
             
-            
             if ([str isEqualToString:@"0"]) {
                 [HUD hideAnimated:YES];
                 [HUD removeFromSuperViewOnHide];
@@ -916,7 +905,6 @@ static NSInteger number;
                 
                 [successHUD hideAnimated:YES afterDelay:0.5];
                 [successHUD removeFromSuperViewOnHide];
-                //                [self.navigationController popToRootViewControllerAnimated:YES];
                 
                 return ;
                 
@@ -926,7 +914,6 @@ static NSInteger number;
             }
             
             [[NSNotificationCenter defaultCenter] postNotificationName:kBadgeValueChanged object:nil];
-            
             
             [HUD hideAnimated:YES];
             [HUD removeFromSuperViewOnHide];
@@ -965,6 +952,7 @@ static NSInteger number;
         }];
         
     }else {
+        
         if ([((UITextField *)[self.tableView viewWithTag:1005]).text isEqualToString:@""] || !((UITextField *)[self.tableView viewWithTag:1005]).text) {
             MBProgressHUD *successHUD = [[MBProgressHUD alloc]initWithView:self.tableView];
             successHUD.mode = MBProgressHUDModeText;
@@ -974,7 +962,6 @@ static NSInteger number;
             
             [successHUD showAnimated:YES];
             
-            
             [successHUD hideAnimated:YES afterDelay:1.2];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 number = 0;
@@ -983,13 +970,10 @@ static NSInteger number;
             return ;
         }
         
-        
-        
         MBProgressHUD *HUD = [[MBProgressHUD alloc]initWithView:self.tableView];
         HUD.mode = MBProgressHUDModeIndeterminate;
         [self.tableView addSubview:HUD];
         [HUD showAnimated:YES];
-        
         
         NSInteger count = 0;
         if (self.firstImageView.image) {
@@ -1076,7 +1060,6 @@ static NSInteger number;
             
         } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSString *str = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
-            NSLog(@"str = %@",str);
             
             if ([str isEqualToString:@"0"]) {
                 [HUD hideAnimated:YES];
@@ -1100,7 +1083,6 @@ static NSInteger number;
             
             [[NSNotificationCenter defaultCenter] postNotificationName:kBadgeValueChanged object:nil];
             
-            
             [HUD hideAnimated:YES];
             [HUD removeFromSuperViewOnHide];
             MBProgressHUD *successHUD = [[MBProgressHUD alloc]initWithView:self.tableView];
@@ -1119,7 +1101,6 @@ static NSInteger number;
             
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             number = 0;
-            //        NSLog(@"error = %@",error.userInfo);
             [HUD hideAnimated:YES];
             [HUD removeFromSuperViewOnHide];
             MBProgressHUD *errorHUD = [[MBProgressHUD alloc]initWithView:self.tableView];
@@ -1141,20 +1122,15 @@ static NSInteger number;
 
 #pragma mark - AVCaptureMetaDataOutputObjectsDelegate -
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
-    
     [self.session stopRunning];
-    
     if (metadataObjects.count > 0) {
-        
         //扫码成功－vibrate
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
         AVMetadataMachineReadableCodeObject *obj = metadataObjects[0];
         UITextField *textfield = [self.tableView viewWithTag:1001];
         textfield.text = obj.stringValue;
     }
-    
     [self.navigationController popViewControllerAnimated:YES];
-    
 }
 
 - (void)setNaviTitle {

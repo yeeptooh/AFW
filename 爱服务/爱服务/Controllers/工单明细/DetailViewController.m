@@ -758,7 +758,6 @@ UIViewControllerTransitioningDelegate
     partVC.ProductClassify2Name = self.ProductClassify2Name;
     
     [self.navigationController pushViewController:partVC animated:YES];
-   
 }
 
 - (void)appendButtonClicked {
@@ -834,7 +833,6 @@ UIViewControllerTransitioningDelegate
     changeVC.productTableView.FtypeID = self.ProductBreedID;
     changeVC.productTableView.FbigID = self.ProductClassify1ID;
     changeVC.productTableView.FsmallID = self.ProductClassify2ID;
-    
     
     changeVC.productTableView.inOut = self.inOut;
     changeVC.productTableView.buyDate = self.buyDate;
@@ -1021,7 +1019,6 @@ UIViewControllerTransitioningDelegate
             [self.CSList addObject:dic];
         }
 
-        
         MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
         [hud hideAnimated:YES];
         DispatchViewController *dispatchVC = [[DispatchViewController alloc] init];
@@ -1032,7 +1029,7 @@ UIViewControllerTransitioningDelegate
         [self presentViewController:dispatchVC animated:YES completion:nil];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@",error.userInfo);
+
         MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
         UIImage *image = [[UIImage imageNamed:@"Checkerror"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
@@ -1042,8 +1039,6 @@ UIViewControllerTransitioningDelegate
         [hud hideAnimated:YES afterDelay:0.75f];
         [hud removeFromSuperViewOnHide];
     }];
-    
-    
 }
 
 - (void)cancelButtonClicked {
@@ -1053,7 +1048,6 @@ UIViewControllerTransitioningDelegate
     hud.label.font = font(14);
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 //    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
     UserModel *userModel = [UserModel readUserModel];
     //m:347,url中有中文
     NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=canceltask",HomeURL];
@@ -1141,12 +1135,8 @@ UIViewControllerTransitioningDelegate
             [successHUD hideAnimated:YES];
             [successHUD removeFromSuperViewOnHide];
             
-            
         });
     }];
-    
-    
-    
 }
 
 - (void)receiveButtonClicked {
@@ -1220,10 +1210,7 @@ UIViewControllerTransitioningDelegate
 
 #pragma mark - UITableViewDataSource -
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    
     return 1;
-    
-
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -1398,7 +1385,6 @@ UIViewControllerTransitioningDelegate
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
-            
             
         }else if (self.state == 7) {
             ChargebackTableViewCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"ChargebackTableViewCell" owner:self options:nil] lastObject];
@@ -1624,9 +1610,7 @@ UIViewControllerTransitioningDelegate
     }else {
         return [[ButtonDismissAnimation alloc]init];
     }
-    
 }
-
 
 - (void)setBadgeValue {
     UIViewController *receiveVC = [self.tabBarController viewControllers][1];

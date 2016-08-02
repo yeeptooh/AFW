@@ -17,7 +17,6 @@
 #import <Foundation/Foundation.h>
 #import "HYBModalTransition.h"
 
-
 #define NSLog(format, ...) do {                                                                          \
 fprintf(stderr, "<%s : %d> %s\n",                                           \
         [[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String],  \
@@ -46,11 +45,8 @@ fprintf(stderr, "-------\n");                                               \
 //13715458921
 //123456
 
-
 #define myPartner @"2088011233310417"
 #define mySeller @"1933218116@qq.com"
-
-
 
 #define kBadgeValueChanged @"badgeValueChanged"
 #define kUpdateMoney @"kUpdateMoney"
@@ -67,9 +63,5 @@ fprintf(stderr, "-------\n");                                               \
 #define WXAppKey @"wxd2929d98dcfb1f60"
 #endif
 
-
-
 #define QQKey @"1105380638"
-
-
 #endif /* PrefixHeader_pch */

@@ -31,7 +31,7 @@
 #import <AlipaySDK/AlipaySDK.h>
 #import "MBProgressHUD.h"
 #import <CoreLocation/CoreLocation.h>
-
+#import "Appirater.h"
 @interface AppDelegate ()
 
 <
@@ -50,9 +50,6 @@ UIAlertViewDelegate
 @property (nonatomic, strong) UIAlertController *locationAlertController;
 @property (nonatomic, strong) UIAlertController *appLocationAlertController;
 @property (nonatomic, strong) NSTimer *updateLocationTimer;
-
-
-
 #elif Environment_Mode == 2
 #endif
 
@@ -86,11 +83,11 @@ static BOOL isProduction = FALSE;
 #endif
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
     [UINavigationBar appearance].barTintColor = color(30, 30, 30, 1);
     [UINavigationBar appearance].tintColor = color(245, 245, 245, 1);
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} ];
-    
+    [[UINavigationBar appearance] setTitleTextAttributes:@{
+                                                           NSFontAttributeName:[UIFont systemFontOfSize:18]
+                                                           }];
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"hadLaunched"]) {
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"FirstLaunch"];
     }else {
@@ -115,6 +112,13 @@ static BOOL isProduction = FALSE;
                                          robNaviController,
                                          allorderNaviController
                                          ];
+    //解决tabbar懒加载问题
+    [homeNaviController view];
+    [receiveNaviController view];
+    [completeNaviController view];
+    [robNaviController view];
+    [allorderNaviController view];
+    
     self.tabBarController.tabBar.tintColor = color(59, 165, 249, 1);
 
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"hadLaunch"]) {
@@ -123,12 +127,30 @@ static BOOL isProduction = FALSE;
         self.window.rootViewController = [[LoginViewController alloc]init];
     }
     
-    
     UIView *tabView = [[UIView alloc]initWithFrame:CGRectMake(0, Height - TabbarHeight, Width, TabbarHeight)];
     tabView.backgroundColor = [UIColor whiteColor];
     [self.window addSubview:tabView];
-
     [self.window makeKeyAndVisible];
+    
+    
+    
+#if Environment_Mode == 1
+    //1073429240
+    [Appirater setAppId:@"1073429240"];
+    [Appirater setDaysUntilPrompt:7];
+    [Appirater setUsesUntilPrompt:5];
+    [Appirater setSignificantEventsUntilPrompt:-1];
+    [Appirater setTimeBeforeReminding:2];
+    [Appirater setDebug:NO];
+#elif Environment_Mode == 2
+    //1134925235
+    [Appirater setAppId:@"1134925235"];
+    [Appirater setDaysUntilPrompt:7];
+    [Appirater setUsesUntilPrompt:5];
+    [Appirater setSignificantEventsUntilPrompt:-1];
+    [Appirater setTimeBeforeReminding:2];
+    [Appirater setDebug:NO];
+#endif
     
     
     [WXApi registerApp:WXAppKey];
@@ -137,12 +159,9 @@ static BOOL isProduction = FALSE;
     TencentOAuth *oAuth = [[TencentOAuth alloc] initWithAppId:QQKey andDelegate:nil];
     NSLog(@"%@",oAuth.accessToken);
     
-    
-    
     if (iOSVerson >= 8.0) {
         [JPUSHService registerForRemoteNotificationTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil];
     }
-    
     
     NSString *advertisingId = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
     
@@ -151,8 +170,6 @@ static BOOL isProduction = FALSE;
                  apsForProduction:isProduction
             advertisingIdentifier:advertisingId];
   
-    
-    
 #if Environment_Mode == 1
     
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"FirstLaunch"]) {
@@ -183,6 +200,10 @@ static BOOL isProduction = FALSE;
 #elif Environment_Mode == 2
 #endif
     self.fuckUBaby = 0;
+    
+    [Appirater appLaunched:YES];
+    
+    
     return YES;
 }
 
@@ -218,7 +239,6 @@ static BOOL isProduction = FALSE;
     switch (status) {
         case kCLAuthorizationStatusDenied:
         {
-            
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"此应用的定位功能已禁用" message:@"请点击确定打开应用的定位功能" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
             alertView.tag = 10001;
             [alertView show];
@@ -226,7 +246,6 @@ static BOOL isProduction = FALSE;
             break;
         case kCLAuthorizationStatusAuthorizedAlways:
         {
-            
             
         }
             
@@ -284,7 +303,6 @@ static BOOL isProduction = FALSE;
                         
                     });
                     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"logOut"];
-                    [[NSUserDefaults standardUserDefaults] synchronize];
                     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"hadLaunch"];
                     [[NSUserDefaults standardUserDefaults] synchronize];
                 }
@@ -299,9 +317,9 @@ static BOOL isProduction = FALSE;
     [manager stopUpdatingLocation];
 }
 
-- (UIViewController *)activityViewController
-{
-    UIViewController* activityViewController = nil;
+- (UIViewController *)activityViewController {
+    
+    UIViewController *activityViewController = nil;
     
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];
     if(window.windowLevel != UIWindowLevelNormal)
@@ -444,6 +462,7 @@ static BOOL isProduction = FALSE;
     
     [manager GETMethodBaseURL:HomeURL path:subURL parameters:nil isJSONSerialization:YES progress:nil success:^(id responseObject) {
         if ([responseObject[@"data"] integerValue] ==  5) {
+            
             [[NSNotificationCenter defaultCenter] postNotificationName:kReloadCell object:nil];
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.window animated:YES];
             hud.label.text = @"付款中..";
@@ -488,6 +507,7 @@ static BOOL isProduction = FALSE;
             
         }
     } failure:^(NSError *error) {
+        
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.window animated:YES];
         hud.label.text = @"付款中..";
         hud.mode = MBProgressHUDModeIndeterminate;
@@ -554,15 +574,12 @@ static BOOL isProduction = FALSE;
 //            
 //        });
     
-    
 #elif Environment_Mode == 2
 #endif
-    
-
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    
+    [Appirater appEnteredForeground:YES];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

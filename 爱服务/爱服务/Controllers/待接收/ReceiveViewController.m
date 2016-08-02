@@ -429,8 +429,6 @@ UITextFieldDelegate
     
 }
 
-
-
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.manager.operationQueue cancelAllOperations];
@@ -477,6 +475,7 @@ UITextFieldDelegate
     self.page ++;
     [self netWorking];
 }
+
 - (void)netWorking {
     
     self.manager = [AFHTTPSessionManager manager];
@@ -512,7 +511,6 @@ UITextFieldDelegate
         
         [self.tableView.mj_footer endRefreshing];
         
-        
         return ;
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -525,8 +523,6 @@ UITextFieldDelegate
         self.tableView.mj_footer.hidden = YES;
         return ;
     }];
-
-    
 }
 
 #pragma mark - UITableViewDelegate And DataSource -
@@ -542,7 +538,6 @@ UITextFieldDelegate
     }else{
         return self.searchResultList.count;
     }
-    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -551,7 +546,6 @@ UITextFieldDelegate
     MainTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[NSBundle mainBundle] loadNibNamed:@"MainTableViewCell" owner:self options:nil].lastObject;
-        
     }
     
     if (tableView.tag == 300) {
@@ -786,13 +780,11 @@ UITextFieldDelegate
         }
         [self.searchResultTableView.mj_footer endRefreshing];
         
-        
         return ;
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
         [self.searchResultTableView.mj_footer endRefreshing];
-
         [self.searchActivityView stopAnimating];
         [self.searchResultView addSubview:self.noNetWorkingView];
         self.searchResultTableView.mj_footer.hidden = YES;
@@ -862,7 +854,6 @@ UITextFieldDelegate
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
-    
     
 }
 

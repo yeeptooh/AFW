@@ -16,19 +16,15 @@ NSCoding
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, assign) NSInteger comid;
 @property (nonatomic, assign) CGFloat money;
-//@property (nonatomic, assign) CGFloat margin;
 @property (nonatomic, assign) NSInteger provinceid;
 @property (nonatomic, assign) NSInteger cityid;
 @property (nonatomic, assign) NSInteger districtid;
-
-
 @property (nonatomic, strong) NSString *companyName;
 @property (nonatomic, strong) NSString *masterName;
 @property (nonatomic, strong) NSString *userType;
 
 
-
 + (void)writeUserModel:(UserModel *)userModel;
-+ (UserModel *)readUserModel;
++ (instancetype)readUserModel;
 
 @end
