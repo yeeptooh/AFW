@@ -12,18 +12,17 @@
 #import "ServiceTypeViewController.h"
 #import "AFNetworking.h"
 #import "ChangeOrderViewController.h"
+
 @interface BusinessDetailTableView ()
 <
 UITableViewDelegate,
 UITableViewDataSource,
 UITextFieldDelegate
 >
-@property (nonatomic, assign) CGRect baseFrame;
 
+@property (nonatomic, assign) CGRect baseFrame;
 @property (nonatomic, strong) NSMutableArray *servceList;
 @property (nonatomic, strong) NSMutableArray *serviceIDList;
-
-
 @end
 
 @implementation BusinessDetailTableView
@@ -77,7 +76,7 @@ UITextFieldDelegate
     
     NSArray *labelList = @[@"服务类型",
                            @"预约时间",
-                           @"备注",
+                           @"备 注",
                            ];
     static NSString *identifier = @"userCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
@@ -135,7 +134,6 @@ UITextFieldDelegate
                 [button setTitle:self.serviceClassify forState:UIControlStateNormal];
             }
             
-            
             if (indexPath.row == 1) {
                 
                 [button setTitle:self.appointment forState:UIControlStateNormal];
@@ -148,22 +146,18 @@ UITextFieldDelegate
             }else {
                 if (indexPath.row == 0) {
                     NSString *name = [[NSUserDefaults standardUserDefaults] objectForKey:@"service"][0][@"n"];
-                    
                     [button setTitle:name forState:UIControlStateNormal];
                 }
             }
             
             if (indexPath.row == 1) {
-                
                 NSDate *date = [NSDate date];
                 NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
                 [formatter setDateFormat:@"yyyy-MM-dd"];
                 NSString *dateString = [formatter stringFromDate:date];
-                
                 [button setTitle:dateString forState:UIControlStateNormal];
             }
         }
-        
     }
     return cell;
 }

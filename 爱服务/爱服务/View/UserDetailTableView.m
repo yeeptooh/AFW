@@ -139,13 +139,15 @@ UITextFieldDelegate
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSArray *labelList = @[@"姓 名",
+    NSArray *labelList = @[
+                           @"姓 名",
                            @"手 机",
-                           @"省份",
-                           @"城市",
+                           @"省 份",
+                           @"城 市",
                            @"市/县/区",
                            @"街 道",
-                           @"详细地址"];
+                           @"详细地址"
+                           ];
     static NSString *identifier = @"userCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
@@ -492,9 +494,6 @@ UITextFieldDelegate
                 
             }];
             
-            
-            
-            
         }else if (sender.tag == 204) {
             RegionViewController *regionVC = [[RegionViewController alloc] init];
             NSString *regionUrl = [NSString stringWithFormat:@"%@Common.ashx?action=getdistricts&parent=%@",HomeURL,self.FcityID];
@@ -580,7 +579,6 @@ UITextFieldDelegate
             };
             
             [[self viewController] presentViewController:streetVC animated:YES completion:nil];
-            
         }
     }else {
         if (sender.tag == 202) {

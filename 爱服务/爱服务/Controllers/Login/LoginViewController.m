@@ -8,9 +8,8 @@
 
 #import "LoginViewController.h"
 #import "UserModel.h"
-
 #import "AppDelegate.h"
-#import "AFNetworking.h"
+#import "YeeptNetWorkingManager.h"
 #import "RegisterViewController.h"
 #import "MBProgressHUD.h"
 #import "HomeViewController.h"
@@ -22,14 +21,13 @@ UITextFieldDelegate
 
 @property (nonatomic, strong) UIView *loginContainerView;
 @property (nonatomic, strong) UIImageView *imageView;
-
 @property (nonatomic, strong) UITextField *accountTextField;
 
 
-@property (nonatomic, strong) MBProgressHUD *HUD;
-@property (nonatomic, strong) MBProgressHUD *successHUD;
-@property (nonatomic, strong) MBProgressHUD *nilHUD;
-@property (nonatomic, strong) MBProgressHUD *failHUD;
+//@property (nonatomic, strong) MBProgressHUD *HUD;
+//@property (nonatomic, strong) MBProgressHUD *successHUD;
+//@property (nonatomic, strong) MBProgressHUD *nilHUD;
+//@property (nonatomic, strong) MBProgressHUD *failHUD;
 
 @end
 
@@ -218,11 +216,31 @@ UITextFieldDelegate
 }
 
 - (void)loginNetWorking {
+
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
     
-    _HUD = [[MBProgressHUD alloc]initWithView:self.view];
-    _HUD.mode = MBProgressHUDModeIndeterminate;
-    [self.view addSubview:_HUD];
-    [self.HUD showAnimated:YES];
+    if ([self.accountTextField.text isEqualToString:@""] || [self.passwordTextField.text isEqualToString:@""]) {
+        
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:window animated:YES];
+        hud.minSize = CGSizeMake(100, 100);
+        hud.label.font = font(14);
+        UIImage *image = [[UIImage imageNamed:@"Checkerror"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+        hud.customView = imageView;
+        hud.mode = MBProgressHUDModeCustomView;
+        hud.detailsLabel.text = NSLocalizedString(@"用户名或密码\n为空", @"HUD completed title");
+        hud.detailsLabel.font = font(14);
+        hud.detailsLabel.numberOfLines = 0;
+        [hud hideAnimated:YES afterDelay:1.25f];
+        [hud removeFromSuperViewOnHide];
+        return;
+        
+    }
+
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:window animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.minSize = CGSizeMake(115, 115);
+    hud.label.font = font(14);
     
 #if Environment_Mode == 1
     NSString *UUID = [[UIDevice currentDevice].identifierForVendor UUIDString];
@@ -237,28 +255,13 @@ UITextFieldDelegate
                              @"password":self.passwordTextField.text
                              };
 #endif
-    NSString *URL = [NSString stringWithFormat:@"%@Passport.ashx?action=login",HomeURL];
-    
 
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//    manager.requestSerializer.timeoutInterval = 15;
-    __weak typeof(self)weakSelf = self;
+    NSString *subURL = @"Passport.ashx?action=login";
     
-    [manager POST:URL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        [weakSelf.HUD hideAnimated:YES];
-        [weakSelf.HUD removeFromSuperViewOnHide];
+    YeeptNetWorkingManager *manager = [[YeeptNetWorkingManager alloc] init];
+    [manager POSTMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:YES progress:nil success:^(id responseObject) {
         
         if (responseObject != nil) {
-
-            _successHUD = [[MBProgressHUD alloc]initWithView:self.view];
-            _successHUD.mode = MBProgressHUDModeText;
-            _successHUD.label.text = @"登录成功";
-            _successHUD.label.font = font(12);
-            
-            [weakSelf.view addSubview:_successHUD];
-            [[NSUserDefaults standardUserDefaults] setObject:weakSelf.accountTextField.text forKey:@"username"];
-            [[NSUserDefaults standardUserDefaults] setObject:weakSelf.passwordTextField.text forKey:@"password"];
             
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hadLaunch"];
             [[NSUserDefaults standardUserDefaults] synchronize];
@@ -275,17 +278,21 @@ UITextFieldDelegate
             userModel.masterName = responseObject[@"user"][0][@"MasterName"];
             userModel.userType = responseObject[@"user"][0][@"UserType"];
             [UserModel writeUserModel:userModel];
-            
-            [weakSelf.successHUD showAnimated:YES];
-            dispatch_group_t group = dispatch_group_create();
-            dispatch_group_enter(group);
 
-            AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-            NSString *countString = [NSString stringWithFormat:@"%@Task.ashx?action=gettaskcount&comid=%ld&uid=%ld&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
             
-            manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-            [manager GET:countString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                dispatch_group_leave(group);
+            YeeptNetWorkingManager *manager = [[YeeptNetWorkingManager alloc] init];
+
+            NSString *subURL = @"Task.ashx?action=gettaskcount";
+            NSDictionary *params = @{
+                                     @"comid":@(userModel.comid),
+                                     @"uid":@(userModel.uid),
+                                     @"provinceid":@(userModel.provinceid),
+                                     @"cityid":@(userModel.cityid),
+                                     @"districtid":@(userModel.districtid)
+                                     };
+            
+            [manager GETMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:NO progress:nil success:^(id responseObject) {
+                
                 NSString *allString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
                 NSArray *countList = [allString componentsSeparatedByString:@","];
                 
@@ -295,66 +302,72 @@ UITextFieldDelegate
                 if (((NSArray *)[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"]).lastObject) {
                     [[NSNotificationCenter defaultCenter] postNotificationName:kupdateBadgeNum object:nil];
                 }
-                [weakSelf.successHUD hideAnimated:YES];
-                [weakSelf.successHUD removeFromSuperViewOnHide];
-                if ([[NSUserDefaults standardUserDefaults] integerForKey:@"logOut"]) {
-                    [weakSelf dismissViewControllerAnimated:YES completion:nil];
-                }else{
-                    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-                    [UIApplication sharedApplication].keyWindow.rootViewController = appDelegate.tabBarController;
-                }
                 
-            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                dispatch_group_leave(group);
+                MBProgressHUD *hud = [MBProgressHUD HUDForView:window];
+                UIImage *image = [[UIImage imageNamed:@"Checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+                hud.customView = imageView;
+                hud.mode = MBProgressHUDModeCustomView;
+                hud.label.text = NSLocalizedString(@"登录成功", @"HUD completed title");
+                [hud hideAnimated:YES afterDelay:0.75f];
+                [hud removeFromSuperViewOnHide];
+                
+                [[NSUserDefaults standardUserDefaults] setObject:self.accountTextField.text forKey:@"username"];
+                [[NSUserDefaults standardUserDefaults] setObject:self.passwordTextField.text forKey:@"password"];
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.75 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"logOut"]) {
+                        [self dismissViewControllerAnimated:YES completion:nil];
+                    }else{
+                        AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+                        [UIApplication sharedApplication].keyWindow.rootViewController = appDelegate.tabBarController;
+                    }
+                });
+                
+            } failure:^(NSError *error) {
+                
+                MBProgressHUD *hud = [MBProgressHUD HUDForView:window];
+                UIImage *image = [[UIImage imageNamed:@"Checkerror"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+                hud.customView = imageView;
+                hud.mode = MBProgressHUDModeCustomView;
+                hud.detailsLabel.text = NSLocalizedString(@"登录失败\n请检查网络", @"HUD completed title");
+                hud.detailsLabel.font = font(14);
+                hud.detailsLabel.numberOfLines = 0;
+                [hud hideAnimated:YES afterDelay:1.25f];
+                [hud removeFromSuperViewOnHide];
+                
             }];
-           
             
         }else{
             
-            if ([weakSelf.accountTextField.text isEqualToString:@""] || [weakSelf.passwordTextField.text isEqualToString:@""]) {
-                _nilHUD = [[MBProgressHUD alloc]initWithView:self.view];
-                _nilHUD.mode = MBProgressHUDModeText;
-                _nilHUD.label.text = @"用户名或密码为空";
-                _nilHUD.label.font = font(12);
-                [weakSelf.view addSubview:_nilHUD];
-                [weakSelf.nilHUD showAnimated:YES];
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [weakSelf.nilHUD hideAnimated:YES];
-                    [weakSelf.nilHUD removeFromSuperViewOnHide];
-                });
-            }else {
-                _failHUD = [[MBProgressHUD alloc]initWithView:self.view];
-                _failHUD.mode = MBProgressHUDModeText;
-                _failHUD.label.text = @"用户名或密码错误";
-                _failHUD.label.font = font(12);
-                [weakSelf.view addSubview:_failHUD];
-                
-                [weakSelf.failHUD showAnimated:YES];
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [weakSelf.failHUD hideAnimated:YES];
-                    [weakSelf.failHUD removeFromSuperViewOnHide];
-                });
-            }
+            MBProgressHUD *hud = [MBProgressHUD HUDForView:window];
+            UIImage *image = [[UIImage imageNamed:@"Checkerror"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+            hud.customView = imageView;
+            hud.mode = MBProgressHUDModeCustomView;
+            hud.detailsLabel.text = NSLocalizedString(@"用户名或密\n码错误", @"HUD completed title");
+            hud.detailsLabel.font = font(14);
+            hud.detailsLabel.numberOfLines = 0;
+            [hud hideAnimated:YES afterDelay:1.25f];
+            [hud removeFromSuperViewOnHide];
             
         }
         
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } failure:^(NSError *error) {
         
-        [weakSelf.HUD hideAnimated:YES];
-        [weakSelf.HUD removeFromSuperViewOnHide];
-        MBProgressHUD *noConnectHUD = [[MBProgressHUD alloc]initWithView:self.view];
-        noConnectHUD.mode = MBProgressHUDModeText;
-        noConnectHUD.label.text = @"请检查网络连接";
-        noConnectHUD.label.font = font(14);
-        [weakSelf.view addSubview:noConnectHUD];
-        [noConnectHUD showAnimated:YES];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [noConnectHUD hideAnimated:YES];
-            [noConnectHUD removeFromSuperViewOnHide];
-        });
+        MBProgressHUD *hud = [MBProgressHUD HUDForView:window];
+        UIImage *image = [[UIImage imageNamed:@"Checkerror"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+        hud.customView = imageView;
+        hud.mode = MBProgressHUDModeCustomView;
+        hud.detailsLabel.text = NSLocalizedString(@"登录失败\n请检查网络", @"HUD completed title");
+        hud.detailsLabel.font = font(14);
+        hud.detailsLabel.numberOfLines = 0;
+        [hud hideAnimated:YES afterDelay:1.25f];
+        [hud removeFromSuperViewOnHide];
         
     }];
-    
   
 }
 

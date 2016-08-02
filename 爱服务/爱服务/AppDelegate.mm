@@ -2,16 +2,19 @@
 //  AppDelegate.m
 //  爱服务
 //
+//  程序中可能还有很多代码需要优化, 也有很多已经被优化过了
+//  请拿到这份代码的人, 好好理解我写的思路
+//  有什么好的建议, 给我发E-mail
+//  939224798@qq.com
+//
 //  Created by 张冬冬 on 16/4/9.
 //  Copyright © 2016年 张冬冬. All rights reserved.
 //
 
 #import "AppDelegate.h"
-#import "AFNetworking.h"
+#import "YeeptNetWorkingManager.h"
 #import "UserModel.h"
-
 #import "LoginViewController.h"
-
 #import "HomeViewController.h"
 #import "ReceiveViewController.h"
 #import "CompleteViewController.h"
@@ -26,7 +29,6 @@
 #import <AdSupport/ASIdentifierManager.h>
 
 #import <AlipaySDK/AlipaySDK.h>
-
 #import "MBProgressHUD.h"
 #import <CoreLocation/CoreLocation.h>
 
@@ -242,16 +244,15 @@ static BOOL isProduction = FALSE;
     CLLocation *location = [locations lastObject];
     UserModel *userModel = [UserModel readUserModel];
 
-    NSString *URL = [NSString stringWithFormat:@"%@common.ashx?action=update_user_lng_lat",HomeURL];
-    NSDictionary *dic = @{
+    NSString *subURL = @"common.ashx?action=update_user_lng_lat";
+    NSDictionary *params = @{
                           @"userid":@(userModel.uid),
                           @"lng":@(location.coordinate.longitude),
                           @"lat":@(location.coordinate.latitude)
                          };
-    AFHTTPSessionManager *afManager = [AFHTTPSessionManager manager];
-    afManager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    [afManager POST:URL parameters:dic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
+    
+    YeeptNetWorkingManager *yManager = [[YeeptNetWorkingManager alloc] init];
+    [yManager POSTMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:NO progress:nil success:^(id responseObject) {
         id jsonObj = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
         if ([jsonObj isKindOfClass:[NSDictionary class]]) {
             NSDictionary *dic = (NSDictionary *)jsonObj;
@@ -289,11 +290,10 @@ static BOOL isProduction = FALSE;
                 }
                 
             }
-           
+            
         }
-       
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-
+    } failure:^(NSError *error) {
+        
     }];
     
     [manager stopUpdatingLocation];
@@ -433,18 +433,16 @@ static BOOL isProduction = FALSE;
 
 - (void)updateResponse:(NSString *)orderID {
     
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    YeeptNetWorkingManager *manager = [[YeeptNetWorkingManager alloc] init];
+    
 #if Environment_Mode == 1
-    NSString *url = [NSString stringWithFormat:@"%@/Payment/Alipay/Recharge.ashx?action=getorderstate&orderid=%@",HomeURL,orderID];
+    NSString *subURL = [NSString stringWithFormat:@"/Payment/Alipay/Recharge.ashx?action=getorderstate&orderid=%@",orderID];
 #elif Environment_Mode == 2
-    NSString *url = [NSString stringWithFormat:@"%@/Payment/Alipay/Recharge.ashx?action=getorderstate&orderid=%@",HomeURL,orderID];
+    NSString *subURL = [NSString stringWithFormat:@"/Payment/Alipay/Recharge.ashx?action=getorderstate&orderid=%@",orderID];
 
 #endif
     
-
-    [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        
+    [manager GETMethodBaseURL:HomeURL path:subURL parameters:nil isJSONSerialization:YES progress:nil success:^(id responseObject) {
         if ([responseObject[@"data"] integerValue] ==  5) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kReloadCell object:nil];
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.window animated:YES];
@@ -463,7 +461,7 @@ static BOOL isProduction = FALSE;
                 hud.label.text = NSLocalizedString(@"付款成功", @"HUD completed title");
                 [hud hideAnimated:YES afterDelay:0.75f];
                 [hud removeFromSuperViewOnHide];
-
+                
             });
             
         }
@@ -486,11 +484,10 @@ static BOOL isProduction = FALSE;
                 hud.label.text = NSLocalizedString(@"付款失败", @"HUD completed title");
                 [hud hideAnimated:YES afterDelay:0.75f];
                 [hud removeFromSuperViewOnHide];
-             });
-
+            });
+            
         }
-  
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } failure:^(NSError *error) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.window animated:YES];
         hud.label.text = @"付款中..";
         hud.mode = MBProgressHUDModeIndeterminate;
@@ -510,6 +507,7 @@ static BOOL isProduction = FALSE;
             
         });
     }];
+    
 }
 
 
@@ -595,15 +593,14 @@ static BOOL isProduction = FALSE;
                              };
 #endif
     
-    NSString *URL = [NSString stringWithFormat:@"%@Passport.ashx?action=login",HomeURL];
+    NSString *subURL = @"Passport.ashx?action=login";
+    YeeptNetWorkingManager *manager = [[YeeptNetWorkingManager alloc] init];
     
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:URL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
+    [manager POSTMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:YES progress:nil success:^(id responseObject) {
         if (responseObject != nil) {
-
+            
             UserModel *userModel = [[UserModel alloc]init];
-
+            
             userModel.uid = [responseObject[@"user"][0][@"UserId"] integerValue];
             userModel.comid = [responseObject[@"user"][0][@"CompanyID"] integerValue];
             userModel.money = [responseObject[@"user"][0][@"Money"] floatValue];
@@ -615,14 +612,19 @@ static BOOL isProduction = FALSE;
             userModel.masterName = responseObject[@"user"][0][@"MasterName"];
             userModel.userType = responseObject[@"user"][0][@"UserType"];
             [UserModel writeUserModel:userModel];
-                        
-            AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-            NSString *countString = [NSString stringWithFormat:@"%@Task.ashx?action=gettaskcount&comid=%ld&uid=%ld&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
-            manager.responseSerializer = [AFHTTPResponseSerializer serializer];
             
-            [manager GET:countString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                
-                
+            YeeptNetWorkingManager *manager = [[YeeptNetWorkingManager alloc] init];
+            NSString *subURL = @"Task.ashx?action=gettaskcount";
+            NSDictionary *params = @{
+                                     @"comid":@(userModel.comid),
+                                     @"uid":@(userModel.uid),
+                                     @"provinceid":@(userModel.provinceid),
+                                     @"cityid":@(userModel.cityid),
+                                     @"districtid":@(userModel.districtid)
+                                     };
+            
+            
+            [manager GETMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:NO progress:nil success:^(id responseObject) {
                 NSString *allString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
                 NSLog(@"%@",allString);
                 NSArray *countList = [allString componentsSeparatedByString:@","];
@@ -632,18 +634,16 @@ static BOOL isProduction = FALSE;
                 if (((NSArray *)[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"]).lastObject) {
                     [[NSNotificationCenter defaultCenter] postNotificationName:kupdateBadgeNum object:nil];
                 }
-            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            } failure:^(NSError *error) {
                 
             }];
-       
+            
         }else{
-  
+            
         }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } failure:^(NSError *error) {
         
     }];
-
     
 }
 

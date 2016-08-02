@@ -19,10 +19,10 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.view.layer.cornerRadius = 5;
     self.view.layer.masksToBounds = YES;
-    [self setTable];
+    [self setTableView];
 }
 
-- (void)setTable {
+- (void)setTableView {
     
     CGFloat height;
     CGFloat width;
@@ -128,10 +128,8 @@
 }
 
 - (void)buttonClicked:(UIButton *)sender {
-    
-        NSString *telString = [NSString stringWithFormat:@"telprompt://%@",sender.titleLabel.text];
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:telString]];
-    
+    NSString *telString = [NSString stringWithFormat:@"telprompt://%@",sender.titleLabel.text];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:telString]];
 }
 
 - (void)quitButtonClicked {
