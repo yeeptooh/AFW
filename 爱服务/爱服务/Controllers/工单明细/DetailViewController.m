@@ -247,11 +247,8 @@ UIViewControllerTransitioningDelegate
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:messageString]];
 }
 
-
-
 - (void)dialogButtonClicked {
-    
-    
+
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *url = [NSString stringWithFormat:@"%@Task.ashx?action=getfeedbacklist&taskid=%@",HomeURL,@(self.ID)];
     [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -268,7 +265,6 @@ UIViewControllerTransitioningDelegate
         dialogVC.modalPresentationStyle = UIModalPresentationCustom;
         dialogVC.transitioningDelegate = self;
         dialogVC.dialogList = self.diaLogList;
-        
         dialogVC.taskID = [NSString stringWithFormat:@"%@",@(self.ID)];
         dialogVC.fromUserName = self.fromUserName;
         dialogVC.fromUserID = self.fromUserID;
@@ -276,7 +272,6 @@ UIViewControllerTransitioningDelegate
         dialogVC.toUserID = self.toUserID;
  
         [self presentViewController:dialogVC animated:YES completion:^{
-
         }];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -372,8 +367,6 @@ UIViewControllerTransitioningDelegate
             [MKMapItem openMapsWithItems:@[currentmapItem,mapItem] launchOptions:options];
         }];
     }
-    
-    
 }
 
 - (void)locationButtonClicked {
@@ -390,8 +383,6 @@ UIViewControllerTransitioningDelegate
     };
     
     [self presentViewController:buttonVC animated:YES completion:nil];
-    
-
     
 }
 
@@ -474,7 +465,6 @@ UIViewControllerTransitioningDelegate
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, Width, 0.6)];
         lineView.backgroundColor = [UIColor lightGrayColor];
         [effectView.contentView addSubview:lineView];
-        
         
         UIButton *completeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         completeButton.frame = CGRectMake(0, 0, Width/4, TabbarHeight);
@@ -609,7 +599,6 @@ UIViewControllerTransitioningDelegate
         [payButton addTarget:self action:@selector(payButtonClicked) forControlEvents:UIControlEventTouchUpInside];
         [effectView.contentView addSubview:payButton];
         
-        
         UIButton *changeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         changeButton.frame = CGRectMake(Width/2, 0, Width/2, TabbarHeight);
         [changeButton setTitle:@"修改" forState:UIControlStateNormal];
@@ -653,8 +642,6 @@ UIViewControllerTransitioningDelegate
         view.backgroundColor = color(230, 230, 230, 1);
         [self.view addSubview:view];
         
-        
-        
         UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
         effectView.frame = view.bounds;
         [view addSubview:effectView];
@@ -670,7 +657,6 @@ UIViewControllerTransitioningDelegate
         agreeButton.backgroundColor = MainBlueColor;
         [agreeButton addTarget:self action:@selector(agreeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
         [effectView.contentView addSubview:agreeButton];
-        
         
         UIButton *disagreeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         disagreeButton.frame = CGRectMake(Width/2, 0, Width/2, TabbarHeight);
@@ -746,9 +732,6 @@ UIViewControllerTransitioningDelegate
         [hud hideAnimated:YES afterDelay:1.5f];
         [hud removeFromSuperViewOnHide];
     }];
-    
-    
-    
 }
 
 
@@ -774,10 +757,8 @@ UIViewControllerTransitioningDelegate
     partVC.ProductClassify2ID = self.ProductClassify2ID;
     partVC.ProductClassify2Name = self.ProductClassify2Name;
     
-    
     [self.navigationController pushViewController:partVC animated:YES];
-    
-    
+   
 }
 
 - (void)appendButtonClicked {
@@ -797,7 +778,6 @@ UIViewControllerTransitioningDelegate
         
         [HUD hideAnimated:YES afterDelay:1.0];
         return;
-        
     }
     
     if ([self.addMoney integerValue] > 0) {
@@ -814,9 +794,7 @@ UIViewControllerTransitioningDelegate
         
         [HUD hideAnimated:YES afterDelay:1.f];
         return;
-        
     }
-    
     
     AppendFeesViewController *appendVC = [[AppendFeesViewController alloc] init];
     appendVC.flag = 1;
@@ -831,7 +809,6 @@ UIViewControllerTransitioningDelegate
 
 - (void)changeButtonClicked {
     
-    
     ChangeOrderViewController *changeVC = [[ChangeOrderViewController alloc] init];
     changeVC.ID = self.ID;
     changeVC.userTableView.name = self.name;
@@ -841,7 +818,6 @@ UIViewControllerTransitioningDelegate
     changeVC.userTableView.district = self.buyerDistrict;
     changeVC.userTableView.town = self.buyerTown;
     changeVC.userTableView.address = self.buyerAddress;
-    
     
     changeVC.userTableView.FprovinceID = self.buyerProvinceID;
     changeVC.userTableView.FcityID = self.buyerCityID;
@@ -982,7 +958,9 @@ UIViewControllerTransitioningDelegate
     hud.label.font = font(14);
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=pay",HomeURL];
-    NSDictionary *params =@{@"taskId":@(self.ID)};
+    NSDictionary *params =@{
+                            @"taskId":@(self.ID)
+                            };
     URL = [URL stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     
     [manager POST:URL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

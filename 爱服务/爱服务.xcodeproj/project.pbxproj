@@ -359,6 +359,8 @@
 		4A6973891CBB4DA3002A036C /* MyAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6973881CBB4DA3002A036C /* MyAccountViewController.m */; };
 		4A69738C1CBB4DD9002A036C /* WithDrawViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A69738B1CBB4DD9002A036C /* WithDrawViewController.m */; };
 		4A69738F1CBB769E002A036C /* MyTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A69738E1CBB769E002A036C /* MyTabBarController.m */; };
+		4A697A4D1D4EF391004EF02E /* YeeptNetWorkingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A697A4C1D4EF391004EF02E /* YeeptNetWorkingManager.m */; };
+		4A697A4E1D4EF391004EF02E /* YeeptNetWorkingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A697A4C1D4EF391004EF02E /* YeeptNetWorkingManager.m */; };
 		4A6BABD81CC62FAB000B94A2 /* MJRefreshAutoFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6BABAE1CC62FAB000B94A2 /* MJRefreshAutoFooter.m */; };
 		4A6BABD91CC62FAB000B94A2 /* MJRefreshBackFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6BABB01CC62FAB000B94A2 /* MJRefreshBackFooter.m */; };
 		4A6BABDA1CC62FAB000B94A2 /* MJRefreshComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6BABB21CC62FAB000B94A2 /* MJRefreshComponent.m */; };
@@ -740,6 +742,8 @@
 		4A69738B1CBB4DD9002A036C /* WithDrawViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WithDrawViewController.m; sourceTree = "<group>"; };
 		4A69738D1CBB769E002A036C /* MyTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyTabBarController.h; path = ../../Controllers/MyTabBarController.h; sourceTree = "<group>"; };
 		4A69738E1CBB769E002A036C /* MyTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyTabBarController.m; path = ../../Controllers/MyTabBarController.m; sourceTree = "<group>"; };
+		4A697A4B1D4EF391004EF02E /* YeeptNetWorkingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YeeptNetWorkingManager.h; sourceTree = "<group>"; };
+		4A697A4C1D4EF391004EF02E /* YeeptNetWorkingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YeeptNetWorkingManager.m; sourceTree = "<group>"; };
 		4A6BABAD1CC62FAB000B94A2 /* MJRefreshAutoFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshAutoFooter.h; sourceTree = "<group>"; };
 		4A6BABAE1CC62FAB000B94A2 /* MJRefreshAutoFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshAutoFooter.m; sourceTree = "<group>"; };
 		4A6BABAF1CC62FAB000B94A2 /* MJRefreshBackFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBackFooter.h; sourceTree = "<group>"; };
@@ -1178,6 +1182,8 @@
 				4A561D6E1CBE490E00BB26AC /* OrderModel.h */,
 				4A561D6F1CBE490E00BB26AC /* OrderModel.m */,
 				4A5228AF1CBC8B3000DD2D9C /* AnimationTransition */,
+				4A697A4B1D4EF391004EF02E /* YeeptNetWorkingManager.h */,
+				4A697A4C1D4EF391004EF02E /* YeeptNetWorkingManager.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2299,6 +2305,7 @@
 				4A1D9D991D1B831E00052B92 /* ProductDetailTableView.m in Sources */,
 				4A6BABE71CC62FAB000B94A2 /* MJRefreshConst.m in Sources */,
 				4A57F8891CD2F5390034E089 /* AFURLSessionManager.m in Sources */,
+				4A697A4D1D4EF391004EF02E /* YeeptNetWorkingManager.m in Sources */,
 				4A4BD2AA1CB8D61C009DA0B9 /* UIView+SDExtension.m in Sources */,
 				4A7749911CC09DC8008B9611 /* ChargebackTableViewCell.m in Sources */,
 				4AF52EB61CC4BEC600E25FC4 /* HYBModalTransition.m in Sources */,
@@ -2483,6 +2490,7 @@
 				4A61DFDB1D3E021700E1FCB8 /* ChangePWDViewController.m in Sources */,
 				4A64239F1D19396600F26BA9 /* MyInfoViewController.m in Sources */,
 				4A64A1661D2272DB00A3DC7C /* BaoXiuViewController.m in Sources */,
+				4A697A4E1D4EF391004EF02E /* YeeptNetWorkingManager.m in Sources */,
 				4A6423A01D19396600F26BA9 /* SDWebImageManager.m in Sources */,
 				4A6423A11D19396600F26BA9 /* MJRefreshComponent.m in Sources */,
 				4A6423A21D19396600F26BA9 /* base64.m in Sources */,

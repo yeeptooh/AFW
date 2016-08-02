@@ -7,7 +7,7 @@
 //
 
 #import "HomeViewController.h"
-#import "AFNetworking.h"
+#import "YeeptNetWorkingManager.h"
 #import "UIImageView+WebCache.h"
 #import "UserModel.h"
 #import "PhoneNumberViewController.h"
@@ -212,13 +212,10 @@ static NSInteger tag = 0;
                              };
 #endif
     
-    NSString *URL = [NSString stringWithFormat:@"%@Passport.ashx?action=login",HomeURL];
+    NSString *subURL = @"Passport.ashx?action=login";
+    YeeptNetWorkingManager *manager = [[YeeptNetWorkingManager alloc] init];
 
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.requestSerializer.timeoutInterval = 5;
-    
-    [manager POST:URL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
+    [manager POSTMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:YES progress:nil success:^(id responseObject) {
         if (responseObject != nil) {
             
             UserModel *userModel = [[UserModel alloc]init];
@@ -235,34 +232,37 @@ static NSInteger tag = 0;
             userModel.userType = responseObject[@"user"][0][@"UserType"];
             [UserModel writeUserModel:userModel];
             
-            AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-            NSString *countString = [NSString stringWithFormat:@"%@Task.ashx?action=gettaskcount&comid=%ld&uid=%ld&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
-            manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-            manager.requestSerializer.timeoutInterval = 5;
-            [manager GET:countString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                
+            YeeptNetWorkingManager *manager = [[YeeptNetWorkingManager alloc] init];
+            NSString *subURL = @"Task.ashx?action=gettaskcount";
+            NSDictionary *params = @{
+                                     @"comid":@(userModel.comid),
+                                     @"uid":@(userModel.uid),
+                                     @"provinceid":@(userModel.provinceid),
+                                     @"cityid":@(userModel.cityid),
+                                     @"districtid":@(userModel.districtid)
+                                     };
+            
+            
+            [manager GETMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:NO progress:nil success:^(id responseObject) {
                 NSString *allString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+                NSLog(@"%@",allString);
                 NSArray *countList = [allString componentsSeparatedByString:@","];
                 
                 [[NSUserDefaults standardUserDefaults] setObject:countList forKey:@"countList"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
-                
                 if (((NSArray *)[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"]).lastObject) {
                     [[NSNotificationCenter defaultCenter] postNotificationName:kupdateBadgeNum object:nil];
                 }
-                
-            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            } failure:^(NSError *error) {
                 
             }];
- 
+            
         }else{
             
         }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } failure:^(NSError *error) {
         
     }];
-
 }
 
 - (void)updateUI {
@@ -1183,13 +1183,12 @@ static NSInteger tag = 0;
         UserModel *userModel = [UserModel readUserModel];
         GatheringViewController *gatherVC = [[GatheringViewController alloc] init];
         gatherVC.hidesBottomBarWhenPushed = YES;
-        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-        NSString *url = [NSString stringWithFormat:@"%@uploadFile.ashx?action=loadimages&userId=%@",HomeURL, @(userModel.uid)];
-        [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-    
+        
+        YeeptNetWorkingManager *manager = [[YeeptNetWorkingManager alloc] init];
+        NSString *subURL = [NSString stringWithFormat:@"uploadFile.ashx?action=loadimages&userId=%@", @(userModel.uid)];
+        [manager GETMethodBaseURL:HomeURL path:subURL parameters:nil isJSONSerialization:NO progress:nil success:^(id responseObject) {
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
-
+            
             if (dic[@"wechatpay"] == 0) {
                 
             }else {
@@ -1208,8 +1207,7 @@ static NSInteger tag = 0;
             [hud hideAnimated:YES];
             [hud removeFromSuperViewOnHide];
             [self.navigationController pushViewController:gatherVC animated:YES];
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            
+        } failure:^(NSError *error) {
             MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
             UIImage *image = [[UIImage imageNamed:@"Checkerror"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
             UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
@@ -1218,9 +1216,8 @@ static NSInteger tag = 0;
             hud.label.text = NSLocalizedString(@"请检查网络", @"HUD completed title");
             [hud hideAnimated:YES afterDelay:1.5f];
             [hud removeFromSuperViewOnHide];
-            
         }];
-       
+        
     }
     
 #elif Environment_Mode == 2
@@ -1290,12 +1287,17 @@ static NSInteger tag = 0;
     
     UserModel *userModel = [UserModel readUserModel];
     
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    NSString *countString = [NSString stringWithFormat:@"%@Task.ashx?action=gettaskcount&comid=%ld&uid=%ld&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    YeeptNetWorkingManager *manager = [[YeeptNetWorkingManager alloc] init];
+    NSString *subURL = @"Task.ashx?action=gettaskcount";
+    NSDictionary *params = @{
+                             @"comid":@(userModel.comid),
+                             @"uid":@(userModel.uid),
+                             @"provinceid":@(userModel.provinceid),
+                             @"cityid":@(userModel.cityid),
+                             @"districtid":@(userModel.districtid)
+                             };
     
-    [manager GET:countString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
+    [manager GETMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:NO progress:nil success:^(id responseObject) {
         NSString *allString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSArray *countList = [allString componentsSeparatedByString:@","];
         
@@ -1334,8 +1336,7 @@ static NSInteger tag = 0;
         }else{
             allorderVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][0];
         }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } failure:^(NSError *error) {
         
     }];
 }

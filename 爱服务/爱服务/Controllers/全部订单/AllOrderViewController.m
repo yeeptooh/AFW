@@ -294,7 +294,7 @@ UITextFieldDelegate
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     [manager GET:countString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        NSLog(@"%@",responseObject);
+
         NSString *allString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSArray *countList = [allString componentsSeparatedByString:@","];
         
