@@ -78,7 +78,6 @@
     [self.view addSubview:quitButton];
     [quitButton addTarget:self action:@selector(quitButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
-    
 }
 
 

@@ -15,7 +15,6 @@
     [aCoder encodeObject:[NSNumber numberWithInteger:self.uid] forKey:@"uid"];
     [aCoder encodeObject:[NSNumber numberWithInteger:self.comid] forKey:@"comid"];
     [aCoder encodeObject:[NSNumber numberWithFloat:self.money] forKey:@"money"];
-//    [aCoder encodeObject:[NSNumber numberWithFloat:self.margin] forKey:@"margin"];
     [aCoder encodeObject:[NSNumber numberWithInteger:self.provinceid] forKey:@"provinceid"];
     [aCoder encodeObject:[NSNumber numberWithInteger:self.cityid] forKey:@"cityid"];
     [aCoder encodeObject:[NSNumber numberWithInteger:self.districtid] forKey:@"districtid"];
@@ -31,7 +30,6 @@
         self.uid = [[aDecoder decodeObjectForKey:@"uid"] integerValue];
         self.comid = [[aDecoder decodeObjectForKey:@"comid"] integerValue];
         self.money = [[aDecoder decodeObjectForKey:@"money"] floatValue];
-//        self.margin = [[aDecoder decodeObjectForKey:@"margin"] floatValue];
         self.provinceid = [[aDecoder decodeObjectForKey:@"provinceid"] integerValue];
         self.cityid = [[aDecoder decodeObjectForKey:@"cityid"] integerValue];
         self.districtid = [[aDecoder decodeObjectForKey:@"districtid"] integerValue];
@@ -49,13 +47,11 @@
     [data writeToFile:filePath atomically:YES];
 }
 
-+ (UserModel *)readUserModel {
++ (instancetype)readUserModel {
     NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"userModel.data"];
     
     NSData *data = [NSData dataWithContentsOfFile:filePath];
-    
     UserModel *userModel = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    
     return userModel;
 }
 

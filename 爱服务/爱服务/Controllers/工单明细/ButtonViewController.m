@@ -11,14 +11,12 @@
 #import "UserModel.h"
 
 @interface ButtonViewController ()
-
 @end
 
 @implementation ButtonViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.view.backgroundColor = [UIColor colorWithWhite:1 alpha:1] ;
     self.view.layer.cornerRadius = 5;
     self.view.layer.masksToBounds = YES;
@@ -79,7 +77,6 @@
     [self.view addSubview:quitButton];
     [quitButton addTarget:self action:@selector(quitButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
-    
 }
 
 
@@ -117,7 +114,5 @@
     self.returnText(self.textfield.text);
     
 }
-
-
 
 @end

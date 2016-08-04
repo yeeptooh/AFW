@@ -23,12 +23,6 @@ UITextFieldDelegate
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UITextField *accountTextField;
 
-
-//@property (nonatomic, strong) MBProgressHUD *HUD;
-//@property (nonatomic, strong) MBProgressHUD *successHUD;
-//@property (nonatomic, strong) MBProgressHUD *nilHUD;
-//@property (nonatomic, strong) MBProgressHUD *failHUD;
-
 @end
 
 @implementation LoginViewController
@@ -440,7 +434,7 @@ UITextFieldDelegate
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
+    return UIStatusBarStyleDefault;
 }
 
 - (void)dealloc {

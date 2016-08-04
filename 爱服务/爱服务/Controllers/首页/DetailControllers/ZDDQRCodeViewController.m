@@ -13,11 +13,32 @@
 @interface ZDDQRCodeViewController ()
 @property (nonatomic, strong) UILabel *label1;
 @property (nonatomic, strong) UILabel *label2;
+@property (nonatomic, strong) UIAlertController *alertController;
 
 @end
 
 @implementation ZDDQRCodeViewController
 
+- (UIAlertController *)alertController {
+    if (!_alertController) {
+        _alertController = [UIAlertController alertControllerWithTitle:@"此应用的相机功能已禁用" message:@"请点击确定打开应用的相机功能" preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *openAction = [UIAlertAction actionWithTitle:@"打开" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+            
+        }];
+        
+        UIAlertAction *closeAction = [UIAlertAction actionWithTitle:@"关闭" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        
+        [_alertController addAction:openAction];
+        [_alertController addAction:closeAction];
+        
+    }
+    return _alertController;
+}
 
 - (UILabel *)label1 {
     if (!_label1) {
@@ -76,13 +97,19 @@
 
 - (void)buttonClicked:(UIButton *)sender {
     
+    PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
+    
+    if (status == PHAuthorizationStatusDenied || status == PHAuthorizationStatusRestricted) {
+        [self presentViewController:self.alertController animated:YES completion:nil];
+        
+    }else {
         [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
             
             [PHAssetChangeRequest creationRequestForAssetFromImage:self.imageView.image];
             
         } completionHandler:^(BOOL success, NSError * _Nullable error) {
             if (success) {
-               
+                
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"success" object:nil];
             }
             
@@ -91,12 +118,11 @@
             }
             
         }];
-    
+    }
 }
 
 
 - (void)successNotificationReceived:(NSNotification *)noti {
-    
     
     dispatch_async(dispatch_get_main_queue(), ^{
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];

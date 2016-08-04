@@ -170,8 +170,11 @@ UIViewControllerTransitioningDelegate
     self.baseDetailInfoCell.priceLabel.text = self.price;
     
     [self.baseDetailInfoCell.locationButton setTitle:self.location forState:UIControlStateNormal];
-    
-    [self.baseDetailInfoCell.locationButton addTarget:self action:@selector(locationButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    if (self.state >= 15) {
+        self.baseDetailInfoCell.locationButton.enabled = NO;
+    }else {
+        [self.baseDetailInfoCell.locationButton addTarget:self action:@selector(locationButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    }
     
     [self.view addSubview:self.baseDetailInfoCell];
 #elif Environment_Mode == 2
@@ -189,7 +192,11 @@ UIViewControllerTransitioningDelegate
     
     [self.baseDetailInfoCell.locationButton setTitle:self.location forState:UIControlStateNormal];
     
-    [self.baseDetailInfoCell.locationButton addTarget:self action:@selector(locationButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    if (self.state >= 15) {
+        self.baseDetailInfoCell.locationButton.enabled = NO;
+    }else {
+        [self.baseDetailInfoCell.locationButton addTarget:self action:@selector(locationButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    }
     
     [self.view addSubview:self.baseDetailInfoCell];
 #endif
@@ -533,7 +540,7 @@ UIViewControllerTransitioningDelegate
         UIButton *exchangeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         exchangeButton.frame = CGRectMake(0, 0, Width, TabbarHeight);
         //            robButton.titleLabel.font = font(12);
-        [exchangeButton setTitle:@"修改图片" forState:UIControlStateNormal];
+        [exchangeButton setTitle:@"添加图片" forState:UIControlStateNormal];
         [exchangeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         exchangeButton.backgroundColor = MainBlueColor;
         [exchangeButton addTarget:self action:@selector(exchangeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -693,6 +700,7 @@ UIViewControllerTransitioningDelegate
     NSString *URL= [NSString stringWithFormat:@"%@task.ashx?action=gettaskfile&taskid=%@&comid=%@",HomeURL, @(self.ID),@(userModel.comid)];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"%@",responseObject);
 
         NSMutableArray *photoList = [NSMutableArray array];
         for (NSDictionary *dic in responseObject) {
@@ -758,7 +766,6 @@ UIViewControllerTransitioningDelegate
     partVC.ProductClassify2Name = self.ProductClassify2Name;
     
     [self.navigationController pushViewController:partVC animated:YES];
-   
 }
 
 - (void)appendButtonClicked {
@@ -834,7 +841,6 @@ UIViewControllerTransitioningDelegate
     changeVC.productTableView.FtypeID = self.ProductBreedID;
     changeVC.productTableView.FbigID = self.ProductClassify1ID;
     changeVC.productTableView.FsmallID = self.ProductClassify2ID;
-    
     
     changeVC.productTableView.inOut = self.inOut;
     changeVC.productTableView.buyDate = self.buyDate;
@@ -1021,7 +1027,6 @@ UIViewControllerTransitioningDelegate
             [self.CSList addObject:dic];
         }
 
-        
         MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
         [hud hideAnimated:YES];
         DispatchViewController *dispatchVC = [[DispatchViewController alloc] init];
@@ -1032,7 +1037,7 @@ UIViewControllerTransitioningDelegate
         [self presentViewController:dispatchVC animated:YES completion:nil];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@",error.userInfo);
+
         MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
         UIImage *image = [[UIImage imageNamed:@"Checkerror"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
@@ -1042,8 +1047,6 @@ UIViewControllerTransitioningDelegate
         [hud hideAnimated:YES afterDelay:0.75f];
         [hud removeFromSuperViewOnHide];
     }];
-    
-    
 }
 
 - (void)cancelButtonClicked {
@@ -1053,7 +1056,6 @@ UIViewControllerTransitioningDelegate
     hud.label.font = font(14);
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 //    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
     UserModel *userModel = [UserModel readUserModel];
     //m:347,url中有中文
     NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=canceltask",HomeURL];
@@ -1141,12 +1143,8 @@ UIViewControllerTransitioningDelegate
             [successHUD hideAnimated:YES];
             [successHUD removeFromSuperViewOnHide];
             
-            
         });
     }];
-    
-    
-    
 }
 
 - (void)receiveButtonClicked {
@@ -1220,10 +1218,7 @@ UIViewControllerTransitioningDelegate
 
 #pragma mark - UITableViewDataSource -
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    
     return 1;
-    
-
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -1265,8 +1260,17 @@ UIViewControllerTransitioningDelegate
         
         [self.cell.typeButton setTitle:self.model forState:UIControlStateNormal];
         [self.cell.dateButton setTitle:self.buyDate forState:UIControlStateNormal];
-        [self.cell.typeButton addTarget:self action:@selector(typeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-        [self.cell.dateButton addTarget:self action:@selector(dateButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        
+        if (self.state >= 15) {
+            self.cell.typeButton.enabled = NO;
+            self.cell.dateButton.enabled = NO;
+            [self.cell.typeButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [self.cell.dateButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        }else {
+            [self.cell.typeButton addTarget:self action:@selector(typeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+            [self.cell.dateButton addTarget:self action:@selector(dateButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        }
+        
         self.cell.proTypeLabel.text = self.productType;
         self.cell.productCodeLabel.text = self.productCode;
         self.cell.orderCodeLabel.text = self.orderCode;
@@ -1361,10 +1365,17 @@ UIViewControllerTransitioningDelegate
         
         self.cell = [[[NSBundle mainBundle] loadNibNamed:@"ProductTableViewCell" owner:self options:nil] lastObject];
         
-        [self.cell.typeButton setTitle:self.orderCode forState:UIControlStateNormal];
-        [self.cell.dateButton setTitle:self.buyDate forState:UIControlStateNormal];
-        [self.cell.typeButton addTarget:self action:@selector(typeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-        [self.cell.dateButton addTarget:self action:@selector(dateButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        
+        if (self.state >= 15) {
+            self.cell.typeButton.enabled = NO;
+            self.cell.dateButton.enabled = NO;
+            [self.cell.typeButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [self.cell.dateButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        }else {
+            [self.cell.typeButton addTarget:self action:@selector(typeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+            [self.cell.dateButton addTarget:self action:@selector(dateButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        }
+        
         self.cell.proTypeLabel.text = self.productType;
         self.cell.productCodeLabel.text = self.productCode;
         self.cell.orderCodeLabel.text = @"";//self.model;
@@ -1398,7 +1409,6 @@ UIViewControllerTransitioningDelegate
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
-            
             
         }else if (self.state == 7) {
             ChargebackTableViewCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"ChargebackTableViewCell" owner:self options:nil] lastObject];
@@ -1624,9 +1634,7 @@ UIViewControllerTransitioningDelegate
     }else {
         return [[ButtonDismissAnimation alloc]init];
     }
-    
 }
-
 
 - (void)setBadgeValue {
     UIViewController *receiveVC = [self.tabBarController viewControllers][1];

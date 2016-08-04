@@ -584,7 +584,7 @@ UINavigationControllerDelegate
     
     
     UIButton *submit = [UIButton buttonWithType:UIButtonTypeCustom];
-    [submit setTitle:@"确认修改" forState:UIControlStateNormal];
+    [submit setTitle:@"确认添加" forState:UIControlStateNormal];
     
     [submit setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [submit addTarget:self action:@selector(submitClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -685,7 +685,7 @@ UINavigationControllerDelegate
 
 
 - (void)setNaviTitle {
-    self.navigationItem.title = @"修改图片";
+    self.navigationItem.title = @"添加图片";
 }
 
 @end

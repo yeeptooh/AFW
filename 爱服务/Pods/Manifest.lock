@@ -1,14 +1,17 @@
 PODS:
+  - Appirater (2.0.5)
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
   - pop (1.0.9)
 
 DEPENDENCIES:
+  - Appirater
   - FMDB
   - pop (~> 1.0)
 
 SPEC CHECKSUMS:
+  Appirater: e7c0a47fb67ee5041ce8479e6ba960927fb40264
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
 
