@@ -46,7 +46,6 @@ static NSInteger i = 0;
         _tableView.scrollEnabled = NO;
         _tableView.delegate = self;
         _tableView.dataSource = self;
-//        _tableView.backgroundColor = [UIColor whiteColor];
         _tableView.tableFooterView = [[UIView alloc] init];
         
     }
@@ -55,6 +54,7 @@ static NSInteger i = 0;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = color(239, 239, 244, 1);
@@ -73,13 +73,13 @@ static NSInteger i = 0;
 
 
 - (void)setRechargeButton {
+    
     self.rechargeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.rechargeButton setTitle:@"充值" forState:UIControlStateNormal];
     self.rechargeButton.layer.cornerRadius = 5;
     self.rechargeButton.layer.masksToBounds = YES;
     [self.rechargeButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
     [self.rechargeButton addTarget:self action:@selector(rechargeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
     self.rechargeButton.enabled = NO;
     self.rechargeButton.backgroundColor = color(144, 144, 144, 1);
     
@@ -102,12 +102,10 @@ static NSInteger i = 0;
         self.haveDot=NO;
     }
 
-    
     if ([sender.text isEqualToString:@""] || [sender.text isEqualToString:@"0"] || [sender.text isEqualToString:@"0."]|| [sender.text isEqualToString:@"0.0"] || [sender.text isEqualToString:@"0.00"]) {
         self.rechargeButton.backgroundColor = color(144, 144, 144, 1);
         self.rechargeButton.enabled = NO;
-        
-        
+
     }
     
     if (sender.text.length > 0) {
@@ -130,7 +128,6 @@ static NSInteger i = 0;
         if (sender.text.length == 2) {
             NSString *firstCharacter = [sender.text substringToIndex:1];
            
-            
             if ([firstCharacter isEqualToString:@"0"]) {
                 if (single == '0') {
                     sender.text = @"0";
@@ -149,7 +146,6 @@ static NSInteger i = 0;
             }
         }
         
-        
         if (sender.text.length == 3) {
             if (self.isHaveDot) {
                 if (single == '0') {
@@ -160,7 +156,7 @@ static NSInteger i = 0;
                 }else {
                     NSString *firstCharacter = [sender.text substringToIndex:1];
                     if ([firstCharacter isEqualToString:@"0"]) {
-                        self.rechargeButton.backgroundColor = CZGreenColor;//BlueColor;//ALiBlueColor;//color(231, 76, 60, 1);
+                        self.rechargeButton.backgroundColor = CZGreenColor;
                         self.rechargeButton.enabled = YES;
                     }else{
                         
@@ -217,8 +213,6 @@ static NSInteger i = 0;
                     self.haveDot = YES;
                 }
             }
-            
-            
         }
         
         if (sender.text.length == 6) {
@@ -262,8 +256,6 @@ static NSInteger i = 0;
             }
         }
         
-        
-        
         if (sender.text.length == 8) {
             NSUInteger location = [sender.text rangeOfString:@"."].location;
             if (self.isHaveDot) {
@@ -286,10 +278,7 @@ static NSInteger i = 0;
         if (sender.text.length == 9) {
             sender.text = [sender.text substringToIndex:sender.text.length - 1];
         }
-        
     }
- 
-  
 }
 
 - (void)rechargeButtonClicked:(UIButton *)sender {
@@ -323,14 +312,11 @@ static NSInteger i = 0;
         Order *order = [[Order alloc] init];
         order.partner = myPartner;
         order.sellerID = mySeller;
-        
         order.subject = @"账户充值";
         order.body = @"账户充值";
-        
         order.totalFee = [NSString stringWithFormat:@"%@",self.cell.moneyTextField.text];
         
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-
         UserModel *userModel = [UserModel readUserModel];
         
 #if Environment_Mode == 1
@@ -352,7 +338,6 @@ static NSInteger i = 0;
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         [manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
-            
             NSDictionary *json = (NSDictionary *)[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
             
             if ([json[@"status"] isEqualToString:@"ok"]) {
@@ -362,7 +347,6 @@ static NSInteger i = 0;
                 order.notifyURL = @"http://i.51ifw.com/forapp2/payment/alipay/notify.aspx";//支付宝服务器异步通知自己服务器回调的URL
 #endif
                 
-
                 order.outTradeNO = json[@"data"];
                 [[NSUserDefaults standardUserDefaults] setObject:order.outTradeNO forKey:@"outTradeNO"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
@@ -403,12 +387,10 @@ static NSInteger i = 0;
                     if ([json[@"status"] isEqualToString:@"ok"]) {
                         
                         NSString *signedString = json[@"data"];
-                        NSLog(@"signedString = %@",signedString);
+                        
                         NSString *signerStr = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, /* allocator */(__bridge CFStringRef)signedString, NULL, /* charactersToLeaveUnescaped */(CFStringRef)@"!*'();:@&=+$,/?%#[]", kCFStringEncodingUTF8);
 
                         NSString *orderString = nil;
-                        NSLog(@"signerStr = %@",signerStr);
-                        
                         if (signedString != nil) {
                             orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",orderSpec, signerStr, @"RSA"];
                             
@@ -419,17 +401,14 @@ static NSInteger i = 0;
                     }
 
                 } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                    NSLog(@"error.userInfo = %@",error.userInfo);
                 }];
 
             }
             
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            NSLog(@"%@",error.userInfo);
-
+            
             MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.view];
             HUD.mode = MBProgressHUDModeText;
-            
             HUD.label.text = @"请检查网络";
             CGFloat fontsize;
             if (iPhone4_4s || iPhone5_5s) {
@@ -439,9 +418,7 @@ static NSInteger i = 0;
             }
             HUD.label.font = font(fontsize);
             [self.view addSubview:HUD];
-            
             [HUD showAnimated:YES];
-            
             [HUD hideAnimated:YES afterDelay:0.75];
             
         }];
@@ -458,13 +435,11 @@ static NSInteger i = 0;
 #elif Environment_Mode == 2
         NSString *urlString   = [NSString stringWithFormat:@"%@Payment/WeiXin/Recharge.ashx?action=getwxpayment&userid=%@&money=%@&ip=%@",HomeURL,@(userModel.comid),totalFee,ipAddress];
 #endif
-        
-        NSLog(@"%@",urlString);
+
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 //        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            NSLog(@"responseObject = %@",responseObject);
-            
+        
             if ([responseObject[@"status"] isEqualToString:@"ok"]) {
                 [[NSUserDefaults standardUserDefaults] setObject:responseObject[@"data"][@"orderid"] forKey:@"WXOrderID"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
@@ -476,25 +451,21 @@ static NSInteger i = 0;
 #elif Environment_Mode == 2
                 payReq.partnerId = @"1364622402";
 #endif
-                
                 payReq.nonceStr = responseObject[@"data"][@"noncestr"];
                 payReq.timeStamp = [responseObject[@"data"][@"timestamp"] intValue];
                 payReq.package = @"Sign=WXPay";
                 payReq.sign = responseObject[@"data"][@"sign"];
                 [WXApi sendReq:payReq];
-                
             }
 
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            NSLog(@"%@",error.userInfo);
+            
         }];
- 
     }
- 
 }
 
-- (NSString *)getIPAddress
-{
+- (NSString *)getIPAddress {
+    
     NSString *address = @"error";
     struct ifaddrs *interfaces = NULL;
     struct ifaddrs *temp_addr = NULL;
@@ -527,7 +498,6 @@ static NSInteger i = 0;
 #elif Environment_Mode == 2
     NSString *url = [NSString stringWithFormat:@"%@/Payment/Alipay/Recharge.ashx?action=getorderstate&orderid=%@",HomeURL,orderID];
 #endif
-    
     
     [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -692,10 +662,10 @@ static NSInteger i = 0;
             cell2.chooseImageView.image = [UIImage imageNamed:@"unchecked"];
         }
     }
-
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
     CGFloat height;
     if (section == 0) {
         height = 20;
@@ -715,9 +685,7 @@ static NSInteger i = 0;
     }
     [button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
-    
     return button;
-    
 }
 
 - (void)buttonClicked:(UIButton *)sender {
@@ -794,10 +762,7 @@ static NSInteger i = 0;
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
-        
     }];
-    
-    
 }
 
 

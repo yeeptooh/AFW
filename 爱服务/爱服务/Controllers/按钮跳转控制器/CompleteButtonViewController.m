@@ -289,6 +289,7 @@ static NSInteger number;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     static NSString *identifier = @"CompleteCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
@@ -305,7 +306,6 @@ static NSInteger number;
                       @"验证码",
                       @"现场拍照",
                       @"",
-                      
                       ];
     }else {
         labelList = @[
@@ -318,9 +318,9 @@ static NSInteger number;
                       @"验证码",
                       @"现场拍照",
                       @"",
-                      
                       ];
     }
+    
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 5, Width/4, (Height - StatusBarAndNavigationBarHeight)/12 - 10)];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     label.text = labelList[indexPath.row];
@@ -338,6 +338,7 @@ static NSInteger number;
     [cell addSubview:label];
     if ([self.inOut isEqualToString:@"保外"]) {
         if (indexPath.row == 0) {
+            
             NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
             [formatter setDateFormat:@"yyyy-MM-dd"];
             
@@ -353,6 +354,7 @@ static NSInteger number;
             dateButton.layer.cornerRadius = 5;
             dateButton.layer.masksToBounds = YES;
             [cell addSubview:dateButton];
+            
         }else if (indexPath.row == 1) {
             
             UITextField *textfield = [[UITextField alloc]initWithFrame:CGRectMake(Width*5/16, 5, Width*7/16, (Height - StatusBarAndNavigationBarHeight)/12 - 10)];
@@ -601,8 +603,6 @@ static NSInteger number;
         }
     }
     
-    
-    
     return cell;
 }
 
@@ -745,7 +745,6 @@ static NSInteger number;
             
             [successHUD showAnimated:YES];
             
-            
             [successHUD hideAnimated:YES afterDelay:1.2];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 number = 0;
@@ -775,9 +774,7 @@ static NSInteger number;
         }
     }
     
-    
     if ([self.inOut isEqualToString:@"保外"]) {
-        
         
         if ([((UITextField *)[self.tableView viewWithTag:1006]).text isEqualToString:@""] || !((UITextField *)[self.tableView viewWithTag:1006]).text) {
             MBProgressHUD *successHUD = [[MBProgressHUD alloc]initWithView:self.tableView];
@@ -787,7 +784,6 @@ static NSInteger number;
             [self.tableView addSubview:successHUD];
             
             [successHUD showAnimated:YES];
-            
             
             [successHUD hideAnimated:YES afterDelay:1.2];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -802,7 +798,6 @@ static NSInteger number;
         HUD.mode = MBProgressHUDModeIndeterminate;
         [self.tableView addSubview:HUD];
         [HUD showAnimated:YES];
-        
         
         NSInteger count = 0;
         if (self.firstImageView.image) {

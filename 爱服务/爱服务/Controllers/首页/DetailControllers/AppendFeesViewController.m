@@ -165,23 +165,17 @@ WKNavigationDelegate
             barButton.frame = CGRectMake(Width * 13 / 16, 5 + ((Height - StatusBarAndNavigationBarHeight)*(i+5)/12), Width *2 / 16, (Height - StatusBarAndNavigationBarHeight)/12 - 10);
             [self.view addSubview:barButton];
         }
-        
     }
     
     UIButton *submit = [UIButton buttonWithType:UIButtonTypeCustom];
     [submit setTitle:@"提交" forState:UIControlStateNormal];
-    
     [submit setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [submit addTarget:self action:@selector(submitClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
     submit.layer.cornerRadius = 5;
     submit.layer.masksToBounds = YES;
     submit.backgroundColor = MainBlueColor;
     submit.frame = CGRectMake(20, 5 + ((Height - StatusBarAndNavigationBarHeight)*7/12), Width - 40, (Height - StatusBarAndNavigationBarHeight)/12);
-    
     [self.view addSubview:submit];
-    
-    
 }
 
 - (void)barButtonClicked:(UIButton *)sender {
@@ -201,7 +195,6 @@ WKNavigationDelegate
         return;
     }
     
-
     AppendReasonViewController *appendReason = [[AppendReasonViewController alloc] init];
     __weak typeof(self) weakSelf = self;
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -276,12 +269,10 @@ WKNavigationDelegate
         
     }
     
-    
     MBProgressHUD *HUD = [[MBProgressHUD alloc]initWithView:self.view];
     HUD.mode = MBProgressHUDModeIndeterminate;
     [self.view addSubview:HUD];
     [HUD showAnimated:YES];
-    
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -329,11 +320,7 @@ WKNavigationDelegate
             
         });
     }];
-    
-    
 }
-
-
 
 - (void)chooseButtonClicked:(UIButton *)sender {
     CompleteViewController *cpVC = [[CompleteViewController alloc]init];
@@ -341,9 +328,7 @@ WKNavigationDelegate
         
         _ID = taskID;
         UIButton *button = [self.view viewWithTag:500];
-        
         [button setTitle:_ID forState:UIControlStateNormal];
-        
         UILabel *label1 = [self.view viewWithTag:700];
         label1.text = name;
         UILabel *label2 = [self.view viewWithTag:701];
@@ -358,11 +343,9 @@ WKNavigationDelegate
         _price = price;
         _comid = comid;
         
-        
     };
     
     [self.navigationController pushViewController:cpVC animated:YES];
-    
 }
 
 - (void)setWebView {
@@ -372,7 +355,6 @@ WKNavigationDelegate
     self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(20, 10 + (Height - StatusBarAndNavigationBarHeight)*8/12, Width - 40, Height - StatusBarAndNavigationBarHeight - (Height - StatusBarAndNavigationBarHeight)*8/12 - 15)];
     [self.indicatorView startAnimating];
     self.webView.navigationDelegate = self;
-    
     self.webView.scrollView.bounces = NO;
     self.webView.scrollView.showsVerticalScrollIndicator = NO;
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@page.aspx?type=addmoney&uid=%ld",HomeURL,(long)userModel.uid]]]];

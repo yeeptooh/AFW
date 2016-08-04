@@ -26,10 +26,8 @@ UICollectionViewDelegateFlowLayout
         _collectionView.dataSource = self;
         _collectionView.delegate = self;
         [_collectionView setBackgroundColor:[UIColor clearColor]];
-        
         //注册Cell，必须要有
         [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"UICollectionViewCell"];
-        
         [self.view addSubview:self.collectionView];
     }
     return _collectionView;
@@ -59,19 +57,23 @@ UICollectionViewDelegateFlowLayout
     return cell;
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
     return CGSizeMake(Width/4-10, Width/4-10);
 }
 
 //定义每个UICollectionView 的 margin
--(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
-{
+-(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    
     return UIEdgeInsetsMake(5, 5, 5, 5);
 }
 
 - (void)setNaviTitle {
     self.navigationItem.title = @"已上传图片";
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
 }
 
 @end

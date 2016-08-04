@@ -32,7 +32,6 @@ UITextFieldDelegate
 @property (nonatomic, strong) OrderModel *orderModel;
 @property (nonatomic, strong) NSMutableArray *dicList;
 
-
 @property (nonatomic, strong) UITableView *searchResultTableView;
 @property (nonatomic, strong) UIView *searchResultView;
 @property (nonatomic, strong) UITextField *textfield;
@@ -40,7 +39,6 @@ UITextFieldDelegate
 @property (nonatomic, strong) UIButton *searchButton;
 @property (nonatomic, strong) UIView *whiteView;
 @property (nonatomic, strong) NSMutableArray *searchResultList;
-
 
 @property (nonatomic, assign) NSInteger page;
 @property (nonatomic, assign) NSInteger searchPage;
@@ -726,7 +724,6 @@ UITextFieldDelegate
         }
         
         [self.searchResultTableView.mj_footer endRefreshing];
-        
         
         return ;
         

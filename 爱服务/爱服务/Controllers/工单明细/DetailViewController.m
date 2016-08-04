@@ -170,8 +170,11 @@ UIViewControllerTransitioningDelegate
     self.baseDetailInfoCell.priceLabel.text = self.price;
     
     [self.baseDetailInfoCell.locationButton setTitle:self.location forState:UIControlStateNormal];
-    
-    [self.baseDetailInfoCell.locationButton addTarget:self action:@selector(locationButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    if (self.state >= 15) {
+        self.baseDetailInfoCell.locationButton.enabled = NO;
+    }else {
+        [self.baseDetailInfoCell.locationButton addTarget:self action:@selector(locationButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    }
     
     [self.view addSubview:self.baseDetailInfoCell];
 #elif Environment_Mode == 2
@@ -189,7 +192,11 @@ UIViewControllerTransitioningDelegate
     
     [self.baseDetailInfoCell.locationButton setTitle:self.location forState:UIControlStateNormal];
     
-    [self.baseDetailInfoCell.locationButton addTarget:self action:@selector(locationButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    if (self.state >= 15) {
+        self.baseDetailInfoCell.locationButton.enabled = NO;
+    }else {
+        [self.baseDetailInfoCell.locationButton addTarget:self action:@selector(locationButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    }
     
     [self.view addSubview:self.baseDetailInfoCell];
 #endif
@@ -533,7 +540,7 @@ UIViewControllerTransitioningDelegate
         UIButton *exchangeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         exchangeButton.frame = CGRectMake(0, 0, Width, TabbarHeight);
         //            robButton.titleLabel.font = font(12);
-        [exchangeButton setTitle:@"修改图片" forState:UIControlStateNormal];
+        [exchangeButton setTitle:@"添加图片" forState:UIControlStateNormal];
         [exchangeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         exchangeButton.backgroundColor = MainBlueColor;
         [exchangeButton addTarget:self action:@selector(exchangeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -693,6 +700,7 @@ UIViewControllerTransitioningDelegate
     NSString *URL= [NSString stringWithFormat:@"%@task.ashx?action=gettaskfile&taskid=%@&comid=%@",HomeURL, @(self.ID),@(userModel.comid)];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"%@",responseObject);
 
         NSMutableArray *photoList = [NSMutableArray array];
         for (NSDictionary *dic in responseObject) {
@@ -1252,8 +1260,17 @@ UIViewControllerTransitioningDelegate
         
         [self.cell.typeButton setTitle:self.model forState:UIControlStateNormal];
         [self.cell.dateButton setTitle:self.buyDate forState:UIControlStateNormal];
-        [self.cell.typeButton addTarget:self action:@selector(typeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-        [self.cell.dateButton addTarget:self action:@selector(dateButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        
+        if (self.state >= 15) {
+            self.cell.typeButton.enabled = NO;
+            self.cell.dateButton.enabled = NO;
+            [self.cell.typeButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [self.cell.dateButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        }else {
+            [self.cell.typeButton addTarget:self action:@selector(typeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+            [self.cell.dateButton addTarget:self action:@selector(dateButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        }
+        
         self.cell.proTypeLabel.text = self.productType;
         self.cell.productCodeLabel.text = self.productCode;
         self.cell.orderCodeLabel.text = self.orderCode;
@@ -1348,10 +1365,17 @@ UIViewControllerTransitioningDelegate
         
         self.cell = [[[NSBundle mainBundle] loadNibNamed:@"ProductTableViewCell" owner:self options:nil] lastObject];
         
-        [self.cell.typeButton setTitle:self.orderCode forState:UIControlStateNormal];
-        [self.cell.dateButton setTitle:self.buyDate forState:UIControlStateNormal];
-        [self.cell.typeButton addTarget:self action:@selector(typeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-        [self.cell.dateButton addTarget:self action:@selector(dateButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        
+        if (self.state >= 15) {
+            self.cell.typeButton.enabled = NO;
+            self.cell.dateButton.enabled = NO;
+            [self.cell.typeButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [self.cell.dateButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        }else {
+            [self.cell.typeButton addTarget:self action:@selector(typeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+            [self.cell.dateButton addTarget:self action:@selector(dateButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        }
+        
         self.cell.proTypeLabel.text = self.productType;
         self.cell.productCodeLabel.text = self.productCode;
         self.cell.orderCodeLabel.text = @"";//self.model;

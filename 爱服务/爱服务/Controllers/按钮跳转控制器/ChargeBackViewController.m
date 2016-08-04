@@ -36,9 +36,7 @@ UITableViewDataSource
     [self setNaviTitle];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    
     self.view.backgroundColor = color(241, 241, 241, 1);
-    
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Width, (Height - StatusBarAndNavigationBarHeight)*2/12) style:UITableViewStylePlain];
     self.tableView.backgroundColor = color(241, 241, 241, 1);
     self.tableView.tableFooterView = [[UIView alloc]init];
@@ -47,7 +45,6 @@ UITableViewDataSource
     self.tableView.dataSource = self;
     self.tableView.scrollEnabled = NO;
     [self.view addSubview:self.tableView];
-    
     [self addKeyBoardNotification];
     [self setSubmitButton];
 }
@@ -104,7 +101,6 @@ UITableViewDataSource
     label.font = [UIFont systemFontOfSize:fontsize];
     label.textAlignment = NSTextAlignmentRight;
     label.textColor = [UIColor blackColor];
-    
     cell.backgroundColor = [UIColor clearColor];
     [cell addSubview:label];
     
@@ -125,12 +121,10 @@ UITableViewDataSource
     }else {
         
         UITextField *textfield = [[UITextField alloc]initWithFrame:CGRectMake(Width*5/16, 5, Width*10/16, (Height - StatusBarAndNavigationBarHeight)/12 - 10)];
-        
         textfield.backgroundColor = [UIColor whiteColor];
         textfield.font = font(fontsize);
         textfield.layer.cornerRadius = 5;
         textfield.layer.masksToBounds = YES;
-        
         textfield.tag = 1000;
         [cell addSubview:textfield];
         
@@ -139,7 +133,6 @@ UITableViewDataSource
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     return (Height - StatusBarAndNavigationBarHeight)/12;
 }
 
@@ -150,7 +143,6 @@ UITableViewDataSource
         [sender setTitle:reason forState:UIControlStateNormal];
     };
     [self presentViewController:cbrVC animated:YES completion:nil];
-    
 }
 
 - (void)setSubmitButton {
