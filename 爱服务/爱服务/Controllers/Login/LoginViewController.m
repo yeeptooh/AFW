@@ -22,6 +22,7 @@ UITextFieldDelegate
 @property (nonatomic, strong) UIView *loginContainerView;
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UITextField *accountTextField;
+@property (nonatomic, strong) UILabel *label;
 
 @end
 
@@ -43,7 +44,7 @@ UITextFieldDelegate
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = color(102, 201, 228, 1);
+    self.view.backgroundColor = [UIColor whiteColor];
     
     NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
     NSString *password = [[NSUserDefaults standardUserDefaults] objectForKey:@"password"];
@@ -60,152 +61,74 @@ UITextFieldDelegate
 
 - (void)setLogoImageView {
     self.imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"mainlogo"]];
+    self.imageView.frame = CGRectMake((Width - 200)/2, 60, 200, 43);
     [self.view addSubview:self.imageView];
-    
-    __weak typeof(self) weakSelf = self;
-    [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(90);
-        make.centerX.mas_equalTo(weakSelf.view);
-        make.size.mas_equalTo(CGSizeMake(150, 50));
-    }];
     
 }
 
 - (void)setLoginContainer {
-    
-    __weak typeof(self) weakSelf = self;
-    
+
     self.loginContainerView = [[UIView alloc]init];
-    self.loginContainerView.backgroundColor = color(164, 217, 231, 0.8);
-    self.loginContainerView.layer.cornerRadius = 5;
-    self.loginContainerView.layer.masksToBounds = YES;
-    if (iPhone6 || iPhone6_plus) {
-        self.loginContainerView.frame = CGRectMake(35, 155, Width - 70, Width - 70);
-    }else{
-        self.loginContainerView.frame = CGRectMake(10, 155, Width - 20, Width - 20);
-    }
-    
-    UILabel *label = [[UILabel alloc]init];
-    label.text = @"登录爱服务家电工作平台";
-    label.textAlignment = NSTextAlignmentCenter;
+    self.loginContainerView.backgroundColor = [UIColor whiteColor];
+    self.loginContainerView.frame = CGRectMake(0, CGRectGetMaxY(self.imageView.frame) + 80, Width, 180);
     
     self.accountTextField.placeholder = @"请输入帐号";
-    self.accountTextField.borderStyle = UITextBorderStyleRoundedRect;
+    self.accountTextField.borderStyle = UITextBorderStyleNone;
     self.accountTextField.returnKeyType = UIReturnKeyNext;
     self.accountTextField.tag = 100;
     self.accountTextField.delegate = self;
     self.accountTextField.clearsOnBeginEditing = YES;
+    self.accountTextField.frame = CGRectMake(10, 0, Width - 20, 43);
+    UILabel *accountView = [[UILabel alloc] initWithFrame:CGRectMake(10, 43, Width - 20, 0.7)];
+    accountView.backgroundColor = color(220, 220, 220, 1);
     
     self.passwordTextField.placeholder = @"请输入密码";
-    self.passwordTextField.borderStyle = UITextBorderStyleRoundedRect;
+    self.passwordTextField.borderStyle = UITextBorderStyleNone;
     self.passwordTextField.returnKeyType = UIReturnKeyDone;
     self.passwordTextField.tag = 101;
     self.passwordTextField.delegate = self;
     self.passwordTextField.secureTextEntry = YES;
     self.passwordTextField.clearsOnBeginEditing = YES;
+    self.passwordTextField.frame = CGRectMake(10, 44, Width - 20, 43);
+    UILabel *passwordView = [[UILabel alloc] initWithFrame:CGRectMake(10, 87, Width - 20, 0.7)];
+    passwordView.backgroundColor = color(220, 220, 220, 1);
     
     UIButton *loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    loginButton.backgroundColor = MainBlueColor;
+    loginButton.backgroundColor = LoginColor;
     [loginButton setTitle:@"登录" forState:UIControlStateNormal];
     [loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
+    loginButton.frame = CGRectMake(10, 115, Width - 20, 45);
     [loginButton addTarget:self action:@selector(loginButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
     loginButton.layer.cornerRadius = 5;
     
+    
+    self.label = [[UILabel alloc] initWithFrame:CGRectMake(40, CGRectGetMaxY(self.loginContainerView.frame), Width - 80, 80)];
+    self.label.numberOfLines = 0;
+    self.label.textColor = color(140, 140, 140, 1);
+    self.label.textAlignment = NSTextAlignmentCenter;
+    self.label.userInteractionEnabled = YES;
+    [self.view addSubview:self.label];
+    
+    NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:@"没有爱服务账号?去注册"];
+    [attributeStr setAttributes:@{NSForegroundColorAttributeName:LoginColor} range:NSMakeRange(attributeStr.length - 2, 2)];
+    self.label.attributedText = attributeStr;
+    
     UIButton *registerButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [registerButton setTitle:@"注册新用户" forState:UIControlStateNormal];
-    [registerButton setTitleColor:color(30, 30, 30, 1) forState:UIControlStateNormal];
+    
     
     [registerButton addTarget:self action:@selector(registerButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    if (iPhone6_plus || iPhone6) {
-        registerButton.frame = CGRectMake(35 + (Width - 70)/2, 155 + (Width - 70), (Width - 70)/2, 40);
-        registerButton.titleLabel.font = font(16);
-    }else{
-        registerButton.frame = CGRectMake(10 + (Width - 20)/2, 155 + (Width - 20), (Width - 20)/2, 40);
-        registerButton.titleLabel.font = font(14);
-    }
-    registerButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    registerButton.frame = self.label.bounds;
 
     
     [self.loginContainerView addSubview:loginButton];
-    [self.view addSubview:registerButton];
+    [self.label addSubview:registerButton];
     [self.loginContainerView addSubview:self.accountTextField];
+    [self.loginContainerView addSubview:accountView];
     [self.loginContainerView addSubview:self.passwordTextField];
-    [self.loginContainerView addSubview:label];
+    [self.loginContainerView addSubview:passwordView];
+    
     [self.view addSubview:self.loginContainerView];
-
-    
-    
-    if (iPhone6_plus) {
-        loginButton.titleLabel.font = font(16);
-        label.font = font(18);
-        
-        [label mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(20);
-            make.left.mas_equalTo(60);
-            make.right.mas_equalTo(-60);
-            make.top.mas_equalTo(30);
-        }];
-        
-        [self.accountTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(90);
-            make.left.mas_equalTo(60);
-            make.right.mas_equalTo(-60);
-            make.height.mas_equalTo(40);
-            
-        }];
-        
-        [self.passwordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(weakSelf.accountTextField.mas_bottom).mas_equalTo(25);
-            make.left.mas_equalTo(60);
-            make.right.mas_equalTo(-60);
-            make.height.mas_equalTo(40);
-        }];
-        
-        [loginButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            
-            make.height.mas_equalTo(40);
-            make.left.mas_equalTo(60);
-            make.right.mas_equalTo(-60);
-            make.bottom.mas_equalTo(-50);
-            
-        }];
-    }else{
-        
-        loginButton.titleLabel.font = font(14);
-        label.font = font(16);
-
-        [label mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(20);
-            make.left.mas_equalTo(60);
-            make.right.mas_equalTo(-60);
-            make.top.mas_equalTo(30);
-        }];
-        
-        [self.accountTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(40);
-            make.left.mas_equalTo(60);
-            make.right.mas_equalTo(-60);
-            make.top.mas_equalTo(70);
-        }];
-
-        [self.passwordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(weakSelf.accountTextField.mas_bottom).mas_equalTo(15);
-            make.left.mas_equalTo(60);
-            make.right.mas_equalTo(-60);
-            make.height.mas_equalTo(40);
-        }];
-        
-        [loginButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            
-            make.top.mas_equalTo(weakSelf.passwordTextField.mas_bottom).mas_equalTo(45);
-            make.left.mas_equalTo(60);
-            make.right.mas_equalTo(-60);
-            make.bottom.mas_equalTo(-50);
-            
-        }];
-    }
 
 }
 
@@ -401,32 +324,47 @@ UITextFieldDelegate
 
 - (void)keyboardWillShow {
     __weak typeof(self)weakSelf = self;
-    
-    if (iPhone4_4s) {
+    if (iPhone5_5s) {
         [UIView animateWithDuration:0.75 animations:^{
-            weakSelf.imageView.alpha = 0;
-            weakSelf.loginContainerView.frame = CGRectMake(10, -10, Width - 20, Width - 20);
+            weakSelf.imageView.frame = CGRectMake((Width - 200)/2, - 45, 200, 43);
+            weakSelf.loginContainerView.frame = CGRectMake(0, 100, Width - 20, 180);
+            weakSelf.label.frame = CGRectMake(40, 300, Width - 80, 80);
+            weakSelf.label.alpha = 0;
+            weakSelf.label.userInteractionEnabled = NO;
         }];
-    }else if (iPhone5_5s){
-        [UIView animateWithDuration:0.75 animations:^{
-            weakSelf.imageView.alpha = 0;
-            weakSelf.loginContainerView.frame = CGRectMake(10, 50, Width - 20, Width - 20);
+    }else if (iPhone4_4s) {
+        weakSelf.imageView.frame = CGRectMake((Width - 200)/2, - 45, 200, 43);
+        weakSelf.loginContainerView.frame = CGRectMake(0, 30, Width - 20, 180);
+        weakSelf.label.frame = CGRectMake(40, 300, Width - 80, 80);
+        weakSelf.label.alpha = 0;
+        weakSelf.label.userInteractionEnabled = NO;
+    }else {
+        [UIView animateWithDuration:0.5 animations:^{
+            weakSelf.label.alpha = 0;
+            weakSelf.label.userInteractionEnabled = NO;
         }];
     }
-
+    
 }
 
 - (void)keyboardWillHide {
     __weak typeof(self)weakSelf = self;
     
-    if (iPhone6 || iPhone6_plus) {
-       
-    }else{
+    if (iPhone5_5s || iPhone4_4s) {
+        [UIView animateWithDuration:0.75 animations:^{
+            weakSelf.imageView.frame = CGRectMake((Width - 200)/2, 60, 200, 43);
+            weakSelf.loginContainerView.frame = CGRectMake(0, 184, Width - 20, 180);
+            weakSelf.label.frame = CGRectMake(40, 383, Width - 80, 80);
+            weakSelf.label.alpha = 1;
+            weakSelf.label.userInteractionEnabled = YES;
+        }];
+    }else {
         [UIView animateWithDuration:0.5 animations:^{
-            weakSelf.imageView.alpha = 1;
-            weakSelf.loginContainerView.frame = CGRectMake(10, 155, Width - 20, Width - 20);
+            weakSelf.label.alpha = 1;
+            weakSelf.label.userInteractionEnabled = YES;
         }];
     }
+    
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

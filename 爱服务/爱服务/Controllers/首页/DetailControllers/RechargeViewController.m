@@ -91,7 +91,15 @@ static NSInteger i = 0;
     }
     self.rechargeButton.frame = CGRectMake(40, 44*4+60 + 20, Width - 80, height);
     [self.view addSubview:self.rechargeButton];
-
+    
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.rechargeButton.frame)+20, Width, 40)];
+    label.text = @"手机充值,扣除手续费0.6%";
+    label.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:label];
+    label.font = font(14);
+    label.textColor = color(130, 130, 130, 1);
+   
 }
 
 

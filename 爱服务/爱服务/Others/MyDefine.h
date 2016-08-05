@@ -56,5 +56,6 @@
 #define  MainBlueColor color(9, 152, 205, 1)
 #define currentPageControlTintColor color(224, 226, 213, 1)
 
+#define LoginColor color(11, 157, 235, 1)
 
 #endif /* MyDefine_h */
