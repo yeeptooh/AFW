@@ -275,10 +275,8 @@ static NSInteger tag = 0;
 - (void)setNaviTitle {
     self.navigationItem.title = @"首页";
     
-    
     UIButton *phoneButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [phoneButton setImage:[UIImage imageNamed:@"msg_room_toolbar_media_fct_notrace_norm_0"] forState:UIControlStateNormal];
-    
     
     phoneButton.frame = CGRectMake(0, 0, Width/10, Width/10);
     [phoneButton addTarget:self action:@selector(phoneButtonClicked) forControlEvents:UIControlEventTouchUpInside];

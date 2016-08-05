@@ -40,7 +40,7 @@
             <connections>
                 <outlet property="moneyTextField" destination="Wq6-x5-GFr" id="8K9-p4-gV5"/>
             </connections>
-            <point key="canvasLocation" x="306" y="278"/>
+            <point key="canvasLocation" x="264" y="274"/>
         </tableViewCell>
     </objects>
 </document>

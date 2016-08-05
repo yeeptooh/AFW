@@ -11,6 +11,7 @@
 #import "MBProgressHUD.h"
 #import "UserModel.h"
 #import "ZDDPhotoBrowerViewController.h"
+
 @interface ChangeImageViewController ()
 <
 UIImagePickerControllerDelegate,
@@ -431,13 +432,17 @@ UINavigationControllerDelegate
 }
 
 - (void)displayPhotoButtonClick {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
     NSMutableArray *list = [NSMutableArray array];
+    
     for (NSString *url in self.array) {
-        NSString *urlString = [NSString stringWithFormat:@"%@upload/voucher/finish/%@",subHomeURL,url];
-        NSLog(@"%@",urlString);
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
-        [list addObject:data];
+            NSString *urlString = [NSString stringWithFormat:@"%@upload/voucher/finish/%@",subHomeURL,url];
+        
+            [list addObject:urlString];
+        
     }
+    [hud hideAnimated:YES];
     
     ZDDPhotoBrowerViewController *photoVC = [[ZDDPhotoBrowerViewController alloc] init];
     photoVC.photoList = list;

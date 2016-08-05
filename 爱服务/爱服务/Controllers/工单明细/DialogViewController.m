@@ -112,6 +112,14 @@ UITextViewDelegate
     cell.dateLabel.text = [NSString stringWithFormat:@"%@ %@",yearStr,timeStr];
     cell.companyLabel.text = self.dialogList[indexPath.row][@"FromUserName"];
     
+    if (iPhone4_4s || iPhone5_5s) {
+        
+    }else {
+        cell.dialogLabel.font = font(14);
+        cell.companyLabel.font = font(14);
+        cell.dateLabel.font = font(14);
+    }
+    
     return cell;
 }
 
@@ -181,14 +189,13 @@ UITextViewDelegate
 
     
     NSString *toName = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, (__bridge CFStringRef)self.toUserName, NULL, (CFStringRef)@"!*’();:@&=+,/?%#[]", kCFStringEncodingUTF8);
-//    NSString *toName = [self.toUserName stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
     NSString *fromName = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, (__bridge CFStringRef)self.fromUserName, NULL, (CFStringRef)@"!*’();:@&=+,/?%#[]", kCFStringEncodingUTF8);
-//    NSString *fromName = [self.fromUserName stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
     NSString *content = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, (__bridge CFStringRef)self.textView.text, NULL, (CFStringRef)@"!*’();:@&=+,/?%#[]", kCFStringEncodingUTF8);
-//    NSString *content = [self.textView.text stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
     NSString *url = [NSString stringWithFormat:@"%@Task.ashx?action=feedbackadd&taskid=%@&touserid=%@&tousername=%@&fromuserid=%@&fromusername=%@&content=%@",HomeURL,self.taskID,self.toUserID,toName,self.fromUserID,fromName,content];
-//    NSString *encodeUrl = [url stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
+
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -274,7 +281,6 @@ UITextViewDelegate
     [self.tableView removeGestureRecognizer:self.tap];
     
 }
-
 
 
 @end
