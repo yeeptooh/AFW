@@ -27,23 +27,23 @@
     
     CGFloat height;
     CGFloat width;
-    CGFloat fontSize;
+//    CGFloat fontSize;
     if (iPhone6_plus) {
         height = Height/5;
         width = Width - 100;
-        fontSize = 20;
+//        fontSize = 20;
     }else if (iPhone6) {
         height = Height/5;
         width = Width - 100;
-        fontSize = 18;
+//        fontSize = 18;
     }else if (iPhone5_5s) {
         height = Height/5;
         width = Width - 100;
-        fontSize = 18;
+//        fontSize = 18;
     }else {
         height = Height/5;
         width = Width - 100;
-        fontSize = 16;
+//        fontSize = 16;
     }
     
     self.textfield = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, width, height/2)];

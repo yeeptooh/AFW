@@ -51,6 +51,7 @@ UITextFieldDelegate
 
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
 @property (nonatomic, assign, getter = isSelected) BOOL selected;
+@property (nonatomic, assign) NSInteger flag;
 @end
 
 @implementation AllOrderViewController
@@ -372,7 +373,7 @@ UITextFieldDelegate
 
 - (void)searchButtonClicked:(UIButton *)sender {
     [self.view addSubview:self.searchResultView];
-    
+    self.flag = 1;
     [UIView animateWithDuration:0.4 animations:^{
         self.searchResultView.alpha = 1;
         
@@ -388,7 +389,10 @@ UITextFieldDelegate
 
 - (void)cancelButtonClicked:(UIButton *)sender {
     self.searchPage = 1;
+    self.flag = 0;
+    
     [UIView animateWithDuration:0.5 animations:^{
+        self.tableView.alpha = 1;
         self.searchResultView.alpha = 0;
         [self.textfield resignFirstResponder];
         CGRect frame = self.whiteView.frame;
@@ -486,6 +490,7 @@ UITextFieldDelegate
     
     self.manager = [AFHTTPSessionManager manager];
     UserModel *userModel = [UserModel readUserModel];
+    
     NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=getlist&comid=%ld&uid=%ld&state=-1&page=%ld&query=&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)self.page,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
     self.manager.requestSerializer.timeoutInterval = 5;
     
@@ -503,9 +508,11 @@ UITextFieldDelegate
         
         [self.view addSubview:self.tableView];
         [self.activityView stopAnimating];
-        [UIView animateWithDuration:0.3 animations:^{
-            self.tableView.alpha = 1;
-        }];
+        if (self.flag != 1) {
+            [UIView animateWithDuration:0.3 animations:^{
+                self.tableView.alpha = 1;
+            }];
+        }
         [self.tableView reloadData];
 
         if ([responseObject[@"ResponseInfo"][0][@"PageNow"] integerValue] == [responseObject[@"ResponseInfo"][0][@"PageRowCount"] integerValue]) {
@@ -618,7 +625,7 @@ UITextFieldDelegate
     cell.assessLabel.text = self.orderModel.assess;
     cell.areaLabel.text = self.orderModel.area;
 #endif
-    
+    cell.backgroundColor = [UIColor whiteColor];
     
     return cell;
 }

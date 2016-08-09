@@ -122,8 +122,6 @@ UICollectionViewDelegateFlowLayout
     [group setValue:@"big" forKey:@"anim"];
     [self.cellSnap.layer addAnimation:group forKey:@"group"];
     
-    
-    
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
@@ -142,12 +140,12 @@ UICollectionViewDelegateFlowLayout
 
 - (void)buttonClicked {
     [UIView animateWithDuration:0.25 animations:^{
-        self.sceneSnap.alpha = 0;
+        self.sceneSnap.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
     }];
     CABasicAnimation *basicAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
     
     basicAnimation.duration = 0.25;
-    basicAnimation.toValue = @((Width/4-10)/(Width - 20));
+    basicAnimation.toValue = @((Width/4-10)*1.0/(Width - 20));
     basicAnimation.removedOnCompletion = NO;
     basicAnimation.fillMode = kCAFillModeForwards;
     
@@ -174,6 +172,10 @@ UICollectionViewDelegateFlowLayout
 
 - (void)setNaviTitle {
     self.navigationItem.title = @"已上传图片";
+}
+
+- (void)dealloc {
+    NSLog(@"zddPhoto dealloc");
 }
 
 

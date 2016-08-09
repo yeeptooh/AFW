@@ -396,7 +396,7 @@ static NSInteger i = 0;
                         
                         NSString *signedString = json[@"data"];
                         
-                        NSString *signerStr = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, /* allocator */(__bridge CFStringRef)signedString, NULL, /* charactersToLeaveUnescaped */(CFStringRef)@"!*'();:@&=+$,/?%#[]", kCFStringEncodingUTF8);
+                        NSString *signerStr = (__bridge_transfer NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, /* allocator */(__bridge CFStringRef)signedString, NULL, /* charactersToLeaveUnescaped */(CFStringRef)@"!*'();:@&=+$,/?%#[]", kCFStringEncodingUTF8);
 
                         NSString *orderString = nil;
                         if (signedString != nil) {

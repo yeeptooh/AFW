@@ -188,11 +188,11 @@ UITextViewDelegate
     }
 
     
-    NSString *toName = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, (__bridge CFStringRef)self.toUserName, NULL, (CFStringRef)@"!*’();:@&=+,/?%#[]", kCFStringEncodingUTF8);
+    NSString *toName = (__bridge_transfer NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, (__bridge CFStringRef)self.toUserName, NULL, (CFStringRef)@"!*’();:@&=+,/?%#[]", kCFStringEncodingUTF8);
 
-    NSString *fromName = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, (__bridge CFStringRef)self.fromUserName, NULL, (CFStringRef)@"!*’();:@&=+,/?%#[]", kCFStringEncodingUTF8);
+    NSString *fromName = (__bridge_transfer NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, (__bridge CFStringRef)self.fromUserName, NULL, (CFStringRef)@"!*’();:@&=+,/?%#[]", kCFStringEncodingUTF8);
 
-    NSString *content = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, (__bridge CFStringRef)self.textView.text, NULL, (CFStringRef)@"!*’();:@&=+,/?%#[]", kCFStringEncodingUTF8);
+    NSString *content = (__bridge_transfer NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, (__bridge CFStringRef)self.textView.text, NULL, (CFStringRef)@"!*’();:@&=+,/?%#[]", kCFStringEncodingUTF8);
 
     NSString *url = [NSString stringWithFormat:@"%@Task.ashx?action=feedbackadd&taskid=%@&touserid=%@&tousername=%@&fromuserid=%@&fromusername=%@&content=%@",HomeURL,self.taskID,self.toUserID,toName,self.fromUserID,fromName,content];
 
