@@ -196,7 +196,6 @@ UITextFieldDelegate
             userModel.userType = responseObject[@"user"][0][@"UserType"];
             [UserModel writeUserModel:userModel];
 
-            
             YeeptNetWorkingManager *manager = [[YeeptNetWorkingManager alloc] init];
 
             NSString *subURL = @"Task.ashx?action=gettaskcount";
@@ -214,7 +213,10 @@ UITextFieldDelegate
                 NSArray *countList = [allString componentsSeparatedByString:@","];
                 
                 [[NSUserDefaults standardUserDefaults] setObject:countList forKey:@"countList"];
+                [[NSUserDefaults standardUserDefaults] setObject:self.accountTextField.text forKey:@"username"];
+                [[NSUserDefaults standardUserDefaults] setObject:self.passwordTextField.text forKey:@"password"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
+                
                 [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateMoney object:nil];
                 if (((NSArray *)[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"]).lastObject) {
                     [[NSNotificationCenter defaultCenter] postNotificationName:kupdateBadgeNum object:nil];
@@ -229,8 +231,7 @@ UITextFieldDelegate
                 [hud hideAnimated:YES afterDelay:0.75f];
                 [hud removeFromSuperViewOnHide];
                 
-                [[NSUserDefaults standardUserDefaults] setObject:self.accountTextField.text forKey:@"username"];
-                [[NSUserDefaults standardUserDefaults] setObject:self.passwordTextField.text forKey:@"password"];
+                
                 
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.75 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     if ([[NSUserDefaults standardUserDefaults] integerForKey:@"logOut"]) {

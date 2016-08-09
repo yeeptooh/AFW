@@ -47,6 +47,7 @@ UITextFieldDelegate
 
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
 @property (nonatomic, assign, getter = isSelected) BOOL selected;
+@property (nonatomic, assign) NSInteger flag;
 @end
 
 @implementation ReceiveViewController
@@ -368,7 +369,7 @@ UITextFieldDelegate
 
 - (void)searchButtonClicked:(UIButton *)sender {
     [self.view addSubview:self.searchResultView];
-    
+    self.flag = 1;
     [UIView animateWithDuration:0.4 animations:^{
         self.searchResultView.alpha = 1;
         
@@ -384,7 +385,10 @@ UITextFieldDelegate
 
 - (void)cancelButtonClicked:(UIButton *)sender {
     self.searchPage = 1;
+    self.flag = 0;
+    
     [UIView animateWithDuration:0.5 animations:^{
+        self.tableView.alpha = 1;
         self.searchResultView.alpha = 0;
         [self.textfield resignFirstResponder];
         CGRect frame = self.whiteView.frame;
@@ -494,9 +498,11 @@ UITextFieldDelegate
             return ;
         }
         [self.view addSubview:self.tableView];
-        [UIView animateWithDuration:0.3 animations:^{
-            self.tableView.alpha = 1;
-        }];
+        if (self.flag != 1) {
+            [UIView animateWithDuration:0.3 animations:^{
+                self.tableView.alpha = 1;
+            }];
+        }
         [self.tableView reloadData];
         
         if ([responseObject[@"ResponseInfo"][0][@"PageNow"] integerValue] == [responseObject[@"ResponseInfo"][0][@"PageRowCount"] integerValue]) {
@@ -594,7 +600,7 @@ UITextFieldDelegate
     cell.areaLabel.text = self.orderModel.area;
     
 #endif
-    
+    cell.backgroundColor = [UIColor whiteColor];
     return cell;
 }
 

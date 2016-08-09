@@ -400,7 +400,7 @@ UIViewControllerTransitioningDelegate
         
         if (self.flag == 1) {
             
-            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, Height - StatusBarAndNavigationBarHeight - TabbarHeight, Width, TabbarHeight)];
+            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, Height - StatusBarAndNavigationBarHeight - TabbarHeight-1.2, Width, TabbarHeight+1.2)];
             view.backgroundColor = color(230, 230, 230, 1);
             [self.view addSubview:view];
             
@@ -413,7 +413,7 @@ UIViewControllerTransitioningDelegate
             [effectView.contentView addSubview:lineView];
             
             UIButton *robButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            robButton.frame = CGRectMake(0, 0, Width, TabbarHeight);
+            robButton.frame = CGRectMake(0, 0, Width, TabbarHeight+1.2);
 //            robButton.titleLabel.font = font(12);
             [robButton setTitle:@"立即抢单" forState:UIControlStateNormal];
             [robButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -423,7 +423,7 @@ UIViewControllerTransitioningDelegate
             
         }else {
             
-            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, Height - StatusBarAndNavigationBarHeight - TabbarHeight, Width, TabbarHeight)];
+            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, Height - StatusBarAndNavigationBarHeight - TabbarHeight-1.2, Width, TabbarHeight+1.2)];
             view.backgroundColor = color(230, 230, 230, 1);
             [self.view addSubview:view];
             
@@ -436,7 +436,7 @@ UIViewControllerTransitioningDelegate
             [effectView.contentView addSubview:lineView];
             
             UIButton *receiveButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            receiveButton.frame = CGRectMake(0, 0, Width/2, TabbarHeight);
+            receiveButton.frame = CGRectMake(0, 0, Width/2, TabbarHeight+1.2);
             [receiveButton setTitle:@"接收" forState:UIControlStateNormal];
 
             [receiveButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -446,7 +446,7 @@ UIViewControllerTransitioningDelegate
             [effectView.contentView addSubview:receiveButton];
             
             UIButton *refuseButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            refuseButton.frame = CGRectMake(Width/2, 0, Width/2, TabbarHeight);
+            refuseButton.frame = CGRectMake(Width/2, 0, Width/2, TabbarHeight+1.2);
             [refuseButton setTitle:@"拒绝" forState:UIControlStateNormal];
             [refuseButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             refuseButton.backgroundColor = MainBlueColor;
@@ -461,7 +461,7 @@ UIViewControllerTransitioningDelegate
         
     }else if (self.state == 5){
         
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, Height - StatusBarAndNavigationBarHeight - TabbarHeight, Width, TabbarHeight)];
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, Height - StatusBarAndNavigationBarHeight - TabbarHeight-1.2, Width, TabbarHeight+1.2)];
         view.backgroundColor = color(230, 230, 230, 1);
         [self.view addSubview:view];
         
@@ -474,7 +474,7 @@ UIViewControllerTransitioningDelegate
         [effectView.contentView addSubview:lineView];
         
         UIButton *completeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        completeButton.frame = CGRectMake(0, 0, Width/4, TabbarHeight);
+        completeButton.frame = CGRectMake(0, 0, Width/4, TabbarHeight+1.2);
         completeButton.backgroundColor = MainBlueColor;
         [completeButton setTitle:@"完成" forState:UIControlStateNormal];
         [completeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -483,7 +483,7 @@ UIViewControllerTransitioningDelegate
         [effectView.contentView addSubview:completeButton];
         
         UIButton *recedeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        recedeButton.frame = CGRectMake(Width/4, 0, Width/4, TabbarHeight);
+        recedeButton.frame = CGRectMake(Width/4, 0, Width/4, TabbarHeight+1.2);
         recedeButton.backgroundColor = MainBlueColor;
         [recedeButton setTitle:@"退单" forState:UIControlStateNormal];
         [recedeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -493,7 +493,7 @@ UIViewControllerTransitioningDelegate
         
         
         UIButton *requestButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        requestButton.frame = CGRectMake(Width/2, 0, Width/4, TabbarHeight);
+        requestButton.frame = CGRectMake(Width/2, 0, Width/4, TabbarHeight+1.2);
         [requestButton setTitle:@"申请配件" forState:UIControlStateNormal];
         [requestButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         requestButton.titleLabel.font = font(13);
@@ -503,7 +503,7 @@ UIViewControllerTransitioningDelegate
         
         
         UIButton *appendButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        appendButton.frame = CGRectMake(Width*3/4, 0, Width/4, TabbarHeight);
+        appendButton.frame = CGRectMake(Width*3/4, 0, Width/4, TabbarHeight+1.2);
         
         [appendButton setTitle:@"追加费用" forState:UIControlStateNormal];
         [appendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -525,7 +525,7 @@ UIViewControllerTransitioningDelegate
         [effectView.contentView addSubview:colView3];
         
     }else if (self.state >= 10) {
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, Height - StatusBarAndNavigationBarHeight - TabbarHeight, Width, TabbarHeight)];
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, Height - StatusBarAndNavigationBarHeight - TabbarHeight - 1.2, Width, TabbarHeight+1.2)];
         view.backgroundColor = color(230, 230, 230, 1);
         [self.view addSubview:view];
         
@@ -538,7 +538,7 @@ UIViewControllerTransitioningDelegate
         [effectView.contentView addSubview:lineView];
         
         UIButton *exchangeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        exchangeButton.frame = CGRectMake(0, 0, Width, TabbarHeight);
+        exchangeButton.frame = CGRectMake(0, 0, Width, TabbarHeight+1.2);
         //            robButton.titleLabel.font = font(12);
         [exchangeButton setTitle:@"添加图片" forState:UIControlStateNormal];
         [exchangeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -700,7 +700,6 @@ UIViewControllerTransitioningDelegate
     NSString *URL= [NSString stringWithFormat:@"%@task.ashx?action=gettaskfile&taskid=%@&comid=%@",HomeURL, @(self.ID),@(userModel.comid)];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@",responseObject);
 
         NSMutableArray *photoList = [NSMutableArray array];
         for (NSDictionary *dic in responseObject) {

@@ -199,6 +199,7 @@ static NSInteger tag = 0;
 }
 
 - (void)upDateNetWorking {
+    
 #if Environment_Mode == 1
     NSDictionary *params = @{
                              @"name":[[NSUserDefaults standardUserDefaults] objectForKey:@"username"],
@@ -245,7 +246,7 @@ static NSInteger tag = 0;
             
             [manager GETMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:NO progress:nil success:^(id responseObject) {
                 NSString *allString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
-                NSLog(@"%@",allString);
+                
                 NSArray *countList = [allString componentsSeparatedByString:@","];
                 
                 [[NSUserDefaults standardUserDefaults] setObject:countList forKey:@"countList"];

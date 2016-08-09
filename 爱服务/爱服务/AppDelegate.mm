@@ -213,15 +213,10 @@ static BOOL isProduction = FALSE;
         if (buttonIndex == 1) {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"prefs:root=LOCATION_SERVICES"]];
             
-        }else {
-
         }
     }else if (alertView.tag == 10001) {
         if (buttonIndex == 1) {
-            
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-        }else {
-            
         }
     }
 }
