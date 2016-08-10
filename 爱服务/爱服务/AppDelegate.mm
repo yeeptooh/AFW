@@ -288,6 +288,8 @@ static BOOL isProduction = FALSE;
                             UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                                 LoginViewController *loginVC = [[LoginViewController alloc] init];
                                 loginVC.passwordTextField.text = @"";
+                                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"password"];
+                                [[NSUserDefaults standardUserDefaults] synchronize];
                                 [[self activityViewController] presentViewController:loginVC animated:YES completion:nil];
                             }];
                             
@@ -627,6 +629,7 @@ static BOOL isProduction = FALSE;
             
             YeeptNetWorkingManager *manager = [[YeeptNetWorkingManager alloc] init];
             NSString *subURL = @"Task.ashx?action=gettaskcount";
+#if Environment_Mode == 1
             NSDictionary *params = @{
                                      @"comid":@(userModel.comid),
                                      @"uid":@(userModel.uid),
@@ -634,6 +637,18 @@ static BOOL isProduction = FALSE;
                                      @"cityid":@(userModel.cityid),
                                      @"districtid":@(userModel.districtid)
                                      };
+#elif Environment_Mode == 2
+            
+            NSDictionary *params = @{
+                                     @"comid":@(userModel.comid),
+                                     @"uid":@(userModel.uid),
+                                     @"provinceid":@(userModel.provinceid),
+                                     @"cityid":@(userModel.cityid),
+                                     @"districtid":@(userModel.districtid),
+                                     @"handler_name":userModel.name
+                                     };
+#endif
+            
             
             
             [manager GETMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:NO progress:nil success:^(id responseObject) {

@@ -653,9 +653,9 @@ UINavigationControllerDelegate
             NSDate *date = [NSDate date];
             NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
             formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-            NSString *fileName = [NSString stringWithFormat:@"%@%ld",[formatter stringFromDate:date],(long)i];
+            NSString *fileName = [NSString stringWithFormat:@"%@%ld.jpeg",[formatter stringFromDate:date],(long)i];
 
-            [formData appendPartWithFileData:dataList[i] name:fileName fileName:fileNameList[i] mimeType:@"image/jpeg"];
+            [formData appendPartWithFileData:dataList[i] name:fileName fileName:fileName mimeType:@"image/jpeg"];
             
         }
         
