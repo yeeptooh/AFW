@@ -199,6 +199,7 @@ UITextFieldDelegate
             YeeptNetWorkingManager *manager = [[YeeptNetWorkingManager alloc] init];
 
             NSString *subURL = @"Task.ashx?action=gettaskcount";
+#if Environment_Mode == 1
             NSDictionary *params = @{
                                      @"comid":@(userModel.comid),
                                      @"uid":@(userModel.uid),
@@ -206,6 +207,18 @@ UITextFieldDelegate
                                      @"cityid":@(userModel.cityid),
                                      @"districtid":@(userModel.districtid)
                                      };
+#elif Environment_Mode == 2
+            
+            NSDictionary *params = @{
+                                     @"comid":@(userModel.comid),
+                                     @"uid":@(userModel.uid),
+                                     @"provinceid":@(userModel.provinceid),
+                                     @"cityid":@(userModel.cityid),
+                                     @"districtid":@(userModel.districtid),
+                                     @"handler_name":userModel.name
+                                     };
+#endif
+
             
             [manager GETMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:NO progress:nil success:^(id responseObject) {
                 

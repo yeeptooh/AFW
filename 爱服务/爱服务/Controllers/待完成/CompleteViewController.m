@@ -330,7 +330,12 @@ UITextFieldDelegate
     UserModel *userModel = [UserModel readUserModel];
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+#if Environment_Mode == 1
     NSString *countString = [NSString stringWithFormat:@"%@Task.ashx?action=gettaskcount&comid=%ld&uid=%ld&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
+#elif Environment_Mode == 2
+    NSString *countString = [NSString stringWithFormat:@"%@Task.ashx?action=gettaskcount&comid=%ld&uid=%ld&handler_name=%@&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,userModel.name,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
+    countString = [countString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+#endif
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     [manager GET:countString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -528,7 +533,14 @@ UITextFieldDelegate
     
     self.manager = [AFHTTPSessionManager manager];
     UserModel *userModel = [UserModel readUserModel];
+#if Environment_Mode == 1
     NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=getlist&comid=%ld&uid=%ld&state=5&page=%ld&query=&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)self.page,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
+#elif Environment_Mode == 2
+    NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=getlist&comid=%ld&uid=%ld&handler_name=%@&state=5&page=%ld&query=&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid, userModel.name, (long)self.page,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
+    URL = [URL stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+#endif
+    
+    
     self.manager.requestSerializer.timeoutInterval = 5;
     
     [self.manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -841,7 +853,11 @@ UITextFieldDelegate
 
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     UserModel *userModel = [UserModel readUserModel];
+#if Environment_Mode == 1
     NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=getlist&comid=%ld&uid=%ld&state=5&page=%ld&query=%@&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)self.page,textField.text,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
+#elif Environment_Mode == 2
+    NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=getlist&comid=%ld&uid=%ld&handler_name=%@&state=5&page=%ld&query=%@&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,userModel.name,(long)self.page,textField.text,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
+#endif
     //297错误，URL中有中文，需转码
     URL = [URL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     manager.requestSerializer.timeoutInterval = 5;
@@ -900,7 +916,11 @@ UITextFieldDelegate
 
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     UserModel *userModel = [UserModel readUserModel];
+#if Environment_Mode == 1
     NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=getlist&comid=%ld&uid=%ld&state=5&page=%ld&query=%@&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)self.searchPage,self.textfield.text,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
+#elif Environment_Mode == 2
+    NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=getlist&comid=%ld&uid=%ld&handler_name=%@&state=5&page=%ld&query=%@&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,userModel.name,(long)self.searchPage,self.textfield.text,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
+#endif
     //297错误，URL中有中文，需转码
     URL = [URL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     manager.requestSerializer.timeoutInterval = 5;
@@ -960,7 +980,12 @@ UITextFieldDelegate
     UserModel *userModel = [UserModel readUserModel];
 
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+#if Environment_Mode == 1
     NSString *countString = [NSString stringWithFormat:@"%@Task.ashx?action=gettaskcount&comid=%ld&uid=%ld&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
+#elif Environment_Mode == 2
+    NSString *countString = [NSString stringWithFormat:@"%@Task.ashx?action=gettaskcount&comid=%ld&uid=%ld&handler_name=%@&provinceid=%ld&cityid=%ld&districtid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid,userModel.name,(long)userModel.provinceid,(long)userModel.cityid,(long)userModel.districtid];
+    countString = [countString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+#endif
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     [manager GET:countString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

@@ -14,6 +14,7 @@
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *url = [NSString stringWithFormat:@"%@%@",baseURL, subURL];
+    NSLog(@"%@",url);
     if (!isJSONSerialization) {
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     }

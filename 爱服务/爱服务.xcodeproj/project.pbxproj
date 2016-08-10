@@ -86,6 +86,8 @@
 		4A4C6CEB1CD201790030B861 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4C6CEA1CD201790030B861 /* SystemConfiguration.framework */; };
 		4A4C6CF51CD202EE0030B861 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4C6CF41CD202EE0030B861 /* libc++.tbd */; };
 		4A4C6CF81CD20DF80030B861 /* ShareAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4C6CF71CD20DF80030B861 /* ShareAnimation.m */; };
+		4A4D5B4B1D5B059B00F33A63 /* ZDDButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4D5B4A1D5B059B00F33A63 /* ZDDButton.m */; };
+		4A4D5B4C1D5B059B00F33A63 /* ZDDButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4D5B4A1D5B059B00F33A63 /* ZDDButton.m */; };
 		4A4EDB6B1CBF849D00A7D1E6 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4EDB6A1CBF849D00A7D1E6 /* DetailViewController.m */; };
 		4A4EDB721CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4EDB701CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.m */; };
 		4A4EDB731CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A4EDB711CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.xib */; };
@@ -595,6 +597,8 @@
 		4A4C6CF41CD202EE0030B861 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		4A4C6CF61CD20DF80030B861 /* ShareAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareAnimation.h; sourceTree = "<group>"; };
 		4A4C6CF71CD20DF80030B861 /* ShareAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareAnimation.m; sourceTree = "<group>"; };
+		4A4D5B491D5B059B00F33A63 /* ZDDButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZDDButton.h; sourceTree = "<group>"; };
+		4A4D5B4A1D5B059B00F33A63 /* ZDDButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZDDButton.m; sourceTree = "<group>"; };
 		4A4EDB691CBF849D00A7D1E6 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		4A4EDB6A1CBF849D00A7D1E6 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		4A4EDB6F1CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailTaskPlanTableViewCell.h; sourceTree = "<group>"; };
@@ -1206,6 +1210,8 @@
 			children = (
 				4A4BD2931CB8D5C2009DA0B9 /* Libraries */,
 				4A4BD28F1CB8A865009DA0B9 /* BaseControllers */,
+				4A4D5B491D5B059B00F33A63 /* ZDDButton.h */,
+				4A4D5B4A1D5B059B00F33A63 /* ZDDButton.m */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -2397,6 +2403,7 @@
 				4ADEDD7B1D17E04E00FE3412 /* Order.m in Sources */,
 				4A4BD3281CB8F812009DA0B9 /* ViewController+MASAdditions.m in Sources */,
 				4A69737D1CBB4D6E002A036C /* StandardFeeViewController.m in Sources */,
+				4A4D5B4B1D5B059B00F33A63 /* ZDDButton.m in Sources */,
 				4A6BABE31CC62FAB000B94A2 /* MJRefreshGifHeader.m in Sources */,
 				4A7749871CC07ECA008B9611 /* ProductTableViewCell.m in Sources */,
 				4A57F8841CD2F5390034E089 /* AFHTTPSessionManager.m in Sources */,
@@ -2494,6 +2501,7 @@
 				4A64238F1D19396600F26BA9 /* MapViewController.m in Sources */,
 				4A6423901D19396600F26BA9 /* UIScrollView+MJExtension.m in Sources */,
 				4A6423911D19396600F26BA9 /* MoneyTableViewCell.m in Sources */,
+				4A4D5B4C1D5B059B00F33A63 /* ZDDButton.m in Sources */,
 				4A6423921D19396600F26BA9 /* NotiViewController.m in Sources */,
 				4A6423931D19396600F26BA9 /* ButtonPresentAnimation.m in Sources */,
 				4A6423941D19396600F26BA9 /* AllOrderViewController.m in Sources */,

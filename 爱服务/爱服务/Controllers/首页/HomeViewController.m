@@ -40,6 +40,7 @@
 #import "UIView+WZLBadge.h"
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
+#import "ZDDButton.h"
 //#import "AddOrderViewController.h"
 
 @interface HomeViewController ()
@@ -48,7 +49,7 @@ SDCycleScrollViewDelegate,
 UIViewControllerTransitioningDelegate,
 UINavigationControllerDelegate
 >
-@property (nonatomic, strong) UIButton *detailButton;
+@property (nonatomic, strong) ZDDButton *detailButton;
 @property (nonatomic, strong) UIView *balanceView;
 @property (nonatomic, strong) UIButton *badgeView;
 @property (nonatomic, strong) UIAlertController *alertController;
@@ -96,6 +97,7 @@ static NSInteger tag = 0;
 - (instancetype)init {
     self = [super init];
     if (self) {
+    
         self.tabBarItem.title = @"首页";
         self.tabBarItem.image = [UIImage imageNamed:@"drawable_no_select_home"];
         self.tabBarItem.selectedImage = [UIImage imageNamed:@"drawable_select_home"];
@@ -235,6 +237,7 @@ static NSInteger tag = 0;
             
             YeeptNetWorkingManager *manager = [[YeeptNetWorkingManager alloc] init];
             NSString *subURL = @"Task.ashx?action=gettaskcount";
+#if Environment_Mode == 1
             NSDictionary *params = @{
                                      @"comid":@(userModel.comid),
                                      @"uid":@(userModel.uid),
@@ -242,6 +245,18 @@ static NSInteger tag = 0;
                                      @"cityid":@(userModel.cityid),
                                      @"districtid":@(userModel.districtid)
                                      };
+#elif Environment_Mode == 2
+            
+            NSDictionary *params = @{
+                                     @"comid":@(userModel.comid),
+                                     @"uid":@(userModel.uid),
+                                     @"provinceid":@(userModel.provinceid),
+                                     @"cityid":@(userModel.cityid),
+                                     @"districtid":@(userModel.districtid),
+                                     @"handler_name":userModel.name
+                                     };
+#endif
+
             
             
             [manager GETMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:NO progress:nil success:^(id responseObject) {
@@ -488,7 +503,7 @@ static NSInteger tag = 0;
         [self.view addSubview:scrollView];
         for (NSInteger i = 0; i < 4; i ++) {
             for (NSInteger j = 0;  j < 4; j ++) {
-                self.detailButton = [UIButton buttonWithType:UIButtonTypeCustom];
+                self.detailButton = [ZDDButton buttonWithType:UIButtonTypeCustom];
                 self.detailButton.tag = tag + 1000;
                 tag ++;
                 
@@ -554,13 +569,7 @@ static NSInteger tag = 0;
                 CGFloat fontsize = 12;
                 
                 self.detailButton.titleLabel.font = font(fontsize);
-                CGSize imageSize = self.detailButton.imageView.bounds.size;
-                CGSize titleLabelSize = self.detailButton.titleLabel.bounds.size;
-                
-                self.detailButton.imageEdgeInsets = UIEdgeInsetsMake(- self.detailButton.bounds.size.height/3, 0, 0, -titleLabelSize.width);
-                self.detailButton.titleEdgeInsets = UIEdgeInsetsMake(self.detailButton.bounds.size.height/2, -imageSize.width, 0, 0);
-                
-                
+
                 [self.containerView addSubview:self.detailButton];
             }
         }
@@ -576,7 +585,7 @@ static NSInteger tag = 0;
         [self.view addSubview:scrollView];
         for (NSInteger i = 0; i < 4; i ++) {
             for (NSInteger j = 0;  j < 4; j ++) {
-                self.detailButton = [UIButton buttonWithType:UIButtonTypeCustom];
+                self.detailButton = [ZDDButton buttonWithType:UIButtonTypeCustom];
                 self.detailButton.tag = tag + 1000;
                 tag ++;
                 
@@ -643,11 +652,6 @@ static NSInteger tag = 0;
                 CGFloat fontsize = 12;
                 
                 self.detailButton.titleLabel.font = font(fontsize);
-                CGSize imageSize = self.detailButton.imageView.bounds.size;
-                CGSize titleLabelSize = self.detailButton.titleLabel.bounds.size;
-                
-                self.detailButton.imageEdgeInsets = UIEdgeInsetsMake(- self.detailButton.bounds.size.height/3, 0, 0, -titleLabelSize.width);
-                self.detailButton.titleEdgeInsets = UIEdgeInsetsMake(self.detailButton.bounds.size.height/2, -imageSize.width, 0, 0);
 
                 [self.containerView addSubview:self.detailButton];
             }
@@ -660,7 +664,7 @@ static NSInteger tag = 0;
         [self.view addSubview:self.containerView];
         for (NSInteger i = 0; i < 4; i ++) {
             for (NSInteger j = 0;  j < 4; j ++) {
-                self.detailButton = [UIButton buttonWithType:UIButtonTypeCustom];
+                self.detailButton = [ZDDButton buttonWithType:UIButtonTypeCustom];
                 self.detailButton.tag = tag + 1000;
                 tag ++;
                 
@@ -726,13 +730,7 @@ static NSInteger tag = 0;
                 CGFloat fontsize = 13;
                 
                 self.detailButton.titleLabel.font = font(fontsize);
-                CGSize imageSize = self.detailButton.imageView.bounds.size;
-                CGSize titleLabelSize = self.detailButton.titleLabel.bounds.size;
-                
-                self.detailButton.imageEdgeInsets = UIEdgeInsetsMake(- self.detailButton.bounds.size.height/3, 0, 0, -titleLabelSize.width);
-                self.detailButton.titleEdgeInsets = UIEdgeInsetsMake(self.detailButton.bounds.size.height/2, -imageSize.width, 0, 0);
-                
-                
+
                 [self.containerView addSubview:self.detailButton];
             }
         }
@@ -744,7 +742,7 @@ static NSInteger tag = 0;
         [self.view addSubview:self.containerView];
         for (NSInteger i = 0; i < 4; i ++) {
             for (NSInteger j = 0;  j < 4; j ++) {
-                self.detailButton = [UIButton buttonWithType:UIButtonTypeCustom];
+                self.detailButton = [ZDDButton buttonWithType:UIButtonTypeCustom];
                 self.detailButton.tag = tag + 1000;
                 tag ++;
                 
@@ -810,13 +808,7 @@ static NSInteger tag = 0;
                 CGFloat fontsize = 13;
                 
                 self.detailButton.titleLabel.font = font(fontsize);
-                CGSize imageSize = self.detailButton.imageView.bounds.size;
-                CGSize titleLabelSize = self.detailButton.titleLabel.bounds.size;
-                
-                self.detailButton.imageEdgeInsets = UIEdgeInsetsMake(- self.detailButton.bounds.size.height/3, 0, 0, -titleLabelSize.width);
-                self.detailButton.titleEdgeInsets = UIEdgeInsetsMake(self.detailButton.bounds.size.height/2, -imageSize.width, 0, 0);
-                
-                
+
                 [self.containerView addSubview:self.detailButton];
             }
         }
@@ -836,7 +828,7 @@ static NSInteger tag = 0;
     [self.view addSubview:containerView];
     for (NSInteger i = 0; i < 2; i ++) {
         for (NSInteger j = 0;  j < 4; j ++) {
-            self.detailButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            self.detailButton = [ZDDButton buttonWithType:UIButtonTypeCustom];
             self.detailButton.tag = tag + 1000;
             tag ++;
             
@@ -897,13 +889,6 @@ static NSInteger tag = 0;
                 fontsize = 13;
             }
             self.detailButton.titleLabel.font = font(fontsize);
-            CGSize imageSize = self.detailButton.imageView.bounds.size;
-            CGSize titleLabelSize = self.detailButton.titleLabel.bounds.size;
-            
-            self.detailButton.imageEdgeInsets = UIEdgeInsetsMake(- self.detailButton.bounds.size.height/3, 0, 0, -titleLabelSize.width);
-            self.detailButton.titleEdgeInsets = UIEdgeInsetsMake(self.detailButton.bounds.size.height/2, -imageSize.width, 0, 0);
-            
-            
             [containerView addSubview:self.detailButton];
         }
     }
@@ -1288,6 +1273,7 @@ static NSInteger tag = 0;
     
     YeeptNetWorkingManager *manager = [[YeeptNetWorkingManager alloc] init];
     NSString *subURL = @"Task.ashx?action=gettaskcount";
+#if Environment_Mode == 1
     NSDictionary *params = @{
                              @"comid":@(userModel.comid),
                              @"uid":@(userModel.uid),
@@ -1295,6 +1281,18 @@ static NSInteger tag = 0;
                              @"cityid":@(userModel.cityid),
                              @"districtid":@(userModel.districtid)
                              };
+#elif Environment_Mode == 2
+    
+    NSDictionary *params = @{
+                             @"comid":@(userModel.comid),
+                             @"uid":@(userModel.uid),
+                             @"provinceid":@(userModel.provinceid),
+                             @"cityid":@(userModel.cityid),
+                             @"districtid":@(userModel.districtid),
+                             @"handler_name":userModel.name
+                             };
+#endif
+
     
     [manager GETMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:NO progress:nil success:^(id responseObject) {
         NSString *allString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];

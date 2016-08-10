@@ -77,8 +77,8 @@ UIScrollViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDeleg
         self.pageControl.numberOfPages = 2;
         self.pageControl.currentPage = 0;
         self.pageControl.selected = NO;
-        self.pageControl.pageIndicatorTintColor = [UIColor whiteColor];
-        self.pageControl.currentPageIndicatorTintColor = currentPageControlTintColor;
+        self.pageControl.pageIndicatorTintColor =  [UIColor colorWithRed:1  green:1  blue:1 alpha:0.7];
+        self.pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:1  green:1  blue:1 alpha:0.9];
         
         UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, Width, 50)];
         label1.textAlignment = NSTextAlignmentCenter;

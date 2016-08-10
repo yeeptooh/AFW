@@ -1363,7 +1363,8 @@ UIViewControllerTransitioningDelegate
     if (indexPath.row == 0) {
         
         self.cell = [[[NSBundle mainBundle] loadNibNamed:@"ProductTableViewCell" owner:self options:nil] lastObject];
-        
+        [self.cell.typeButton setTitle:self.model forState:UIControlStateNormal];
+        [self.cell.dateButton setTitle:self.buyDate forState:UIControlStateNormal];
         
         if (self.state >= 15) {
             self.cell.typeButton.enabled = NO;

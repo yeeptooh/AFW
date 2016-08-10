@@ -816,11 +816,7 @@ static NSInteger number;
         }
         
         NSArray *picArray = [[NSArray alloc]init];
-        NSArray *picNameArray = @[
-                                  @"profile_picture1.jpeg",
-                                  @"profile_picture2.jpeg",
-                                  @"profile_picture3.jpeg"
-                                  ];
+        
         if (self.firstImageView.image) {
             if (self.secondImageView.image) {
                 if (self.thirdImageView.image) {
@@ -876,10 +872,10 @@ static NSInteger number;
                 NSDate *date = [NSDate date];
                 NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
                 formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-                NSString *fileName = [NSString stringWithFormat:@"%@%ld",[formatter stringFromDate:date],(long)i];
+                NSString *fileName = [NSString stringWithFormat:@"%@%ld.jpeg",[formatter stringFromDate:date],(long)i];
                     
                 //name必须跟后台给的一致，fileName随便
-                [formData appendPartWithFileData:picArray[i] name:fileName fileName:picNameArray[i] mimeType:@"image/jpeg"];
+                [formData appendPartWithFileData:picArray[i] name:fileName fileName:fileName mimeType:@"image/jpeg"];
                 
             }
             
@@ -987,11 +983,7 @@ static NSInteger number;
         }
         
         NSArray *picArray = [[NSArray alloc]init];
-        NSArray *picNameArray = @[
-                                  @"profile_picture1.jpeg",
-                                  @"profile_picture2.jpeg",
-                                  @"profile_picture3.jpeg"
-                                  ];
+        
         if (self.firstImageView.image) {
             if (self.secondImageView.image) {
                 if (self.thirdImageView.image) {
@@ -1046,10 +1038,10 @@ static NSInteger number;
                 NSDate *date = [NSDate date];
                 NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
                 formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-                NSString *fileName = [NSString stringWithFormat:@"%@%ld",[formatter stringFromDate:date],(long)i];
+                NSString *fileName = [NSString stringWithFormat:@"%@%ld.jpeg",[formatter stringFromDate:date],(long)i];
                 
                 //name必须跟后台给的一致，fileName随便
-                [formData appendPartWithFileData:picArray[i] name:fileName fileName:picNameArray[i] mimeType:@"image/jpeg"];
+                [formData appendPartWithFileData:picArray[i] name:fileName fileName:fileName mimeType:@"image/jpeg"];
                 
             }
             
