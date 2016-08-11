@@ -653,7 +653,7 @@ static BOOL isProduction = FALSE;
             
             [manager GETMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:NO progress:nil success:^(id responseObject) {
                 NSString *allString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
-                NSLog(@"%@",allString);
+                
                 NSArray *countList = [allString componentsSeparatedByString:@","];
                 
                 [[NSUserDefaults standardUserDefaults] setObject:countList forKey:@"countList"];

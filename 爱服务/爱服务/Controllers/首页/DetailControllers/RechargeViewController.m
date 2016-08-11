@@ -127,7 +127,7 @@ static NSInteger i = 0;
                 sender.text = @"";
                 
             }else{
-                self.rechargeButton.backgroundColor = CZGreenColor;//BlueColor;//ALiBlueColor;//color(231, 76, 60, 1);
+                self.rechargeButton.backgroundColor = LoginColor;
                 self.rechargeButton.enabled = YES;
 
             }
@@ -143,7 +143,7 @@ static NSInteger i = 0;
                     self.haveDot = YES;
                 }else {
                     sender.text = [NSString stringWithFormat:@"%@",@(single - 48)];
-                    self.rechargeButton.backgroundColor = CZGreenColor;//BlueColor;//ALiBlueColor;//color(231, 76, 60, 1);
+                    self.rechargeButton.backgroundColor = LoginColor;
                     self.rechargeButton.enabled = YES;
                     
                 }
@@ -164,7 +164,7 @@ static NSInteger i = 0;
                 }else {
                     NSString *firstCharacter = [sender.text substringToIndex:1];
                     if ([firstCharacter isEqualToString:@"0"]) {
-                        self.rechargeButton.backgroundColor = CZGreenColor;
+                        self.rechargeButton.backgroundColor = LoginColor;
                         self.rechargeButton.enabled = YES;
                     }else{
                         
@@ -187,7 +187,7 @@ static NSInteger i = 0;
                 }else if (single == '0') {
                     
                 }else {
-                    self.rechargeButton.backgroundColor = CZGreenColor;//BlueColor;//ALiBlueColor;//color(231, 76, 60, 1);
+                    self.rechargeButton.backgroundColor = LoginColor;
                     self.rechargeButton.enabled = YES;
                 }
                 
