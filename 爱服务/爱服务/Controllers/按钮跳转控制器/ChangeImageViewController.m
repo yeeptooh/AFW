@@ -404,6 +404,7 @@ UINavigationControllerDelegate
     for (NSInteger i = 1; i <= self.count; i++) {
         UIImageView *imageView = [self.containerView viewWithTag:2000 + i];
         NSString *urlString = [NSString stringWithFormat:@"%@upload/voucher/finish/%@",subHomeURL, self.array[i - 1]];
+        
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
         imageView.image = [UIImage imageWithData:data];
     }
@@ -442,8 +443,9 @@ UINavigationControllerDelegate
             [list addObject:urlString];
         
     }
-    [hud hideAnimated:YES];
     
+    [hud hideAnimated:YES];
+    NSLog(@"%@",list);
     ZDDPhotoBrowerViewController *photoVC = [[ZDDPhotoBrowerViewController alloc] init];
     photoVC.photoList = list;
     [self.navigationController pushViewController:photoVC animated:YES];
@@ -500,33 +502,7 @@ UINavigationControllerDelegate
     
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     
-    if (self.selectedBtnposition == 1) {
-        self.firstImageView1.image = image;
-    }
-    if (self.selectedBtnposition == 2) {
-        self.secondImageView1.image = image;
-    }
-    if (self.selectedBtnposition == 3) {
-        self.thirdImageView1.image = image;
-    }
-    if (self.selectedBtnposition == 4) {
-        self.firstImageView2.image = image;
-    }
-    if (self.selectedBtnposition == 5) {
-        self.secondImageView2.image = image;
-    }
-    if (self.selectedBtnposition == 6) {
-        self.thirdImageView2.image = image;
-    }
-    if (self.selectedBtnposition == 7) {
-        self.firstImageView3.image = image;
-    }
-    if (self.selectedBtnposition == 8) {
-        self.secondImageView3.image = image;
-    }
-    if (self.selectedBtnposition == 9) {
-        self.thirdImageView3.image = image;
-    }
+    
     if (self.selectedBtnposition <= self.count) {
         [picker dismissViewControllerAnimated:YES completion:nil];
     }else {
@@ -557,13 +533,40 @@ UINavigationControllerDelegate
             maskView = self.thirdMaskView3;
             self.button9.enabled = YES;
         }
-       
+        
         [maskView removeFromSuperview];
         self.count++;
         [picker dismissViewControllerAnimated:YES completion:nil];
     }
     
     
+    if (self.selectedBtnposition == 1) {
+        self.firstImageView1.image = image;
+    }
+    if (self.selectedBtnposition == 2) {
+        self.secondImageView1.image = image;
+    }
+    if (self.selectedBtnposition == 3) {
+        self.thirdImageView1.image = image;
+    }
+    if (self.selectedBtnposition == 4) {
+        self.firstImageView2.image = image;
+    }
+    if (self.selectedBtnposition == 5) {
+        self.secondImageView2.image = image;
+    }
+    if (self.selectedBtnposition == 6) {
+        self.thirdImageView2.image = image;
+    }
+    if (self.selectedBtnposition == 7) {
+        self.firstImageView3.image = image;
+    }
+    if (self.selectedBtnposition == 8) {
+        self.secondImageView3.image = image;
+    }
+    if (self.selectedBtnposition == 9) {
+        self.thirdImageView3.image = image;
+    }
     
 }
 
@@ -655,7 +658,7 @@ UINavigationControllerDelegate
             formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
             NSString *fileName = [NSString stringWithFormat:@"%@%ld.jpeg",[formatter stringFromDate:date],(long)i];
 
-            [formData appendPartWithFileData:dataList[i] name:fileName fileName:fileName mimeType:@"image/jpeg"];
+            [formData appendPartWithFileData:dataList[i] name:fileNameList[i] fileName:fileName mimeType:@"image/jpeg"];
             
         }
         
@@ -674,7 +677,7 @@ UINavigationControllerDelegate
             [self.navigationController popViewControllerAnimated:YES];
         });
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@",error.userInfo);
+        
         MBProgressHUD *hud = [MBProgressHUD HUDForView:self.navigationController.view];
         UIImage *image = [[UIImage imageNamed:@"Checkerror"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         UIImageView *imageView = [[UIImageView alloc] initWithImage:image];

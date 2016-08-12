@@ -700,13 +700,16 @@ UIViewControllerTransitioningDelegate
     NSString *URL= [NSString stringWithFormat:@"%@task.ashx?action=gettaskfile&taskid=%@&comid=%@",HomeURL, @(self.ID),@(userModel.comid)];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-
+        
         NSMutableArray *photoList = [NSMutableArray array];
         for (NSDictionary *dic in responseObject) {
             [photoList addObject:dic[@"fileUrl"]];
         }
+        
         for (NSInteger i = 0; i < photoList.count; i++) {
             if ([photoList[i] isEqualToString:@""]) {
+                [photoList removeObjectAtIndex:i];
+            }else if ([photoList[i] rangeOfString:@"."].location == NSNotFound) {
                 [photoList removeObjectAtIndex:i];
             }
         }

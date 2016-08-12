@@ -10,11 +10,11 @@
 #import "AFNetworking.h"
 @implementation YeeptNetWorkingManager
 
-- (void)GETMethodBaseURL:(NSString *)baseURL path:(NSString *)subURL parameters:(NSDictionary *)parameters isJSONSerialization:(BOOL)isJSONSerialization progress:(void (^) (NSProgress *progress))progress success:(void (^) (id responseObject))success failure:(void (^) (NSError *error))failure {
++ (void)GETMethodBaseURL:(NSString *)baseURL path:(NSString *)subURL parameters:(NSDictionary *)parameters isJSONSerialization:(BOOL)isJSONSerialization progress:(void (^) (NSProgress *progress))progress success:(void (^) (id responseObject))success failure:(void (^) (NSError *error))failure {
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *url = [NSString stringWithFormat:@"%@%@",baseURL, subURL];
-    NSLog(@"%@",url);
+    
     if (!isJSONSerialization) {
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     }
@@ -36,7 +36,7 @@
     
 }
 
-- (void)POSTMethodBaseURL:(NSString *)baseURL path:(NSString *)subURL parameters:(NSDictionary *)parameters isJSONSerialization:(BOOL)isJSONSerialization progress:(void (^) (NSProgress *progress))progress success:(void (^) (id responseObject))success failure:(void (^) (NSError *error))failure {
++ (void)POSTMethodBaseURL:(NSString *)baseURL path:(NSString *)subURL parameters:(NSDictionary *)parameters isJSONSerialization:(BOOL)isJSONSerialization progress:(void (^) (NSProgress *progress))progress success:(void (^) (id responseObject))success failure:(void (^) (NSError *error))failure {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *url = [NSString stringWithFormat:@"%@%@",baseURL, subURL];
     if (!isJSONSerialization) {

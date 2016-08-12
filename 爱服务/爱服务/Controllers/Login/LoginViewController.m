@@ -102,7 +102,7 @@ UITextFieldDelegate
     
     loginButton.layer.cornerRadius = 5;
     
-    
+
     self.label = [[UILabel alloc] initWithFrame:CGRectMake(40, CGRectGetMaxY(self.loginContainerView.frame), Width - 80, 80)];
     self.label.numberOfLines = 0;
     self.label.textColor = color(140, 140, 140, 1);
@@ -112,6 +112,7 @@ UITextFieldDelegate
     
     NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:@"没有爱服务账号?去注册"];
     [attributeStr setAttributes:@{NSForegroundColorAttributeName:LoginColor} range:NSMakeRange(attributeStr.length - 2, 2)];
+#if Environment_Mode == 1
     self.label.attributedText = attributeStr;
     
     UIButton *registerButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -119,10 +120,15 @@ UITextFieldDelegate
     
     [registerButton addTarget:self action:@selector(registerButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     registerButton.frame = self.label.bounds;
+    [self.label addSubview:registerButton];
+#elif Environment_Mode == 2
+    
+#endif
+    
 
     
     [self.loginContainerView addSubview:loginButton];
-    [self.label addSubview:registerButton];
+    
     [self.loginContainerView addSubview:self.accountTextField];
     [self.loginContainerView addSubview:accountView];
     [self.loginContainerView addSubview:self.passwordTextField];
@@ -175,8 +181,7 @@ UITextFieldDelegate
 
     NSString *subURL = @"Passport.ashx?action=login";
     
-    YeeptNetWorkingManager *manager = [[YeeptNetWorkingManager alloc] init];
-    [manager POSTMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:YES progress:nil success:^(id responseObject) {
+    [YeeptNetWorkingManager POSTMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:YES progress:nil success:^(id responseObject) {
         
         if (responseObject != nil) {
             
@@ -195,8 +200,6 @@ UITextFieldDelegate
             userModel.masterName = responseObject[@"user"][0][@"MasterName"];
             userModel.userType = responseObject[@"user"][0][@"UserType"];
             [UserModel writeUserModel:userModel];
-
-            YeeptNetWorkingManager *manager = [[YeeptNetWorkingManager alloc] init];
 
             NSString *subURL = @"Task.ashx?action=gettaskcount";
 #if Environment_Mode == 1
@@ -220,7 +223,7 @@ UITextFieldDelegate
 #endif
 
             
-            [manager GETMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:NO progress:nil success:^(id responseObject) {
+            [YeeptNetWorkingManager GETMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:NO progress:nil success:^(id responseObject) {
                 
                 NSString *allString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
                 NSArray *countList = [allString componentsSeparatedByString:@","];
@@ -310,10 +313,23 @@ UITextFieldDelegate
 - (void)registerButtonClicked {
     
     RegisterViewController *registerVC = [[RegisterViewController alloc]init];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(-0.7, 0, 0.7, Height)];
+    label.backgroundColor = color(150, 150, 150, 1);
+    [registerVC.view addSubview:label];
     
-    UINavigationController *registerNaviController = [[UINavigationController alloc]initWithRootViewController:registerVC];
+    registerVC.view.frame = CGRectMake(Width, 0, Width, Height);
+    [self.view.superview addSubview:registerVC.view];
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         self.view.frame = CGRectMake(-Width/2, 0, Width, Height);
+                         registerVC.view.frame = CGRectMake(0, 0, Width, Height);
+                     }
+                     completion:^(BOOL finished) {
+                         [self presentViewController:registerVC animated:NO completion:^{
 
-    [self presentViewController:registerNaviController animated:YES completion:nil];
+                         }];
+                     }];
+    
 }
 
 #pragma mark - UITextFieldDelegate -
