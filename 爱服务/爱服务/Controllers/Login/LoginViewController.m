@@ -181,8 +181,7 @@ UITextFieldDelegate
 
     NSString *subURL = @"Passport.ashx?action=login";
     
-    YeeptNetWorkingManager *manager = [[YeeptNetWorkingManager alloc] init];
-    [manager POSTMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:YES progress:nil success:^(id responseObject) {
+    [YeeptNetWorkingManager POSTMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:YES progress:nil success:^(id responseObject) {
         
         if (responseObject != nil) {
             
@@ -201,8 +200,6 @@ UITextFieldDelegate
             userModel.masterName = responseObject[@"user"][0][@"MasterName"];
             userModel.userType = responseObject[@"user"][0][@"UserType"];
             [UserModel writeUserModel:userModel];
-
-            YeeptNetWorkingManager *manager = [[YeeptNetWorkingManager alloc] init];
 
             NSString *subURL = @"Task.ashx?action=gettaskcount";
 #if Environment_Mode == 1
@@ -226,7 +223,7 @@ UITextFieldDelegate
 #endif
 
             
-            [manager GETMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:NO progress:nil success:^(id responseObject) {
+            [YeeptNetWorkingManager GETMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:NO progress:nil success:^(id responseObject) {
                 
                 NSString *allString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
                 NSArray *countList = [allString componentsSeparatedByString:@","];

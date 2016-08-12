@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 @interface YeeptNetWorkingManager : NSObject
 
-- (void)GETMethodBaseURL:(NSString *)baseURL path:(NSString *)subURL parameters:(NSDictionary *)parameters isJSONSerialization:(BOOL)isJSONSerialization progress:(void (^) (NSProgress *progress))progress success:(void (^) (id responseObject))success failure:(void (^) (NSError *error))failure;
++ (void)GETMethodBaseURL:(NSString *)baseURL path:(NSString *)subURL parameters:(NSDictionary *)parameters isJSONSerialization:(BOOL)isJSONSerialization progress:(void (^) (NSProgress *progress))progress success:(void (^) (id responseObject))success failure:(void (^) (NSError *error))failure;
 
-- (void)POSTMethodBaseURL:(NSString *)baseURL path:(NSString *)subURL parameters:(NSDictionary *)parameters isJSONSerialization:(BOOL)isJSONSerialization progress:(void (^) (NSProgress *progress))progress success:(void (^) (id responseObject))success failure:(void (^) (NSError *error))failure;
++ (void)POSTMethodBaseURL:(NSString *)baseURL path:(NSString *)subURL parameters:(NSDictionary *)parameters isJSONSerialization:(BOOL)isJSONSerialization progress:(void (^) (NSProgress *progress))progress success:(void (^) (id responseObject))success failure:(void (^) (NSError *error))failure;
 
 
 @end

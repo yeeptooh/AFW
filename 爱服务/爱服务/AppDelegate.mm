@@ -265,8 +265,7 @@ static BOOL isProduction = FALSE;
                           @"lat":@(location.coordinate.latitude)
                          };
     
-    YeeptNetWorkingManager *yManager = [[YeeptNetWorkingManager alloc] init];
-    [yManager POSTMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:NO progress:nil success:^(id responseObject) {
+    [YeeptNetWorkingManager POSTMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:NO progress:nil success:^(id responseObject) {
         id jsonObj = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
         if ([jsonObj isKindOfClass:[NSDictionary class]]) {
             NSDictionary *dic = (NSDictionary *)jsonObj;
@@ -448,8 +447,6 @@ static BOOL isProduction = FALSE;
 
 - (void)updateResponse:(NSString *)orderID {
     
-    YeeptNetWorkingManager *manager = [[YeeptNetWorkingManager alloc] init];
-    
 #if Environment_Mode == 1
     NSString *subURL = [NSString stringWithFormat:@"/Payment/Alipay/Recharge.ashx?action=getorderstate&orderid=%@",orderID];
 #elif Environment_Mode == 2
@@ -457,7 +454,7 @@ static BOOL isProduction = FALSE;
 
 #endif
     
-    [manager GETMethodBaseURL:HomeURL path:subURL parameters:nil isJSONSerialization:YES progress:nil success:^(id responseObject) {
+    [YeeptNetWorkingManager GETMethodBaseURL:HomeURL path:subURL parameters:nil isJSONSerialization:YES progress:nil success:^(id responseObject) {
         if ([responseObject[@"data"] integerValue] ==  5) {
             
             [[NSNotificationCenter defaultCenter] postNotificationName:kReloadCell object:nil];
@@ -608,9 +605,8 @@ static BOOL isProduction = FALSE;
 #endif
     
     NSString *subURL = @"Passport.ashx?action=login";
-    YeeptNetWorkingManager *manager = [[YeeptNetWorkingManager alloc] init];
     
-    [manager POSTMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:YES progress:nil success:^(id responseObject) {
+    [YeeptNetWorkingManager POSTMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:YES progress:nil success:^(id responseObject) {
         if (responseObject != nil) {
             
             UserModel *userModel = [[UserModel alloc]init];
@@ -627,7 +623,6 @@ static BOOL isProduction = FALSE;
             userModel.userType = responseObject[@"user"][0][@"UserType"];
             [UserModel writeUserModel:userModel];
             
-            YeeptNetWorkingManager *manager = [[YeeptNetWorkingManager alloc] init];
             NSString *subURL = @"Task.ashx?action=gettaskcount";
 #if Environment_Mode == 1
             NSDictionary *params = @{
@@ -651,7 +646,7 @@ static BOOL isProduction = FALSE;
             
             
             
-            [manager GETMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:NO progress:nil success:^(id responseObject) {
+            [YeeptNetWorkingManager GETMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:NO progress:nil success:^(id responseObject) {
                 NSString *allString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
                 
                 NSArray *countList = [allString componentsSeparatedByString:@","];

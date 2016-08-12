@@ -216,9 +216,8 @@ static NSInteger tag = 0;
 #endif
     
     NSString *subURL = @"Passport.ashx?action=login";
-    YeeptNetWorkingManager *manager = [[YeeptNetWorkingManager alloc] init];
-
-    [manager POSTMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:YES progress:nil success:^(id responseObject) {
+    
+    [YeeptNetWorkingManager POSTMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:YES progress:nil success:^(id responseObject) {
         if (responseObject != nil) {
             
             UserModel *userModel = [[UserModel alloc]init];
@@ -235,7 +234,6 @@ static NSInteger tag = 0;
             userModel.userType = responseObject[@"user"][0][@"UserType"];
             [UserModel writeUserModel:userModel];
             
-            YeeptNetWorkingManager *manager = [[YeeptNetWorkingManager alloc] init];
             NSString *subURL = @"Task.ashx?action=gettaskcount";
 #if Environment_Mode == 1
             NSDictionary *params = @{
@@ -259,7 +257,7 @@ static NSInteger tag = 0;
 
             
             
-            [manager GETMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:NO progress:nil success:^(id responseObject) {
+            [YeeptNetWorkingManager GETMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:NO progress:nil success:^(id responseObject) {
                 NSString *allString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
                 
                 NSArray *countList = [allString componentsSeparatedByString:@","];
@@ -1168,9 +1166,9 @@ static NSInteger tag = 0;
         GatheringViewController *gatherVC = [[GatheringViewController alloc] init];
         gatherVC.hidesBottomBarWhenPushed = YES;
         
-        YeeptNetWorkingManager *manager = [[YeeptNetWorkingManager alloc] init];
+        
         NSString *subURL = [NSString stringWithFormat:@"uploadFile.ashx?action=loadimages&userId=%@", @(userModel.uid)];
-        [manager GETMethodBaseURL:HomeURL path:subURL parameters:nil isJSONSerialization:NO progress:nil success:^(id responseObject) {
+        [YeeptNetWorkingManager GETMethodBaseURL:HomeURL path:subURL parameters:nil isJSONSerialization:NO progress:nil success:^(id responseObject) {
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
             
             if (dic[@"wechatpay"] == 0) {
@@ -1271,7 +1269,6 @@ static NSInteger tag = 0;
     
     UserModel *userModel = [UserModel readUserModel];
     
-    YeeptNetWorkingManager *manager = [[YeeptNetWorkingManager alloc] init];
     NSString *subURL = @"Task.ashx?action=gettaskcount";
 #if Environment_Mode == 1
     NSDictionary *params = @{
@@ -1294,7 +1291,7 @@ static NSInteger tag = 0;
 #endif
 
     
-    [manager GETMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:NO progress:nil success:^(id responseObject) {
+    [YeeptNetWorkingManager GETMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:NO progress:nil success:^(id responseObject) {
         NSString *allString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSArray *countList = [allString componentsSeparatedByString:@","];
         
