@@ -445,7 +445,7 @@ UINavigationControllerDelegate
     }
     
     [hud hideAnimated:YES];
-    NSLog(@"%@",list);
+    
     ZDDPhotoBrowerViewController *photoVC = [[ZDDPhotoBrowerViewController alloc] init];
     photoVC.photoList = list;
     [self.navigationController pushViewController:photoVC animated:YES];

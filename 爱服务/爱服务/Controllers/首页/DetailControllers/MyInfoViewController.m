@@ -28,6 +28,7 @@ UIViewControllerTransitioningDelegate
 @property (nonatomic, strong) NSString *url;
 @property (nonatomic, strong) UIView *containerView;
 @property (nonatomic, strong) UIButton *quitButton;
+@property (nonatomic, strong) UIView *quitView;
 @end
 
 @implementation MyInfoViewController
@@ -117,18 +118,12 @@ UIViewControllerTransitioningDelegate
 
 - (void)setWebView {
     UserModel *userModel = [UserModel readUserModel];
-    CGFloat height;
-    if (iPhone4_4s || iPhone5_5s) {
-        height = 44;
-    }else {
-        height = 49;
-    }
-
-    self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, Width, Height - StatusBarAndNavigationBarHeight - height)];
+    
+    self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, Width, Height - StatusBarAndNavigationBarHeight)];
     
     self.webView.navigationDelegate = self;
     self.webView.UIDelegate = self;
-    self.webView.allowsBackForwardNavigationGestures = YES;
+    
 
     self.webView.scrollView.bounces = NO;
     self.webView.scrollView.showsVerticalScrollIndicator = NO;
@@ -147,13 +142,7 @@ UIViewControllerTransitioningDelegate
     
     [self.webView addObserver:self
                    forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
-#if Environment_Mode == 1
-#elif Environment_Mode == 2
-    [self.webView addObserver:self forKeyPath:@"canGoBack" options:NSKeyValueObservingOptionNew context:nil];
-#endif
-    
-    
-    
+
 }
 
 - (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler {
@@ -173,9 +162,6 @@ UIViewControllerTransitioningDelegate
     if ([keyPath isEqualToString:@"estimatedProgress"]) {
         
         self.progressView.progress = self.webView.estimatedProgress;
-    }else if ([keyPath isEqualToString:@"canGoBack"]) {
-        
-        
     }
     //加载完成
     if (!self.webView.isLoading) {
@@ -206,13 +192,7 @@ UIViewControllerTransitioningDelegate
 
 
 - (void)dealloc {
-    
     [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];
-#if Environment_Mode == 1
-#elif Environment_Mode == 2
-    [self.webView removeObserver:self forKeyPath:@"canGoBack"];
-#endif
-    
 }
 
 
@@ -222,19 +202,33 @@ UIViewControllerTransitioningDelegate
     
     
 }
-
-
-
+#if Environment_Mode == 1
+#elif Environment_Mode == 2
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
+    NSString *urlString = [navigationResponse.response.URL absoluteString];
+    NSLog(@"%@",urlString);
+    if ([urlString rangeOfString:@"BaseData"].location != NSNotFound) {
+        [UIView animateWithDuration:0.2 animations:^{
+            self.quitView.frame = CGRectMake(0, Height - StatusBarAndNavigationBarHeight, Width, TabbarHeight);
+        }];
+    }else {
+        [UIView animateWithDuration:0.2 animations:^{
+            self.quitView.frame = CGRectMake(0, Height - StatusBarAndNavigationBarHeight - TabbarHeight, Width, TabbarHeight);
+        }];
+    }
+    decisionHandler(WKNavigationResponsePolicyAllow);
+}
+#endif
 
 - (void)setQuitButton {
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, Height - StatusBarAndNavigationBarHeight - TabbarHeight, Width, TabbarHeight)];
-    view.backgroundColor = color(230, 230, 230, 1);
-    [self.view addSubview:view];
+    self.quitView = [[UIView alloc] initWithFrame:CGRectMake(0, Height - StatusBarAndNavigationBarHeight - TabbarHeight, Width, TabbarHeight)];
+    self.quitView.backgroundColor = color(230, 230, 230, 1);
+    [self.view addSubview:self.quitView];
     
     UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
-    effectView.frame = view.bounds;
-    [view addSubview:effectView];
+    effectView.frame = self.quitView.bounds;
+    [self.quitView addSubview:effectView];
     
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, Width, 0.6)];
     lineView.backgroundColor = [UIColor lightGrayColor];
