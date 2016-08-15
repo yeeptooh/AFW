@@ -139,18 +139,18 @@ UICollectionViewDelegateFlowLayout
 }
 
 - (void)buttonClicked {
-    [UIView animateWithDuration:0.25 animations:^{
-        self.sceneSnap.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.sceneSnap.alpha = 0;
     }];
     CABasicAnimation *basicAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
     
-    basicAnimation.duration = 0.25;
+    basicAnimation.duration = 0.3;
     basicAnimation.toValue = @((Width/4-10)*1.0/(Width - 20));
     basicAnimation.removedOnCompletion = NO;
     basicAnimation.fillMode = kCAFillModeForwards;
     
     CABasicAnimation *positionAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
-    positionAnimation.duration = 0.25;
+    positionAnimation.duration = 0.3;
     
     positionAnimation.toValue = [NSValue valueWithCGPoint:self.center];
     positionAnimation.removedOnCompletion = NO;
@@ -159,7 +159,7 @@ UICollectionViewDelegateFlowLayout
     
     CAAnimationGroup *group = [CAAnimationGroup animation];
     group.animations = @[basicAnimation, positionAnimation];
-    group.duration = 0.25;
+    group.duration = 0.3;
     group.removedOnCompletion = NO;
     group.fillMode = kCAFillModeForwards;
     group.delegate = self;
