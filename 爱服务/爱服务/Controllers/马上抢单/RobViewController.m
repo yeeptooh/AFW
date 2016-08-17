@@ -426,6 +426,13 @@ UITextFieldDelegate
     [viewController viewDidDisappear:animated];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (self.dicList.count) {
+        [self.dicList removeAllObjects];
+    }
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     if (_noOrderView) {
@@ -468,7 +475,7 @@ UITextFieldDelegate
     
     [self.tableView removeFromSuperview];
     self.tableView = nil;
-    if (self.dicList) {
+    if (self.dicList.count) {
         [self.dicList removeAllObjects];
     }
 }
@@ -478,7 +485,6 @@ UITextFieldDelegate
     [super viewDidDisappear:animated];
     [self.manager.operationQueue cancelAllOperations];
     if (self.dicList.count) {
-        
         [self.dicList removeAllObjects];
         self.dicList = nil;
     }
@@ -507,7 +513,8 @@ UITextFieldDelegate
     self.manager.requestSerializer.timeoutInterval = 5;
     
     [self.manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
+        [[NSUserDefaults standardUserDefaults] setObject:responseObject[@"ResponseInfo"][0][@"PageCount"] forKey:@"PageCount"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         [self.activityView stopAnimating];
         
         for (NSDictionary *dic in responseObject[@"task"]) {
@@ -564,7 +571,12 @@ UITextFieldDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     if (tableView.tag == 300) {
-        return self.dicList.count;
+        NSInteger count = [[[NSUserDefaults standardUserDefaults] objectForKey:@"PageCount"] integerValue];
+        if (self.dicList.count <= count) {
+            return self.dicList.count;
+        }else {
+            return count;
+        }
     }else{
         return self.searchResultList.count;
     }

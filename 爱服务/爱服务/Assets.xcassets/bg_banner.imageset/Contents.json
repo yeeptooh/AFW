@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "home_viewpage3.png"
+      "filename" : "bg_banner.png"
     },
     {
       "idiom" : "universal",
-      "filename" : "home_viewpage3@2x.jpg",
+      "filename" : "bg_banner@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "home_viewpage3@3x.png"
+      "filename" : "bg_banner@3x.png"
     }
   ],
   "info" : {

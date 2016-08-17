@@ -37,10 +37,12 @@
 #import "MasterQueryViewController.h"
 #import "AddMoneyDetailViewController.h"
 
+#import "AFNetworking.h"
 #import "UIView+WZLBadge.h"
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import "ZDDButton.h"
+#import "UIImageView+WebCache.h"
 //#import "AddOrderViewController.h"
 
 @interface HomeViewController ()
@@ -55,10 +57,27 @@ UINavigationControllerDelegate
 @property (nonatomic, strong) UIAlertController *alertController;
 @property (nonatomic, strong) UIView *containerView;
 
+@property (nonatomic, strong) NSMutableArray *picList;
+@property (nonatomic, strong) NSMutableArray *linkList;
+
 @end
 static NSInteger tag = 0;
 
 @implementation HomeViewController
+
+- (NSMutableArray *)picList {
+    if (!_picList) {
+        _picList = [NSMutableArray array];
+    }
+    return _picList;
+}
+
+- (NSMutableArray *)linkList {
+    if (!_linkList) {
+        _linkList = [NSMutableArray array];
+    }
+    return _linkList;
+}
 
 - (UIView *)balanceView {
 
@@ -132,10 +151,7 @@ static NSInteger tag = 0;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setBadgeValue:) name:kBackFromNoti object:nil];
 #elif Environment_Mode == 2
 #endif
-    
-    
     self.timer = [NSTimer scheduledTimerWithTimeInterval:5 * 60 target:self selector:@selector(updateUI) userInfo:nil repeats:YES];
-    
 }
 
 - (void)updateBadge:(NSNotification *)sender {
@@ -148,8 +164,6 @@ static NSInteger tag = 0;
 
 }
 
-
-
 - (void)updateMoney:(NSNotification *)sender {
     [self updateUI];
 }
@@ -157,7 +171,6 @@ static NSInteger tag = 0;
 - (void)setBadgeValue:(NSNotification *)sender {
     [self upDateNetWorking];
 }
-
 
 - (void)setBadgeValue {
     UIViewController *receiveVC = [self.tabBarController viewControllers][1];
@@ -244,7 +257,6 @@ static NSInteger tag = 0;
                                      @"districtid":@(userModel.districtid)
                                      };
 #elif Environment_Mode == 2
-            
             NSDictionary *params = @{
                                      @"comid":@(userModel.comid),
                                      @"uid":@(userModel.uid),
@@ -255,8 +267,6 @@ static NSInteger tag = 0;
                                      };
 #endif
 
-            
-            
             [YeeptNetWorkingManager GETMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:NO progress:nil success:^(id responseObject) {
                 NSString *allString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
                 
@@ -319,30 +329,76 @@ static NSInteger tag = 0;
     }
     
     UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, Width, imageHeight)];
-    scrollView.contentSize = CGSizeMake(Width * PageCount, scrollView.bounds.size.height);
+    scrollView.contentSize = CGSizeMake(Width, scrollView.bounds.size.height);
     [self.view addSubview:scrollView];
     
-    NSArray *imageNameList = @[
-                               @"home_viewpage1.jpg",
-                               @"home_viewpage2.jpg",
-                               @"home_viewpage3.jpg"
-                               ];
-    
-    SDCycleScrollView *cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:scrollView.bounds shouldInfiniteLoop:YES imageNamesGroup:imageNameList];
-    
-    cycleScrollView.delegate = self;
-    cycleScrollView.pageControlStyle = SDCycleScrollViewPageContolStyleAnimated;
-    
-    [scrollView addSubview:cycleScrollView];
-    cycleScrollView.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    cycleScrollView.autoScrollTimeInterval = 3.f;
-    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:scrollView.bounds];
+    imageView.image = [UIImage imageNamed:@"bg_banner"];
+    [scrollView addSubview:imageView];
+#if Environment_Mode == 1
+    NSString *url = [NSString stringWithFormat:@"http://192.168.1.228:90/forapp/Common.ashx?action=getAppPhoto&appkey=1"];
+//    NSString *url = [NSString stringWithFormat:@"%@/Common.ashx?action=getAppPhoto&appkey=1",HomeURL];
+#elif Environment_Mode == 2
+    NSString *url = [NSString stringWithFormat:@"http://192.168.1.228:90/forapp/Common.ashx?action=getAppPhoto&appkey=2"];
+//    NSString *url = [NSString stringWithFormat:@"%@/Common.ashx?action=getAppPhoto&appkey=2",HomeURL];
+#endif
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer.timeoutInterval = 5;
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSMutableArray *imageList = [NSMutableArray array];
+        NSMutableArray *dataList = [NSMutableArray array];
+        NSArray *array = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        
+        for (NSInteger i = 0; i < array.count; i++) {
+
+            [self.picList addObject:[NSString stringWithFormat:@"%@%@",@"http://192.168.1.228:90/",array[i][@"Path"]]];
+//            [self.picList addObject:[NSString stringWithFormat:@"%@%@",subHomeURL,array[i][@"Path"]]];
+            [self.linkList addObject:array[i][@"Link"]];
+            [dataList addObject:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.picList[i]]]];
+            
+            [imageList addObject:[UIImage imageWithData:dataList[i]]];
+        }
+        [[NSUserDefaults standardUserDefaults] setObject:self.picList forKey:@"appbanner"];
+        [[NSUserDefaults standardUserDefaults] setObject:self.linkList forKey:@"applink"];
+        [[NSUserDefaults standardUserDefaults] setObject:dataList forKey:@"dataList"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        scrollView.contentSize = CGSizeMake(Width * array.count, scrollView.bounds.size.height);
+        SDCycleScrollView *cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:scrollView.bounds delegate:self placeholderImage:[UIImage imageNamed:@"bg_banner"]];
+        cycleScrollView.localizationImageNamesGroup = imageList;
+        cycleScrollView.placeholderImage = [UIImage imageNamed:@"bg_banner"];
+        cycleScrollView.pageControlStyle = SDCycleScrollViewPageContolStyleNone;
+        [scrollView addSubview:cycleScrollView];
+        cycleScrollView.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+        cycleScrollView.autoScrollTimeInterval = 3.f;
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        NSArray *dataList = [[NSUserDefaults standardUserDefaults] objectForKey:@"dataList"];
+        NSMutableArray *imageList = [NSMutableArray array];
+        for (NSInteger i = 0; i < dataList.count; i++) {
+            [imageList addObject:[UIImage imageWithData:dataList[i]]];
+        }
+        scrollView.contentSize = CGSizeMake(Width * imageList.count, scrollView.bounds.size.height);
+        SDCycleScrollView *cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:scrollView.bounds delegate:self placeholderImage:[UIImage imageNamed:@"bg_banner"]];
+        self.linkList = [[NSUserDefaults standardUserDefaults] objectForKey:@"applink"];
+        cycleScrollView.localizationImageNamesGroup = imageList;
+        cycleScrollView.placeholderImage = [UIImage imageNamed:@"bg_banner"];
+        cycleScrollView.pageControlStyle = SDCycleScrollViewPageContolStyleNone;
+        [scrollView addSubview:cycleScrollView];
+        cycleScrollView.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+        cycleScrollView.autoScrollTimeInterval = 3.f;
+    }];
 }
 
 #pragma mark - SDCycleScrollViewDelegate -
 //点击某张图片
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
-    NSLog(@"点击了第%ld张图片",(long)index);
+    if ([self.linkList[index] isEqualToString:@"#"]) {
+        return;
+    }
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.linkList[index]]];
 }
 
 - (void)setBalance {

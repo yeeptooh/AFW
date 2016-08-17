@@ -460,6 +460,13 @@ UITextFieldDelegate
     [viewController viewDidDisappear:animated];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (self.dicList.count) {
+        [self.dicList removeAllObjects];
+    }
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     if (_noOrderView) {
@@ -504,7 +511,7 @@ UITextFieldDelegate
     
     [self.tableView removeFromSuperview];
     self.tableView = nil;
-    if (self.dicList) {
+    if (self.dicList.count) {
        [self.dicList removeAllObjects];
     }
 }
@@ -545,7 +552,8 @@ UITextFieldDelegate
     
     [self.manager GET:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [self.activityView stopAnimating];
-        
+        [[NSUserDefaults standardUserDefaults] setObject:responseObject[@"ResponseInfo"][0][@"PageCount"] forKey:@"PageCount"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         if (self.page == 1) {
             if (self.dicList) {
                 [self.dicList removeAllObjects];
@@ -607,7 +615,12 @@ UITextFieldDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
     if (tableView.tag == 300) {
-        return self.dicList.count;
+        NSInteger count = [[[NSUserDefaults standardUserDefaults] objectForKey:@"PageCount"] integerValue];
+        if (self.dicList.count <= count) {
+            return self.dicList.count;
+        }else {
+            return count;
+        }
     }else{
         return self.searchResultList.count;
     }
