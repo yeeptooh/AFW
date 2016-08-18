@@ -103,7 +103,6 @@ UINavigationControllerDelegate
     NSString *url = [NSString stringWithFormat:@"%@API/AiXinBao.aspx?comId=%@",heartProHomeURL,@(userModel.uid)];
     
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
-//    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://192.168.1.228:89/API/AiXinBao.aspx"]]]];
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [self.view addSubview:self.progressView];

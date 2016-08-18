@@ -203,8 +203,14 @@ UIViewControllerTransitioningDelegate
     
 }
 #if Environment_Mode == 1
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
+    self.progressView.alpha = 1;
+    
+    decisionHandler(WKNavigationResponsePolicyAllow);
+}
 #elif Environment_Mode == 2
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
+    self.progressView.alpha = 1;
     NSString *urlString = [navigationResponse.response.URL absoluteString];
     NSLog(@"%@",urlString);
     if ([urlString rangeOfString:@"BaseData"].location != NSNotFound) {

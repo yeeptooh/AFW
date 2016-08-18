@@ -146,6 +146,7 @@ static NSInteger tag = 0;
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"AVCan"];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(badgeValueChanged:) name:kBadgeValueChanged object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMoney:) name:kUpdateMoney object:nil];
+    
 #if Environment_Mode == 1
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBadge:) name:kupdateBadgeNum object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setBadgeValue:) name:kBackFromNoti object:nil];
@@ -336,11 +337,11 @@ static NSInteger tag = 0;
     imageView.image = [UIImage imageNamed:@"bg_banner"];
     [scrollView addSubview:imageView];
 #if Environment_Mode == 1
-    NSString *url = [NSString stringWithFormat:@"http://192.168.1.228:90/forapp/Common.ashx?action=getAppPhoto&appkey=1"];
-//    NSString *url = [NSString stringWithFormat:@"%@/Common.ashx?action=getAppPhoto&appkey=1",HomeURL];
+//    NSString *url = [NSString stringWithFormat:@"http://192.168.1.228:90/forapp/Common.ashx?action=getAppPhoto"];
+    NSString *url = [NSString stringWithFormat:@"%@/Common.ashx?action=getAppPhoto",HomeURL];
 #elif Environment_Mode == 2
-    NSString *url = [NSString stringWithFormat:@"http://192.168.1.228:90/forapp/Common.ashx?action=getAppPhoto&appkey=2"];
-//    NSString *url = [NSString stringWithFormat:@"%@/Common.ashx?action=getAppPhoto&appkey=2",HomeURL];
+//    NSString *url = [NSString stringWithFormat:@"http://192.168.1.228:90/forapp/Common.ashx?action=getAppPhoto"];
+    NSString *url = [NSString stringWithFormat:@"%@/Common.ashx?action=getAppPhoto",HomeURL];
 #endif
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = 5;
@@ -352,8 +353,8 @@ static NSInteger tag = 0;
         
         for (NSInteger i = 0; i < array.count; i++) {
 
-            [self.picList addObject:[NSString stringWithFormat:@"%@%@",@"http://192.168.1.228:90/",array[i][@"Path"]]];
-//            [self.picList addObject:[NSString stringWithFormat:@"%@%@",subHomeURL,array[i][@"Path"]]];
+//            [self.picList addObject:[NSString stringWithFormat:@"%@%@",@"http://192.168.1.228:90/",array[i][@"Path"]]];
+            [self.picList addObject:[NSString stringWithFormat:@"%@%@",subHomeURL,array[i][@"Path"]]];
             [self.linkList addObject:array[i][@"Link"]];
             [dataList addObject:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.picList[i]]]];
             
@@ -363,15 +364,24 @@ static NSInteger tag = 0;
         [[NSUserDefaults standardUserDefaults] setObject:self.linkList forKey:@"applink"];
         [[NSUserDefaults standardUserDefaults] setObject:dataList forKey:@"dataList"];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        
-        scrollView.contentSize = CGSizeMake(Width * array.count, scrollView.bounds.size.height);
-        SDCycleScrollView *cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:scrollView.bounds delegate:self placeholderImage:[UIImage imageNamed:@"bg_banner"]];
-        cycleScrollView.localizationImageNamesGroup = imageList;
-        cycleScrollView.placeholderImage = [UIImage imageNamed:@"bg_banner"];
-        cycleScrollView.pageControlStyle = SDCycleScrollViewPageContolStyleNone;
-        [scrollView addSubview:cycleScrollView];
-        cycleScrollView.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-        cycleScrollView.autoScrollTimeInterval = 3.f;
+        if (imageList.count) {
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:imageList[0]];
+            imageView.frame = CGRectMake(Width, 0, Width, imageHeight);
+            [self.view addSubview:imageView];
+            [UIView animateWithDuration:0.2 animations:^{
+                imageView.frame = CGRectMake(0, 0, Width, imageHeight);
+            } completion:^(BOOL finished) {
+                [imageView removeFromSuperview];
+                scrollView.contentSize = CGSizeMake(Width * array.count, scrollView.bounds.size.height);
+                SDCycleScrollView *cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:scrollView.bounds delegate:self placeholderImage:[UIImage imageNamed:@"bg_banner"]];
+                cycleScrollView.localizationImageNamesGroup = imageList;
+                cycleScrollView.placeholderImage = [UIImage imageNamed:@"bg_banner"];
+                cycleScrollView.pageControlStyle = SDCycleScrollViewPageContolStyleNone;
+                [scrollView addSubview:cycleScrollView];
+                cycleScrollView.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+                cycleScrollView.autoScrollTimeInterval = 3.f;
+            }];
+        }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
@@ -380,15 +390,17 @@ static NSInteger tag = 0;
         for (NSInteger i = 0; i < dataList.count; i++) {
             [imageList addObject:[UIImage imageWithData:dataList[i]]];
         }
-        scrollView.contentSize = CGSizeMake(Width * imageList.count, scrollView.bounds.size.height);
-        SDCycleScrollView *cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:scrollView.bounds delegate:self placeholderImage:[UIImage imageNamed:@"bg_banner"]];
-        self.linkList = [[NSUserDefaults standardUserDefaults] objectForKey:@"applink"];
-        cycleScrollView.localizationImageNamesGroup = imageList;
-        cycleScrollView.placeholderImage = [UIImage imageNamed:@"bg_banner"];
-        cycleScrollView.pageControlStyle = SDCycleScrollViewPageContolStyleNone;
-        [scrollView addSubview:cycleScrollView];
-        cycleScrollView.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-        cycleScrollView.autoScrollTimeInterval = 3.f;
+        if (imageList.count) {
+            scrollView.contentSize = CGSizeMake(Width * imageList.count, scrollView.bounds.size.height);
+            SDCycleScrollView *cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:scrollView.bounds delegate:self placeholderImage:[UIImage imageNamed:@"bg_banner"]];
+            self.linkList = [[NSUserDefaults standardUserDefaults] objectForKey:@"applink"];
+            cycleScrollView.localizationImageNamesGroup = imageList;
+            cycleScrollView.placeholderImage = [UIImage imageNamed:@"bg_banner"];
+            cycleScrollView.pageControlStyle = SDCycleScrollViewPageContolStyleNone;
+            [scrollView addSubview:cycleScrollView];
+            cycleScrollView.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+            cycleScrollView.autoScrollTimeInterval = 3.f;
+        }
     }];
 }
 
@@ -1090,7 +1102,6 @@ static NSInteger tag = 0;
         H2Line.backgroundColor = color(200, 200, 200, 1);
         [self.view addSubview:H2Line];
         
-        
         UIView *V1Line = [[UIView alloc]initWithFrame:CGRectMake(Width / 4 - 0.5, imageHeight + height, 0.5, height * 6*2/3)];
         V1Line.backgroundColor = color(200, 200, 200, 1);
         [self.view addSubview:V1Line];
@@ -1104,15 +1115,69 @@ static NSInteger tag = 0;
         [self.view addSubview:V3Line];
     }
 #endif
-   
 }
 
 #pragma mark - buttonClicked -
 - (void)drawMoneyButtonClicked {
     
-    WithDrawViewController *withDrawVC = [[WithDrawViewController alloc]init];
-    withDrawVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:withDrawVC animated:YES];
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"password"] isEqualToString:@"123456"]) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.font = font(14);
+#if Environment_Mode == 1
+        hud.label.text = @"请到我的信息修改初始密码\n修改之后才能完成提现操作!!!";
+#elif Environment_Mode == 2
+        hud.label.text = @"请到基础资料修改初始密码\n修改之后才能完成提现操作!!!";
+#endif
+        
+        hud.label.numberOfLines = 0;
+        [hud hideAnimated:YES afterDelay:2.5f];
+        return;
+    }else {
+        
+        if ([[NSUserDefaults standardUserDefaults] integerForKey:@"verify"]) {
+            WithDrawViewController *withDrawVC = [[WithDrawViewController alloc]init];
+            withDrawVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:withDrawVC animated:YES];
+        }else {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"请进行密码验证" message:@"请输入登陆密码进行验证" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *alertAction1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                
+            }];
+            
+            UIAlertAction *alertAction2 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+                UITextField *textfield = alertController.textFields[0];
+                if ([textfield.text isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"password"]]) {
+                    [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"verify"];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    WithDrawViewController *withDrawVC = [[WithDrawViewController alloc]init];
+                    withDrawVC.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:withDrawVC animated:YES];
+                }else {
+                    
+                    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+                    hud.mode = MBProgressHUDModeText;
+                    hud.label.numberOfLines = 0;
+                    hud.label.text = @"密码错误!\n如有疑问, 请联系客服";
+                    hud.label.font = font(14);
+                    [hud hideAnimated:YES afterDelay:1.5];
+                    
+                }
+                
+            }];
+            
+            [alertController addAction:alertAction1];
+            [alertController addAction:alertAction2];
+            [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+                textField.placeholder = @"请输入密码";
+                textField.secureTextEntry = YES;
+            }];
+            
+            [self presentViewController:alertController animated:YES completion:nil];
+        }
+        
+    }
 
 }
 
@@ -1198,9 +1263,8 @@ static NSInteger tag = 0;
         
     }else if (sender.tag == 1009) {
         
-        WithDrawViewController *withDrawVC = [[WithDrawViewController alloc]init];
-        withDrawVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:withDrawVC animated:YES];
+        [self drawMoneyButtonClicked];
+        
     }else if (sender.tag == 1010) {
         
         RechargeViewController *rechargeVC = [[RechargeViewController alloc] init];
@@ -1300,10 +1364,7 @@ static NSInteger tag = 0;
         
     }else if (sender.tag == 1006) {
         
-        WithDrawViewController *withDrawVC = [[WithDrawViewController alloc]init];
-        withDrawVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:withDrawVC animated:YES];
-        
+        [self drawMoneyButtonClicked];
         
     }else if (sender.tag == 1007) {
         

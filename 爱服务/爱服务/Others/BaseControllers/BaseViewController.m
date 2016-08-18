@@ -29,6 +29,7 @@
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     if (self.navigationController && [self.navigationController.viewControllers count] == 1) {
         return NO;
     }

@@ -187,6 +187,8 @@
         NSNumber *str = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         
         if ([str integerValue] == 1) {
+            [[NSUserDefaults standardUserDefaults] setObject:self.textfield1.text forKey:@"password"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             UIImage *image = [[UIImage imageNamed:@"Checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
             UIImageView *imageView = [[UIImageView alloc] initWithImage:image];

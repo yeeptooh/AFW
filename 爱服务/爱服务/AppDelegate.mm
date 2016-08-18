@@ -121,7 +121,7 @@ static BOOL isProduction = FALSE;
     [robNaviController view];
     [allorderNaviController view];
     
-    self.tabBarController.tabBar.tintColor = color(59, 165, 249, 1);
+    self.tabBarController.tabBar.tintColor = color(65, 131, 196, 1);
 
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"hadLaunch"]) {
         self.window.rootViewController = self.tabBarController;
@@ -673,6 +673,8 @@ static BOOL isProduction = FALSE;
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"logOut"];
+    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"verify"];
+    
     [[NSUserDefaults standardUserDefaults] synchronize];
     
 }
