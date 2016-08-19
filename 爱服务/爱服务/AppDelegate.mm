@@ -121,7 +121,7 @@ static BOOL isProduction = FALSE;
     [robNaviController view];
     [allorderNaviController view];
     
-    self.tabBarController.tabBar.tintColor = color(59, 165, 249, 1);
+    self.tabBarController.tabBar.tintColor = color(65, 131, 196, 1);
 
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"hadLaunch"]) {
         self.window.rootViewController = self.tabBarController;
@@ -144,6 +144,7 @@ static BOOL isProduction = FALSE;
     [Appirater setSignificantEventsUntilPrompt:-1];
     [Appirater setTimeBeforeReminding:2];
     [Appirater setDebug:NO];
+    [Appirater appLaunched:YES];
 #elif Environment_Mode == 2
     //1134925235
     [Appirater setAppId:@"1134925235"];
@@ -152,6 +153,7 @@ static BOOL isProduction = FALSE;
     [Appirater setSignificantEventsUntilPrompt:-1];
     [Appirater setTimeBeforeReminding:2];
     [Appirater setDebug:NO];
+    [Appirater appLaunched:YES];
 #endif
     
     
@@ -673,7 +675,10 @@ static BOOL isProduction = FALSE;
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"logOut"];
+    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"verify"];
+    
     [[NSUserDefaults standardUserDefaults] synchronize];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
 }
 

@@ -127,7 +127,7 @@ static NSInteger i = 0;
                 sender.text = @"";
                 
             }else{
-                self.rechargeButton.backgroundColor = LoginColor;
+                self.rechargeButton.backgroundColor = MainBlueColor;//LoginColor;
                 self.rechargeButton.enabled = YES;
 
             }
@@ -143,7 +143,7 @@ static NSInteger i = 0;
                     self.haveDot = YES;
                 }else {
                     sender.text = [NSString stringWithFormat:@"%@",@(single - 48)];
-                    self.rechargeButton.backgroundColor = LoginColor;
+                    self.rechargeButton.backgroundColor = MainBlueColor;//LoginColor;
                     self.rechargeButton.enabled = YES;
                     
                 }
@@ -164,7 +164,7 @@ static NSInteger i = 0;
                 }else {
                     NSString *firstCharacter = [sender.text substringToIndex:1];
                     if ([firstCharacter isEqualToString:@"0"]) {
-                        self.rechargeButton.backgroundColor = LoginColor;
+                        self.rechargeButton.backgroundColor = MainBlueColor;//LoginColor;
                         self.rechargeButton.enabled = YES;
                     }else{
                         
@@ -187,7 +187,7 @@ static NSInteger i = 0;
                 }else if (single == '0') {
                     
                 }else {
-                    self.rechargeButton.backgroundColor = LoginColor;
+                    self.rechargeButton.backgroundColor = MainBlueColor;//LoginColor;
                     self.rechargeButton.enabled = YES;
                 }
                 
@@ -341,7 +341,7 @@ static NSInteger i = 0;
                                  @"money":order.totalFee,
                                  @"userId":@(userModel.comid)
                                  };
-//        url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
         url = [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         [manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -445,7 +445,7 @@ static NSInteger i = 0;
 #endif
 
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+
         [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
             if ([responseObject[@"status"] isEqualToString:@"ok"]) {

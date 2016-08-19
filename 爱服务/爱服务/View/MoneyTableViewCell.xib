@@ -17,12 +17,12 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="金额(元)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ouh-vF-U7U">
                         <rect key="frame" x="15" y="5" width="52" height="33.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" red="0.043137254899999998" green="0.61568627450000002" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" red="0.035294117649999998" green="0.59607843140000005" blue="0.80392156859999997" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wq6-x5-GFr">
                         <rect key="frame" x="67" y="5" width="245" height="33.5"/>
-                        <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" red="0.035294117649999998" green="0.59607843140000005" blue="0.80392156859999997" alpha="1" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
                     </textField>
@@ -40,7 +40,7 @@
             <connections>
                 <outlet property="moneyTextField" destination="Wq6-x5-GFr" id="8K9-p4-gV5"/>
             </connections>
-            <point key="canvasLocation" x="264" y="274"/>
+            <point key="canvasLocation" x="218" y="320"/>
         </tableViewCell>
     </objects>
 </document>

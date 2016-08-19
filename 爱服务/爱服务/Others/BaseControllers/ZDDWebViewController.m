@@ -26,6 +26,7 @@ WKNavigationDelegate
         
         [_webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
         
+        
     }
     return _webView;
 }

@@ -34,6 +34,8 @@ WKNavigationDelegate
 - (UIProgressView *)progressView {
     if (!_progressView) {
         _progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, StatusBarAndNavigationBarHeight - 1, Width, 0)];
+        _progressView.trackTintColor = [UIColor clearColor];
+        _progressView.progressTintColor = BlueColor;
         
     }
     return _progressView;
