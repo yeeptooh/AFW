@@ -212,7 +212,7 @@ UIViewControllerTransitioningDelegate
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
     self.progressView.alpha = 1;
     NSString *urlString = [navigationResponse.response.URL absoluteString];
-    NSLog(@"%@",urlString);
+    
     if ([urlString rangeOfString:@"BaseData"].location != NSNotFound) {
         [UIView animateWithDuration:0.2 animations:^{
             self.quitView.frame = CGRectMake(0, Height - StatusBarAndNavigationBarHeight, Width, TabbarHeight);
@@ -240,9 +240,6 @@ UIViewControllerTransitioningDelegate
     lineView.backgroundColor = [UIColor lightGrayColor];
     [effectView.contentView addSubview:lineView];
     
-    
-    
-
     UIButton *quitButton = [UIButton buttonWithType:0];
     
     [quitButton setTitle:@"退出登录" forState:UIControlStateNormal];

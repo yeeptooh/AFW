@@ -144,6 +144,7 @@ static BOOL isProduction = FALSE;
     [Appirater setSignificantEventsUntilPrompt:-1];
     [Appirater setTimeBeforeReminding:2];
     [Appirater setDebug:NO];
+    [Appirater appLaunched:YES];
 #elif Environment_Mode == 2
     //1134925235
     [Appirater setAppId:@"1134925235"];
@@ -152,6 +153,7 @@ static BOOL isProduction = FALSE;
     [Appirater setSignificantEventsUntilPrompt:-1];
     [Appirater setTimeBeforeReminding:2];
     [Appirater setDebug:NO];
+    [Appirater appLaunched:YES];
 #endif
     
     
@@ -676,6 +678,7 @@ static BOOL isProduction = FALSE;
     [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"verify"];
     
     [[NSUserDefaults standardUserDefaults] synchronize];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
 }
 

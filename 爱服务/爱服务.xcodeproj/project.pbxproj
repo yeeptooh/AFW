@@ -88,6 +88,8 @@
 		4A4C6CF81CD20DF80030B861 /* ShareAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4C6CF71CD20DF80030B861 /* ShareAnimation.m */; };
 		4A4D5B4B1D5B059B00F33A63 /* ZDDButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4D5B4A1D5B059B00F33A63 /* ZDDButton.m */; };
 		4A4D5B4C1D5B059B00F33A63 /* ZDDButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4D5B4A1D5B059B00F33A63 /* ZDDButton.m */; };
+		4A4D94621D66DFAF0031E865 /* ZDDSkipWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4D94611D66DFAF0031E865 /* ZDDSkipWebViewController.m */; };
+		4A4D94631D66DFCD0031E865 /* ZDDSkipWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4D94611D66DFAF0031E865 /* ZDDSkipWebViewController.m */; };
 		4A4EDB6B1CBF849D00A7D1E6 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4EDB6A1CBF849D00A7D1E6 /* DetailViewController.m */; };
 		4A4EDB721CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4EDB701CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.m */; };
 		4A4EDB731CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A4EDB711CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.xib */; };
@@ -599,6 +601,8 @@
 		4A4C6CF71CD20DF80030B861 /* ShareAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareAnimation.m; sourceTree = "<group>"; };
 		4A4D5B491D5B059B00F33A63 /* ZDDButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZDDButton.h; sourceTree = "<group>"; };
 		4A4D5B4A1D5B059B00F33A63 /* ZDDButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZDDButton.m; sourceTree = "<group>"; };
+		4A4D94601D66DFAF0031E865 /* ZDDSkipWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZDDSkipWebViewController.h; sourceTree = "<group>"; };
+		4A4D94611D66DFAF0031E865 /* ZDDSkipWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZDDSkipWebViewController.m; sourceTree = "<group>"; };
 		4A4EDB691CBF849D00A7D1E6 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		4A4EDB6A1CBF849D00A7D1E6 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		4A4EDB6F1CBF8EFD00A7D1E6 /* DetailTaskPlanTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailTaskPlanTableViewCell.h; sourceTree = "<group>"; };
@@ -1582,6 +1586,8 @@
 				4A5274691D113ABA00B056C6 /* HeartProtectViewController.m */,
 				4A4F99F01D2CF4A500374F9B /* GatheringViewController.h */,
 				4A4F99F11D2CF4A500374F9B /* GatheringViewController.m */,
+				4A4D94601D66DFAF0031E865 /* ZDDSkipWebViewController.h */,
+				4A4D94611D66DFAF0031E865 /* ZDDSkipWebViewController.m */,
 			);
 			name = "爱服务";
 			sourceTree = "<group>";
@@ -2422,6 +2428,7 @@
 				4A77498C1CC09464008B9611 /* ServiceTypeTableViewCell.m in Sources */,
 				4A6BABDD1CC62FAB000B94A2 /* MJRefreshAutoGifFooter.m in Sources */,
 				4A7749961CC0C3EB008B9611 /* OverTableViewCell.m in Sources */,
+				4A4D94621D66DFAF0031E865 /* ZDDSkipWebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2445,6 +2452,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A4D94631D66DFCD0031E865 /* ZDDSkipWebViewController.m in Sources */,
 				4A7211E41D50870800D9AB7D /* ZDDWebViewController.m in Sources */,
 				4A49B1AD1D4B59E8002D0EC0 /* ZDDPhotoBrowerViewController.m in Sources */,
 				4A49B1AC1D4B59D3002D0EC0 /* ChangeImageViewController.m in Sources */,
