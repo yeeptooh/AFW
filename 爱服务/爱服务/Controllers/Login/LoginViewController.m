@@ -102,7 +102,6 @@ UITextFieldDelegate
     
     loginButton.layer.cornerRadius = 5;
     
-
     self.label = [[UILabel alloc] initWithFrame:CGRectMake(40, CGRectGetMaxY(self.loginContainerView.frame), Width - 80, 80)];
     self.label.numberOfLines = 0;
     self.label.textColor = color(140, 140, 140, 1);
@@ -124,8 +123,6 @@ UITextFieldDelegate
 #elif Environment_Mode == 2
     
 #endif
-    
-
     
     [self.loginContainerView addSubview:loginButton];
     
@@ -157,7 +154,6 @@ UITextFieldDelegate
         [hud hideAnimated:YES afterDelay:1.25f];
         [hud removeFromSuperViewOnHide];
         return;
-        
     }
 
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:window animated:YES];
