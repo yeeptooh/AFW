@@ -117,7 +117,7 @@ UIViewControllerTransitioningDelegate
             frame = CGRectMake(0, BaseInfoViewHeight, Width, Height - BaseInfoViewHeight - StatusBarAndNavigationBarHeight);
         }
 #elif Environment_Mode == 2
-        if (self.state == 1 || self.state == 2 || self.state == 3 || self.state == 4 || self.state == 6) {
+        if (self.state == 1 || self.state == 2 || self.state == 3 || self.state == 4 || self.state == 6 || self.state == 10) {
             frame = CGRectMake(0, BaseInfoViewHeight, Width, Height - BaseInfoViewHeight - StatusBarAndNavigationBarHeight - TabbarHeight + 0.6);
         }else{
             frame = CGRectMake(0, BaseInfoViewHeight, Width, Height - BaseInfoViewHeight - StatusBarAndNavigationBarHeight);
@@ -681,6 +681,37 @@ UIViewControllerTransitioningDelegate
             //已拒绝
     }else if (self.state == 10){
         //带确认
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, Height - StatusBarAndNavigationBarHeight - TabbarHeight, Width, TabbarHeight)];
+        view.backgroundColor = color(230, 230, 230, 1);
+        [self.view addSubview:view];
+        
+        UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
+        effectView.frame = view.bounds;
+        [view addSubview:effectView];
+        
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, Width, 0.6)];
+        lineView.backgroundColor = [UIColor lightGrayColor];
+        [effectView.contentView addSubview:lineView];
+        
+        UIButton *agreeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        agreeButton.frame = CGRectMake(0, 0, Width/2, TabbarHeight);
+        [agreeButton setTitle:@"同意" forState:UIControlStateNormal];
+        [agreeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        agreeButton.backgroundColor = MainBlueColor;
+        [agreeButton addTarget:self action:@selector(certainButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        [effectView.contentView addSubview:agreeButton];
+        
+        UIButton *disagreeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        disagreeButton.frame = CGRectMake(Width/2, 0, Width/2, TabbarHeight);
+        [disagreeButton setTitle:@"不同意" forState:UIControlStateNormal];
+        [disagreeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        disagreeButton.backgroundColor = MainBlueColor;
+        [disagreeButton addTarget:self action:@selector(uncertainButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        [effectView.contentView addSubview:disagreeButton];
+        
+        UIView *colView = [[UIView alloc] initWithFrame:CGRectMake(Width/2-0.7, 15, 1.4, TabbarHeight - 30)];
+        colView.backgroundColor = [UIColor whiteColor];
+        [effectView.contentView addSubview:colView];
     }else if (self.state == 15){
         //已评价
         //17 已录入
@@ -689,6 +720,13 @@ UIViewControllerTransitioningDelegate
     
 }
 
+- (void)certainButtonClicked {
+    
+}
+
+- (void)uncertainButtonClicked {
+    
+}
 
 - (void)exchangeButtonClicked {
     

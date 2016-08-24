@@ -123,7 +123,7 @@ UITextFieldDelegate
         _searchResultTableView.tableFooterView = [[UIView alloc]init];
         _searchResultTableView.delegate = self;
         _searchResultTableView.dataSource = self;
-        
+        _searchResultTableView.alpha = 0;
         __weak typeof(self) weakSelf = self;
         _searchResultTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
             [weakSelf loadMoreSearchData];
@@ -434,7 +434,7 @@ UITextFieldDelegate
         [self.noNetWorkingView removeFromSuperview];
         self.noNetWorkingView = nil;
     }
-    
+    self.flag = 0;
     self.page = 1;
     self.searchPage = 1;
     [self setBadgeValue];
@@ -746,6 +746,9 @@ UITextFieldDelegate
             return ;
         }
         [self.searchResultView addSubview:self.searchResultTableView];
+        [UIView animateWithDuration:0.3 animations:^{
+            self.searchResultTableView.alpha = 1;
+        }];
         [self.searchResultTableView reloadData];
         
         if ([responseObject[@"ResponseInfo"][0][@"PageNow"] integerValue] == [responseObject[@"ResponseInfo"][0][@"PageRowCount"] integerValue]) {

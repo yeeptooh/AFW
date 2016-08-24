@@ -126,7 +126,7 @@ UITextFieldDelegate
         _searchResultTableView.tableFooterView = [[UIView alloc]init];
         _searchResultTableView.delegate = self;
         _searchResultTableView.dataSource = self;
-        
+        _searchResultTableView.alpha = 0;
         __weak typeof(self) weakSelf = self;
         _searchResultTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
             [weakSelf loadMoreSearchData];
@@ -177,6 +177,7 @@ UITextFieldDelegate
         self.textfield.clearsOnBeginEditing = YES;
         self.textfield.keyboardType = UIKeyboardTypeWebSearch;
         self.textfield.delegate = self;
+        
         //监听textfield的text时时变化
         self.textfield.font = font(fontSize);
         [self.textfield addTarget:self action:@selector(editingChanged:) forControlEvents:UIControlEventEditingChanged];
@@ -214,7 +215,6 @@ UITextFieldDelegate
     if (self.searchResultList.count) {
         [self.searchResultList removeAllObjects];
     }
-    
 }
 
 - (UIView *)noOrderView {
@@ -335,8 +335,6 @@ UITextFieldDelegate
             robVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][4];
         }
 #endif
-        
-        
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][0] isEqualToString:@"0"]) {
             allorderVC.tabBarItem.badgeValue = nil;
         }else{
@@ -427,10 +425,12 @@ UITextFieldDelegate
     if (self.dicList.count) {
         [self.dicList removeAllObjects];
     }
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
     if (_noOrderView) {
         [self.noOrderView removeFromSuperview];
         self.noOrderView = nil;
@@ -439,13 +439,13 @@ UITextFieldDelegate
         [self.noNetWorkingView removeFromSuperview];
         self.noNetWorkingView = nil;
     }
- 
+    
+    self.flag = 0;
     self.page = 1;
     self.searchPage = 1;
     [self setBadgeValue];
     [self.activityView startAnimating];
     [self loadNewDate];
-   
 }
 
 
@@ -564,9 +564,6 @@ UITextFieldDelegate
         return ;
         
     }];
-    
- 
-
 }
 
 #pragma mark - UITableViewDelegate And DataSource -
@@ -596,7 +593,6 @@ UITextFieldDelegate
     MainTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[NSBundle mainBundle] loadNibNamed:@"MainTableViewCell" owner:self options:nil].lastObject;
-        
     }
     
     if (tableView.tag == 300) {
@@ -616,7 +612,6 @@ UITextFieldDelegate
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@",self.orderModel.serviceType, self.orderModel.productType]];
     
     [attributedString addAttributes:@{NSForegroundColorAttributeName:color(248, 89, 34, 1)}range:[self.orderModel.serviceType rangeOfString:self.orderModel.serviceType]];
-    
     
     cell.productTypeLabel.attributedText = attributedString;
     cell.nameLabel.text = self.orderModel.name;
@@ -773,6 +768,7 @@ UITextFieldDelegate
 #pragma mark - UITextFieldDelegate -
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
+    
     if (_noSearchResultView) {
         [self.noSearchResultView removeFromSuperview];
         self.noSearchResultView = nil;
@@ -822,6 +818,9 @@ UITextFieldDelegate
         }
         
         [self.searchResultView addSubview:self.searchResultTableView];
+        [UIView animateWithDuration:0.3 animations:^{
+            self.searchResultTableView.alpha = 1;
+        }];
         [self.searchResultTableView reloadData];
         if ([responseObject[@"ResponseInfo"][0][@"PageNow"] integerValue] == [responseObject[@"ResponseInfo"][0][@"PageRowCount"] integerValue]) {
             [self.searchResultTableView.mj_footer endRefreshing];
@@ -846,8 +845,6 @@ UITextFieldDelegate
         return ;
         
     }];
-    
-
     
     return YES;
 }

@@ -674,7 +674,6 @@ static NSInteger tag = 0;
                 
                 [self.detailButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"a%ld",(long)tag]] forState:UIControlStateNormal];
                 
-            
                 [self.detailButton addTarget:self action:@selector(detailButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 
                 self.detailButton.frame = CGRectMake(Width*j/4, height*2*i, Width/4, height*2);
@@ -907,7 +906,6 @@ static NSInteger tag = 0;
         containerView = [[UIView alloc]initWithFrame:CGRectMake(0, imageHeight + height, Width, height*6)];
     }
     
-    
     [self.view addSubview:containerView];
     for (NSInteger i = 0; i < 2; i ++) {
         for (NSInteger j = 0;  j < 4; j ++) {
@@ -916,7 +914,6 @@ static NSInteger tag = 0;
             tag ++;
             
             [self.detailButton addTarget:self action:@selector(detailButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-            
             
             if (iPhone4_4s) {
                 self.detailButton.frame = CGRectMake(Width*j/4, height*7*i/3, Width/4, height*6/3);
@@ -1137,28 +1134,28 @@ static NSInteger tag = 0;
 #pragma mark - buttonClicked -
 - (void)drawMoneyButtonClicked {
     
-    WithDrawViewController *withDrawVC = [[WithDrawViewController alloc]init];
-    withDrawVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:withDrawVC animated:YES];
     
-//    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"password"] isEqualToString:@"123456"]) {
-//#if Environment_Mode == 1
-//        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"请修改密码" message:@"请到我的信息修改初始密码, 修改之后才能完成提现操作!" preferredStyle:UIAlertControllerStyleAlert];
-//#elif Environment_Mode == 2
-//        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"请修改密码" message:@"请到基础资料修改初始密码, 修改之后才能完成提现操作!" preferredStyle:UIAlertControllerStyleAlert];
-//#endif
-//        
-//        UIAlertAction *action = [UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-//            
-//        }];
-//        
-//        [alertController addAction:action];
-//        
-//        [self presentViewController:alertController animated:YES completion:nil];
-//        return;
-//        
-//    }else {
-//        
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"password"] isEqualToString:@"123456"]) {
+#if Environment_Mode == 1
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"请修改密码" message:@"请到我的信息修改初始密码, 修改之后才能完成提现操作!" preferredStyle:UIAlertControllerStyleAlert];
+#elif Environment_Mode == 2
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"请修改密码" message:@"请到基础资料修改初始密码, 修改之后才能完成提现操作!" preferredStyle:UIAlertControllerStyleAlert];
+#endif
+        
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        
+        [alertController addAction:action];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+        
+    }else {
+        WithDrawViewController *withDrawVC = [[WithDrawViewController alloc]init];
+        withDrawVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:withDrawVC animated:YES];
+
+//
 //        if ([[NSUserDefaults standardUserDefaults] integerForKey:@"verify"]) {
 //            WithDrawViewController *withDrawVC = [[WithDrawViewController alloc]init];
 //            withDrawVC.hidesBottomBarWhenPushed = YES;
@@ -1201,7 +1198,7 @@ static NSInteger tag = 0;
 //            [self presentViewController:alertController animated:YES completion:nil];
 //        }
 //        
-//    }
+    }
 
 }
 
@@ -1352,12 +1349,10 @@ static NSInteger tag = 0;
         addVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:addVC animated:YES];
         
-        
     }else if (sender.tag == 1001) {
         ACCReviewViewController *ACCVC = [[ACCReviewViewController alloc] init];
         ACCVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:ACCVC animated:YES];
-        
         
     }else if (sender.tag == 1002) {
         
@@ -1365,14 +1360,11 @@ static NSInteger tag = 0;
         addMoneyVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:addMoneyVC animated:YES];
         
-        
-        
     }else if (sender.tag == 1003) {
        
         MasterQueryViewController *ACCVC = [[MasterQueryViewController alloc] init];
         ACCVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:ACCVC animated:YES];
-        
         
     }else if (sender.tag == 1004) {
         
@@ -1493,7 +1485,6 @@ static NSInteger tag = 0;
     }else{
         return [ShareAnimation shareAnimationWithType:ShareAnimationTypeDismiss duration:0.05 presentHeight:258];
     }
-    
 }
 
 - (NSArray *)detectQRCodeWithImage:(UIImage *)QRCodeImage {

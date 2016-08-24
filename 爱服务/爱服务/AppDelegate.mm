@@ -24,7 +24,6 @@
 #import "AllOrderViewController.h"
 
 #import "WXApi.h"
-#import "WeiboSDK.h"
 #import <TencentOpenAPI/TencentOAuth.h>
 #import <TencentOpenAPI/TencentApiInterface.h>
 #import "JPUSHService.h"
@@ -155,7 +154,6 @@ static BOOL isProduction = FALSE;
     [Appirater setDebug:NO];
     [Appirater appLaunched:YES];
 #endif
-    
     
     [WXApi registerApp:WXAppKey];
     [WeiboSDK enableDebugMode:YES];

@@ -1,0 +1,6 @@
+framework module Pods____ {
+  umbrella header "Pods-爱服务-umbrella.h"
+
+  export *
+  module * { export * }
+}
