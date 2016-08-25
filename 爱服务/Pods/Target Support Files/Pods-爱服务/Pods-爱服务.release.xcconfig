@@ -1,5 +1,8 @@
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/Appirater" "${PODS_ROOT}/Headers/Public/FMDB" "${PODS_ROOT}/Headers/Public/pop"
-OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/Appirater" -isystem "${PODS_ROOT}/Headers/Public/FMDB" -isystem "${PODS_ROOT}/Headers/Public/pop"
-OTHER_LDFLAGS = $(inherited) -ObjC -l"Appirater" -l"FMDB" -l"c++" -l"pop" -l"sqlite3" -framework "CFNetwork" -framework "SystemConfiguration" -weak_framework "StoreKit"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/WeiboSDK"
+LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
+LIBRARY_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/WeiboSDK/libWeiboSDK"
+OTHER_CFLAGS = $(inherited) -iquote "$CONFIGURATION_BUILD_DIR/Appirater.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/FMDB.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/ReactiveCocoa.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/pop.framework/Headers" -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/WeiboSDK"
+OTHER_LDFLAGS = $(inherited) -ObjC -l"WeiboSDK" -l"sqlite3" -l"z" -framework "Appirater" -framework "CoreGraphics" -framework "CoreTelephony" -framework "CoreText" -framework "FMDB" -framework "Foundation" -framework "ImageIO" -framework "QuartzCore" -framework "ReactiveCocoa" -framework "Security" -framework "SystemConfiguration" -framework "UIKit" -framework "pop"
+PODS_FRAMEWORK_BUILD_PATH = $(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Pods-爱服务
 PODS_ROOT = ${SRCROOT}/Pods

@@ -4,10 +4,12 @@
 # use_frameworks!
 
 target '爱服务' do
+pod "WeiboSDK", :git => "https://github.com/sinaweibosdk/weibo_ios_sdk.git" 
 pod 'pop', '~> 1.0'
 pod 'FMDB'
 pod "Appirater"
-
+use_frameworks!
+pod ‘ReactiveCocoa’, ‘~>2.5’
 end
 
 target '爱服务Tests' do

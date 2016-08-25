@@ -6,8 +6,10 @@
  *  比如,使用系统的UIImagePickerController,当用户手机中有一些超大的图片
  *  (20M的图片)应用的内存会暴增,造成闪退,可以自定义一个或使用好的第三方的
  *  imagePickerController,优化一下内存.避免这个问题.
- *  有什么好的建议, 给我发E-mail
- *  939224798@qq.com
+ *  
+ *  这个项目用了一个project多个target的策略， 好处挺多， 但这个东西我也不是使用的最好， 可以探究更多用法。
+ *  不是所有地方都用的autoLayout， 原谅我。
+ *  
  ****************************************************************/
 //  Created by 张冬冬 on 16/4/9.
 //  Copyright © 2016年 张冬冬. All rights reserved.
@@ -24,7 +26,6 @@
 #import "AllOrderViewController.h"
 
 #import "WXApi.h"
-#import "WeiboSDK.h"
 #import <TencentOpenAPI/TencentOAuth.h>
 #import <TencentOpenAPI/TencentApiInterface.h>
 #import "JPUSHService.h"
@@ -155,7 +156,6 @@ static BOOL isProduction = FALSE;
     [Appirater setDebug:NO];
     [Appirater appLaunched:YES];
 #endif
-    
     
     [WXApi registerApp:WXAppKey];
     [WeiboSDK enableDebugMode:YES];

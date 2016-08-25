@@ -82,3 +82,16 @@ strip_invalid_archs() {
   fi
 }
 
+
+if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "Pods-爱服务/Appirater.framework"
+  install_framework "Pods-爱服务/FMDB.framework"
+  install_framework "Pods-爱服务/ReactiveCocoa.framework"
+  install_framework "Pods-爱服务/pop.framework"
+fi
+if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "Pods-爱服务/Appirater.framework"
+  install_framework "Pods-爱服务/FMDB.framework"
+  install_framework "Pods-爱服务/ReactiveCocoa.framework"
+  install_framework "Pods-爱服务/pop.framework"
+fi

@@ -2,9 +2,10 @@
 //  MyDefine.h
 //  天气
 //
-//  Created by apple1 on 16/1/13.
+//  Created by apple on 16/1/13.
 //  Copyright © 2016年 apple1. All rights reserved.
 //
+//  真的只是局内人看不透吗？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？
 
 #ifndef MyDefine_h
 #define MyDefine_h

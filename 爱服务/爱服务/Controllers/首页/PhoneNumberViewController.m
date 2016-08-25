@@ -126,7 +126,8 @@
     [quitButton addTarget:self action:@selector(quitButtonClicked) forControlEvents:UIControlEventTouchUpInside];
 
 }
-
+//千百句的我爱你，不及一句我在你身边
+//电话再多有用吗？？？？？？？？？？
 - (void)buttonClicked:(UIButton *)sender {
     NSString *telString = [NSString stringWithFormat:@"telprompt://%@",sender.titleLabel.text];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:telString]];

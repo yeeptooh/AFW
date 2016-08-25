@@ -162,9 +162,7 @@ static NSInteger tag = 0;
 }
 
 - (void)updateBadge {
-    
     [self.badgeView showBadgeWithStyle:WBadgeStyleNumber value:[((NSArray *)[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"]).lastObject integerValue] animationType:WBadgeAnimTypeNone];
-
 }
 
 - (void)updateMoney:(NSNotification *)sender {
@@ -294,12 +292,10 @@ static NSInteger tag = 0;
             
         }
     } failure:^(NSError *error) {
-        
     }];
 }
 
 - (void)updateUI {
-    
     [self upDateNetWorking];
     [self setBalance];
     [self setBadgeValue];
@@ -307,15 +303,12 @@ static NSInteger tag = 0;
 
 - (void)setNaviTitle {
     self.navigationItem.title = @"首页";
-    
     UIButton *phoneButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [phoneButton setImage:[UIImage imageNamed:@"msg_room_toolbar_media_fct_notrace_norm_0"] forState:UIControlStateNormal];
     
     phoneButton.frame = CGRectMake(0, 0, Width/10, Width/10);
     [phoneButton addTarget:self action:@selector(phoneButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:phoneButton];
-
 }
 
 - (void)phoneButtonClicked {
@@ -341,9 +334,9 @@ static NSInteger tag = 0;
     scrollView.contentSize = CGSizeMake(Width, scrollView.bounds.size.height);
     [self.view addSubview:scrollView];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:scrollView.bounds];
-    imageView.image = [UIImage imageNamed:@"bg_banner"];
-    [scrollView addSubview:imageView];
+//    UIImageView *imageView = [[UIImageView alloc] initWithFrame:scrollView.bounds];
+//    imageView.image = [UIImage imageNamed:@"bg_banner"];
+//    [scrollView addSubview:imageView];
 #if Environment_Mode == 1
     NSString *url = [NSString stringWithFormat:@"%@/Common.ashx?action=getAppPhoto",HomeURL];
 #elif Environment_Mode == 2
@@ -353,63 +346,48 @@ static NSInteger tag = 0;
     manager.requestSerializer.timeoutInterval = 5;
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        NSMutableArray *imageList = [NSMutableArray array];
-        NSMutableArray *dataList = [NSMutableArray array];
+
         NSArray *array = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         
         for (NSInteger i = 0; i < array.count; i++) {
 
             [self.picList addObject:[NSString stringWithFormat:@"%@%@",subHomeURL,array[i][@"Path"]]];
             [self.linkList addObject:array[i][@"Link"]];
-            [dataList addObject:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.picList[i]]]];
-            
-            [imageList addObject:[UIImage imageWithData:dataList[i]]];
+
         }
+        
+        NSLog(@"%@",self.linkList);
+        
         [[NSUserDefaults standardUserDefaults] setObject:self.picList forKey:@"appbanner"];
         [[NSUserDefaults standardUserDefaults] setObject:self.linkList forKey:@"applink"];
-        [[NSUserDefaults standardUserDefaults] setObject:dataList forKey:@"dataList"];
+
         [[NSUserDefaults standardUserDefaults] synchronize];
-        if (imageList.count) {
-            UIImageView *imageView = [[UIImageView alloc] initWithImage:imageList[0]];
-            imageView.frame = CGRectMake(Width, 0, Width, imageHeight);
-            [self.view addSubview:imageView];
-            [UIView animateWithDuration:0.2 animations:^{
-                imageView.frame = CGRectMake(0, 0, Width, imageHeight);
-            } completion:^(BOOL finished) {
-                [imageView removeFromSuperview];
-                scrollView.contentSize = CGSizeMake(Width * array.count, scrollView.bounds.size.height);
-                
-                SDCycleScrollView *cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:scrollView.bounds delegate:self placeholderImage:[UIImage imageNamed:@"bg_banner"]];
-                cycleScrollView.localizationImageNamesGroup = imageList;
-                cycleScrollView.placeholderImage = [UIImage imageNamed:@"bg_banner"];
-                cycleScrollView.pageControlStyle = SDCycleScrollViewPageContolStyleNone;
-                [scrollView addSubview:cycleScrollView];
-                cycleScrollView.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-                if (array.count != 1) {
-                    cycleScrollView.autoScrollTimeInterval = 3.f;
-                }
-                
-            }];
+        scrollView.contentSize = CGSizeMake(Width * array.count, scrollView.bounds.size.height);
+        
+        SDCycleScrollView *cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:scrollView.bounds imageURLStringsGroup:self.picList];
+        cycleScrollView.delegate = self;
+        cycleScrollView.placeholderImage = [UIImage imageNamed:@"bg_banner"];
+        cycleScrollView.pageControlStyle = SDCycleScrollViewPageContolStyleNone;
+        [scrollView addSubview:cycleScrollView];
+        cycleScrollView.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+        if (array.count != 1) {
+            cycleScrollView.autoScrollTimeInterval = 3.f;
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-        NSArray *dataList = [[NSUserDefaults standardUserDefaults] objectForKey:@"dataList"];
-        NSMutableArray *imageList = [NSMutableArray array];
-        for (NSInteger i = 0; i < dataList.count; i++) {
-            [imageList addObject:[UIImage imageWithData:dataList[i]]];
-        }
-        if (imageList.count) {
-            scrollView.contentSize = CGSizeMake(Width * imageList.count, scrollView.bounds.size.height);
-            SDCycleScrollView *cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:scrollView.bounds delegate:self placeholderImage:[UIImage imageNamed:@"bg_banner"]];
+ 
+        NSArray *picList = [[NSUserDefaults standardUserDefaults] objectForKey:@"appbanner"];
+
+        if (picList.count) {
+            scrollView.contentSize = CGSizeMake(Width * picList.count, scrollView.bounds.size.height);
+            SDCycleScrollView *cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:scrollView.bounds imageURLStringsGroup:picList];
             self.linkList = [[NSUserDefaults standardUserDefaults] objectForKey:@"applink"];
-            cycleScrollView.localizationImageNamesGroup = imageList;
+            cycleScrollView.delegate = self;
             cycleScrollView.placeholderImage = [UIImage imageNamed:@"bg_banner"];
             cycleScrollView.pageControlStyle = SDCycleScrollViewPageContolStyleNone;
             [scrollView addSubview:cycleScrollView];
             cycleScrollView.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-            if (imageList.count != 1) {
+            if (picList.count != 1) {
                 cycleScrollView.autoScrollTimeInterval = 3.f;
             }
         }
@@ -466,7 +444,6 @@ static NSInteger tag = 0;
     balanceLabel.font = font(13);
     balanceLabel.textAlignment = NSTextAlignmentCenter;
     [self.balanceView addSubview:balanceLabel];
-    
     
 #if Environment_Mode == 1
     UILabel *moneyLabel = [[UILabel alloc]initWithFrame:CGRectMake(Width*2/5, 0, Width*2/5, balanceLabel.bounds.size.height)];
@@ -674,7 +651,6 @@ static NSInteger tag = 0;
                 
                 [self.detailButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"a%ld",(long)tag]] forState:UIControlStateNormal];
                 
-            
                 [self.detailButton addTarget:self action:@selector(detailButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 
                 self.detailButton.frame = CGRectMake(Width*j/4, height*2*i, Width/4, height*2);
@@ -907,7 +883,6 @@ static NSInteger tag = 0;
         containerView = [[UIView alloc]initWithFrame:CGRectMake(0, imageHeight + height, Width, height*6)];
     }
     
-    
     [self.view addSubview:containerView];
     for (NSInteger i = 0; i < 2; i ++) {
         for (NSInteger j = 0;  j < 4; j ++) {
@@ -916,7 +891,6 @@ static NSInteger tag = 0;
             tag ++;
             
             [self.detailButton addTarget:self action:@selector(detailButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-            
             
             if (iPhone4_4s) {
                 self.detailButton.frame = CGRectMake(Width*j/4, height*7*i/3, Width/4, height*6/3);
@@ -1137,9 +1111,6 @@ static NSInteger tag = 0;
 #pragma mark - buttonClicked -
 - (void)drawMoneyButtonClicked {
     
-    WithDrawViewController *withDrawVC = [[WithDrawViewController alloc]init];
-    withDrawVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:withDrawVC animated:YES];
     
 //    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"password"] isEqualToString:@"123456"]) {
 //#if Environment_Mode == 1
@@ -1155,10 +1126,13 @@ static NSInteger tag = 0;
 //        [alertController addAction:action];
 //        
 //        [self presentViewController:alertController animated:YES completion:nil];
-//        return;
 //        
 //    }else {
-//        
+        WithDrawViewController *withDrawVC = [[WithDrawViewController alloc]init];
+        withDrawVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:withDrawVC animated:YES];
+
+//
 //        if ([[NSUserDefaults standardUserDefaults] integerForKey:@"verify"]) {
 //            WithDrawViewController *withDrawVC = [[WithDrawViewController alloc]init];
 //            withDrawVC.hidesBottomBarWhenPushed = YES;
@@ -1352,12 +1326,10 @@ static NSInteger tag = 0;
         addVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:addVC animated:YES];
         
-        
     }else if (sender.tag == 1001) {
         ACCReviewViewController *ACCVC = [[ACCReviewViewController alloc] init];
         ACCVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:ACCVC animated:YES];
-        
         
     }else if (sender.tag == 1002) {
         
@@ -1365,14 +1337,11 @@ static NSInteger tag = 0;
         addMoneyVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:addMoneyVC animated:YES];
         
-        
-        
     }else if (sender.tag == 1003) {
        
         MasterQueryViewController *ACCVC = [[MasterQueryViewController alloc] init];
         ACCVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:ACCVC animated:YES];
-        
         
     }else if (sender.tag == 1004) {
         
@@ -1420,7 +1389,6 @@ static NSInteger tag = 0;
                              @"districtid":@(userModel.districtid)
                              };
 #elif Environment_Mode == 2
-    
     NSDictionary *params = @{
                              @"comid":@(userModel.comid),
                              @"uid":@(userModel.uid),
@@ -1431,7 +1399,6 @@ static NSInteger tag = 0;
                              };
 #endif
 
-    
     [YeeptNetWorkingManager GETMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:NO progress:nil success:^(id responseObject) {
         NSString *allString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSArray *countList = [allString componentsSeparatedByString:@","];
@@ -1493,7 +1460,6 @@ static NSInteger tag = 0;
     }else{
         return [ShareAnimation shareAnimationWithType:ShareAnimationTypeDismiss duration:0.05 presentHeight:258];
     }
-    
 }
 
 - (NSArray *)detectQRCodeWithImage:(UIImage *)QRCodeImage {

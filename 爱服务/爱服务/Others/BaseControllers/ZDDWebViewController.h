@@ -6,6 +6,7 @@
 //  Copyright © 2016年 张冬冬. All rights reserved.
 //
 
+//封装的没用的带进度条的webView，对不起
 #import "DetailPageBaseViewController.h"
 #import <WebKit/WebKit.h>
 @interface ZDDWebViewController : DetailPageBaseViewController
