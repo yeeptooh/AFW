@@ -355,6 +355,9 @@ static NSInteger tag = 0;
             [self.linkList addObject:array[i][@"Link"]];
 
         }
+        
+        NSLog(@"%@",self.linkList);
+        
         [[NSUserDefaults standardUserDefaults] setObject:self.picList forKey:@"appbanner"];
         [[NSUserDefaults standardUserDefaults] setObject:self.linkList forKey:@"applink"];
 

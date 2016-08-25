@@ -282,6 +282,7 @@ UIViewControllerTransitioningDelegate
 
 
 - (void)quitButtonClicked {
+    //人生真的有很多求而不得，舍而不能的东西，不要轻易退出，也不要轻易放弃
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"logOut"];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"hadLaunch"];
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"everLaunch"];

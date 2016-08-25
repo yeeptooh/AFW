@@ -5,7 +5,10 @@
 //  Created by 张冬冬 on 16/4/9.
 //  Copyright © 2016年 张冬冬. All rights reserved.
 //
-
+/*
+  我终究不会再是第一次来到南方，总会脸红的男孩，福祸相依，苦乐相抵
+  输人不输阵，举杯不低头
+ */
 #import "LoginViewController.h"
 #import "UserModel.h"
 #import "AppDelegate.h"
@@ -113,10 +116,7 @@ UITextFieldDelegate
     [attributeStr setAttributes:@{NSForegroundColorAttributeName:LoginColor} range:NSMakeRange(attributeStr.length - 2, 2)];
 #if Environment_Mode == 1
     self.label.attributedText = attributeStr;
-    
     UIButton *registerButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    
     [registerButton addTarget:self action:@selector(registerButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     registerButton.frame = self.label.bounds;
     [self.label addSubview:registerButton];
@@ -125,14 +125,11 @@ UITextFieldDelegate
 #endif
     
     [self.loginContainerView addSubview:loginButton];
-    
     [self.loginContainerView addSubview:self.accountTextField];
     [self.loginContainerView addSubview:accountView];
     [self.loginContainerView addSubview:self.passwordTextField];
     [self.loginContainerView addSubview:passwordView];
-    
     [self.view addSubview:self.loginContainerView];
-
 }
 
 - (void)loginNetWorking {
@@ -217,7 +214,6 @@ UITextFieldDelegate
                                      @"handler_name":userModel.name
                                      };
 #endif
-
             
             [YeeptNetWorkingManager GETMethodBaseURL:HomeURL path:subURL parameters:params isJSONSerialization:NO progress:nil success:^(id responseObject) {
                 
@@ -242,8 +238,6 @@ UITextFieldDelegate
                 hud.label.text = NSLocalizedString(@"登录成功", @"HUD completed title");
                 [hud hideAnimated:YES afterDelay:0.75f];
                 [hud removeFromSuperViewOnHide];
-                
-                
                 
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.75 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     if ([[NSUserDefaults standardUserDefaults] integerForKey:@"logOut"]) {

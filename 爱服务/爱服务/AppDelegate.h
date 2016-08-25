@@ -1,4 +1,9 @@
 //
+//
+//  工作还行，老板不错，fighting
+//
+//
+//
 //  AppDelegate.h
 //  爱服务
 //
@@ -25,6 +30,7 @@
 //         ======`-.____`-.___\_____/___.-`____.-'======
 //                            `=---='
 //
+//                  BUG不多               需优化不少
 #import <UIKit/UIKit.h>
 #import "MyTabBarController.h"
 @interface AppDelegate : UIResponder <UIApplicationDelegate>

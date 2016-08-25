@@ -17,7 +17,7 @@
 #import "WeiboSDK.h"
 #import <Foundation/Foundation.h>
 #import "HYBModalTransition.h"
-#import "ReactiveCocoa.h"
+#import "ReactiveCocoa.h"//没来得及用就要离开了，只能说异步处理真挺好用，还帮你省掉想方法名的痛苦！~
 
 #define NSLog(format, ...) do {                                                                          \
 fprintf(stderr, "<%s : %d> %s\n",                                           \

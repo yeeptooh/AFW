@@ -5,7 +5,7 @@
 //  Created by 张冬冬 on 16/4/9.
 //  Copyright © 2016年 张冬冬. All rights reserved.
 //
-
+//
 #import "DetailPageBaseViewController.h"
 
 @interface DetailPageBaseViewController ()
@@ -16,6 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [backButton setTitle:@"返回" forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(backLastView:) forControlEvents:UIControlEventTouchUpInside];
@@ -33,7 +34,6 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [self.navigationController popViewControllerAnimated:YES];
 }
-
 
 
 @end

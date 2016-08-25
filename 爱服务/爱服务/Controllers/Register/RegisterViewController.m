@@ -2,6 +2,15 @@
 //  RegisterViewController.m
 //  爱服务
 //
+/*
+    开始总是分分钟都妙不可言
+ 　　谁都以为热情它永不会减
+ 　　除了激情褪去后的那一点点倦
+ 　　也许像谁说过的贪得无厌
+ 　　活该应了谁说过的不知检点
+ 　　总之那几年　感性赢了理性的那一面
+ 
+ */
 //  Created by 张冬冬 on 16/4/11.
 //  Copyright © 2016年 张冬冬. All rights reserved.
 //
