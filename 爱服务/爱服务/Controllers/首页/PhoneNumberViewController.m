@@ -52,7 +52,6 @@
     label.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:label];
     
-    
     UILabel *time1label = [[UILabel alloc] initWithFrame:CGRectMake(width/10, 0, (width*4/5), (height*1.5/5.5)/2)];
     if (iPhone4_4s) {
         time1label.text = @"上午   08:30 - 12:00";
@@ -136,6 +135,5 @@
 - (void)quitButtonClicked {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-
 
 @end

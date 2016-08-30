@@ -69,14 +69,13 @@ UIViewControllerTransitioningDelegate
 #elif Environment_Mode == 2
 @property (nonatomic, strong) CSDetailTaskTableViewCell *baseDetailInfoCell;
 #endif
-
 @property (nonatomic, strong) ProductTableViewCell *cell;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIAlertController *alertController;
-
 @property (nonatomic, strong) NSMutableArray *diaLogList;
 @property (nonatomic, strong) NSMutableArray *CSList;
 @property (nonatomic, strong) CTCallCenter *callCenter;
+
 @end
 
 @implementation DetailViewController
@@ -100,22 +99,17 @@ UIViewControllerTransitioningDelegate
         _alertController = [UIAlertController alertControllerWithTitle:@"此应用的相机功能已禁用" message:@"请点击确定打开应用的相机功能" preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *openAction = [UIAlertAction actionWithTitle:@"打开" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-            
         }];
         
         UIAlertAction *closeAction = [UIAlertAction actionWithTitle:@"关闭" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
         }];
         
         [_alertController addAction:openAction];
         [_alertController addAction:closeAction];
-        
     }
     return _alertController;
 }
-
 
 - (UITableView *)tableView {
     if (!_tableView) {
@@ -197,7 +191,6 @@ UIViewControllerTransitioningDelegate
 #endif
 }
 
-
 - (void)phoneButtonClicked {
     NSString *phoneString = [NSString stringWithFormat:@"telprompt://%@",self.phone];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneString]];
@@ -230,8 +223,6 @@ UIViewControllerTransitioningDelegate
         }
     };
 }
-
-
 
 - (void)mailButtonClicked {
     NSString *messageString = [NSString stringWithFormat:@"sms://%@",self.phone];
@@ -268,7 +259,6 @@ UIViewControllerTransitioningDelegate
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error = %@",error.userInfo);
     }];
-
 }
 
 - (void)mapButtonClick {
@@ -1673,11 +1663,9 @@ UIViewControllerTransitioningDelegate
     return 0;
 }
 
-
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 44;
 }
-
 
 - (void)typeButtonClicked {
     PTypeViewController *ptypeVC = [[PTypeViewController alloc]init];
@@ -1749,7 +1737,6 @@ UIViewControllerTransitioningDelegate
     }else{
         completeVC.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][2];
     }
-    
 #if Environment_Mode == 1
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"countList"][3] isEqualToString:@"0"]) {
         robVC.tabBarItem.badgeValue = nil;
@@ -1780,7 +1767,6 @@ UIViewControllerTransitioningDelegate
     }else {
         [self.navigationController popViewControllerAnimated:YES];
     }
-    
 }
 #endif
 

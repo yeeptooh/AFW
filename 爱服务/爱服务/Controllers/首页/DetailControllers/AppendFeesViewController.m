@@ -19,15 +19,11 @@ WKNavigationDelegate
 >
 
 @property (nonatomic, strong) UIActivityIndicatorView *indicatorView;
-
 @property (nonatomic, strong) MBProgressHUD *HUD;
 @property (nonatomic, strong) MBProgressHUD *errorHUD;
 @property (nonatomic, strong) WKWebView *webView;
-
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
-
 @property (nonatomic, strong) UIButton *chooseButton;
-
 @property (nonatomic, strong) NSMutableArray *reasonList;
 @end
 
@@ -226,8 +222,6 @@ WKNavigationDelegate
         [hud hideAnimated:YES afterDelay:1.f];
         
     }];
-    
-    
 }
 
 - (void)submitClicked:(UIButton *)sender {
@@ -325,7 +319,6 @@ WKNavigationDelegate
 - (void)chooseButtonClicked:(UIButton *)sender {
     CompleteViewController *cpVC = [[CompleteViewController alloc]init];
     cpVC.returnAppend = ^(NSString *taskID, NSString *name, NSString *address, NSString *product, NSString *price, NSString *comid) {
-        
         _ID = taskID;
         UIButton *button = [self.view viewWithTag:500];
         [button setTitle:_ID forState:UIControlStateNormal];

@@ -28,8 +28,7 @@
 }
 
 - (void)setBackgroundView {
-//    height = 258;
-    
+
     NSArray *list = @[
                       @"微信好友",
                       @"微信朋友圈",
@@ -50,7 +49,6 @@
         [self.view addSubview:shareButton];
     }
     
-    
     for (NSInteger i = 0; i < 2; i ++) {
         UIButton *shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [shareButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"ZHActionShareNormal%@",@(i+5)]] forState:UIControlStateNormal];
@@ -61,7 +59,6 @@
         
         [self.view addSubview:shareButton];
     }
-    
     
     for (NSInteger i = 0; i < 4 ; i ++) {
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake((Width/4) * i, 30 + 54 + 5, Width/4, 20)];
@@ -80,9 +77,7 @@
         label.textColor = color(150, 150, 150, 1);
         [self.view addSubview:label];
     }
-    
-    
-    
+
     UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [cancelButton setTitle:@"取消" forState:UIControlStateNormal];
     [cancelButton setTitleColor:color(150, 150, 150, 1) forState:UIControlStateNormal];
@@ -102,7 +97,6 @@
     if (sender.tag == 100) {
         
         if (![WXApi isWXAppInstalled]) {
-
             UIAlertView *alertview = [[UIAlertView alloc] initWithTitle:nil message:@"请先安装微信客户端再进行分享" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
             [alertview show];
             return;
@@ -137,7 +131,6 @@
             UIAlertView *alertview = [[UIAlertView alloc] initWithTitle:nil message:@"请先安装QQ客户端再进行分享" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
             [alertview show];
             return;
-            
         }
         //QQ
         [self dismissViewControllerAnimated:YES completion:nil];

@@ -6,7 +6,7 @@
 //  Copyright © 2016年 张冬冬. All rights reserved.
 //
 /*
-  我终究不会再是第一次来到南方，总会脸红的男孩，福祸相依，苦乐相抵
+  福祸相依，苦乐相抵
   输人不输阵，举杯不低头
  */
 #import "LoginViewController.h"
@@ -66,7 +66,6 @@ UITextFieldDelegate
     self.imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"mainlogo"]];
     self.imageView.frame = CGRectMake((Width - 200)/2, 60, 200, 43);
     [self.view addSubview:self.imageView];
-    
 }
 
 - (void)setLoginContainer {
@@ -292,7 +291,6 @@ UITextFieldDelegate
         [hud removeFromSuperViewOnHide];
         
     }];
-  
 }
 
 - (void)loginButtonClicked {
@@ -335,8 +333,6 @@ UITextFieldDelegate
     return YES;
 }
 
-
-
 - (void)addNotification {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide) name:UIKeyboardWillHideNotification object:nil];
@@ -364,7 +360,6 @@ UITextFieldDelegate
             weakSelf.label.userInteractionEnabled = NO;
         }];
     }
-    
 }
 
 - (void)keyboardWillHide {
@@ -384,7 +379,6 @@ UITextFieldDelegate
             weakSelf.label.userInteractionEnabled = YES;
         }];
     }
-    
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
