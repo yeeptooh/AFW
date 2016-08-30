@@ -64,24 +64,16 @@ WKNavigationDelegate
     }
 }
 
-
-
 - (void)setWebView {
     UserModel *userModel = [UserModel readUserModel];
     self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, Width, Height - StatusBarAndNavigationBarHeight)];
-    
-    
     self.webView.navigationDelegate = self;
-    
-    
-    
     self.webView.scrollView.bounces = NO;
     self.webView.scrollView.showsVerticalScrollIndicator = NO;
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@page.aspx?type=erweima&comid=%ld&uid=%ld",HomeURL,(long)userModel.comid,(long)userModel.uid]]]];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [self.view addSubview:self.progressView];
     [self.view insertSubview:self.webView belowSubview:self.progressView];
-    
     
     [self.webView addObserver:self
                    forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
@@ -99,7 +91,6 @@ WKNavigationDelegate
             self.progressView.alpha = 0;
         }];
     }
-    
 }
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
@@ -119,12 +110,8 @@ WKNavigationDelegate
     }
 }
 
-
-
 - (void)dealloc {
-    
     [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];
-    
 }
 
 - (void)setNaviTitle {

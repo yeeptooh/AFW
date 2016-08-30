@@ -33,7 +33,6 @@
 #import "GatheringViewController.h"
 #import "ZDDSkipWebViewController.h"
 
-
 #import "AddOrderViewController.h"
 #import "ACCReviewViewController.h"
 #import "MasterQueryViewController.h"
@@ -58,7 +57,6 @@ UINavigationControllerDelegate
 @property (nonatomic, strong) UIButton *badgeView;
 @property (nonatomic, strong) UIAlertController *alertController;
 @property (nonatomic, strong) UIView *containerView;
-
 @property (nonatomic, strong) NSMutableArray *picList;
 @property (nonatomic, strong) NSMutableArray *linkList;
 
@@ -397,7 +395,7 @@ static NSInteger tag = 0;
 #pragma mark - SDCycleScrollViewDelegate -
 //点击某张图片
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
-    if ([self.linkList[index] isEqualToString:@"#"]) {
+    if (![self.linkList[index] hasPrefix:@"http"]) {
         return;
     }
     
@@ -873,7 +871,6 @@ static NSInteger tag = 0;
         }
     }
     
-  
 #elif Environment_Mode == 2
     CGFloat height = (Height - StatusBarAndNavigationBarHeight - imageHeight - TabbarHeight)/8;
     UIView *containerView;
@@ -1238,7 +1235,6 @@ static NSInteger tag = 0;
         qrcodeVC.message = QRCodeFeature.messageString;
         NSData *urlData = [QRCodeFeature.messageString dataUsingEncoding:NSUTF8StringEncoding];
         
-        
         [filter setValue:urlData forKey:@"inputMessage"];
         CIImage *ciImage = [filter outputImage];
         
@@ -1448,7 +1444,7 @@ static NSInteger tag = 0;
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
     if ([presented isKindOfClass:[PhoneNumberViewController class]]) {
-        return [[PresentAnimation alloc]init];
+        return [[PresentAnimation alloc] init];
     }else{
         return [ShareAnimation shareAnimationWithType:ShareAnimationTypePresent duration:0.15 presentHeight:258];
     }
@@ -1456,7 +1452,7 @@ static NSInteger tag = 0;
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
     if ([dismissed isKindOfClass:[PhoneNumberViewController class]]) {
-        return [[DismissAnimation alloc]init];
+        return [[DismissAnimation alloc] init];
     }else{
         return [ShareAnimation shareAnimationWithType:ShareAnimationTypeDismiss duration:0.05 presentHeight:258];
     }
@@ -1478,6 +1474,7 @@ static NSInteger tag = 0;
 }
 
 - (UIImage *)createNonInterpolatedUIImageFromCIImage:(CIImage *)image withSize:(CGFloat)size {
+    
     CGRect extent = CGRectIntegral(image.extent);
     CGFloat scale = MIN(size/CGRectGetWidth(extent), size/CGRectGetHeight(extent));
     size_t width = scale * CGRectGetWidth(extent);

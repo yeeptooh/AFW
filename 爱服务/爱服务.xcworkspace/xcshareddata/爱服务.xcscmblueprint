@@ -1,0 +1,32 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "5789B00BB090C5B91CBB753660AFC6290A8532DB",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "64137336-b319-3d4d-b361-012772166479" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "5789B00BB090C5B91CBB753660AFC6290A8532DB" : 0,
+    "64137336-b319-3d4d-b361-012772166479" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "B905CD96-1159-4DF9-9B2C-6FDA9C164462",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "5789B00BB090C5B91CBB753660AFC6290A8532DB" : "AFW\/",
+    "64137336-b319-3d4d-b361-012772166479" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "爱服务",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "爱服务\/爱服务.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/yeeptooh\/AFW.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "5789B00BB090C5B91CBB753660AFC6290A8532DB"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/192.168.1.88:8080\/svn\/IOS",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "64137336-b319-3d4d-b361-012772166479"
+    }
+  ]
+}

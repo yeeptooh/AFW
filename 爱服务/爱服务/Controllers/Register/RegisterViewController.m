@@ -65,7 +65,6 @@ WKNavigationDelegate
         label.textAlignment = NSTextAlignmentCenter;
         [_noNetWorkingView addSubview:imageView];
         [_noNetWorkingView addSubview:label];
-        
     }
     return _noNetWorkingView;
 }
@@ -85,8 +84,7 @@ WKNavigationDelegate
     label.font = font(18);
     label.textAlignment = NSTextAlignmentCenter;
     [navigationView addSubview:label];
-    
-    
+
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
     
     [backButton addTarget:self action:@selector(backLastView:) forControlEvents:UIControlEventTouchUpInside];
@@ -94,10 +92,7 @@ WKNavigationDelegate
     
     [backButton setImage:[UIImage imageNamed:@"icon_back_pre"] forState:UIControlStateNormal];
     backButton.contentEdgeInsets = UIEdgeInsetsMake(0, -16, 0, 0);
-    
     [navigationView addSubview:backButton];
-    
-    
 }
 
 - (void)viewDidLoad {
@@ -106,12 +101,10 @@ WKNavigationDelegate
     
     [self setNavigationView];
     [self setWebView];
-
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [self.view.superview insertSubview:self.snapView atIndex:0];
-    
 }
 
 - (void)setWebView {
@@ -141,14 +134,12 @@ WKNavigationDelegate
             self.progressView.alpha = 0;
         }];
     }
-    
 }
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     //去掉html的标题
 //    NSString *str1 = @"document.getElementById('head').remove();";
 //    [webView evaluateJavaScript:str1 completionHandler:nil];
-    
     [UIView animateWithDuration:0.5 animations:^{
         self.progressView.alpha = 0;
     }];
@@ -175,7 +166,6 @@ WKNavigationDelegate
 - (void)backLastView:(UIBarButtonItem *)sender {
     [self.view endEditing:YES];
 
-    
     [UIView animateWithDuration:.3
                      animations:^{
                          self.snapView.frame = CGRectMake(0, 0, Width, Height);
@@ -194,7 +184,5 @@ WKNavigationDelegate
     [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];
     
 }
-
-
 
 @end

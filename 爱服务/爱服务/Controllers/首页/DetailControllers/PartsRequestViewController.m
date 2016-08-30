@@ -98,7 +98,6 @@ static NSInteger number;
     self.scrollView.contentSize = CGSizeMake(Width,(Height - StatusBarAndNavigationBarHeight) * 19/12);
     [self.view addSubview:self.scrollView];
     
-    
     NSArray *labelList = @[
                            @"工单号",
                            @"商品品牌",
@@ -110,9 +109,7 @@ static NSInteger number;
                            @"联系电话",
                            @"收货地址",
                            @"附加照片",
-                           
                            ];
-    
     
     for (NSInteger i = 0; i < 10; i ++) {
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 5 + ((Height - StatusBarAndNavigationBarHeight)*i/12), Width/4, (Height - StatusBarAndNavigationBarHeight)/12 - 10)];
@@ -215,7 +212,6 @@ static NSInteger number;
             textfield.tag = 1003 + i;
             [self.scrollView addSubview: textfield];
         }
-        
     }
     
     UIView *firstView = [[UIView alloc]initWithFrame:CGRectMake(20, 10 + ((Height - StatusBarAndNavigationBarHeight)*(10)/12), (Width - 120)/3, 4*(Width - 120)/9)];
@@ -290,7 +286,6 @@ static NSInteger number;
     thirdButton.tag = 4003;
     [thirdButton addTarget:self action:@selector(pictureAction:) forControlEvents:UIControlEventTouchUpInside];
     
-    
     UIButton *submit = [UIButton buttonWithType:UIButtonTypeCustom];
     [submit setTitle:@"提交" forState:UIControlStateNormal];
     
@@ -323,15 +318,11 @@ static NSInteger number;
         _type = type;
         _model = model;
         UIButton *button = [self.scrollView viewWithTag:500];
-        
         [button setTitle:_ID forState:UIControlStateNormal];
-        
         UILabel *label1 = [self.scrollView viewWithTag:1000];
         label1.text = _brand;
-        
         UILabel *label2 = [self.scrollView viewWithTag:1001];
         label2.text = _type;
-        
         UILabel *label3 = [self.scrollView viewWithTag:1002];
         label3.text = _model;
         _FromUserID = FromUserID;
@@ -357,7 +348,6 @@ static NSInteger number;
     
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction *cameraAction = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
         
         if (![[NSUserDefaults standardUserDefaults] boolForKey:@"AVCan"]) {
             NSUInteger sourceType = UIImagePickerControllerSourceTypeCamera;
@@ -398,7 +388,6 @@ static NSInteger number;
     }];
     
     UIAlertAction *albumAction = [UIAlertAction actionWithTitle:@"从手机相册中选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
         
         NSUInteger sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         
@@ -499,7 +488,6 @@ static NSInteger number;
         return;
     }
     
-
     NSInteger count = 0;
     if (self.firstImageView.image) {
         count ++;

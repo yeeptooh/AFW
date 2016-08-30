@@ -14,5 +14,4 @@ typedef void (^ReturnText) (NSString *text);
 @property (nonatomic, strong) ReturnText returnText;
 @property (nonatomic, assign) NSInteger ID;
 
-
 @end

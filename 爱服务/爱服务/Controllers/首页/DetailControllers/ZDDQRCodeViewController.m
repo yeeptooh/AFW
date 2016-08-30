@@ -10,7 +10,9 @@
 #import <Photos/Photos.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "MBProgressHUD.h"
+
 @interface ZDDQRCodeViewController ()
+
 @property (nonatomic, strong) UILabel *label1;
 @property (nonatomic, strong) UILabel *label2;
 @property (nonatomic, strong) UIAlertController *alertController;
@@ -88,11 +90,8 @@
     [self.view addSubview:self.label1];
     [self.view addSubview:self.label2];
     
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(successNotificationReceived:) name:@"success" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorNotificationReceived:) name:@"error" object:nil];
-    
-    
 }
 
 - (void)buttonClicked:(UIButton *)sender {
@@ -109,14 +108,12 @@
             
         } completionHandler:^(BOOL success, NSError * _Nullable error) {
             if (success) {
-                
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"success" object:nil];
             }
             
             if (error) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"error" object:nil];
             }
-            
         }];
     }
 }
@@ -135,8 +132,6 @@
         hud.label.text = NSLocalizedString(@"保存成功", @"HUD completed title");
         [hud hideAnimated:YES afterDelay:1.25f];
     });
-    
-
 }
 
 - (void)errorNotificationReceived:(NSNotification *)noti {
@@ -152,7 +147,6 @@
         hud.label.text = NSLocalizedString(@"保存失败", @"HUD completed title");
         [hud hideAnimated:YES afterDelay:1.25f];
     });
- 
 }
 
 

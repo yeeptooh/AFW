@@ -27,29 +27,23 @@
     
     CGFloat height;
     CGFloat width;
-//    CGFloat fontSize;
+
     if (iPhone6_plus) {
         height = Height/5;
         width = Width - 100;
-//        fontSize = 20;
     }else if (iPhone6) {
         height = Height/5;
         width = Width - 100;
-//        fontSize = 18;
     }else if (iPhone5_5s) {
         height = Height/5;
         width = Width - 100;
-//        fontSize = 18;
     }else {
         height = Height/5;
         width = Width - 100;
-//        fontSize = 16;
     }
     
     self.textfield = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, width, height/2)];
-    
     self.textfield.text = self.text;
-    
     self.textfield.backgroundColor = [UIColor whiteColor];
     self.textfield.clearsOnBeginEditing = YES;
     self.textfield.placeholder = @" 修改地址信息";
@@ -58,27 +52,20 @@
     
     UIButton *ensureButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [ensureButton setTitle:@"确定" forState:UIControlStateNormal];
-    
     [ensureButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
     ensureButton.backgroundColor = MainBlueColor;
     ensureButton.frame = CGRectMake(0, height*2/3, width/2 - 0.25, height/3);
-    
-    
     [self.view addSubview:ensureButton];
     [ensureButton addTarget:self action:@selector(ensureButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    
     UIButton *quitButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [quitButton setTitle:@"取消" forState:UIControlStateNormal];
-    
     [quitButton setTitleColor:color(240, 240, 240, 1) forState:UIControlStateNormal];
     quitButton.backgroundColor = MainBlueColor;
     quitButton.frame = CGRectMake(width/2 + 0.5, height*2/3, width/2 - 0.25, height/3);
-    
     [self.view addSubview:quitButton];
     [quitButton addTarget:self action:@selector(quitButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
 }
-
 
 - (void)quitButtonClicked {
     [self.textfield resignFirstResponder];
@@ -91,11 +78,8 @@
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     UserModel *userModel = [UserModel readUserModel];
     NSString *name = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
-    
     NSString *URL = [NSString stringWithFormat:@"%@Task.ashx?action=up_detail_address",HomeURL];
-    
     URL = [URL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
     NSDictionary *params = @{
                              @"id":[NSNumber numberWithInteger:self.ID],
                              @"handler":name,
@@ -105,14 +89,11 @@
                              };
 
     [manager POST:URL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
     }];
 
     [self dismissViewControllerAnimated:YES completion:nil];
     self.returnText(self.textfield.text);
-    
 }
 
 @end

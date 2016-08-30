@@ -416,10 +416,8 @@ static BOOL isProduction = FALSE;
          standbyCallback:^(NSDictionary *resultDic) {
             
              [self updateResponse:[[NSUserDefaults standardUserDefaults] objectForKey:@"outTradeNO"]];
-             
          }];
     }
-    
     return YES;
 }
 
@@ -433,7 +431,6 @@ static BOOL isProduction = FALSE;
     }else if ([absoluteURL rangeOfString:QQKey].location != NSNotFound) {
         return [TencentApiInterface handleOpenURL:url delegate:self];
     }
-    
     //跳转支付宝钱包进行支付，需要将支付宝钱包的支付结果回传给SDK（这个是将支付宝客户端的支付结果传回给SDK）
     if ([url.host isEqualToString:@"safepay"]) {
         
@@ -445,7 +442,6 @@ static BOOL isProduction = FALSE;
              
          }];
     }
-    
     return YES;
 }
 
@@ -478,9 +474,7 @@ static BOOL isProduction = FALSE;
                 hud.label.text = NSLocalizedString(@"付款成功", @"HUD completed title");
                 [hud hideAnimated:YES afterDelay:0.75f];
                 [hud removeFromSuperViewOnHide];
-                
             });
-            
         }
         
         if ([responseObject[@"data"] integerValue] == 1) {
